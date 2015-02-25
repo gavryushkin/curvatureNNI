@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass{amsart}
 
 \usepackage{amsmath,amsthm}
 \usepackage{todonotes}
@@ -9,13 +9,14 @@
 
 \newtheorem{lemma}{Lemma}
 \newtheorem{question}{Question}
+\newtheorem{proposition}{Proposition}
 
 \newcommand{\tN}{\mathrm{\tau NNI}}
 
 \begin{document}
 
+\section{Discrete $\tau$-space}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 We consider the ranked-NNI graph (the distance on ranked topologies inherited from 
 $\tau$-space). 
@@ -30,8 +31,9 @@ Obvious.
 
 \begin{lemma}
 \begin{enumerate}[(1)]
-\item $\frac{\deg(T)}{deg(R)}>\frac12.$
-\item $deg(T)-deg(R)> n-3.$
+\item $deg(T)-deg(R) \leq n-3.$
+\item $\dfrac{\deg(T)}{deg(R)}>\dfrac12.$
+\item $\lim\limits_n\dfrac{\deg(T)}{deg(R)}=\dfrac{1}{2}.$
 \end{enumerate}
 \end{lemma}
 
@@ -48,9 +50,9 @@ Obvious.
 \endproof
 
 \begin{lemma}
-The following is true for any finite metrics $d$ and any points $x,y$:
+Under random walk, the following is true for any finite metrics $d$ and any points $x,y$:
 \[
-\frac{-2}{d(x,y)} \leq \kappa(x,y) \leq \frac{2}{d(x,y)}.
+\dfrac{-2}{d(x,y)} \leq \kappa(x,y) \leq \dfrac{2}{d(x,y)}.
 \]
 \end{lemma}
 
@@ -61,7 +63,7 @@ Obvious, assuming the measure of any point is bounded by one.
 
 \begin{lemma}
 Assume uniform random walk and $d_\tau(T,R) = 1$. Then \[\kappa(T,R) \leq 
-\frac{1}{2(n-2)}.\]
+\dfrac{1}{2(n-2)}.\]
 \end{lemma}
 
 \proof
@@ -71,6 +73,22 @@ Follows from Lemma~5.2 in~\cite{WhiddenMatsen}.
 What does this Lemma say about full and topological $\tau$-spaces? In full $\tau$-space,
 $\kappa(T,R) \leq 0$~\cite{GD} for some random walk. For which one? 
 
+\begin{proposition}
+Let $(\mathcal G_n)_{n \in \omega}$ be a sequence of finite graphs and 
+$(x_n, y_n)$ a sequence of adjacent vertices from $\mathcal G_n$ such that
+\begin{enumerate}[(1)]
+\item $\big|N(x_n) \cap N(y_n)\big| = o(|N(x_n)|).$ 
+\item $\big||N(x_n)| - |N(y_n)|\big| = o(|N(x_n)|).$ 
+\item $\big|\{(x,y) \mid x \in N(x_n),~ y \in N(y_n),~ d(x, y) \geq 2\}\big| = o(|N(x_n)|).$
+\end{enumerate}
+
+Then $\lim\limits_{n \to \infty} \kappa(x_n, y_n) = 0.$
+\end{proposition}
+
+\proof
+
+\endproof
+
 \begin{question}
 Assume some (e.g.\ uniform, lazy, ...) random walk. What are the $m$ and $M$ 
 such that 
@@ -78,6 +96,9 @@ such that
 m(\deg x,\deg y, \ldots) \leq \kappa(x,y) \leq M(\deg x, \deg y, \ldots)? 
 \]
 \end{question}
+
+\section{Full $\tau$-space}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 We now extend the space of possible moves by including branch length moves. In general,
 such moves should allow the branch length to be any positive real number, but this setting
@@ -111,7 +132,18 @@ Let $T$ be a ranked tree on $n>2$ leaves. Then \[n-2\leq \deg(T)\leq3(n-2).\]
 Obvious.
 \endproof
 
-This lemma remains unchanged if we change the number of branch lengths. 
+\begin{lemma}
+\begin{enumerate}[(1)]
+\item $deg(T)-deg(R) \leq 2(n-2).$
+\item $\min\limits_{T,R}\dfrac{\deg(T)}{deg(R)} = \dfrac13$ for all $n.$
+\end{enumerate}
+\end{lemma}
+
+\proof
+Follows from previous Lemma. 
+\endproof
+
+These two lemmas remains unchanged if we change the number of branch lengths. 
 
 Other lemmas follow similarly too. 
 
