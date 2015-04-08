@@ -12,6 +12,7 @@
 *-converted-to.*
 *.tex~
 *.txt~
+*.bib~
 # these rules might exclude image files for figures etc.
 *.ps
 *.pdf
