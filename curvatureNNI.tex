@@ -94,6 +94,32 @@ What does this Lemma say about full and topological $\tau$-spaces?
 In full $\tau$-space, $\kappa(T,R) \leq 0$~\cite{GD} for some random walk. 
 For which one? 
 
+\begin{lemma}
+\begin{enumerate}
+\item The curvature of the $p$-lazy uniform random walk on the, the NNI
+graph, the $\tau$-graph, and the discrete $\tau$-space on rooted trees with 
+$n$ leaves is bounded from below by $-\displaystyle\frac{3p}{n-2}.$
+\item Subtract $2/3$ to get a lower bound on the curvature of the
+uniform prior Metropolis-Hastings random walk.
+\end{enumerate}
+\end{lemma}
+
+\proof
+(1) Let $T$ and $S$ be two NNI-adjacent trees. There are at most $8$ unpairable 
+trees in $N_1(T)$ and one tree in the intersection $N_1(T) \cap N_1(S)$. The
+total number of elements of $N_1(T)$ is $2(n-2).$
+Hence, 
+\[
+W_1(m_T,m_S)\leq (1 - p - \frac{p}{2(n - 2)}) + 
+8 \cdot 2 \cdot \frac{p}{2(n - 2)} +
+(2(n - 2) - 9)\frac{p}{2(n-2)} =
+\]
+$1 + \displaystyle\frac{3p}{n-2}.$ 
+Hence, $1 - W_1(m_T,m_S) \leq - \displaystyle\frac{3p}{n-2}.$
+
+(2) Same reasoning as in~\cite{WhiddenMatsen}. 
+\endproof
+
 \begin{proposition}
 Let $(\mathcal G_n)_{n \in \omega}$ be a sequence of finite graphs and 
 $(x_n, y_n)$ a sequence of adjacent vertices from $\mathcal G_n$ such that
@@ -148,7 +174,7 @@ of the length of precisely one interval.
 
 First, we consider a uniform (lazy) random walk, where given a tree $T$ 
 we do nothing with probability $p$, where $0\leq p\leq 1$ is the probability of 
-\href{https://academichelp.net/wp-content/uploads/2014/01/laziness.jpg}{leziness},
+\href{https://academichelp.net/wp-content/uploads/2014/01/laziness.jpg}{laziness},
 and uniformly move to a neighbouring tree with probability $1-p$. 
 
 \begin{lemma}
