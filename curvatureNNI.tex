@@ -95,18 +95,31 @@ Thus, we will interchangeable refer to $\dts$ as a graph or a metric space.
 We will denote the corresponding distance by $d_\dts$. 
 
 \begin{lemma}
-Let $T$ be a $\dts$-tree on $n>2$ leaves. Then \[2n-1\leq \deg(T)\leq3n-4\] 
+Let $T$ be a $\dts$-tree on $n>2$ leaves. Then \[2(n-1)\leq \deg(T)\leq3(n-1)\] 
 \end{lemma}
 
 \proof
-Obvious. 
+The lower bounded is attained by any tree with all intercoalescent intervals 
+long, or by a tree which as has no intercoalescent interval between a parent and
+a child, apart from the root, and the root interval is long. It is simply the
+number of intercoalescent events, since every intercoalescent interval adds $1$
+to the total degree of the tree. The upper bound is attained by a 
+caterpillar-tree with all intervals short and no coalescent event being younger
+that a taxon. It is $n-1$, the number of intervals between the taxa, plus 
+$2(n-1)$, twice the number of intervals between coalescent events, because 
+every such an intervals results in two neighbours in the $\dts$ graph from
+the corresponding NNI move. 
 \endproof
+
+Note that the lower bound would be $2n-1$ if we would drop the interval lengths
+and look at ranked tree topologies only, the upper bound would remain the same.
+Note also that no other tree attains the upper bound. 
 
 \begin{lemma} The following are satisfied. 
 \begin{enumerate}[(1)]
-\item $deg(T)-deg(R) \leq n-3.$
-\item $\dfrac{\deg(T)}{deg(R)}>\dfrac23.$
-\item $\liminf\limits_n\dfrac{\deg(T)}{deg(R)}=\dfrac23.$
+\item $deg(T)-deg(R) \leq n-1.$
+\item $\dfrac{\deg(T)}{deg(R)} \leq \dfrac23$ and the equality is attained for
+any $n>2$. 
 \end{enumerate}
 \end{lemma}
 
@@ -114,13 +127,24 @@ Obvious.
 Follows from previous Lemma. 
 \endproof
 
+Let $N(T)$ be the set of trees at distance one from $T$, that is, the set of
+trees adjacent to $T$ in the $\dts$ graph. 
+
 \begin{lemma}
-$d_{\dts}(T,R) = 1 \Rightarrow |N_1(T)\cap N_1(R)|\in\{0,1\}.$
+If $d_{\dts}(T,R) = 1$ then $|N(T)\cap N(R)|\in\{0,1\}$.
 \end{lemma}
 
 \proof
-Obvious.
+Unless the trees $T$ and $R$ are NNI-neighbours, they do not have a neighbour in
+common. If $T$ and $R$ are NNI-neighbours, there is precisely one tree which is
+a neighbour of both $T$ and $R$, namely the third tree that can be obtained by
+resolving the interval that connects $T$ and $R$. 
 \endproof
+
+The following general lemma is true for all graphs, particularly, for $\dts$. 
+By ``distance-one random walk'', we mean a random walk $(m_x)_{x \in X}$ 
+satisfying $m_x(y) = 0$ for all $x$ and $y$ such that $d(x,y) > 1$. 
+\todo{Do we want to generalise this to `distance-$d$' random walks? }
 
 \begin{lemma}
 Under a distance-one random walk, the following is true for any finite 
@@ -162,8 +186,8 @@ uniform prior Metropolis-Hastings random walk.
 
 \proof
 (1) Let $T$ and $S$ be two NNI-adjacent trees. There are at most $8$ unpairable 
-trees in $N_1(T)$ and one tree in the intersection $N_1(T) \cap N_1(S)$. The
-total number of elements of $N_1(T)$ is $2(n-2).$
+trees in $N(T)$ and one tree in the intersection $N(T) \cap N(S)$. The
+total number of elements of $N(T)$ is $2(n-2).$
 Hence, 
 \[
 W_1(m_T,m_S)\leq (1 - p - \frac{p}{2(n - 2)}) + 
@@ -280,7 +304,7 @@ $p<1/2$.
 
 {\bf MH lazy walk.} Propose a tree in the one-neighbourhood uniformly at random. 
 Accept the proposal with probability 
-$\min(1, \dfrac{|N_1(T_{old})|}{|N_1(T_{new})|})$. 
+$\min(1, \dfrac{|N(T_{old})|}{|N(T_{new})|})$. 
 
 \bibliography{curvatureNNI}
 \bibliographystyle{alpha}
