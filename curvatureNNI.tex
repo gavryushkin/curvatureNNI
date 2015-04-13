@@ -135,34 +135,52 @@ If $d_{\dts}(T,R) = 1$ then $|N(T)\cap N(R)|\in\{0,1\}$.
 \end{lemma}
 
 \proof
-Unless the trees $T$ and $R$ are NNI-neighbours, they do not have a neighbour in
+Suppose $T$ and $R$ are $\dts$-neighbours. Unless the trees are NNI-neighbours,
+they do not have a neighbour in
 common. If $T$ and $R$ are NNI-neighbours, there is precisely one tree which is
 a neighbour of both $T$ and $R$, namely the third tree that can be obtained by
 resolving the interval that connects $T$ and $R$. 
 \endproof
 
 The following general lemma is true for all graphs, particularly, for $\dts$. 
-By ``distance-one random walk'', we mean a random walk $(m_x)_{x \in X}$ 
+By {\em distance-one random walk}, we mean a random walk $(m_x)_{x \in X}$ 
 satisfying $m_x(y) = 0$ for all $x$ and $y$ such that $d(x,y) > 1$. 
-\todo{Do we want to generalise this to `distance-$d$' random walks? }
 
 \begin{lemma}
-Under a distance-one random walk, the following is true for any finite 
-metric $d$ and any pair of points $x,y$:
+Let $(M,d)$ be a finite metric space and $x,y$ a pair of points from $M$. If
+$(m_x)_{x \in M}$ is a distance-one random walk on $M$, then the curvature 
+$\kappa$ of the random walk satisfies the following boundary conditions. 
 \[
 \dfrac{-2}{d(x,y)} \leq \kappa(x,y) \leq \dfrac{2}{d(x,y)}.
 \]
 \end{lemma}
 
 \proof
-Obvious, assuming the measure of any point is bounded by one. 
+Let $x$, $y$, $u$, and $v$ be arbitrary points from $M$ such that both $m_x(u)$
+and $m_y(v)$ are positive. Since $m$ is a distance-one random walk, 
+$d(u,v) \leq d(x,y) + 2$. Hence, 
+$W(m_x,m_y) \leq \sum p_u d(u,v) \leq (d(x,y)+2)\sum p_u = d(x,y) + 2$, 
+where the sum is taken over a correspondence between the set of $u \in N(x)$ and 
+$v \in N(y)$. So, $\kappa(x,y) \geq - 2/d(x,y)$. The lower bound follows 
+similarly from $d(u,v) \geq d(x,y) - 2$.
 \endproof
 
-\begin{lemma}
-The curvature of a uniform random walk on the discrete $\tau$-space satisfies 
+Note that this lemma can be generalised to {\em distance-$d$} random walks, 
+which are those satisfying $m_x(y) = 0$ for all $x$ and $y$ such that 
+$d(x,y) > d$. In this case, the curvature boundaries are 
 \[
-\kappa_{d\tau}(T,R) \leq 
-\dfrac{1}{2(n-2)}.
+-\dfrac{2d+1}{d(x,y)} \leq \kappa(x,y) \leq \dfrac{2d+1}{d(x,y)}.
+\]
+For one needs to notice that in the notations of the lemma, 
+$d(u,v) \leq d(x,y) + 2d + 1$. 
+
+As we will see in the next few lemmas, these boundaries can be improved for 
+certain random walks on $\dts$. 
+
+\begin{lemma}
+The curvature of a uniform random walk on the $\dts$ space satisfies 
+\[
+\kappa(T,R) \leq \dfrac{1}{2(n-2)}.
 \]
 \end{lemma}
 
@@ -171,7 +189,8 @@ Follows from Lemma~5.2 in~\cite{Whidden2015-es}.
 \endproof
 
 What does this Lemma say about full and topological $\tau$-spaces? 
-In full $\tau$-space, $\kappa(T,R) \leq 0$~\cite{Gavryushkin2014-bw} for some random walk. 
+In full $\tau$-space, $\kappa(T,R) \leq 0$~\cite{Gavryushkin2014-bw} for some 
+random walk. 
 For which one? 
 
 \begin{lemma}
