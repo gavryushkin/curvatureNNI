@@ -94,8 +94,10 @@ assign the minimal length to the new interval.
 Thus, we will interchangeable refer to $\dts$ as a graph or a metric space. 
 We will denote the corresponding distance by $d_\dts$. 
 
+We denote the number of taxa by $n$ throughout the paper and assume $n \geq 3$.
+
 \begin{lemma}
-Let $T$ be a $\dts$-tree on $n>2$ leaves. Then \[2(n-1)\leq \deg(T)\leq3(n-1)\] 
+Let $T$ be a $\dts$-tree on $n$ leaves. Then \[2(n-1)\leq \deg(T)\leq3(n-1)\] 
 \end{lemma}
 
 \proof
@@ -119,7 +121,7 @@ Note also that no other tree attains the upper bound.
 \begin{enumerate}[(1)]
 \item $deg(T)-deg(R) \leq n-1.$
 \item $\dfrac{\deg(T)}{deg(R)} \leq \dfrac23$ and the equality is attained for
-any $n>2$. 
+all $n$. 
 \end{enumerate}
 \end{lemma}
 
@@ -130,7 +132,7 @@ Follows from previous Lemma.
 Let $N(T)$ be the set of trees at distance one from $T$, that is, the set of
 trees adjacent to $T$ in the $\dts$ graph. 
 
-\begin{lemma}
+\begin{lemma}\label{intersecNeighb}
 If $d_{\dts}(T,R) = 1$ then $|N(T)\cap N(R)|\in\{0,1\}$.
 \end{lemma}
 
@@ -146,7 +148,7 @@ The following general lemma is true for all graphs, particularly, for $\dts$.
 By {\em distance-one random walk}, we mean a random walk $(m_x)_{x \in X}$ 
 satisfying $m_x(y) = 0$ for all $x$ and $y$ such that $d(x,y) > 1$. 
 
-\begin{lemma}
+\begin{lemma}\label{curvBoundGeneral}
 Let $(M,d)$ be a finite metric space and $x,y$ a pair of points from $M$. If
 $(m_x)_{x \in M}$ is a distance-one random walk on $M$, then the curvature 
 $\kappa$ of the random walk satisfies the following boundary conditions. 
@@ -169,31 +171,66 @@ Note that this lemma can be generalised to {\em distance-$d$} random walks,
 which are those satisfying $m_x(y) = 0$ for all $x$ and $y$ such that 
 $d(x,y) > d$. In this case, the curvature boundaries are 
 \[
--\dfrac{2d+1}{d(x,y)} \leq \kappa(x,y) \leq \dfrac{2d+1}{d(x,y)}.
+-\dfrac{2d}{d(x,y)} \leq \kappa(x,y) \leq \dfrac{2d}{d(x,y)}.
 \]
 For one needs to notice that in the notations of the lemma, 
-$d(u,v) \leq d(x,y) + 2d + 1$. 
+$d(u,v) \leq d(x,y) + 2d$. 
 
 As we will see in the next few lemmas, these boundaries can be improved for 
 certain random walks on $\dts$. 
 
-\begin{lemma}
-The curvature of a uniform random walk on the $\dts$ space satisfies 
+\begin{lemma}\label{uniformUpper}
+Let $T$ and $R$ be adjacent trees in $\dts$. Then the curvature of the $\dts$
+space with a uniform random walk satisfies. 
 \[
-\kappa(T,R) \leq \dfrac{1}{2(n-2)}.
+\kappa(T,R) \leq \dfrac{1}{3(n-2)}.
 \]
 \end{lemma}
 
 \proof
-Follows from Lemma~5.2 in~\cite{Whidden2015-es}. 
+To maximise the curvature $\kappa(T,R)$, we have to minimise $W(m_T,m_R)$. 
+The latter is minimised when the probability mass on trees $E \in N(T)$ 
+such that
+$d(E,R) \leq d(T,R)$ is maximised. Since $d(T,R) = 1$, it follows from 
+Lemma~\ref{intersecNeighb} that this probability mass is positive only
+when $|N(T) \cap N(R)| = 1$. It follows from Lemma~\ref{curvBoundGeneral} that
+the maximal mass we can allocate under a uniform random walk to the tree in 
+$N(T) \cap N(R)$ is $\frac{1}{3(n-2)}$. The lemma follows. 
 \endproof
 
-What does this Lemma say about full and topological $\tau$-spaces? 
+This lemma provides a tighter upper bound for the curvature than 
+Lemma~\ref{curvBoundGeneral} when the number of taxa $n$ is large enough for
+the inequality $d(T,R) \leq 4(n-2)$ to be satisfied. 
+
+It is easy to generalise the lemma to the uniform $p$-lazy random walk. 
+\todo{I assume $m_x(x) = 1-p$.}
+Indeed, by looking at the proof at the lemma, one can notice that the curvature
+between adjacent trees $T$ and $R$ under a uniform $p$-lazy random walk 
+satisfies 
+\[
+\kappa(T,R) \leq \frac{p}{3(n-2)}.
+\]
+
+Note that Ollivier~\cite{Ollivier2009-cj} defines the curvature of a metric 
+space with a uniform $p$-lazy random walk (for positive $p$) by 
+\[
+\kappa(x,y) = \frac1p (1 - \frac{W(m_x, m_y)}{d(x, y)}). 
+\]
+
+In this case the curvature between adjacent trees in $\dts$ with a uniform 
+$p$-lazy random walk (for arbitrary $p$) is bounded from above by
+\[
+\frac{1}{3(n-2)}.
+\]
+\todo{
+What does Lemma~\ref{uniformUpper} say about full and topological $\tau$-spaces? 
 In full $\tau$-space, $\kappa(T,R) \leq 0$~\cite{Gavryushkin2014-bw} for some 
 random walk. 
-For which one? 
+For which one?
+}
 
-\begin{lemma}
+\begin{lemma}\label{uniformLower}
+\todo{Make the statement look the same as Lemma~\ref{uniformUpper}.}
 \begin{enumerate}
 \item The curvature of the $p$-lazy uniform random walk on the, the NNI
 graph, the $\tau$-graph, and the discrete $\tau$-space on rooted trees with 
@@ -219,9 +256,15 @@ Hence, $1 - W_1(m_T,m_S) \leq - \displaystyle\frac{3p}{n-2}.$
 (2) Same reasoning as in~\cite{Whidden2015-es}. 
 \endproof
 
+Although the following proposition immediately follows from 
+Lemma~\ref{uniformUpper} and Lemma~\ref{uniformLower} for the $\dts$ space,
+we would like to state and prove it in the more general setting applicable 
+to many other spaces, e.g.\ the rooted SPR space~\cite{Whidden2015-es}. 
+
 \begin{proposition}
-Let $(\mathcal G_n)_{n \in \omega}$ be a sequence of finite graphs and 
-$(x_n, y_n)$ a sequence of adjacent vertices from $\mathcal G_n$ such that
+Let $(M_n,d_n)_{n \in \omega}$ be a sequence of finite metric spaces and 
+$(x_n, y_n)$ a sequence of adjacent vertices, that is $d_n(x_n,y_n) = 1$,
+from $M_n$ such that
 \begin{enumerate}[(1)]
 \item $\big|N(x_n) \cap N(y_n)\big| = o(|N(x_n)|).$ 
 \item $\big||N(x_n)| - |N(y_n)|\big| = o(|N(x_n)|).$ 
