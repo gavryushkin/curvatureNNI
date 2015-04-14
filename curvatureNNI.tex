@@ -93,6 +93,9 @@ assign the minimal length to the new interval.
 
 Thus, we will interchangeable refer to $\dts$ as a graph or a metric space. 
 We will denote the corresponding distance by $d_\dts$. 
+\todo{ 
+What are the other tree spaces to which the results below apply?
+	}
 
 We denote the number of taxa by $n$ throughout the paper and assume $n \geq 3$.
 
@@ -181,7 +184,7 @@ certain random walks on $\dts$.
 
 \begin{lemma}\label{uniformUpper}
 Let $T$ and $R$ be adjacent trees in $\dts$. Then the curvature of the $\dts$
-space with a uniform random walk satisfies. 
+space with a uniform random walk satisfies 
 \[
 \kappa(T,R) \leq \dfrac{1}{3(n-2)}.
 \]
@@ -191,7 +194,7 @@ space with a uniform random walk satisfies.
 To maximise the curvature $\kappa(T,R)$, we have to minimise $W(m_T,m_R)$. 
 The latter is minimised when the probability mass on trees $E \in N(T)$ 
 such that
-$d(E,R) \leq d(T,R)$ is maximised. Since $d(T,R) = 1$, it follows from 
+$d(E,R) \leq d(T,R)$, is maximised. Since $d(T,R) = 1$, it follows from 
 Lemma~\ref{intersecNeighb} that this probability mass is positive only
 when $|N(T) \cap N(R)| = 1$. It follows from Lemma~\ref{curvBoundGeneral} that
 the maximal mass we can allocate under a uniform random walk to the tree in 
@@ -222,38 +225,55 @@ $p$-lazy random walk (for arbitrary $p$) is bounded from above by
 \[
 \frac{1}{3(n-2)}.
 \]
+
+We continue with lower bounds on the curvature of $\dts$ space with uniform lazy
+random walks, where we follow 
+Ollivier~\cite{Ollivier2009-cj} and divide the curvature of a $p$-lazy random 
+walk by $p$ when $p$ is positive, as explained above.  
 \todo{
-What does Lemma~\ref{uniformUpper} say about full and topological $\tau$-spaces? 
-In full $\tau$-space, $\kappa(T,R) \leq 0$~\cite{Gavryushkin2014-bw} for some 
+What does Lemma~\ref{uniformUpper} say about $\dts$- and $\tau$-spaces? 
+In $\tau$-space, $\kappa(T,R) \leq 0$~\cite{Gavryushkin2014-bw} for some 
 random walk. 
 For which one?
 }
 
 \begin{lemma}\label{uniformLower}
-\todo{Make the statement look the same as Lemma~\ref{uniformUpper}.}
-\begin{enumerate}
-\item The curvature of the $p$-lazy uniform random walk on the, the NNI
-graph, the $\tau$-graph, and the discrete $\tau$-space on rooted trees with 
-$n$ leaves is bounded from below by $-\displaystyle\frac{3p}{n-2}.$
-\item Subtract $2/3$ to get a lower bound on the curvature of the
-uniform prior Metropolis-Hastings random walk.
-\end{enumerate}
+Let $T$ and $R$ be adjacent trees in $\dts$. Then the curvature of the $\dts$
+space with a $p$-lazy uniform random walk satisfies
+\[
+\kappa(T,R) \geq -\frac{3}{n-2}.
+\]
 \end{lemma}
 
 \proof
-(1) Let $T$ and $S$ be two NNI-adjacent trees. There are at most $8$ unpairable 
-trees in $N(T)$ and one tree in the intersection $N(T) \cap N(S)$. The
-total number of elements of $N(T)$ is $2(n-2).$
+Let $T$ and $R$ be two NNI-adjacent trees. To minimise the curvature, we have
+to maximise $W(m_T, m_R)$. Since $d(T, R) = 1$, the trees $T$ and $R$ can be
+chosen so that there are 
+\todo{Explain this.}
+$8$ trees $E$ in $N(T)$ for which 
+$d(E, N(R)) > d(T, R)$. 
+For the rest of the trees $S$ from $N(T)$, we can assume $d(S, N(R)) = 1$.
+The total number of elements of $N(T)$ should be taken to be $2(n-2)$ to 
+maximise the probability mass under consideration.
+\todo{This is not quite a proof. One has to count unpairable trees instead. 
+See Lemma~\ref{uniformLower} too.}
 Hence, 
 \[
-W_1(m_T,m_S)\leq (1 - p - \frac{p}{2(n - 2)}) + 
+W(m_T,m_R)\leq (1 - p - \frac{p}{2(n - 2)}) + 
 8 \cdot 2 \cdot \frac{p}{2(n - 2)} +
 (2(n - 2) - 9)\frac{p}{2(n-2)} =
 \]
 $1 + \displaystyle\frac{3p}{n-2}.$ 
-Hence, $1 - W_1(m_T,m_S) \leq - \displaystyle\frac{3p}{n-2}.$
+Hence, $1 - W(m_T,m_R) \geq - \displaystyle\frac{3p}{n-2}.$
+\endproof
 
-(2) Same reasoning as in~\cite{Whidden2015-es}. 
+\begin{lemma}
+Subtract $2/3$ to get a lower bound on the curvature of the
+uniform prior Metropolis-Hastings random walk.
+\end{lemma}
+
+\proof
+Same reasoning as in~\cite{Whidden2015-es}. 
 \endproof
 
 Although the following proposition immediately follows from 
