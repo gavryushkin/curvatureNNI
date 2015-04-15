@@ -188,6 +188,7 @@ space with a uniform random walk satisfies
 \[
 \kappa(T,R) \leq \dfrac{1}{3(n-2)}.
 \]
+The upper boundary is tight. 
 \end{lemma}
 
 \proof
@@ -241,30 +242,36 @@ For which one?
 Let $T$ and $R$ be adjacent trees in $\dts$. Then the curvature of the $\dts$
 space with a $p$-lazy uniform random walk satisfies
 \[
-\kappa(T,R) \geq -\frac{3}{n-2}.
+\kappa(T,R) \geq -\frac{4}{n-2}.
 \]
+The lower boundary is tight. 
 \end{lemma}
 
 \proof
-Let $T$ and $R$ be two NNI-adjacent trees. To minimise the curvature, we have
-to maximise $W(m_T, m_R)$. Since $d(T, R) = 1$, the trees $T$ and $R$ can be
-chosen so that there are 
+Let $T$ and $R$ be two $\dts$-adjacent trees. To minimise the curvature, we have
+to maximise $W(m_T, m_R)$. The letter is maximised when the probability mass
+on trees $E\in N(T)$ such that $d(E, N(R)) > d(T, R)$, is 
+maximised\footnote{If $x$ is a point of a metric space $(M,d)$ and 
+$S \subseteq M$ then by $d(x,S)$ we denote $\inf\limits_{s \in S} d(x,s)$.}. 
+Since $d(T, R) = 1$, the maximum possible number of such trees $E$ is 
 \todo{Explain this.}
-$8$ trees $E$ in $N(T)$ for which 
-$d(E, N(R)) > d(T, R)$. 
-For the rest of the trees $S$ from $N(T)$, we can assume $d(S, N(R)) = 1$.
-The total number of elements of $N(T)$ should be taken to be $2(n-2)$ to 
-maximise the probability mass under consideration.
-\todo{This is not quite a proof. One has to count unpairable trees instead. 
-See Lemma~\ref{uniformLower} too.}
-Hence, 
+$8$. To make $W(m_T,m_R)$ as large as possible, we have to assume 
+$d(S, N(R)) = 1$ for the rest of the trees $S$ from $N(T)$, and the
+total number of elements of $N(T)$ to be $2(n-2)$.
+Hence for the uniform random walk we have: 
 \[
-W(m_T,m_R)\leq (1 - p - \frac{p}{2(n - 2)}) + 
-8 \cdot 2 \cdot \frac{p}{2(n - 2)} +
-(2(n - 2) - 9)\frac{p}{2(n-2)} =
+W(m_T,m_R)\leq 8 \cdot 2 \cdot \frac{1}{2(n - 2)} +
+(2(n - 2) - 8) \cdot \frac{1}{2(n-2)} = 1 + \displaystyle\frac{4}{n-2}.
 \]
-$1 + \displaystyle\frac{3p}{n-2}.$ 
-Hence, $1 - W(m_T,m_R) \geq - \displaystyle\frac{3p}{n-2}.$
+Hence, $1 - W(m_T,m_R) \geq - \displaystyle\frac{4}{n-2}$. 
+
+A similar reasoning applies when $1-p$ is positive:
+\[
+W(m_T,m_R)\leq 8 \cdot 2 \cdot \frac{p}{2(n - 2)} + 
+(2(n - 2) - 7) \cdot \frac{1}{2(n-2)} + (1-p) - \frac{p}{2(n-2)} =
+\]
+$1 + \displaystyle\frac{4p}{n-2}$. Hence, 
+$1 - W(m_T,m_R) \geq - \displaystyle\frac{4p}{n-2}$. The lemma follows. 
 \endproof
 
 \begin{lemma}
@@ -277,7 +284,7 @@ Same reasoning as in~\cite{Whidden2015-es}.
 \endproof
 
 Although the following proposition immediately follows from 
-Lemma~\ref{uniformUpper} and Lemma~\ref{uniformLower} for the $\dts$ space,
+Lemma~\ref{uniformUpper} and Lemma~\ref{uniformLower} for $\dts$ space,
 we would like to state and prove it in the more general setting applicable 
 to many other spaces, e.g.\ the rooted SPR space~\cite{Whidden2015-es}. 
 
