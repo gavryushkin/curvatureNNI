@@ -120,11 +120,12 @@ Note that the lower bound would be $2n-1$ if we would drop the interval lengths
 and look at ranked tree topologies only, the upper bound would remain the same.
 Note also that no other tree attains the upper bound. 
 
-\begin{lemma} The following are satisfied. 
+\begin{lemma}\label{degreeBounds}
+The following are satisfied. 
 \begin{enumerate}[(1)]
 \item $deg(T)-deg(R) \leq n-1.$
-\item $\dfrac{\deg(T)}{deg(R)} \leq \dfrac23$ and the equality is attained for
-all $n$. 
+\item $\dfrac23 \leq \dfrac{\deg(T)}{deg(R)} \leq \dfrac32$, and the equality is 
+attained for both boundaries and all $n$. 
 \end{enumerate}
 \end{lemma}
 
@@ -261,26 +262,41 @@ total number of elements of $N(T)$ to be $2(n-2)$.
 Hence for the uniform random walk we have: 
 \[
 W(m_T,m_R)\leq 8 \cdot 2 \cdot \frac{1}{2(n - 2)} +
-(2(n - 2) - 8) \cdot \frac{1}{2(n-2)} = 1 + \displaystyle\frac{4}{n-2}.
+(2(n - 2) - 8) \cdot \frac{1}{2(n-2)} = 1 + \dfrac{4}{n-2}.
 \]
-Hence, $1 - W(m_T,m_R) \geq - \displaystyle\frac{4}{n-2}$. 
+Hence, $1 - W(m_T,m_R) \geq - \dfrac{4}{n-2}$. 
 
 A similar reasoning applies when $1-p$ is positive:
 \[
 W(m_T,m_R)\leq 8 \cdot 2 \cdot \frac{p}{2(n - 2)} + 
 (2(n - 2) - 7) \cdot \frac{1}{2(n-2)} + (1-p) - \frac{p}{2(n-2)} =
 \]
-$1 + \displaystyle\frac{4p}{n-2}$. Hence, 
-$1 - W(m_T,m_R) \geq - \displaystyle\frac{4p}{n-2}$. The lemma follows. 
+$1 + \dfrac{4p}{n-2}$. Hence, 
+$1 - W(m_T,m_R) \geq - \dfrac{4p}{n-2}$. The lemma follows. 
 \endproof
 
+We now estimate the curvature of the Metropolis-Hastings random walk, which 
+propose a tree in the one-neighbourhood uniformly at random and 
+accepts the proposal with probability 
+$\min(1, \dfrac{|N(T_{old})|}{|N(T_{new})|})$. We denote the corresponding 
+curvature by $\kappa(MH;T,R)$
+
 \begin{lemma}
-Subtract $2/3$ to get a lower bound on the curvature of the
-uniform prior Metropolis-Hastings random walk.
+The following inequalities are satisfied. 
+\[
+\kappa(T,R) - \dfrac{2}{3d(T,R)} \leq \kappa(MH;T,R) \leq \kappa(T,R) +
+\dfrac{2}{3d(T,R)}\mbox{, and}
+\]
+\[
+\kappa(T,R) - \dfrac13 \leq \kappa(MH;T,R) \leq \kappa(T,R) - \dfrac13.
+\]
 \end{lemma}
 
 \proof
-Same reasoning as in~\cite{Whidden2015-es}. 
+From Lemma~\ref{degreeBounds} we have that 
+$\frac{|N(T_{old})|}{|N(T_{new})|} \geq \frac{2}{3}$, so the probability 
+mass that remains at $T_{old}$ is not more than $\frac13$. The rest of the
+proof follows~\cite{Whidden2015-es} literally. 
 \endproof
 
 Although the following proposition immediately follows from 
@@ -390,10 +406,6 @@ If the coordinate becomes $0$, resolve the multifurcation uniformly at
 random and set the new coordinate to $1$. Note that this mechanism 
 does not bound edge lengths from above favours topological moves when 
 $p<1/2$. 
-
-{\bf MH lazy walk.} Propose a tree in the one-neighbourhood uniformly at random. 
-Accept the proposal with probability 
-$\min(1, \dfrac{|N(T_{old})|}{|N(T_{new})|})$. 
 
 \bibliography{curvatureNNI}
 \bibliographystyle{alpha}
