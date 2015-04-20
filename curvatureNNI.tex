@@ -360,6 +360,7 @@ consideration, we will not
 include the statement in general terms of metric 
 spaces. However, we prove a much stronger property for $\dts$ space: 
 
+
 \begin{theorem}
 Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of $\dts$-trees on $n$ taxa.
 Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$.
@@ -368,6 +369,33 @@ Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$.
 \proof
 \todo{Should follow from the NNI conjecture.}
 \endproof
+
+We next bound the number of neighbors of a tree $x$ in $\dts$-space that are closer than $x$ to a given tree $y$.
+We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
+These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
+\todo{I put this here for now, but it will have to go earlier.}
+
+\begin{theorem}
+\label{max_good_neighbors}
+Let $x$ and $y$ be $\dts$-trees.
+Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most $4d(x,y)$.
+\end{theorem}
+\begin{proof}
+Sketch:
+
+At most $d(x,y)$ bipartitions differ between $x$ and $y$. 
+It is never optimal to break a common bipartition with an NNI operation.
+There are at most $2d(x,y)$ possible NNI operations that can be applied to $x$ that operate on a unique bipartition.
+There are at most $d(x,y)$ rank changes that can be applied to move $x$ closer to $y$.
+There are at most $d(x,y)$ length changes that can be applied to move $x$ closer to $y$.
+Therefore, there are at most $4d(x,y)$ trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$. 
+\end{proof}
+
+Note that this implies the following corollary for the basic NNI treespace which may be of interest to others studying this space.
+\begin{corollary}
+Let $x$ and $y$ be $X$-trees.
+Then the number of trees $u \in N_{NNI}(x)$ such that $d_{NNI}(u, y) \le d_{NNI}(x, y)$ is at most $2d_{NNI}(x,y)$.
+\end{corollary}
 
 \section{Some other space}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
