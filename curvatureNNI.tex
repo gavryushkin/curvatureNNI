@@ -12,11 +12,13 @@
 \usepackage{natbib}
 
 \newtheorem{lemma}{Lemma}
-\newtheorem{question}{Question}
-\newtheorem{proposition}{Proposition}
+\newtheorem{question}[lemma]{Question}
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{theorem}[lemma]{Theorem}
 
 \newcommand{\tN}{\mathrm{\tau NNI}}
-\newcommand{\dts}{\mathrm{DtS}}
+\newcommand{\dts}{\mathrm{DtT}}
 
 \begin{document}
 
@@ -288,7 +290,7 @@ The following inequalities are satisfied.
 \dfrac{2}{3d(T,R)}\mbox{, and}
 \]
 \[
-\kappa(T,R) - \dfrac13 \leq \kappa(MH;T,R) \leq \kappa(T,R) - \dfrac13.
+\kappa(T,R) - \dfrac13 \leq \kappa(MH;T,R) \leq \kappa(T,R) + \dfrac13.
 \]
 \end{lemma}
 
@@ -300,12 +302,21 @@ The rest of the
 proof follows the proof of Lemma~V.8 in~\cite{Whidden2015-es} literally. 
 \endproof
 
-Although the following proposition immediately follows from 
-Lemma~\ref{uniformUpper} and Lemma~\ref{uniformLower} for $\dts$ space,
-we would like to state and prove it in the more general setting applicable 
-to many other spaces, e.g.\ the rooted SPR space~\cite{Whidden2015-es}. 
+\begin{corollary}\label{flatInLimDTS}
+Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of $\dts$-trees such that
+$d_{\dts}(T_n,R_n) = 1$. Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$.
+\end{corollary}
 
-\begin{proposition}
+\proof
+Follows from Lemma~\ref{uniformUpper} and Lemma~\ref{uniformLower}.
+\endproof
+
+As we have just proved, the corollary above holds true in the $\dts$ space. 
+This corollary is also true in the rSPR space~\cite{Whidden2015-es}.
+Actually, this property can be derived from the following general statement 
+for both $\dts$ and $rSPR$, as well as for many other spaces. 
+
+\begin{proposition}\label{flatInLimGen}
 Let $(M_n,d_n)_{n \in \omega}$ be a sequence of finite metric spaces and 
 $(x_n, y_n)$ a sequence of adjacent vertices, that is $d_n(x_n,y_n) = 1$,
 from $M_n$ such that
@@ -323,89 +334,47 @@ Then $\lim\limits_{n \to \infty} \kappa(x_n, y_n) = 0.$
 
 \endproof
 
-\begin{question}
-Assume some (e.g.\ uniform, lazy, ...) random walk. What are the $m$ and $M$ 
-such that 
-\[
-m(\deg x,\deg y, \ldots) \leq \kappa(x,y) \leq M(\deg x, \deg y, \ldots)? 
-\]
-\end{question}
+We note that in both Corollary~\ref{flatInLimDTS} and 
+Proposition~\ref{flatInLimGen}, the assumption of being at distance one can be
+relaxed by that of being at a distance uniformly bounded by a slowly growing 
+function.\todo{Make this formal if the NNI-conjecture is not proven.} 
+But since we are mostly interested in the spaces, under consideration, we will
+not include the statement in general terms of metric spaces. However, we prove a
+much stronger property for $\dts$ space: 
+
+\begin{theorem}
+Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of $\dts$-trees on $n$ taxa.
+Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$.
+\end{theorem}
+
+\proof
+\todo{Should follow from the NNI conjecture.}
+\endproof
 
 \section{Some other space}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-We now extend the space of possible moves by including branch length moves. 
-In general, such moves should allow the branch length to be any positive real 
-number, but this setting seems to require quite sophisticated techniques for 
-computing the curvature and hence is a direction of future research. 
-Instead, here we allow branch length (or rather $\tau$-coordinates) 
-to be of two possible values: long (denoted by $\Lambda$) and short (denoted 
-by $\lambda$). Node that the number of possible `branch lengths' can be 
-generalised to any finite set $\lambda_1,\ldots,\lambda_s$\todo{It's worth 
-pointing out explicitly what the change in what result will be.}.
-
-More precisely, we consider a graph $\tN$ on the set of ranked rooted tree 
-topologies (which we call simply trees from now on) with all leaves of rank 
-$0$ and all intervals between nodes of the tree marked by $\Lambda$ or
-$\lambda$. Two trees are adjacent in $\tN$ if and only if they are in 
-adjacent orthants in $\tau$-space~\cite{Gavryushkin2014-bw} and the interval corresponding 
-to the boundary in $\tau$-space is marked by $\lambda$ in both trees, 
-or they are of the same ranked topology and there 
-exists precisely one interval which is marked by different symbols in 
-the two trees. 
-
-The intuition behind this notion is that one move corresponds to either 
-a $\tau$-move from a short interval to a new short interval or a change 
-of the length of precisely one interval. 
-
-First, we consider a uniform (lazy) random walk, where given a tree $T$ 
-we do nothing with probability $p$, where $0\leq p\leq 1$ is the probability of 
-\href{https://academichelp.net/wp-content/uploads/2014/01/laziness.jpg}{laziness},
-and uniformly move to a neighbouring tree with probability $1-p$. 
-
-\begin{lemma}
-Let $T$ be a ranked tree on $n>2$ leaves. Then \[n-2\leq \deg(T)\leq3(n-2).\] 
-\end{lemma}
-
-\proof
-Obvious.
-\endproof
-
-\begin{lemma}
-\begin{enumerate}[(1)]
-\item $deg(T)-deg(R) \leq 2(n-2).$
-\item $\min\limits_{T,R}\dfrac{\deg(T)}{deg(R)} = \dfrac13$ for all $n.$
-\end{enumerate}
-\end{lemma}
-
-\proof
-Follows from previous Lemma. 
-\endproof
-
-These two lemmas remain unchanged if we increase the number of branch lengths. 
-
-Other lemmas follow similarly too. 
-
 Several important proposal mechanisms used in phylogenetic Bayesian inference by 
 popular software packages such as BEAST2~\cite{beast2} favour topological moves
-or tree moves depending on various conditions. All tree moves I have been 
+or tree moves depending on various conditions. All tree moves we have been 
 considering so far do not make an explicit distinction between topological 
-changes and branch length changes. To address this issue, we consider the
+changes and branch length changes. To address this issue\todo{issue?}, we
+consider the
 following tree move that explicitly allows distributing the acceptance 
 probability between topological and branch length moves. 
 
-{\bf Lazy walk.} Let $p$ be a laziness probability, that is, we do nothing 
-with probability $p$ and distribute the rest of probability $1-p$ as follows. 
+{\bf Lazy walk.} Let $p$ be the laziness probability, that is, we do nothing 
+with probability $1-p$ and distribute the probability $p$ as follows. 
 We decide first on what type of move we want to perform: choose a topological 
-move with probability $q$ and a length move otherwise, that is, $q \leq 1-p$
-and the probability of a length move is $1-p-q$. The proposal is rejected if
+move with probability $q$ and a length move otherwise, that is, $q \leq p$
+and the probability of a length move is $p-q$. The proposal is rejected if
 a topological move is impossible. 
 
 {\bf tau move.} Choose a coordinate uniformly at random. Increase the
 coordinate by $1$ with probability $p$ and decrease it by $1$ otherwise.
 If the coordinate becomes $0$, resolve the multifurcation uniformly at
 random and set the new coordinate to $1$. Note that this mechanism 
-does not bound edge lengths from above favours topological moves when 
+does not bound edge lengths from above and favours topological moves when 
 $p<1/2$. 
 
 \bibliography{curvatureNNI}
