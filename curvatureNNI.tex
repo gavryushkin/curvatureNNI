@@ -20,6 +20,8 @@
 \newcommand{\tN}{\mathrm{\tau NNI}}
 \newcommand{\dts}{\mathrm{DtT}}
 
+\renewcommand{\O}{\mathcal{O}}
+
 \begin{document}
 
 \section{Introduction}
@@ -318,29 +320,45 @@ for both $\dts$ and $rSPR$, as well as for many other spaces.
 
 \begin{proposition}\label{flatInLimGen}
 Let $(M_n,d_n)_{n \in \omega}$ be a sequence of finite metric spaces and 
-$(x_n, y_n)$ a sequence of adjacent vertices, that is $d_n(x_n,y_n) = 1$,
-from $M_n$ such that
+$(x_n, y_n)$ a sequence of adjacent vertices from $M_n$, 
+that is $d_n(x_n,y_n) = 1$, such that 
 \begin{enumerate}[(1)]
-\item $\big|N(x_n) \cap N(y_n)\big| = o(|N(x_n)|).$ 
-\item $\big||N(x_n)| - |N(y_n)|\big| = o(|N(x_n)|).$ 
-\item $\big|\{(x,y) \mid x \in N(x_n),~ y \in N(y_n),~ d(x, y) \geq 2\}\big| 
-= o(|N(x_n)|).$
+\item\label{intersec} $\big|N(x_n) \cap N(y_n)\big| = o(|N(x_n)|).$ 
+\item\label{difference} $\big||N(x_n)| - |N(y_n)|\big| = o(|N(x_n)|).$ 
+\item\label{dist2} $\big|\{(x,y) \mid 
+	x \in N(x_n),~ y \in N(y_n),~ d(x, y) \geq 2\}\big| = o(|N(x_n)|).$
 \end{enumerate}
 
-Then $\lim\limits_{n \to \infty} \kappa(x_n, y_n) = 0.$
+Then $\lim\limits_{n \to \infty} \kappa(x_n, y_n) = 0$. 
 \end{proposition}
 
 \proof
-
+Consider an arbitrary $n$ and the pair of points $x_n,y_n$. Denote by $I_0$ the
+set points $z$ such that $z \in N(x_n) \cup N(y_n)$, by $I_1$ the set of points
+$z$ such that the probability mass is moved from $z$ at distance one under the
+optimum scenario for $W(m_{x_n},m_{y_n})$, by $I_2$ the set of points $z$ such that 
+the probability mass is moved from $z$ at distance $\geq 2$ under the optimum 
+scenario for $W(m_x,m_y)$. Then 
+\[
+W(m_{x_n},m_{y_n}) = \sum_{I_0} d_i x_i p_{x_i} + \sum_{I_1} d_i x_i p_{x_i} + 
+\sum_{I_2} d_i x_i p_{x_i}.
+\]
+It follows from~(\ref{intersec}) and~(\ref{dist2}) that the first and the last sums
+are $\O(1)$ when $n\to\infty$. This together with property~(\ref{difference}) 
+implies that the middle sum tends to $1$ when $n\to\infty$ because the number of
+points $z$ such that the probability mass has to travel at distance one under an
+optimum scenario divided by $|N(x_n)|$ tends to $1$ when $n\to\infty$. 
 \endproof
 
 We note that in both Corollary~\ref{flatInLimDTS} and 
 Proposition~\ref{flatInLimGen}, the assumption of being at distance one can be
 relaxed by that of being at a distance uniformly bounded by a slowly growing 
 function.\todo{Make this formal if the NNI-conjecture is not proven.} 
-But since we are mostly interested in the spaces, under consideration, we will
-not include the statement in general terms of metric spaces. However, we prove a
-much stronger property for $\dts$ space: 
+But since we are mostly interested in this paper in the spaces under
+consideration, we will not 
+\todo{Should we?}
+include the statement in general terms of metric 
+spaces. However, we prove a much stronger property for $\dts$ space: 
 
 \begin{theorem}
 Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of $\dts$-trees on $n$ taxa.
