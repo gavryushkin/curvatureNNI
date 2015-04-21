@@ -381,14 +381,28 @@ Let $x$ and $y$ be $\dts$-trees.
 Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most $4d(x,y)$.
 \end{theorem}
 \begin{proof}
-Sketch:
+Let $U$ be the set of neighbors $u$ of $x$ such that $d(u,y) \le d(x,y)$, as stated in the theorem.
+We partition $U$ into three sets of trees---$I$, $R$, and $L$---obtained from $x$ by a single NNI move, rank change, or length change, respectively.
+We then prove the theorem by bounding the size of each partition by $2d(x,y)$, $d(x,y)$, and $d(x,y)$, respectively.
 
-At most $d(x,y)$ bipartitions differ between $x$ and $y$. 
-It is never optimal to break a common bipartition with an NNI operation.
-There are at most $2d(x,y)$ possible NNI operations that can be applied to $x$ that operate on a unique bipartition.
-There are at most $d(x,y)$ rank changes that can be applied to move $x$ closer to $y$.
-There are at most $d(x,y)$ length changes that can be applied to move $x$ closer to $y$.
-Therefore, there are at most $4d(x,y)$ trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$. 
+We first consider some basic properties of minimal length paths between $x$ and $y$.  
+Observe that at most $d(x,y)$ bipartitions differ between $x$ and $y$, as each NNI operation replaces one bipartition with another (and rank and length changes do not modify bipartitions).
+Now, observe that no minimal length path from $x$ to $y$ will replace a bipartition that is common to $x$ and $y$, as any path including such a replacement can be made shorter by removing the replacement move (and subsequent moves that reintroduce the bipartition).
+
+We are now ready to bound the sizes of each partition.
+First, consider the subset $I$ of closer neighbors obtained via NNI moves.
+By our observations above, $|I|$ is bounded by the number of NNI operations that modify one of the at most $d(x,y)$ bipartitions of $x$ that are not a bipartition of $y$.
+There are two neighbors of $x$ that lack any given bipartition (obtained by moving either the left or right subtree located below the bipartition).
+Therefore, $|I| \le 2d(x,y)$.
+
+Second, consider the subset $R$ of closer neighbors obtained via rank change moves.
+These operate either on one of $x$'s unique bipartitions or a bipartition common to $x$ and $y$ that differs in rank.
+As observed above, the number of unique bipartitions is bounded by the maximum number of NNI moves on any minimal $x$ to $y$ path.
+Any such path must fix the ranks of each common edge.
+Thus, the total size of $R$ is bounded by $d(x,y)$.
+
+The bound of $d(x,y)$ on the number of length changes that can be applied to move $x$ closer to $y$ follows similarly.
+Therefore, there are at most $|I| + |R| + |L| \le 2d(x,y) + d(x,y) + d(x,y) = 4d(x,y)$ trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$. 
 \end{proof}
 
 Note that this implies the following corollary for the basic NNI treespace which may be of interest to others studying this space.
