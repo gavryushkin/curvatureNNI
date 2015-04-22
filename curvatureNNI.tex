@@ -184,9 +184,8 @@ Unless the trees are NNI-neighbours, they do not have a neighbour in common.
 If $T$ and $R$ are NNI-neighbours, there is precisely one tree which is a neighbour of both $T$ and $R$, namely the third tree that can be obtained by resolving the interval that connects $T$ and $R$. 
 \endproof
 
-The following general lemma is true for all graphs, particularly, for $\dts$. 
-By {\em distance-one random walk}, we mean a random walk $(m_x)_{x \in X}$ 
-satisfying $m_x(y) = 0$ for all $x$ and $y$ such that $d(x,y) > 1$. 
+The following general lemma is true for all graphs, particularly, for those we consider in this paper.  
+By {\em distance-one random walk}, we mean a random walk $(m_x)_{x \in X}$ satisfying $m_x(y) = 0$ for all $x$ and $y$ such that $d(x,y) > 1$. 
 
 \begin{lemma}\label{curvBoundGeneral}
 Let $(M,d)$ be a finite metric space and $x,y$ a pair of points from $M$. If
@@ -217,7 +216,7 @@ For one needs to notice that in the notations of the lemma,
 $d(u,v) \leq d(x,y) + 2d$. 
 
 As we will see in the next few lemmas, these boundaries can be improved for 
-certain random walks on $\dts$. 
+certain random walks on graphs under consideration. 
 
 \begin{lemma}\label{uniformUpper}
 Let $T$ and $R$ be adjacent trees in $\dts$. Then the curvature of the $\dts$
@@ -267,13 +266,7 @@ $p$-lazy random walk (for arbitrary $p$) is bounded from above by
 We continue with lower bounds on the curvature of $\dts$ space with uniform lazy
 random walks, where we follow 
 Ollivier~\cite{Ollivier2009-cj} and divide the curvature of a $p$-lazy random 
-walk by $p$ when $p$ is positive, as explained above.  
-\todo{
-What does Lemma~\ref{uniformUpper} say about $\dts$- and $\tau$-spaces? 
-In $\tau$-space, $\kappa(T,R) \leq 0$~\cite{Gavryushkin2014-bw} for some 
-random walk. 
-For which one?
-}
+walk by $p$ when $p$ is positive, as explained above. 
 
 \begin{lemma}\label{uniformLower}
 Let $T$ and $R$ be adjacent trees in $\dts$. Then the curvature of the $\dts$
@@ -337,8 +330,9 @@ proof follows the proof of Lemma~V.8 in~\cite{Whidden2015-es} literally.
 \endproof
 
 \begin{corollary}\label{flatInLimDTS}
-Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of $\dts$-trees such that
-$d_{\dts}(T_n,R_n) = 1$. Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$.
+Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of trees such that
+$d(T_n,R_n) = 1$ in $\nni$, $\rnni$, $\dts$, or $\mdts$ space.
+Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$.
 \end{corollary}
 
 \proof
@@ -418,7 +412,7 @@ The bound of $d(x,y)$ on the number of length changes that can be applied to mov
 Therefore, there are at most $|I| + |R| + |L| \le 2d(x,y) + d(x,y) + d(x,y) = 4d(x,y)$ trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$. 
 \end{proof}
 
-Note that this implies the following corollary for the basic NNI treespace which may be of interest to others studying this space. \todo{Shouldn't we include NNI as one of the spaces we study here?}
+Note that this implies the following corollary for the $\nni$ treespace.
 \begin{corollary}
 Let $x$ and $y$ be $X$-trees.
 Then the number of trees $u \in N_{NNI}(x)$ such that $d_{NNI}(u, y) \le d_{NNI}(x, y)$ is at most $2d_{NNI}(x,y)$.
@@ -461,11 +455,11 @@ Thus, $\kappa(T_n,R_n) \leq \dfrac{8}{|N(T_n)|}$.
 It remains to note that $\lim\limits_{n\to\infty}\dfrac{8}{|N(T_n)|} = 0$. 
 \endproof
 
-Clearly, the same reasoning goes through for NNI treespace:
+Clearly, the same reasoning goes through for the other three spaces under consideration:
 
 \begin{corollary}
 Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of trees on $n$ taxa.
-Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$ for NNI distance. 
+Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$ for $\nni$, $\rnni$, and $\mdts$ distances. 
 \end{corollary}
 
 \section{Some other spaces}
