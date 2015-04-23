@@ -28,7 +28,7 @@
 \section{Introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In this paper we study the curvature of Markov chains over phylogenetic trees. 
+In this paper we study curvature of Markov chains over phylogenetic trees. 
 We see different spaces of phylogenetic trees as graphs where the adjacency 
 relation is given by a tree move. Those graphs can be also seen as metric 
 spaces where the distance between two points is given by the length of a
@@ -38,7 +38,7 @@ connected, so thus defined distance is a metric indeed.
 A Markov chain (often a random walk in our case) is defined on a graph by its
 proposal mechanism, which is a functional $m$ that maps vertices of the graph to
 the set of measures on this graph. In other words, for every vertex $v$, 
-$m_v(w)$ is the (probability) of getting from $v$ to $w$ in one step. 
+$m_v(w)$ is the probability of getting from $v$ to $w$ in one step. 
 
 We consider a number of Markov chains that arise 
 \todo{Do they?} 
@@ -46,20 +46,17 @@ in phylogenetic Bayesian
 inference and investigate the curvature of those chains with an eye towards 
 the efficiency properties of the corresponding inference methods. 
 
-\section{Discrete time-tree space}
+\section{Discrete time-tree space and its variants}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In this section we introduce a discrete analogue of the space of time-trees
-and establish several graph-theoretic properties of this space, which will
-be useful in later section for the study of the curvature of certain random
-walks on the space. 
+In this section we introduce a discrete analogue of the space of time-trees and establish several graph-theoretic properties of this space, which will be used to study of the curvature of certain random walks on the space.
+We also consider three other tree spaces, which have similar properties as time-trees, as we will see. 
 
 The easiest way to define the space is to assume that the reader is familiar 
 with~\cite{Gavryushkin2014-bw} and say that the 
 {\em discrete time-tree space,}
 or $\dts$ for short, is the $\mathrm t$-space defined 
-in~\cite{Gavryushkin2014-bw}, where the
-branch lengths are allowed to take only three values, $0$, $1$, and $2$. 
+in~\cite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only three length values: $0$, $1$, and $2$. 
 In other words, to define a tree in the $\dts$, we first fix a ranked tree 
 topology with all nodes being of different ranks and then assign a number
 from $\{1,2\}$ to every intercoalescent interval. Intuitively, we will have
@@ -68,8 +65,7 @@ be thought of as short
 \todo{I'm fairly certain that all we are going to say about this space can
 be generalised to $n$ intercoalescent interval lengths.}
 and long. 
-We shall address to the numbers assigned to the coalescent intervals as to
-the {\em lengths} of those intervals. 
+We shall address to the numbers assigned to the intercoalescent intervals as to the {\em lengths} of those intervals. 
 
 Two trees from $\dts$ are adjacent if and only if precisely one of the following
 conditions is satisfied: 
@@ -96,8 +92,7 @@ then resolve the multifurcation to either of the two possible topologies
 (one possible topology if there is no multifurcation) and
 assign the minimal length to the new interval.
 
-Thus, we will interchangeable refer to $\dts$ as a graph or a metric space. 
-We will denote the corresponding distance by $d_\dts$. 
+Thus, we can interchangeable refer to $\dts$ as a graph or a metric space. 
 
 One might suggest that geometrically and graph-theoretically $\dts$ is similar to NNI space on rooted tree topologies, to ranked NNI space, and to $\dts$ space with an arbitrary (but finite) number of intercoalescent interval lengths. 
 This is so indeed. 
@@ -162,7 +157,7 @@ The following are satisfied in $\rnni$ space.
 \end{corollary}
 
 \proof
-Follow from Lemma~\ref{cor_deg_rNNI}. 
+Follows from Lemma~\ref{cor_deg_rNNI}. 
 \endproof
 
 Let $N(T)$ be the set of trees at distance one from $T$, that is, the set of trees adjacent to $T$ in the corresponding graph. 
@@ -210,13 +205,13 @@ $d(x,y) > d$. In this case, the curvature boundaries are
 For one needs to notice that in the notations of the lemma, 
 $d(u,v) \leq d(x,y) + 2d$. 
 
-As we will see in the next few lemmas, these boundaries can be improved for certain random walks on graphs under consideration. 
+As we will see in the next few lemmas, these boundaries can be improved for certain random walks on the graphs under consideration. 
 
 \begin{lemma}\label{uniformUpper}
 Let $T$ and $R$ be adjacent trees. 
-Then the curvature of both $\dts$ and $\mdts$ spaces with uniform random walk satisfies 
+Then the curvature of $\nni$, $\dts$, and $\mdts$ spaces with uniform random walk satisfies 
 \[
-\kappa(T,R) \leq \dfrac{1}{5(n-1)}
+\kappa(T,R) \leq \dfrac{1}{2(n-1)}
 \]
 The bound is tight. 
 \end{lemma}
@@ -229,26 +224,21 @@ $d(E,R) \leq d(T,R)$, is maximised. Since $d(T,R) = 1$, it follows from
 Lemma~\ref{intersecNeighb} that this probability mass is positive only
 when $|N(T) \cap N(R)| = 1$. It follows from Lemma~\ref{neighBound} that
 the maximal mass we can allocate under a uniform random walk to the tree in 
-$N(T) \cap N(R)$ is $\frac{1}{5(n-1)}$. The lemma follows. 
+$N(T) \cap N(R)$ is $\frac{1}{2(n-1)}$. The lemma follows. 
 \endproof
 
 \begin{corollary}
 Let $T$ and $R$ be adjacent trees. 
-Then 
-\begin{enumerate}[(i)]
-\item Curvature of $\nni$ space with uniform random walk is at most $\dfrac{1}{2(n-1)}$.
-\item Curvature of $\rnni$ space with uniform random walk is at most $\dfrac{1}{3(n-1)}$.
-\end{enumerate}
+Then the curvature of $\rnni$ space with uniform random walk is at most $\dfrac{1}{n-1}$.
 \end{corollary}
 
 This lemma and corollary provide tighter upper bounds for the curvature than Lemma~\ref{curvBoundGeneral} for all $n$. 
 
 It is easy to generalise the lemma to the uniform $p$-lazy random walk. 
 \todo{I assume $m_x(x) = 1-p$.}
-Indeed, by looking at the proof at the lemma, one can notice that the curvature between adjacent $\dts$ or $\mdts$ trees $T$ and $R$ under a uniform $p$-lazy random walk 
-satisfies 
+Indeed, by looking at the proof of the lemma, one can notice that the curvature between adjacent $\nni$, $\dts$, or $\mdts$ trees $T$ and $R$ under a uniform $p$-lazy random walk satisfies 
 \[
-\kappa(T,R) \leq \frac{p}{5(n-1)}.
+\kappa(T,R) \leq \frac{p}{2(n-1)}.
 \]
 
 Note that Ollivier~\cite{Ollivier2009-cj} defines the curvature of a metric 
@@ -259,9 +249,9 @@ space with a uniform $p$-lazy random walk (for positive $p$) by
 
 In this case the curvature between adjacent trees in $\dts$ and in $\mdts$ with a uniform $p$-lazy random walk (for arbitrary $p$) is bounded from above by
 \[
-\frac{1}{5(n-1)}.
+\frac{1}{2(n-1)}.
 \]
-The curvature of $\nni$ and $\rnni$ spaces in this case remains the same as in the case of uniform random walk as well. 
+The curvature $\rnni$ spaces in this case remains the same as in the case of uniform random walk as well. 
 
 We continue with lower bounds on curvature of spaces with uniform lazy random walks, where we follow Ollivier~\cite{Ollivier2009-cj} and divide the curvature of a $p$-lazy random walk by $p$ when $1-p$ is positive, as explained above. 
 
@@ -269,9 +259,9 @@ We continue with lower bounds on curvature of spaces with uniform lazy random wa
 Let $T$ and $R$ be adjacent trees in $\nni$, $\dts$, or $\mdts$ space. 
 Then the curvature of the space with $p$-lazy uniform random walk satisfies
 \[
-\kappa(T,R) \geq -\frac{4}{n-2}.
+\kappa(T,R) \geq -\frac{4}{n-1}.
 \]
-The lower boundary is tight. 
+The bound is tight. 
 \end{lemma}
 
 \proof
@@ -282,9 +272,10 @@ maximised\footnote{If $x$ is a point of a metric space $(M,d)$ and
 $S \subseteq M$ then by $d(x,S)$ we denote $\inf\limits_{s \in S} d(x,s)$.}. 
 Since $d(T, R) = 1$, the maximum possible number of such trees $E$ is 
 \todo{Explain this.}
-$8$. To make $W(m_T,m_R)$ as large as possible, we have to assume 
+$8$. To make $W(m_T,m_R)$ being as large as possible, we have to assume 
 $d(S, N(R)) = 1$ for the rest of the trees $S$ from $N(T)$, and the
 total number of elements of $N(T)$ to be $2(n-1)$.
+\todo{May be, write this proof in terms of $|N(T)|$ and then put its value only when the curvature is estimated.}
 Hence for the uniform random walk we have: 
 \[
 W(m_T,m_R)\leq 8 \cdot 2 \cdot \frac{1}{2(n - 1)} +
@@ -310,7 +301,7 @@ Then the curvature of the space with $p$-lazy uniform random walk satisfies
 \[
 \kappa(T,R) \geq -\frac{8}{n-1}.
 \]
-The lower boundary is tight.
+The bound is tight.
 \end{corollary}
 
 \proof
@@ -328,7 +319,7 @@ Follows from Lemma~\ref{uniformUpper} and Lemma~\ref{uniformLower} and correspon
 \endproof
 
 As we have just proved, the corollary above holds true in $\nni$, $\rnni$, $\dts$, and $\mdts$ spaces. 
-This corollary is also true in the rSPR space~\cite{Whidden2015-es}.
+This corollary is also true in the SPR space of rooted trees~\cite{Whidden2015-es}.
 Actually, this property can be derived from the following general statement for all spaces mentioned, as well as for many others. 
 
 \begin{proposition}\label{flatInLimGen}
@@ -365,7 +356,7 @@ optimum scenario, divided by $|N(x_n)|$, tends to $1$ when $n\to\infty$.
 
 We note that in both Corollary~\ref{flatInLimDTS} and Proposition~\ref{flatInLimGen}, the assumption of being at distance one can be relaxed by that of being at a distance uniformly bounded by a slowly growing function.
 But since the primary focus of this paper is on the spaces under consideration, we will not \todo{Should we?} include the statement in general terms of metric spaces. 
-However, we prove below (Theorem~\ref{zero-in-the-limit}) a much stronger property of the spaces, namely, that the curvature tends to zero when the tree size tends to infinity does not matter what distance between the points is.
+However, we prove below (Theorem~\ref{zero-in-the-limit}) a much stronger property of the spaces, namely, that the curvature tends to zero when the tree size tends to infinity does not matter what distance between the trees is.
 
 We first bound the number of neighbors of a tree $x$ in $\dts$-space that are closer than $x$ to a given tree $y$.
 We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
@@ -464,13 +455,13 @@ We now estimate the curvature of the Metropolis-Hastings random walk, which
 propose a tree in the one-neighbourhood uniformly at random and 
 accepts the proposal with probability 
 $\min(1, \dfrac{|N(T_{old})|}{|N(T_{new})|})$. We denote the corresponding 
-curvature by $\kappa(MH;T,R)$
+curvature by $\kappa(MH;T,R)$.
 
 \begin{lemma}
 The following inequalities are satisfied in both $\dts$ and $\mdts$ spaces. 
 \[
-\kappa(T,R) - \dfrac{2}{5d(T,R)} \leq \kappa(MH;T,R) \leq \kappa(T,R) +
-\dfrac{2}{5d(T,R)}\mbox{, and}
+\kappa(T,R) - \dfrac{6}{5d(T,R)} \leq \kappa(MH;T,R) \leq \kappa(T,R) +
+\dfrac{6}{5d(T,R)}\mbox{, and}
 \]
 \[
 \kappa(T,R) - \dfrac35 \leq \kappa(MH;T,R) \leq \kappa(T,R) + \dfrac35.
@@ -488,8 +479,8 @@ proof follows the proof of Lemma~V.8 in~\cite{Whidden2015-es} literally.
 \begin{corollary}
 The following inequalities are satisfied in $\rnni$ \todo{What about NNI?} space.
 \[
-\kappa(T,R) - \dfrac{1}{3d(T,R)} \leq \kappa(MH;T,R) \leq \kappa(T,R) +
-\dfrac{1}{3d(T,R)}\mbox{, and}
+\kappa(T,R) - \dfrac{4}{3d(T,R)} \leq \kappa(MH;T,R) \leq \kappa(T,R) +
+\dfrac{4}{3d(T,R)}\mbox{, and}
 \]
 \[
 \kappa(T,R) - \dfrac23 \leq \kappa(MH;T,R) \leq \kappa(T,R) + \dfrac23.
