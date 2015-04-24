@@ -110,3 +110,7 @@ sympy-plots-for-*.tex/
 
 # xindy
 *.xdy
+
+# Matsen group
+.sconsign.dblite
+SConstruct
