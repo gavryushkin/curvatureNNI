@@ -49,26 +49,29 @@ the efficiency properties of the corresponding inference methods.
 
 \section{Discrete time-tree space and its variants}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\todo[inline]{At first I thought that time-trees had all of their leaves sampled at the present, but later notes made me think otherwise. Please clarify.}
+%\todo[inline]{At first I thought that time-trees had all of their leaves sampled at the present, but later notes made me think otherwise. Please clarify.} AG: fixed. 
 
 In this section we introduce a discrete analogue of the space of time-trees and establish several graph-theoretic properties of this space, which will be used to study of the curvature of certain random walks on the space.
 We also consider three other tree spaces, which have similar properties as time-trees, as we will see.
+
+It is generally assumed that a time-tree is an ultrametric phylogenetic tree, that is a tree with all leaves sampled at present.
+All results in this paper can be derived for the discrete counterpart of such space.
+However, there is no need to restrict ourselves by the ultrametricity property, as the results can be obtained in the more general setting of rooted phylogenetic trees with branch lengths.
+Moreover, many biological application explicitly require the restriction imposed by ultrmetricity to be dropped~\cite{}.
+Hence, by a time-tree in this paper we mean a rooted phylogenetic tree. 
 
 The easiest way to define the space is to assume that the reader is familiar
 with~\cite{Gavryushkin2014-bw} and say that the
 {\em discrete time-tree space,}
 or $\dts$ for short, is the $\mathrm t$-space defined
-in~\cite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only three length values: $0$, $1$, and $2$.
+in~\cite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only two length values, $1$ and $2$.
 In other words, to define a tree in the $\dts$, we first fix a ranked tree
 topology with all nodes being of different ranks and then assign a number
 from $\{1,2\}$ to every intercoalescent interval.
-\todo{I find it confusing that before length could be 0, 1, or 2, but now it's just 1 and 2. I assume 0 = no coalescent interval, but...}
+%\todo{I find it confusing that before length could be 0, 1, or 2, but now it's just 1 and 2. I assume 0 = no coalescent interval, but...} AG: fixed. 
 Intuitively, we will have
 only two options for the length of an intercoalescent interval, which can
-be thought of as short
-\todo{I'm fairly certain that all we are going to say about this space can
-be generalised to $n$ intercoalescent interval lengths.}
-and long.
+be thought of as short and long.
 We shall describe the numbers assigned to the intercoalescent intervals as to the {\em lengths} of those intervals.
 
 Two trees from $\dts$ are adjacent if and only if precisely one of the following
@@ -133,7 +136,9 @@ Let $T$ be an $\rnni$-tree on $n$ leaves. Then \[n-1\leq \deg(T)\leq3(n-1)\]
 
 \proof
 The lower bound is attained by the caterpillar-tree where taxa get ranks $1, 2, 4, 6, \ldots$ and internal nodes get ranks $3, 5, 7, \ldots$
-In this case, even intervals \todo{A little more detail, please? The nodes are numbered so far, not the intervals} add nothing to the degree of the tree and odd intervals add one each, hence $n-1$ in total.
+In other words, the coalescent events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence $\ldots$
+%\todo{A little more detail, please? The nodes are numbered so far, not the intervals} AG: fixed
+In this case, even intervals add nothing to the degree of the tree and odd intervals add one each, hence $n-1$ in total.
 The upper bound is obtained in the same way as in Lemma~\ref{neighBound}.
 \endproof
 
@@ -177,7 +182,8 @@ If $d(T,R) = 1$ then $|N(T)\cap N(R)|\in\{0,1\}$.
 Suppose $T$ and $R$ are neighbours.
 Unless the trees are NNI-neighbours, they do not have a neighbour in common.
 If $T$ and $R$ are NNI-neighbours, there is precisely one tree which is a neighbour of both $T$ and $R$, namely the third tree that can be obtained by resolving the interval that connects $T$ and $R$.
-\todo[inline]{What if the two trees just differ in terms of branch length?}
+\todo[inline]{AM: What if the two trees just differ in terms of branch length?\\
+AG: Then the `unless the trees are NNI-neighbours' applies.}
 \endproof
 
 The following general lemma is true for all graphs, particularly, for those we consider in this paper.
@@ -227,7 +233,7 @@ The bound is tight.
 \proof
 To maximise the curvature $\kappa(T,R)$, we have to minimise $W(m_T,m_R)$.
 The latter is minimised when the probability mass on trees of distance zero or one away from $R$ is maximized.
-\todo{Could you clarify? We should be talking about where the mass is in the coupling.}
+\todo{TODO: clarify this. We should be talking about where the mass is in the coupling.}
 Since $d(T,R) = 1$, it follows from
 Lemma~\ref{intersecNeighb} that this probability mass is positive only
 when $|N(T) \cap N(R)| = 1$. It follows from Lemma~\ref{neighBound} that
