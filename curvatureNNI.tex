@@ -20,6 +20,7 @@
 \newcommand{\nni}{\mathrm{NNI}}
 \newcommand{\rnni}{\mathrm{rNNI}}
 \newcommand{\mdts}{\mathrm{mDtT}}
+\newcommand{\MH}{\mathrm{MH}}
 
 \renewcommand{\O}{\mathcal{O}}
 
@@ -49,7 +50,6 @@ the efficiency properties of the corresponding inference methods.
 
 \section{Discrete time-tree space and its variants}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\todo[inline]{At first I thought that time-trees had all of their leaves sampled at the present, but later notes made me think otherwise. Please clarify.} AG: fixed. 
 
 In this section we introduce a discrete analogue of the space of time-trees and establish several graph-theoretic properties of this space, which will be used to study of the curvature of certain random walks on the space.
 We also consider three other tree spaces, which have similar properties as time-trees, as we will see.
@@ -58,7 +58,7 @@ It is generally assumed that a time-tree is an ultrametric phylogenetic tree, th
 All results in this paper can be derived for the discrete counterpart of such space.
 However, there is no need to restrict ourselves by the ultrametricity property, as the results can be obtained in the more general setting of rooted phylogenetic trees with branch lengths.
 Moreover, many biological application explicitly require the restriction imposed by ultrmetricity to be dropped~\cite{}.
-Hence, by a time-tree in this paper we mean a rooted phylogenetic tree. 
+Hence, by a time-tree in this paper we mean a rooted phylogenetic tree.
 
 The easiest way to define the space is to assume that the reader is familiar
 with~\cite{Gavryushkin2014-bw} and say that the
@@ -68,7 +68,6 @@ in~\cite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to
 In other words, to define a tree in the $\dts$, we first fix a ranked tree
 topology with all nodes being of different ranks and then assign a number
 from $\{1,2\}$ to every intercoalescent interval.
-%\todo{I find it confusing that before length could be 0, 1, or 2, but now it's just 1 and 2. I assume 0 = no coalescent interval, but...} AG: fixed. 
 Intuitively, we will have
 only two options for the length of an intercoalescent interval, which can
 be thought of as short and long.
@@ -137,7 +136,7 @@ Let $T$ be an $\rnni$-tree on $n$ leaves. Then \[n-1\leq \deg(T)\leq3(n-1)\]
 \proof
 The lower bound is attained by the caterpillar-tree where taxa get ranks $1, 2, 4, 6, \ldots$ and internal nodes get ranks $3, 5, 7, \ldots$
 In other words, the coalescent events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence $\ldots$
-%\todo{A little more detail, please? The nodes are numbered so far, not the intervals} AG: fixed
+%\todo{A little more detail, please? The nodes are numbered so far, not the intervals} AG: fixed. EM: OK, thanks, though in the next sentence you still do talk about even and odd _intervals_.
 In this case, even intervals add nothing to the degree of the tree and odd intervals add one each, hence $n-1$ in total.
 The upper bound is obtained in the same way as in Lemma~\ref{neighBound}.
 \endproof
@@ -183,7 +182,8 @@ Suppose $T$ and $R$ are neighbours.
 Unless the trees are NNI-neighbours, they do not have a neighbour in common.
 If $T$ and $R$ are NNI-neighbours, there is precisely one tree which is a neighbour of both $T$ and $R$, namely the third tree that can be obtained by resolving the interval that connects $T$ and $R$.
 \todo[inline]{AM: What if the two trees just differ in terms of branch length?\\
-AG: Then the `unless the trees are NNI-neighbours' applies.}
+AG: Then the `unless the trees are NNI-neighbours' applies.\\
+:) it wasn't intuitively obvious that identical trees count as neighbors. Clarify please?}
 \endproof
 
 The following general lemma is true for all graphs, particularly, for those we consider in this paper.
@@ -223,7 +223,7 @@ As we will see in the next few lemmas, these bounds can be improved for certain 
 
 \begin{lemma}\label{uniformUpper}
 Let $T$ and $R$ be adjacent trees.
-Then the curvature of $\nni$, $\dts$, and $\mdts$ spaces with uniform random walk satisfies
+Then the curvature of $\nni$, $\dts$, and $\mdts$ spaces with uniform random walk satisfy
 \[
 \kappa(T,R) \leq \dfrac{1}{2(n-1)}
 \]
@@ -241,6 +241,7 @@ the maximal mass we can allocate under a uniform random walk to the tree in
 $N(T) \cap N(R)$ is $\frac{1}{2(n-1)}$. The lemma follows.
 \endproof
 
+\todo[inline]{You use "corollary" in a different sense than I've seen before. I have only seen it used to mean "follows directly from the theorem/lemma but you seem to use it as "follows from a similar line of argument."}
 \begin{corollary}
 Let $T$ and $R$ be adjacent trees.
 Then the curvature of $\rnni$ space with uniform random walk is at most $\dfrac{1}{n-1}$.
@@ -255,10 +256,11 @@ Indeed, by looking at the proof of the lemma, one can notice that the curvature 
 \kappa(T,R) \leq \frac{p}{2(n-1)}.
 \]
 
+\todo{This can get confusing fast. Please see \url{https://matsengrp.slack.com/files/matsen/F04J79F5A/pasted_image_at_2015_04_27_07_08_am.png} for definition of asymptotic ricci curvature. I suggest using $\operatorname{ric}$ for this quantity.}
 Note that Ollivier~\cite{Ollivier2009-cj} defines the curvature of a metric
 space with a uniform $p$-lazy random walk (for positive $p$) by
 \[
-\kappa(x,y) = \frac1p (1 - \frac{W(m_x, m_y)}{d(x, y)})
+\kappa(x,y) = \frac1p \left(1 - \frac{W(m_x, m_y)}{d(x, y)}\right)
 \]
 
 In this case the curvature between adjacent trees in $\dts$ and in $\mdts$ with a uniform $p$-lazy random walk (for arbitrary $p$) is bounded from above by
@@ -280,12 +282,12 @@ The bound is tight.
 
 \proof
 Let $T$ and $R$ be two $\dts$-adjacent trees. To minimise the curvature, we have
-to maximise $W(m_T, m_R)$. The letter is maximised when the probability mass
+to maximise $W(m_T, m_R)$ across $T$ and $R$. The latter is maximised when the probability mass
 on trees $E\in N(T)$ such that $d(E, N(R)) > d(T, R)$, is
 maximised\footnote{If $x$ is a point of a metric space $(M,d)$ and
 $S \subseteq M$ then by $d(x,S)$ we denote $\inf\limits_{s \in S} d(x,s)$.}.
 Since $d(T, R) = 1$, the maximum possible number of such trees $E$ is
-\todo{Explain this.}
+\todo{Explain this. EM skipped pending explanation.}
 $8$. To make $W(m_T,m_R)$ being as large as possible, we have to assume
 $d(S, N(R)) = 1$ for the rest of the trees $S$ from $N(T)$, and the
 total number of elements of $N(T)$ to be $2(n-1)$.
@@ -351,16 +353,17 @@ Then $\lim\limits_{n \to \infty} \kappa(x_n, y_n) = 0$.
 \end{proposition}
 
 \proof
-Consider an arbitrary $n$ and the pair of points $x_n,y_n$. Denote by $I_0$ the
-set points $z$ such that $z \in N(x_n) \cup N(y_n)$, by $I_1$ the set of points
+Consider an arbitrary $n$ and the pair of points $x_n,y_n$.
+Set $I_0 = N(x_n) \cup N(y_n)$, denote by $I_1$ the set of points
 $z$ such that the probability mass is moved from $z$ at distance one under the
-optimum scenario for $W(m_{x_n},m_{y_n})$, by $I_2$ the set of points $z$ such that
-the probability mass is moved from $z$ at distance $\geq 2$ under the optimum
+optimum coupling for $W(m_{x_n},m_{y_n})$, by $I_2$ the set of points $z$ such that
+the probability mass is moved from $z$ a distance $\geq 2$ under the optimum
 scenario for $W(m_x,m_y)$. Then
 \[
 W(m_{x_n},m_{y_n}) = \sum_{I_0} d_i x_i p_{x_i} + \sum_{I_1} d_i x_i p_{x_i} +
 \sum_{I_2} d_i x_i p_{x_i}.
 \]
+\todo{I'm not sure why \ref{intersec}) is needed here.}
 It follows from~(\ref{intersec}) and~(\ref{dist2}) that the first and the last sums
 are $\O(1)$ when $n\to\infty$. This together with property~(\ref{difference})
 implies that the middle sum tends to $1$ when $n\to\infty$ because the number of
@@ -408,6 +411,7 @@ The bound of $d(x,y)$ on the number of length changes that can be applied to mov
 Therefore, there are at most $|I| + |R| + |L| \le 2d(x,y) + d(x,y) + d(x,y) = 4d(x,y)$ trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$.
 \end{proof}
 
+\todo[inline]{I suggest folding all of this into the above theorem, along with a statement in the proof saying that the extra statements follow similarly.}
 Note that this implies the following corollaries for $\nni$, $\rnni$ and $\mdts$ spaces.
 \begin{corollary}
 Let $x$ and $y$ be trees from NNI space.
@@ -427,7 +431,7 @@ We now use Theorem~\ref{max_good_neighbors} to prove the following.
 
 \begin{theorem}\label{zero-in-the-limit}
 Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of $\dts$-trees on $n$ taxa.
-Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$.
+Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$ for the uniform random walk.
 \end{theorem}
 
 \proof
@@ -437,23 +441,23 @@ is that the curvature is a local property~\cite{Ollivier2009-cj}, that is, for a
 \[
 \inf\{\kappa(x,y)\mid d(x,y) = 1\} \leq \kappa(u,v).
 \]
-Hence, it follows from Lemma~\ref{uniformLower} that $\kappa(T_n,R_n) \geq -\dfrac{4}{n-2}$ for all $n$.
+Hence, it follows from Lemma~\ref{uniformLower} that $\kappa(T_n,R_n) \geq -\dfrac{4}{n-1}$ for all $n$.
 To finish the proof, we need to bound the sequence $\kappa(T_n,R_n)$ from above by another sequence which tends to zero.
 
-Let us fix an $n$ and let $G$ be the set of trees $E \in N(T)$ such that $d_\dts(E,R_n) \leq d_\dts(T_n,R_n)$ as in Theorem~\ref{max_good_neighbors}, and $B$ be the rest of trees $N(T_n)\setminus G$ from $N(T_n)$.
+Let us fix an $n$ and let $U$ be the set of trees $E \in N(T)$ such that $d_\dts(E,R_n) \leq d_\dts(T_n,R_n)$ as in Theorem~\ref{max_good_neighbors}, and $B$ be the rest of trees $N(T_n)\setminus U$ from $N(T_n)$.
 Let's denote $d_\dts(T_n,R_n)$ by $d$. Then
 \[
-W(m_{T_n},m_{R_n}) = \sum_{i\in G} p_i d_i + \sum_{j\in B} p_j d_j \geq
-\sum_{i\in G} p_i (d-2) + \sum_{j\in B} p_j d =
-\frac{|G|(d-2)}{|N(T_n)|} + \frac{|B|d}{|N(T_n)|}.
+W(m_{T_n},m_{R_n}) = \sum_{i\in U} p_i d_i + \sum_{j\in B} p_j d_j \geq
+\sum_{i\in U} p_i (d-2) + \sum_{j\in B} p_j d =
+\frac{|U|(d-2)}{|N(T_n)|} + \frac{|B|d}{|N(T_n)|}.
 \]
 Hence,
 \[
 \kappa(T_n,R_n) = 1 - \frac{W(m_{T_n},m_{R_n})}{d} \leq
-1 - \frac{|G| + |B|}{|N(T_n)|} + \frac{2|G|}{|N(T_n)|d}
-= \frac{2|G|}{|N(T_n)|d}.
+1 - \frac{|U| + |B|}{|N(T_n)|} + \frac{2|U|}{|N(T_n)|d}
+= \frac{2|U|}{|N(T_n)|d}.
 \]
-It follows from Theorem~\ref{max_good_neighbors} that $|G| \leq 4d$.
+It follows from Theorem~\ref{max_good_neighbors} that $|U| \leq 4d$.
 Thus, $\kappa(T_n,R_n) \leq \dfrac{8}{|N(T_n)|}$.
 It remains to note that $\lim\limits_{n\to\infty}\dfrac{8}{|N(T_n)|} = 0$.
 \endproof
@@ -466,19 +470,19 @@ Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$ for $\nni$, $\rnni$, and $\
 \end{corollary}
 
 We now estimate the curvature of the Metropolis-Hastings random walk, which
-propose a tree in the one-neighbourhood uniformly at random and
+proposes a tree in the one-neighbourhood uniformly at random and
 accepts the proposal with probability
-$\min(1, \dfrac{|N(T_{old})|}{|N(T_{new})|})$. We denote the corresponding
-curvature by $\kappa(MH;T,R)$.
+$\min\left(1, \dfrac{|N(T_{old})|}{|N(T_{new})|}\right)$. We denote the corresponding
+curvature by $\kappa(\MH;T,R)$.
 
 \begin{lemma}
 The following inequalities are satisfied in both $\dts$ and $\mdts$ spaces.
 \[
-\kappa(T,R) - \dfrac{6}{5d(T,R)} \leq \kappa(MH;T,R) \leq \kappa(T,R) +
+\kappa(T,R) - \dfrac{6}{5d(T,R)} \leq \kappa(\MH;T,R) \leq \kappa(T,R) +
 \dfrac{6}{5d(T,R)}\mbox{, and}
 \]
 \[
-\kappa(T,R) - \dfrac35 \leq \kappa(MH;T,R) \leq \kappa(T,R) + \dfrac35.
+\kappa(T,R) - \dfrac35 \leq \kappa(\MH;T,R) \leq \kappa(T,R) + \dfrac35.
 \]
 \end{lemma}
 
@@ -493,11 +497,11 @@ proof follows the proof of Lemma~V.8 in~\cite{Whidden2015-es} literally.
 \begin{corollary}
 The following inequalities are satisfied in $\rnni$ \todo{What about NNI?} space.
 \[
-\kappa(T,R) - \dfrac{4}{3d(T,R)} \leq \kappa(MH;T,R) \leq \kappa(T,R) +
+\kappa(T,R) - \dfrac{4}{3d(T,R)} \leq \kappa(\MH;T,R) \leq \kappa(T,R) +
 \dfrac{4}{3d(T,R)}\mbox{, and}
 \]
 \[
-\kappa(T,R) - \dfrac23 \leq \kappa(MH;T,R) \leq \kappa(T,R) + \dfrac23.
+\kappa(T,R) - \dfrac23 \leq \kappa(\MH;T,R) \leq \kappa(T,R) + \dfrac23.
 \]
 \end{corollary}
 
