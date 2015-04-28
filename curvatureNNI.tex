@@ -112,7 +112,7 @@ By $n$ we denote the number of taxa and assume $n \geq 3$ throughout the paper.
 
 \begin{lemma}\label{neighBound}
 Let $T$ be a tree on $n$ leaves. 
-Then \[2(n-1)\leq \deg(T)\leq5(n-1)\] in $\dts$ or $\mdts$ space, \[\deg(T) = 2(n-1)\] in $\nni$ space, and \[n-1\leq \deg(T)\leq3(n-1)\] in $\rnni$ space.
+Then \[2(n-1)\leq \deg(T)\leq5(n-1)\] in $\dts$ or $\mdts$ space, \[\deg(T) = 2(n-2)\] in $\nni$ space, and \[n-1\leq \deg(T)\leq3(n-1)\] in $\rnni$ space.
 \end{lemma}
 
 \proof
@@ -124,7 +124,7 @@ In this case, $\deg(T)$ is $2(n-1)$, twice the number of intervals between the t
 
 Note that no other tree class attains the upper bound in $\dts$ space.
 
-Since every NNI move results in two neighbours, the equality $\deg(T) = 2(n-1)$ 
+Since every NNI move results in two neighbours, the equality $\deg(T) = 2(n-2)$ follows because no NNI is possible for the cherry branches.
 
 The lower bound in $\rnni$ space is attained by the caterpillar-tree where taxa get ranks $1, 2, 4, 6, \ldots$ and internal nodes get ranks $3, 5, 7, \ldots$
 In other words, the coalescent events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence $\ldots$
@@ -133,7 +133,7 @@ In other words, the coalescent events alternate with the taxa in the ranked topo
 %EM: OK, thanks, though in the next sentence you still do talk about even and odd {\em intervals}.\\
 %AG: fixed.}
 In this case, intervals bounded by a taxon from below add nothing to the degree of the tree and intervals bounded from below by an internal node add one each, hence $n-1$ in total.
-The upper bound is obtained in the same way as in Lemma~\ref{neighBound}.
+The upper bound is obtained in the same way as for $\dts$ and $\mdts$ spaces.
 \endproof
 
 We will need the following obvious corollaries for our analysis of curvature.
@@ -150,7 +150,7 @@ The following are satisfied in both $\dts$ and $\mdts$ spaces for any trees $T$ 
 Follows from Lemma~\ref{neighBound}.
 \endproof
 
-Analogous bounds exist for $\nni$ space.
+Analogous bounds for $\nni$ space are $0$ and $1$ respectively.
 
 \begin{corollary}\label{degreeBoundsNNI}
 The following are satisfied in $\rnni$ space.
@@ -174,9 +174,9 @@ If $d(T,R) = 1$ then $|N(T)\cap N(R)|\in\{0,1\}$.
 
 \proof
 Suppose $T$ and $R$ are neighbours.
-Unless the trees are NNI-neighbours, they do not have a neighbour in common.
+If the trees differ by a single branch length or rank change then the fact that NNI moves only apply to short branches implies that any shared neighbour $S$ would have to match the length or rank of one of the trees. As $S$ must differ from both trees, they do not have a neighbour in common.
 If $T$ and $R$ are NNI-neighbours, there is precisely one tree which is a neighbour of both $T$ and $R$, namely the third tree that can be obtained by resolving the interval that connects $T$ and $R$.
-\todo[inline]{EM: Clarify please?}
+%\todo[inline]{EM: Clarify please?} CW&AG: Fixed.
 \endproof
 
 The following general lemma is true for all graphs, particularly, for those we consider in this paper.
@@ -216,17 +216,21 @@ As we will see in the next few lemmas, these bounds can be improved for certain 
 
 \begin{lemma}\label{uniformUpper}
 Let $T$ and $R$ be adjacent trees.
-Then the curvature of $\nni$, $\dts$, and $\mdts$ spaces with uniform random walk satisfy
+Then the curvature of the spaces with uniform random walk satisfy
 \[
 \kappa(T,R) \leq \dfrac{1}{2(n-1)}
 \]
-and
+for $\dts$ and $\mdts$ spaces,
+\[
+\kappa(T,R) \leq \dfrac{1}{2(n-2)}
+\]
+for $\nni$ space, and
 \[
 \kappa(T,R) \leq \dfrac{1}{n-1}
 \]
 for $\rnni$ space.
 
-The bounds is tight.
+The bounds are tight.
 \end{lemma}
 
 \proof
@@ -234,7 +238,7 @@ To maximise the curvature $\kappa(T,R)$, we have to minimise $W(m_T,m_R)$.
 The latter is minimised when the probability mass on trees of distance zero or one away from $R$ is maximized.
 \todo{TODO: clarify this. We should be talking about where the mass is in the coupling.}
 Since $d(T,R) = 1$, it follows from Lemma~\ref{intersecNeighb} that this probability mass is positive only when $|N(T) \cap N(R)| = 1$. 
-It follows from Lemma~\ref{neighBound} that the maximal mass we can allocate under a uniform random walk to the tree in $N(T) \cap N(R)$ is $\frac{1}{2(n-1)}$ in $\nni$, $\dts$, and $\mdts$ spaces and is $\frac{1}{n-1}$ in $\rnni$ space.
+It follows from Lemma~\ref{neighBound} that the maximal mass we can allocate under a uniform random walk to the tree in $N(T) \cap N(R)$ is $\frac{1}{2(n-1)}$ in $\dts$ and $\mdts$ spaces, $\frac{1}{2(n-2)}$ in $\nni$ space, and $\frac{1}{n-1}$ in $\rnni$ space.
 The lemma follows.
 \endproof
 
@@ -357,7 +361,7 @@ However, we prove below (Theorem~\ref{zero-in-the-limit}) a much stronger proper
 We first bound the number of neighbors of a tree $x$ in $\dts$-space that are closer than $x$ to a given tree $y$.
 We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
 These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
-\todo{I put this here for now, but it will have to go earlier.}
+%\todo{I put this here for now, but it will have to go earlier.} AG: fixed.
 
 \begin{theorem}
 \label{max_good_neighbors}
