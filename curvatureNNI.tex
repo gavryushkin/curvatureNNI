@@ -21,6 +21,7 @@
 \newcommand{\rnni}{\mathrm{rNNI}}
 \newcommand{\mdts}{\mathrm{mDtT}}
 \newcommand{\MH}{\mathrm{MH}}
+\newcommand{\ric}{\operatorname{ric}}
 
 \renewcommand{\O}{\mathcal{O}}
 
@@ -40,7 +41,7 @@ A Markov chain (often a random walk in our case) is defined on a graph by its
 proposal mechanism, which is a functional $m$ that maps vertices of the graph to
 the set of measures on this graph. In other words, for every vertex $v$,
 $m_v(w)$ is the probability of moving from $v$ to $w$ in one step.
-Given a graph with vertices ${u, v, \ldots}$, a \emph{coupling} between two measures $\mu$ and $\nu$ $\{p_{u,v}\}$ is a probability measure on $V(G) \times V(G)$ that is $\mu$ after marginalizing over the second component, and $\nu$ after marginalizing over the first.
+Given a graph with vertices ${u, v, \ldots}$, a \emph{coupling} $\{p_{u,v}\}$ between two measures $\mu$ and $\nu$ is a probability measure on $V(G) \times V(G)$ that is $\mu$ after marginalizing over the second component, and $\nu$ after marginalizing over the first.
 
 We consider a number of Markov chains that arise
 \todo{Do they?}
@@ -110,34 +111,28 @@ All of these can be considered as either a graph or a metric space, and we will 
 By $n$ we denote the number of taxa and assume $n \geq 3$ throughout the paper.
 
 \begin{lemma}\label{neighBound}
-Let $T$ be a $\dts$-tree or an $\mdts$-tree on $n$ leaves. Then \[2(n-1)\leq \deg(T)\leq5(n-1)\]
+Let $T$ be a tree on $n$ leaves. 
+Then \[2(n-1)\leq \deg(T)\leq5(n-1)\] in $\dts$ or $\mdts$ space, \[\deg(T) = 2(n-1)\] in $\nni$ space, and \[n-1\leq \deg(T)\leq3(n-1)\] in $\rnni$ space.
 \end{lemma}
 
 \proof
-The lower bound is attained by any tree with all intercoalescent intervals being long.
+The lower bound in $\dts$ and $\mdts$ spaces is attained by any tree with all intercoalescent intervals being long.
 In this case, $\deg(T)$ is simply the number of intercoalescent intervals, since every intercoalescent interval adds $1$ to the total degree of the tree.
 Other trees have the same or more possible intercoalescent interval changes, showing that this is a lower bound.
 The upper bound is attained by a caterpillar-tree with all intervals short and no coalescent event being younger than a taxon.
 In this case, $\deg(T)$ is $2(n-1)$, twice the number of intervals between the taxa, plus $3(n-1)$, three times the number of intervals between coalescent events, because every such an interval results in two neighbours in the graph from the corresponding NNI move and one neighbour from increasing the interval length.
 
 Note that no other tree class attains the upper bound in $\dts$ space.
-\endproof
 
-The following corollaries are easy to derive from the proof of the lemma.
+Since every NNI move results in two neighbours, the equality $\deg(T) = 2(n-1)$ 
 
-\begin{corollary}
-Let $T$ be an $\nni$-tree on $n$ leaves. Then $\deg(T) = 2(n-1)$.
-\end{corollary}
-
-\begin{lemma}\label{cor_deg_rNNI}
-Let $T$ be an $\rnni$-tree on $n$ leaves. Then \[n-1\leq \deg(T)\leq3(n-1)\]
-\end{lemma}
-
-\proof
-The lower bound is attained by the caterpillar-tree where taxa get ranks $1, 2, 4, 6, \ldots$ and internal nodes get ranks $3, 5, 7, \ldots$
+The lower bound in $\rnni$ space is attained by the caterpillar-tree where taxa get ranks $1, 2, 4, 6, \ldots$ and internal nodes get ranks $3, 5, 7, \ldots$
 In other words, the coalescent events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence $\ldots$
-%\todo{A little more detail, please? The nodes are numbered so far, not the intervals} AG: fixed. EM: OK, thanks, though in the next sentence you still do talk about even and odd _intervals_.
-In this case, even intervals add nothing to the degree of the tree and odd intervals add one each, hence $n-1$ in total.
+%\todo{EM: A little more detail, please? The nodes are numbered so far, not the intervals\\ 
+%AG: fixed.\\
+%EM: OK, thanks, though in the next sentence you still do talk about even and odd {\em intervals}.\\
+%AG: fixed.}
+In this case, intervals bounded by a taxon from below add nothing to the degree of the tree and intervals bounded from below by an internal node add one each, hence $n-1$ in total.
 The upper bound is obtained in the same way as in Lemma~\ref{neighBound}.
 \endproof
 
@@ -166,7 +161,7 @@ The following are satisfied in $\rnni$ space.
 \end{corollary}
 
 \proof
-Follows from Lemma~\ref{cor_deg_rNNI}.
+Follows from Lemma~\ref{neighBound}.
 \endproof
 
 Let $N(T)$ be the set of trees at distance one from $T$, that is, the set of trees adjacent to $T$ in the corresponding graph.
@@ -181,9 +176,7 @@ If $d(T,R) = 1$ then $|N(T)\cap N(R)|\in\{0,1\}$.
 Suppose $T$ and $R$ are neighbours.
 Unless the trees are NNI-neighbours, they do not have a neighbour in common.
 If $T$ and $R$ are NNI-neighbours, there is precisely one tree which is a neighbour of both $T$ and $R$, namely the third tree that can be obtained by resolving the interval that connects $T$ and $R$.
-\todo[inline]{AM: What if the two trees just differ in terms of branch length?\\
-AG: Then the `unless the trees are NNI-neighbours' applies.\\
-:) it wasn't intuitively obvious that identical trees count as neighbors. Clarify please?}
+\todo[inline]{EM: Clarify please?}
 \endproof
 
 The following general lemma is true for all graphs, particularly, for those we consider in this paper.
@@ -227,61 +220,62 @@ Then the curvature of $\nni$, $\dts$, and $\mdts$ spaces with uniform random wal
 \[
 \kappa(T,R) \leq \dfrac{1}{2(n-1)}
 \]
-The bound is tight.
+and
+\[
+\kappa(T,R) \leq \dfrac{1}{n-1}
+\]
+for $\rnni$ space.
+
+The bounds is tight.
 \end{lemma}
 
 \proof
 To maximise the curvature $\kappa(T,R)$, we have to minimise $W(m_T,m_R)$.
 The latter is minimised when the probability mass on trees of distance zero or one away from $R$ is maximized.
 \todo{TODO: clarify this. We should be talking about where the mass is in the coupling.}
-Since $d(T,R) = 1$, it follows from
-Lemma~\ref{intersecNeighb} that this probability mass is positive only
-when $|N(T) \cap N(R)| = 1$. It follows from Lemma~\ref{neighBound} that
-the maximal mass we can allocate under a uniform random walk to the tree in
-$N(T) \cap N(R)$ is $\frac{1}{2(n-1)}$. The lemma follows.
+Since $d(T,R) = 1$, it follows from Lemma~\ref{intersecNeighb} that this probability mass is positive only when $|N(T) \cap N(R)| = 1$. 
+It follows from Lemma~\ref{neighBound} that the maximal mass we can allocate under a uniform random walk to the tree in $N(T) \cap N(R)$ is $\frac{1}{2(n-1)}$ in $\nni$, $\dts$, and $\mdts$ spaces and is $\frac{1}{n-1}$ in $\rnni$ space.
+The lemma follows.
 \endproof
 
-\todo[inline]{You use "corollary" in a different sense than I've seen before. I have only seen it used to mean "follows directly from the theorem/lemma but you seem to use it as "follows from a similar line of argument."}
-\begin{corollary}
-Let $T$ and $R$ be adjacent trees.
-Then the curvature of $\rnni$ space with uniform random walk is at most $\dfrac{1}{n-1}$.
-\end{corollary}
+%\todo[inline]{You use "corollary" in a different sense than I've seen before. I have only seen it used to mean "follows directly from the theorem/lemma but you seem to use it as "follows from a similar line of argument."} AG: fixed.
 
 This lemma and corollary provide tighter upper bounds for the curvature than Lemma~\ref{curvBoundGeneral} for all $n$.
 
 It is easy to generalise the lemma to the uniform $p$-lazy random walk.
-\todo{I assume $m_x(x) = 1-p$.}
 Indeed, by looking at the proof of the lemma, one can notice that the curvature between adjacent $\nni$, $\dts$, or $\mdts$ trees $T$ and $R$ under a uniform $p$-lazy random walk satisfies
 \[
 \kappa(T,R) \leq \frac{p}{2(n-1)}.
 \]
 
-\todo{This can get confusing fast. Please see \url{https://matsengrp.slack.com/files/matsen/F04J79F5A/pasted_image_at_2015_04_27_07_08_am.png} for definition of asymptotic ricci curvature. I suggest using $\operatorname{ric}$ for this quantity.}
-Note that Ollivier~\cite{Ollivier2009-cj} defines the curvature of a metric
-space with a uniform $p$-lazy random walk (for positive $p$) by
+%\todo{This can get confusing fast. Please see \url{https://matsengrp.slack.com/files/matsen/F04J79F5A/pasted_image_at_2015_04_27_07_08_am.png} for definition of asymptotic ricci curvature. I suggest using $\operatorname{ric}$ for this quantity.} AG: fixed.
+
+We follow Loisel and Romon~\cite{Loisel2014-gu} and define {\em asymptotic Ricci-Ollivier curvature} $\ric$ of a metric space with uniform $p$-lazy random walk by 
 \[
-\kappa(x,y) = \frac1p \left(1 - \frac{W(m_x, m_y)}{d(x, y)}\right)
+\ric(x,y) = \lim_{p\to0} \frac{\kappa(x,y)}{p}
 \]
 
-In this case the curvature between adjacent trees in $\dts$ and in $\mdts$ with a uniform $p$-lazy random walk (for arbitrary $p$) is bounded from above by
+In this case the asymptotic curvature between adjacent trees in $\nni$, $\dts$, and $\mdts$ with uniform $p$-lazy random walk is bounded from above by
 \[
 \frac{1}{2(n-1)}.
 \]
-The curvature $\rnni$ spaces in this case remains the same as in the case of uniform random walk as well.
+The upper bound of asymptotic curvature of $\rnni$ space with uniform $p$-lazy random walk coincides with the (plain) curvature of the space with uniform random walk as well. 
 
-We continue with lower bounds on curvature of spaces with uniform lazy random walks, where we follow Ollivier~\cite{Ollivier2009-cj} and divide the curvature of a $p$-lazy random walk by $p$ when $1-p$ is positive, as explained above.
+We continue with lower bounds on curvature of spaces with uniform lazy random walks.
 
 \begin{lemma}\label{uniformLower}
-Let $T$ and $R$ be adjacent trees in $\nni$, $\dts$, or $\mdts$ space.
-Then the curvature of the space with $p$-lazy uniform random walk satisfies
-\[
-\kappa(T,R) \geq -\frac{4}{n-1}.
-\]
+Let $T$ and $R$ be adjacent trees.
+Then both the asymptotic curvature of the space with $p$-lazy uniform random walk and the curvature of the space with uniform random walk are at least 
+\begin{enumerate}[(i)]
+\item $-\dfrac{4}{n-1}$ in $\nni$, $\dts$, and $\mdts$ spaces,
+\item $-\dfrac{8}{n-1}$ in $\rnni$ space. 
+\end{enumerate}
+
 The bound is tight.
 \end{lemma}
 
 \proof
-Let $T$ and $R$ be two $\dts$-adjacent trees. To minimise the curvature, we have
+Let $T$ and $R$ be two adjacent trees. To minimise the curvature, we have
 to maximise $W(m_T, m_R)$ across $T$ and $R$. The latter is maximised when the probability mass
 on trees $E\in N(T)$ such that $d(E, N(R)) > d(T, R)$, is
 maximised\footnote{If $x$ is a point of a metric space $(M,d)$ and
@@ -289,49 +283,34 @@ $S \subseteq M$ then by $d(x,S)$ we denote $\inf\limits_{s \in S} d(x,s)$.}.
 Since $d(T, R) = 1$, the maximum possible number of such trees $E$ is
 \todo{Explain this. EM skipped pending explanation.}
 $8$. To make $W(m_T,m_R)$ being as large as possible, we have to assume
-$d(S, N(R)) = 1$ for the rest of the trees $S$ from $N(T)$, and the
-total number of elements of $N(T)$ to be $2(n-1)$.
-\todo{May be, write this proof in terms of $|N(T)|$ and then put its value only when the curvature is estimated.}
+$d(S, N(R)) = 1$ for the rest of the trees $S$ from $N(T)$.
 Hence for the uniform random walk we have:
 \[
-W(m_T,m_R)\leq 8 \cdot 2 \cdot \frac{1}{2(n - 1)} +
-(2(n - 1) - 8) \cdot \frac{1}{2(n-1)} = 1 + \dfrac{4}{n-1}.
+W(m_T,m_R)\leq 8 \cdot 2 \cdot \frac{1}{|N(T)|} +
+(|N(T)| - 8) \cdot \frac{1}{N(T)} = 1 + \dfrac{8}{|N(T)|}.
 \]
-Hence, $1 - W(m_T,m_R) \geq - \dfrac{4}{n-1}$.
+Hence, $\kappa(T,R) = 1 - W(m_T,m_R) \geq - \dfrac{8}{|N(T)|}$.
 
-A similar reasoning applies when $1-p$ is positive:
+A similar reasoning applies for the $p$-lazy random walk:
 \[
-W(m_T,m_R)\leq 8 \cdot 2 \cdot \frac{p}{2(n - 1)} +
-(2(n - 1) - 7) \cdot \frac{1}{2(n-1)} + (1-p) - \frac{p}{2(n-1)} =
+W(m_T,m_R)\leq 8 \cdot 2 \cdot \frac{p}{|N(T)|} +
+(|N(T)| - 7) \cdot \frac{p}{|N(T)|} + (1-p) - \frac{p}{|N(T)|} =
 \]
-$1 + \dfrac{4p}{n-1}$. Hence,
-$1 - W(m_T,m_R) \geq - \dfrac{4p}{n-1}$. The lemma follows.
-\endproof
+$1 + \dfrac{8p}{|N(T)|}$. Hence,
+$\ric(T,R) = \lim\limits_{p\to0}\left(1 - W(m_T,m_R)\right) \geq - \dfrac{8}{|N(T)|}$.
 
-We note that the lower bound on the size of neighbours in $\rnni$ is twice that in $\nni$, $\dts$, or $\mdts$.
-This makes the lower bound on the curvature of $\rnni$ twice that in $\nni$, $\dts$, or $\mdts$.
-
-\begin{corollary}
-Let $T$ and $R$ be adjacent trees in $\rnni$ space.
-Then the curvature of the space with $p$-lazy uniform random walk satisfies
-\[
-\kappa(T,R) \geq -\frac{8}{n-1}.
-\]
-The bound is tight.
-\end{corollary}
-
-\proof
-The proof repeats that of the lemma with $2(n-1)$ being replaced by $n-1$.
+It remains to note that Lemma~\ref{neighBound} gives us an estimate $|N(T)| \geq 2(n-1)$ in $\nni$, $\dts$, $\mdts$, and $|N(T)| \geq n-1$ in $\rnni$ space.
+The lemma follows.
 \endproof
 
 \begin{corollary}\label{flatInLimDTS}
 Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of trees such that
 $d(T_n,R_n) = 1$ in $\nni$, $\rnni$, $\dts$, or $\mdts$ space.
-Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$.
+Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = \lim\limits_{n \to \infty}\ric(T_n,R_n) = 0$.
 \end{corollary}
 
 \proof
-Follows from Lemma~\ref{uniformUpper} and Lemma~\ref{uniformLower} and corresponding corollaries.
+Follows from Lemma~\ref{uniformUpper} and Lemma~\ref{uniformLower}.
 \endproof
 
 As we have just proved, the corollary above holds true in $\nni$, $\rnni$, $\dts$, and $\mdts$ spaces.
@@ -354,7 +333,7 @@ Then $\lim\limits_{n \to \infty} \kappa(x_n, y_n) = 0$.
 
 \proof
 Consider an arbitrary $n$ and the pair of points $x_n,y_n$.
-Set $I_0 = N(x_n) \cup N(y_n)$, denote by $I_1$ the set of points
+Set $I_0 = N(x_n) \cap N(y_n)$, denote by $I_1$ the set of points
 $z$ such that the probability mass is moved from $z$ at distance one under the
 optimum coupling for $W(m_{x_n},m_{y_n})$, by $I_2$ the set of points $z$ such that
 the probability mass is moved from $z$ a distance $\geq 2$ under the optimum
@@ -363,7 +342,7 @@ scenario for $W(m_x,m_y)$. Then
 W(m_{x_n},m_{y_n}) = \sum_{I_0} d_i x_i p_{x_i} + \sum_{I_1} d_i x_i p_{x_i} +
 \sum_{I_2} d_i x_i p_{x_i}.
 \]
-\todo{I'm not sure why \ref{intersec}) is needed here.}
+%\todo{I'm not sure why \ref{intersec}) is needed here.} AG: the typo fixed.
 It follows from~(\ref{intersec}) and~(\ref{dist2}) that the first and the last sums
 are $\O(1)$ when $n\to\infty$. This together with property~(\ref{difference})
 implies that the middle sum tends to $1$ when $n\to\infty$ because the number of
@@ -382,10 +361,19 @@ These subsets of neighbors are the force pushing towards positive curvature, so 
 
 \begin{theorem}
 \label{max_good_neighbors}
-Let $x$ and $y$ be $\dts$-trees.
-Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most $4d(x,y)$.
+Let $x$ and $y$ be two trees.
+Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most 
+\begin{enumerate}[(i)]
+\item $2d(x,y)$ in $\nni$ space,
+\item $3d(x,y)$ in $\rnni$ space,
+\item $4d(x,y)$ in $\dts$ space, and
+\item $5d(x,y)$ in $\mdts$ space.
+\end{enumerate}
 \end{theorem}
+
 \begin{proof}
+We first prove the statement for $\dts$ space.
+
 Let $U$ be the set of neighbors $u$ of $x$ such that $d(u,y) \le d(x,y)$, as stated in the theorem.
 We partition $U$ into three sets of trees---$I$, $R$, and $L$---obtained from $x$ by a single NNI move, rank change, or length change, respectively.
 We then prove the theorem by bounding the size of each partition by $2d(x,y)$, $d(x,y)$, and $d(x,y)$, respectively.
@@ -409,25 +397,15 @@ Thus, the total size of $R$ is bounded by $d(x,y)$.
 
 The bound of $d(x,y)$ on the number of length changes that can be applied to move $x$ closer to $y$ follows similarly.
 Therefore, there are at most $|I| + |R| + |L| \le 2d(x,y) + d(x,y) + d(x,y) = 4d(x,y)$ trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$.
+
+The statement for the other three spaces follows similarly: for $\nni$ we need to count only for trees from $I$, for $\rnni$ we need to count only for trees from $I$ and $R$, for $\mdts$ we will have to add $2d(x,y)$ instead of $d(x,y)$ for $L$.
 \end{proof}
 
-\todo[inline]{I suggest folding all of this into the above theorem, along with a statement in the proof saying that the extra statements follow similarly.}
-Note that this implies the following corollaries for $\nni$, $\rnni$ and $\mdts$ spaces.
-\begin{corollary}
-Let $x$ and $y$ be trees from NNI space.
-Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
-\begin{enumerate}[(i)]
-\item $2d(x,y)$ in $\nni$ space,
-\item $3d(x,y)$ in $\rnni$ space, and
-\item $5d(x,y)$ in $\mdts$ space.
-\end{enumerate}
-\end{corollary}
-
-\proof
-Using notations from the proof of the theorem: for (i) we need to count only for trees from $I$, for (ii) we need to count only for trees from $I$ and $R$, for (iii) we will have to add $2d(x,y)$ instead of $d(x,y)$ for $L$.
-\endproof
+%\todo[inline]{I suggest folding all of this into the above theorem, along with a statement in the proof saying that the extra statements follow similarly.}
+%Note that this implies the following corollaries for $\nni$, $\rnni$ and $\mdts$ spaces. AG: fixed.
 
 We now use Theorem~\ref{max_good_neighbors} to prove the following.
+\todo[inline]{v This must be true for $p$-lazy walk as well.}
 
 \begin{theorem}\label{zero-in-the-limit}
 Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of $\dts$-trees on $n$ taxa.
