@@ -124,7 +124,7 @@ In this case, $\deg(T)$ is $2(n-1)$, twice the number of intervals between the t
 
 Note that no other tree class attains the upper bound in $\dts$ space.
 
-Since every NNI move results in two neighbours, the equality $\deg(T) = 2(n-2)$ follows because no NNI is possible for the cherry branches.
+Since every NNI move results in two neighbours, the equality $\deg(T) = 2(n-2)$ follows, because no NNI is possible for the cherry branches.
 
 The lower bound in $\rnni$ space is attained by the caterpillar-tree where taxa get ranks $1, 2, 4, 6, \ldots$ and internal nodes get ranks $3, 5, 7, \ldots$
 In other words, the coalescent events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence $\ldots$
@@ -150,7 +150,7 @@ The following are satisfied in both $\dts$ and $\mdts$ spaces for any trees $T$ 
 Follows from Lemma~\ref{neighBound}.
 \endproof
 
-Analogous bounds for $\nni$ space are $0$ and $1$ respectively.
+For $\nni$ space, Lemma~\ref{neighBound} implies that are $deg(T)-deg(R) = 0$ and $\frac{\deg(T)}{deg(R)} = 1$.
 
 \begin{corollary}\label{degreeBoundsNNI}
 The following are satisfied in $\rnni$ space.
@@ -247,10 +247,19 @@ The lemma follows.
 This lemma and corollary provide tighter upper bounds for the curvature than Lemma~\ref{curvBoundGeneral} for all $n$.
 
 It is easy to generalise the lemma to the uniform $p$-lazy random walk.
-Indeed, by looking at the proof of the lemma, one can notice that the curvature between adjacent $\nni$, $\dts$, or $\mdts$ trees $T$ and $R$ under a uniform $p$-lazy random walk satisfies
+Indeed, by looking at the proof of the lemma, one can notice that the curvature between adjacent trees $T$ and $R$ under a uniform $p$-lazy random walk satisfies
 \[
-\kappa(T,R) \leq \frac{p}{2(n-1)}.
+\kappa(T,R) \leq \frac{p}{2(n-1)}
 \]
+in $\dts$ and $\mdts$ spaces,
+\[
+\kappa(T,R) \leq \frac{p}{2(n-2)}
+\]
+in $\nni$ space, and
+\[
+\kappa(T,R) \leq \frac{p}{n-1}
+\]
+in $\rnni$ space.
 
 %\todo{This can get confusing fast. Please see \url{https://matsengrp.slack.com/files/matsen/F04J79F5A/pasted_image_at_2015_04_27_07_08_am.png} for definition of asymptotic ricci curvature. I suggest using $\operatorname{ric}$ for this quantity.} AG: fixed.
 
@@ -259,11 +268,11 @@ We follow Loisel and Romon~\cite{Loisel2014-gu} and define {\em asymptotic Ricci
 \ric(x,y) = \lim_{p\to0} \frac{\kappa(x,y)}{p}
 \]
 
-In this case the asymptotic curvature between adjacent trees in $\nni$, $\dts$, and $\mdts$ with uniform $p$-lazy random walk is bounded from above by
+In this case the asymptotic curvature between adjacent trees in $\dts$ and $\mdts$ with uniform $p$-lazy random walk is bounded from above by
 \[
-\frac{1}{2(n-1)}.
+\frac{1}{2(n-1)}
 \]
-The upper bound of asymptotic curvature of $\rnni$ space with uniform $p$-lazy random walk coincides with the (plain) curvature of the space with uniform random walk as well. 
+The upper bound of asymptotic curvature of $\nni$ and $\rnni$ spaces with uniform $p$-lazy random walk coincides with the (plain) curvatures of the spaces with uniform random walk as well. 
 
 We continue with lower bounds on curvature of spaces with uniform lazy random walks.
 
@@ -271,11 +280,12 @@ We continue with lower bounds on curvature of spaces with uniform lazy random wa
 Let $T$ and $R$ be adjacent trees.
 Then both the asymptotic curvature of the space with $p$-lazy uniform random walk and the curvature of the space with uniform random walk are at least 
 \begin{enumerate}[(i)]
-\item $-\dfrac{4}{n-1}$ in $\nni$, $\dts$, and $\mdts$ spaces,
+\item $-\dfrac{4}{n-1}$ in $\dts$ and $\mdts$ spaces,
+\item $-\dfrac{4}{n-2}$ in $\nni$ space,
 \item $-\dfrac{8}{n-1}$ in $\rnni$ space. 
 \end{enumerate}
 
-The bound is tight.
+The bounds are tight.
 \end{lemma}
 
 \proof
@@ -303,7 +313,7 @@ W(m_T,m_R)\leq 8 \cdot 2 \cdot \frac{p}{|N(T)|} +
 $1 + \dfrac{8p}{|N(T)|}$. Hence,
 $\ric(T,R) = \lim\limits_{p\to0}\left(1 - W(m_T,m_R)\right) \geq - \dfrac{8}{|N(T)|}$.
 
-It remains to note that Lemma~\ref{neighBound} gives us an estimate $|N(T)| \geq 2(n-1)$ in $\nni$, $\dts$, $\mdts$, and $|N(T)| \geq n-1$ in $\rnni$ space.
+It remains to note that Lemma~\ref{neighBound} gives us an estimate $|N(T)| \geq 2(n-1)$ in $\dts$ and $\mdts$, $|N(T)| \geq 2(n-2)$ in $\nni$, and $|N(T)| \geq n-1$ in $\rnni$ space.
 The lemma follows.
 \endproof
 
@@ -326,10 +336,10 @@ Let $(M_n,d_n)_{n \in \omega}$ be a sequence of finite metric spaces and
 $(x_n, y_n)$ a sequence of adjacent vertices from $M_n$,
 that is $d_n(x_n,y_n) = 1$, such that
 \begin{enumerate}[(1)]
-\item\label{intersec} $\big|N(x_n) \cap N(y_n)\big| = o(|N(x_n)|).$
-\item\label{difference} $\big||N(x_n)| - |N(y_n)|\big| = o(|N(x_n)|).$
+\item\label{intersec} $\big|N(x_n) \cap N(y_n)\big| = o(|N(x_n)|)$
+\item\label{difference} $\big||N(x_n)| - |N(y_n)|\big| = o(|N(x_n)|)$
 \item\label{dist2} $\big|\{(x,y) \mid
-	x \in N(x_n),~ y \in N(y_n),~ d(x, y) \geq 2\}\big| = o(|N(x_n)|).$
+	x \in N(x_n),~ y \in N(y_n),~ d(x, y) \geq 2\}\big| = o(|N(x_n)|)$
 \end{enumerate}
 
 Then $\lim\limits_{n \to \infty} \kappa(x_n, y_n) = 0$.
@@ -370,7 +380,8 @@ Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
 \begin{enumerate}[(i)]
 \item $2d(x,y)$ in $\nni$ space,
 \item $3d(x,y)$ in $\rnni$ space,
-\item $4d(x,y)$ in $\dts$ space, and
+\item $4d(x,y)$ in $\dts$ space,
+\todo{How is this consistent with the $8$ in Lemma~\ref{uniformLower}?}
 \item $5d(x,y)$ in $\mdts$ space.
 \end{enumerate}
 \end{theorem}
