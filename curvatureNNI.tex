@@ -99,12 +99,12 @@ assign the minimal length to the new interval.
 
 Thus $\dts$ can be considered as either a graph or a metric space, and we will refer to it as both.
 
-One might suggest that geometrically and graph-theoretically $\dts$ is similar to NNI space on rooted tree topologies, to ranked NNI space, and to $\dts$ space with an arbitrary (but finite) number of intercoalescent interval lengths.
-This is so indeed.
-As we will see, the results and proofs in this paper can be straightforwardly adapted to the spaces mentioned.
-Furthermore, as the NNI space of unrooted tree topologies with $n-1$ leaves is exactly the same as the NNI space of rooted tree topologies with $n$ leaves, all our result immediately imply their counterparts in unrooted NNI space.
+One might suggest that geometrically and graph-theoretically $\dts$ is similar to NNI space on (rooted) tree topologies, to ranked NNI space, and to $\dts$ space with an arbitrary (but finite) number of intercoalescent interval lengths.
+That is so indeed.
+As we shall see, the results and proofs in this paper can be straightforwardly adapted to the spaces mentioned.
+Furthermore, as the NNI space of unrooted tree topologies with $n-1$ leaves is isomorphic (as a graph) to the NNI space of rooted tree topologies with $n$ leaves, all our results immediately imply their counterparts in unrooted NNI space.
 We omit from the text the exact formulations for unrooted trees, as they can be obtained in the obvious way.
-We will provide all proofs for the $\dts$ space and draw the corresponding results for the other three treespaces as corollaries.
+We will provide all proofs for $\dts$ space and draw the corresponding results for the other three treespaces as corollaries.
 
 We denote NNI space on rooted tree topologies by $\nni$, on ranked tree topologies by $\rnni$,
 \todo{TODO: Give proper definitions.}
@@ -114,7 +114,10 @@ By $n$ we denote the number of taxa and assume $n \geq 3$ throughout the paper.
 
 \begin{lemma}\label{neighBound}
 Let $T$ be a tree on $n$ leaves. 
-Then \[2(n-1)\leq \deg(T)\leq5(n-1)\] in $\dts$ or $\mdts$ space, \[\deg(T) = 2(n-2)\] in $\nni$ space, and \[n-1\leq \deg(T)\leq3(n-1)\] in $\rnni$ space.
+Then
+\[2(n-1)\leq \deg(T)\leq5(n-1)\] in $\dts$ and $\mdts$ space,
+\[\deg(T) = 2(n-2)\] in $\nni$ space, and
+\[n-1\leq \deg(T)\leq3(n-1)\] in $\rnni$ space.
 \end{lemma}
 
 \proof
@@ -129,7 +132,7 @@ Note that no other tree class attains the upper bound in $\dts$ space.
 Since every NNI move results in two neighbours, the equality $\deg(T) = 2(n-2)$ follows, because no NNI is possible for the cherry branches.
 
 The lower bound in $\rnni$ space is attained by the caterpillar-tree where taxa get ranks $1, 2, 4, 6, \ldots$ and internal nodes get ranks $3, 5, 7, \ldots$
-In other words, the coalescent events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence $\ldots$
+In other words, the coalescent events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence$\ldots$
 %\todo{EM: A little more detail, please? The nodes are numbered so far, not the intervals\\ 
 %AG: fixed.\\
 %EM: OK, thanks, though in the next sentence you still do talk about even and odd {\em intervals}.\\
