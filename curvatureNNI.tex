@@ -43,9 +43,7 @@ the set of measures on this graph. In other words, for every vertex $v$,
 $m_v(w)$ is the probability of moving from $v$ to $w$ in one step.
 Given a graph with vertices ${u, v, \ldots}$, a \emph{coupling} $\{p_{u,v}\}$ between two measures $\mu$ and $\nu$ is a probability measure on $V(G) \times V(G)$ that is $\mu$ after marginalizing over the second component, and $\nu$ after marginalizing over the first.
 
-We consider a number of Markov chains that arise
-\todo{Do they?}
-in phylogenetic Bayesian inference and investigate the curvature of those chains with the eventual goal of the efficiency properties of the corresponding inference methods.
+We consider a number of Markov chains that arise in phylogenetic Bayesian inference and investigate the curvature of those chains with the eventual goal of the efficiency properties of the corresponding inference methods.
 
 \section{Discrete time-tree space and its variants}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -82,12 +80,13 @@ other by one unit.
 \item The trees have identical topologies, there exists a unique pair of nodes
 which have different rank in the two trees, and the intercoalescent intervals
 between these two nodes are of the smallest possible length in both trees, and all other intercoalescent intervals are identical.
-\item The trees have topologies which differ by one NNI move, all nodes that
-are not involved in the NNI move have identical ranks, all intercoalescent
-intervals that are not involved in the NNI move have identical lengths,
-and the two intervals that are involved in the NNI move (the one that was there
-before the move and the one that appeared after the move) both have the minimal
-possible length.
+\item The trees have topologies which differ by one NNI move and
+\begin{itemize}
+\item the NNI move is done by sending the length of one intercoalescent interval down to zero and resolving the multifurcation in one of the two possible ways, 
+\item all nodes that are not involved in the NNI move have identical ranks, 
+\item all intercoalescent intervals that are not involved in the NNI move have identical lengths,
+\item the two intervals that are involved in the NNI move (the one that was there before the move and the one that appeared after the move) both have the minimal possible length.
+\end{itemize}
 \end{enumerate}
 
 In other words, by going from one tree to an adjacent tree in the graph we can
@@ -106,9 +105,7 @@ Furthermore, as the NNI space of unrooted tree topologies with $n-1$ leaves is i
 We omit from the text the exact formulations for unrooted trees, as they can be obtained in the obvious way.
 We will provide all proofs for $\dts$ space and draw the corresponding results for the other three treespaces as corollaries.
 
-We denote NNI space on rooted tree topologies by $\nni$, on ranked tree topologies by $\rnni$,
-\todo{TODO: Give proper definitions.}
-and on $\dts$ trees with $m$ branch lengths by $\mdts$.
+We denote NNI space on rooted tree topologies by $\nni$, on ranked tree topologies, which is considered as $\dts$ space with only short branches, by $\rnni$, and on $\dts$ trees with $m$ branch lengths by $\mdts$.
 All of these can be considered as either a graph or a metric space, and we will refer to them as both.
 By $n$ we denote the number of taxa and assume $n \geq 3$ throughout the paper.
 
