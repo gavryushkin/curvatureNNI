@@ -9,6 +9,7 @@
 \usepackage{enumerate}
 \usepackage{url}
 \usepackage[colorlinks=true]{hyperref}
+\usepackage{graphicx}
 
 \newtheorem{lemma}{Lemma}
 \newtheorem{question}[lemma]{Question}
@@ -22,6 +23,8 @@
 \newcommand{\mdts}{\mathrm{mDtT}}
 \newcommand{\MH}{\mathrm{MH}}
 \newcommand{\ric}{\operatorname{ric}}
+\newcommand{\rt}{\mathrm{rt}}
+\newcommand{\tp}{\mathrm{tp}}
 
 \renewcommand{\O}{\mathcal{O}}
 
@@ -57,44 +60,51 @@ However, there is no need to restrict ourselves by the ultrametricity property, 
 Moreover, many biological application explicitly require the restriction imposed by ultrmetricity to be dropped~\cite{}.
 Hence, by a time-tree in this paper we mean a rooted phylogenetic tree.
 
-The easiest way to define the space is to assume that the reader is familiar
-with~\cite{Gavryushkin2014-bw} and say that the
-{\em discrete time-tree space,}
-or $\dts$ for short, is the $\mathrm t$-space defined
-in~\cite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only two length values, $1$ and $2$.
-In other words, to define a tree in the $\dts$, we first fix a ranked tree
-topology with all nodes being of different ranks and then assign a number
-from $\{1,2\}$ to every intercoalescent interval.
-Intuitively, we will have
-only two options for the length of an intercoalescent interval, which can
-be thought of as short and long.
+In short, the {\em discrete time-tree space,} or $\dts$ space, is the $\tau$-space defined in~\cite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only two length values, $1$ and $2$.
+In other words, to define a tree in $\dts$, we first fix a ranked tree topology with all nodes being of different ranks and then assign a number from $\{1,2\}$ to every intercoalescent interval.
+Intuitively, we have only two options for the length of an intercoalescent interval, which can be thought of as short and long.
 We shall describe the numbers assigned to the intercoalescent intervals as to the {\em lengths} of those intervals.
 
-Two trees from $\dts$ are adjacent if and only if precisely one of the following
-conditions is satisfied:
+We now go on to defining the adjacency relation of the graph $\dts$.
+In short, two trees in $\dts$ are adjacent if the $\tau$-geodesic, defined in~\cite{Gavryushkin2014-bw}, crosses precisely one face of co-dimension $1$.
+To define the space formally, we first need to introduce the following notions.
+Let $T$ be a rooted phylogenetic tree with branch lengths such that the ranked topology of $T$ inherited from its branch lengths does not have two nodes (including taxa) of the same rank.
+We denote this ranked topology by $\rt(T)$ and assume that all nodes of the tree (including taxa) are assigned ranks $1,2,\ldots$
+The node of the least rank is seen as being at the present, so the root is the oldest node of the tree.
+An {\em intercoalescent interval} of $T$ is an interval between any two nodes of consecutive ranks.
+Intercoalescent intervals of a tree on $5$ taxa\todo{Make the tree on the figure non-ultrametric.} are denoted by $\tau_i$ on Figure~\ref{T5.pdf}.
+By $\ell_T(I)$ we denote the length of intercoalescent interval $I$ in tree $T$.
+We say that two trees $T$ and $R$ {\em have the same ranked topology} and write $\rt(T) = \rt(R)$ if the tree topologies are isomorphic as directed graph and the isomorphism preserves the ranks of the nodes.
+In the same way we write $\tp(T) = \tp(R)$ when trees $T$ and $R$ have the same rooted tree topology (that is, ranks are ignored).
 
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{T5.pdf}
+\caption{Intercoalescent intervals of a tree on $5$ taxa.}
+\label{T5.pdf}
+\end{figure}
+
+We say that two trees $T$ and $R$ are {\em NNI neighbours} if $\rt(T) \ne \rt(R)$ and the tree $R$ is obtained from tree $T$ by sending the length of an intercoalescent interval between an internal node and its parent in $T$ down to zero and resolving the multifurcation in one of the two possible ways.
+We note that this definition implies the existence of an internal node $a$ the parent of which is the immediate successor of $a$ in $\rt(T)$.
+See figure~\ref{dts_neighbours.pdf} for a graphical explanation.
+
+Two trees $T$ and $R$ from $\dts$ are adjacent if and only if precisely one of the following conditions is satisfied.
 \begin{enumerate}[(1)]
-\item The trees have identical ranked topologies and there exists a unique
-intercoalescent interval such that its length in one tree is smaller than in the
-other by one unit.
-\item The trees have identical topologies, there exists a unique pair of nodes
-which have different rank in the two trees, and the intercoalescent intervals
-between these two nodes are of the smallest possible length in both trees, and all other intercoalescent intervals are identical.
-\item The trees have topologies which differ by one NNI move and
-\begin{itemize}
-\item the NNI move is done by sending the length of one intercoalescent interval down to zero and resolving the multifurcation in one of the two possible ways, 
-\item all nodes that are not involved in the NNI move have identical ranks, 
-\item all intercoalescent intervals that are not involved in the NNI move have identical lengths,
-\item the two intervals that are involved in the NNI move (the one that was there before the move and the one that appeared after the move) both have the minimal possible length.
-\end{itemize}
+\item $\rt(T) = \rt(R)$ and there exists a unique intercoalescent interval $I$ such that $|\ell_T(I) - \ell_R(I)| = 1$.
+\item $\tp(T) = \tp(R)$, there exists a unique pair of consecutive nodes $a$ and $b$ in $T$ such that the ranks of $a$ and $b$ are swapped in $R$, the intercoalescent interval $I$ between $a$ and $b$ satisfies $\ell_T(I) = \ell_R(I) = 1$, and $\ell_T(J) = \ell_R(J)$ for all other intervals $J \ne I$.
+\item $T$ and $R$ are NNI neighbours.
 \end{enumerate}
 
-In other words, by going from one tree to an adjacent tree in the graph we can
-either change the length of one intercoalescent interval by one unit or we
-can send an intercoalescent interval of minimal length down to zero and
-then resolve the multifurcation to either of the two possible topologies
-(one possible topology if there is no multifurcation) and
-assign the minimal length to the new interval.
+In other words, by going from one tree to an adjacent tree in the graph we can either change the length of one intercoalescent interval by one unit or we can send the length of an intercoalescent interval of minimal length down to zero and then resolve the multifurcation to either of the two possible topologies (one possible topology if there is no multifurcation) and assign the minimal length to the new interval.
+See Figure~\ref{dts_neighbours.pdf} \todo{Draw the picture.} for an example of a pair of trees $T$ and $R$ at $\dts$ distance $3$, where one has to apply all of the three possible cases from the definition above to obtain a path from $T$ to $R$ in $\dts$.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{T5.pdf}
+\caption{Trees $T$ and $R$ are at $\dts$ distance $3$.
+To go from $T$ to $R$ in $\dts$, one has to change the length of the interval $I$, swap the ranks of the nodes bounding the interval $J$, and perform an NNI move for the interval $K$.}
+\label{dts_neighbours.pdf}
+\end{figure}
 
 Thus $\dts$ can be considered as either a graph or a metric space, and we will refer to it as both.
 
