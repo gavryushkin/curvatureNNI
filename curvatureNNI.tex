@@ -69,14 +69,14 @@ We shall describe the numbers assigned to the intercoalescent intervals as to th
 
 We now go on to defining the adjacency relation of the graph $\dts$, the set of vertices of which consists of $\dts$ trees.
 In short, two trees in $\dts$ are adjacent if the $\tau$-geodesic, defined in~\cite{Gavryushkin2014-bw}, crosses precisely one face of co-dimension $1$.
-To define the space formally, we first need to introduce the following notions.
+To make this paper self-contained, we provide a complete definition below, for which the following notions are needed.
 Let $T$ be a rooted phylogenetic tree with branch lengths such that the ranked topology of $T$ inherited from its branch lengths does not have two nodes (including taxa) of the same rank.
-We denote this ranked topology by $\rt(T)$ and assume that all nodes of the tree (including taxa) are assigned ranks $1,2,\ldots$
-The node of the least rank is seen as being at the present, so the root is the oldest node of the tree of the highest rank.
+We denote this ranked topology by $\rt(T)$ and assume that all nodes of the tree (including taxa) are assigned ranks $0,1,\ldots$
+The node of rank $0$ is seen as being at the present, so the root has the highest rank and is the oldest node of the tree.
 An {\em intercoalescent interval} of $T$ is an interval between any two nodes of consecutive ranks.
 Intercoalescent intervals of a tree on $6$ taxa are depicted on Figure~\ref{T5.pdf}.
 By $\ell_T(I)$ we denote the length of the intercoalescent interval $I$ in tree $T$.
-We say that two trees $T$ and $R$ {\em have the same ranked topology} and write $\rt(T) = \rt(R)$ if the tree topologies are isomorphic as directed graph and the isomorphism preserves the ranks of the nodes.
+We say that two trees $T$ and $R$ {\em have the same ranked topology} and write $\rt(T) = \rt(R)$ if the tree topologies are isomorphic as directed graphs and the isomorphism preserves ranks of the nodes.
 In the same way we write $\tp(T) = \tp(R)$ when trees $T$ and $R$ have the same rooted tree topology (that is, ranks are ignored).
 
 \begin{figure}
@@ -88,19 +88,18 @@ In the same way we write $\tp(T) = \tp(R)$ when trees $T$ and $R$ have the same 
 
 We say that two trees $T$ and $R$ are {\em NNI neighbours} if $\rt(T) \ne \rt(R)$ and tree $R$ is obtained from tree $T$ by sending the length of an intercoalescent interval between an internal node and its parent in $T$ down to zero and resolving the multifurcation in one of the two possible ways.
 We note that this definition implies the existence of such an interval in $T$, that is, the existence of an internal node $a$ the parent of which is the immediate successor of $a$ in $\rt(T)$.
-See Figure~\ref{dts_neighbours.pdf} for a graphical explanation.
 In particular, $\mathrm{mrca}(D,E)$ in tree $T$ on Figure~\ref{dts_neighbours.pdf} gives an example of such a node $a$.
-Note also that $\mathrm{mrca}(C,E)$ in $T$ is not a node of this sort, so the tree obtained from $T$ by cutting the edge adjacent to $C$ and regrafting it to the aunt of $\mathrm{mrca}(C,E)$ does not give an NNI neighbour of $T$ in this sense.
+Note also that $\mathrm{mrca}(C,E)$ in $T$ is not a node of such sort, so the tree obtained from $T$ by cutting the edge adjacent to $C$ and regrafting it to the edge between the aunt of $\mathrm{mrca}(C,E)$ and the root does not give an NNI neighbour of $T$ in this sense.
 
 Two trees $T$ and $R$ from $\dts$ are adjacent if and only if precisely one of the following conditions is satisfied.
 \begin{enumerate}[(1)]
 \item $\rt(T) = \rt(R)$ and there exists a unique intercoalescent interval $I$ such that $|\ell_T(I) - \ell_R(I)| = 1$.
-\item $\tp(T) = \tp(R)$, there exists a unique pair of consecutive nodes $a$ and $b$ in $T$ such that the ranks of $a$ and $b$ are swapped in $R$, the intercoalescent interval $I$ between $a$ and $b$ satisfies $\ell_T(I) = \ell_R(I) = 1$, and $\ell_T(J) = \ell_R(J)$ for all other intervals $J \ne I$.
+\item $\tp(T) = \tp(R)$, there exists a unique pair of nodes $a,b$ with consecutive ranks in $\rt(T)$ such that the ranks of $a$ and $b$ are swapped in $R$, the intercoalescent interval $I$ between $a$ and $b$ satisfies $\ell_T(I) = \ell_R(I) = 1$, and $\ell_T(J) = \ell_R(J)$ for all other intervals $J \ne I$.
 \item $T$ and $R$ are NNI neighbours.
 \end{enumerate}
 
-In other words, by going from one tree to an adjacent tree in the graph we can either change the length of one intercoalescent interval by one unit or we can send the length of an intercoalescent interval of minimal length down to zero and then resolve the multifurcation to either of the two possible topologies (one possible topology if there is no multifurcation) and assign the minimal length to the new interval.
-See Figure~\ref{dts_neighbours.pdf} \todo{Draw the picture.} for an example of a pair of trees $T$ and $R$ at $\dts$ distance $3$, where one has to apply all of the three possible cases from the definition above to obtain a path from $T$ to $R$ in $\dts$.
+In other words, by going from one tree to an adjacent tree in $\dts$ graph we can either change the length of one intercoalescent interval by one unit or we can send the length of an intercoalescent interval of minimal length down to zero and then resolve the multifurcation to either of the two possible topologies (one possible topology if there is no multifurcation) and assign the minimal length to the new interval.
+See Figure~\ref{dts_neighbours.pdf} for an example of a pair of trees $T,R$ at $\dts$ distance $3$, where one has to apply all of the three possible cases from the definition above to obtain a path from $T$ to $R$ in $\dts$.
 
 \begin{figure}
 \centering
@@ -110,16 +109,19 @@ To go from $T$ to $R$ in $\dts$, one has to change the length of the interval $I
 \label{dts_neighbours.pdf}
 \end{figure}
 
-Thus $\dts$ can be considered as either a graph or a metric space, and we will refer to it as both.
+Thus we have defined a graph, which we denote by $\dts$.
+Since a graph can also be seen as a metric space where the distance is given by the length of a shortest path, we will refer to $\dts$ as both.
 
 One might suggest that geometrically and graph-theoretically $\dts$ is similar to NNI space on (rooted) tree topologies, to ranked NNI space, and to $\dts$ space with an arbitrary (but finite) number of intercoalescent interval lengths.
 That is so indeed.
 As we shall see, the results and proofs in this paper can be straightforwardly adapted to the spaces mentioned.
 Furthermore, as the NNI space of unrooted tree topologies with $n-1$ leaves is isomorphic (as a graph) to the NNI space of rooted tree topologies with $n$ leaves, all our results immediately imply their counterparts in unrooted NNI space.
 We omit from the text the exact formulations for unrooted trees, as they can be obtained in the obvious way.
-We will provide all proofs for $\dts$ space and draw the corresponding results for the other three treespaces as corollaries.
+We will provide complete proofs for $\dts$ space and draw the corresponding results for the other three treespaces simultaneously.
 
-We denote NNI space on rooted tree topologies by $\nni$, on ranked tree topologies, which is considered as $\dts$ space with only short branches, by $\rnni$, and on $\dts$ trees with $m$ branch lengths by $\mdts$.
+We denote NNI space on rooted tree topologies by $\nni$.
+The $\dts$ space with only short branches is denoted by $\rnni$ and called {\em ranked NNI} space.
+The space of $\dts$ trees with $m$ branch lengths is denoted by $\mdts$.
 All of these can be considered as either a graph or a metric space, and we will refer to them as both.
 By $n$ we denote the number of taxa and assume $n \geq 3$ throughout the paper.
 
