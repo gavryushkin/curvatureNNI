@@ -62,7 +62,7 @@ Hence, by a time-tree in this paper we mean a rooted phylogenetic tree.
 
 \todo[inline]{Should we add some other trees? Ultrametric trees? Ranked NNI as Chris initially understood it?}
 
-In short, the {\em discrete time-tree space,} or $\dts$ space, is the $\tau$-space\footnote{In this discrete setting, $\tau$- and $\mathrm{t}$-spaces from~\cite{Gavryushkin2014-bw} coincide.} defined in~\cite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only two length values, $1$ and $2$.
+In short, the {\em discrete time-tree space,} or $\dts$ space, is the $\tau$-space defined in~\cite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only two length values, $1$ and $2$.
 In other words, to define a tree in $\dts$, we first fix a ranked tree topology with all nodes being of different ranks and then assign a number from $\{1,2\}$ to every intercoalescent interval.
 Intuitively, we have only two options for the length of an intercoalescent interval, which can be thought of as short and long.
 We shall describe the numbers assigned to the intercoalescent intervals as to the {\em lengths} of those intervals.
@@ -89,9 +89,10 @@ In the same way we write $\tp(T) = \tp(R)$ when trees $T$ and $R$ have the same 
 We say that two trees $T$ and $R$ are {\em NNI neighbours} if $\rt(T) \ne \rt(R)$ and tree $R$ is obtained from tree $T$ by sending the length of an intercoalescent interval between an internal node and its parent in $T$ down to zero and resolving the multifurcation in one of the two possible ways.
 We note that this definition implies the existence of such an interval in $T$, that is, the existence of an internal node $a$ the parent of which is the immediate successor of $a$ in $\rt(T)$.
 In particular, the parent of $D$ in tree $T$ on Figure~\ref{dts_neighbours.pdf} gives an example of such a node $a$.
-Note also that the parent of $C$ in $T$ denoted by $b$ on Figure~\ref{dts_neighbours.pdf} is not a node of such sort, so the tree obtained from $T$ by cutting the edge adjacent to $C$ and regrafting it to the edge between the aunt of $b$ and the root does not give an NNI neighbour of $T$ in this sense.
-If trees $T$ and $R$ are NNI neighbours and tree $R$ is obtained by collapsing an interval $I$ in $T$ then we say that the {\em NNI move is performed on interval $I$}.
-We note that it follows from the definition that if $T$ and $R$ are NNI neighbours and an interval $J$ is such that the NNI move is performed on interval $I \ne J$, then $\ell_T(J) = \ell_R(J)$ and the ranks of all nodes that present in both $T$ and $R$ coincide.
+Note also that the parent of $C$ in $T$ denoted by $b$ on Figure~\ref{dts_neighbours.pdf} does not satisfy this property, that is, the parent of $b$ is not its immediate successor in $\rt(T)$.
+Hence, the tree obtained from $T$ by cutting the edge adjacent to $C$ and regrafting it to the edge between the aunt of $b$ and the root does not give an NNI neighbour of $T$ in this sense.
+Note that the definition of NNI neighbours implies $\ell_T(J) = \ell_R(J)$ for each interval $J \ne I$, and the ranks of all nodes present in both $T$ and $R$ coincide.
+If trees $T$ and $R$ are NNI neighbours and tree $R$ is obtained by suppressing an interval $I$ in $T$ then we say that the {\em NNI move is performed on interval $I$}.
 
 Two trees $T$ and $R$ from $\dts$ are adjacent if and only if precisely one of the following conditions is satisfied.
 \begin{enumerate}[(1)]
@@ -142,8 +143,11 @@ Other trees have the same or more possible intercoalescent interval changes, sho
 The upper bound is attained by a caterpillar tree with all intervals short and no coalescent event being younger than a taxon.
 In this case, $\deg(T)$ is $2(n-1)$, the number of intervals---comes from the interval length changes, plus $2(n-2)$, the maximal possible number of NNI neighbours, plus $n$, the number of rank changes between taxa.
 In total, $2(n-1) + 2(n-2) + n = 5n-6$.
+Note that this is an upper bound indeed, as each of the $2(n-2)$ intervals excluding the most recent can contribute either a rank change or $2$ NNI moves.
+Clearly, the tree described maximises the number of intervals that contribute $2$ NNI moves and enables the rest of intervals to contribute a rank change.
 
-Note that no other tree class attains the upper bound in $\dts$ space.
+Note also that no other tree class attains the upper bound in $\dts$ space.\todo{This is actually the only property mentioned so far that distinguish DtT and mDtT.
+This should be taken care of when we decide what spaces we keep.}
 
 Since every NNI move results in two neighbours, the equality $\deg(T) = 2(n-2)$ follows.
 Indeed, it is not hard to see that the set of NNI moves that only consider moving a subtree to its aunt captures the full set of NNI neighbors with no duplicates.
