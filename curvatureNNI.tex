@@ -88,14 +88,16 @@ In the same way we write $\tp(T) = \tp(R)$ when trees $T$ and $R$ have the same 
 
 We say that two trees $T$ and $R$ are {\em NNI neighbours} if $\rt(T) \ne \rt(R)$ and tree $R$ is obtained from tree $T$ by sending the length of an intercoalescent interval between an internal node and its parent in $T$ down to zero and resolving the multifurcation in one of the two possible ways.
 We note that this definition implies the existence of such an interval in $T$, that is, the existence of an internal node $a$ the parent of which is the immediate successor of $a$ in $\rt(T)$.
-In particular, $\mathrm{mrca}(D,E)$ in tree $T$ on Figure~\ref{dts_neighbours.pdf} gives an example of such a node $a$.
-Note also that $\mathrm{mrca}(C,E)$ in $T$ is not a node of such sort, so the tree obtained from $T$ by cutting the edge adjacent to $C$ and regrafting it to the edge between the aunt of $\mathrm{mrca}(C,E)$ and the root does not give an NNI neighbour of $T$ in this sense.
+In particular, the parent of $D$ in tree $T$ on Figure~\ref{dts_neighbours.pdf} gives an example of such a node $a$.
+Note also that the parent of $C$ in $T$ denoted by $b$ on Figure~\ref{dts_neighbours.pdf} is not a node of such sort, so the tree obtained from $T$ by cutting the edge adjacent to $C$ and regrafting it to the edge between the aunt of $b$ and the root does not give an NNI neighbour of $T$ in this sense.
+If trees $T$ and $R$ are NNI neighbours and tree $R$ is obtained by collapsing an interval $I$ in $T$ then we say that the {\em NNI move is performed on interval $I$}.
+We note that it follows from the definition that if $T$ and $R$ are NNI neighbours and an interval $J$ is such that the NNI move is performed on interval $I \ne J$, then $\ell_T(J) = \ell_R(J)$ and the ranks of all nodes that present in both $T$ and $R$ coincide.
 
 Two trees $T$ and $R$ from $\dts$ are adjacent if and only if precisely one of the following conditions is satisfied.
 \begin{enumerate}[(1)]
 \item $\rt(T) = \rt(R)$ and there exists a unique intercoalescent interval $I$ such that $|\ell_T(I) - \ell_R(I)| = 1$.
 \item $\tp(T) = \tp(R)$, there exists a unique pair of nodes $a,b$ with consecutive ranks in $\rt(T)$ such that the ranks of $a$ and $b$ are swapped in $R$, the intercoalescent interval $I$ between $a$ and $b$ satisfies $\ell_T(I) = \ell_R(I) = 1$, and $\ell_T(J) = \ell_R(J)$ for all other intervals $J \ne I$.
-\item $T$ and $R$ are NNI neighbours.
+\item $T$ and $R$ are NNI neighbours and $\ell_T(I) = \ell_R(I) = 1$ where the NNI move is performed on interval $I$.
 \end{enumerate}
 
 In other words, by going from one tree to an adjacent tree in $\dts$ graph we can either change the length of one intercoalescent interval by one unit or we can send the length of an intercoalescent interval of minimal length down to zero and then resolve the multifurcation to either of the two possible topologies (one possible topology if there is no multifurcation) and assign the minimal length to the new interval.
