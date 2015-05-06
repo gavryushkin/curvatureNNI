@@ -86,8 +86,8 @@ In the same way we write $\tp(T) = \tp(R)$ when trees $T$ and $R$ have the same 
 \label{T5.pdf}
 \end{figure}
 
-We say that two trees $T$ and $R$ are {\em NNI neighbours} if $\rt(T) \ne \rt(R)$ and tree $R$ is obtained from tree $T$ by sending the length of an intercoalescent interval between an internal node and its parent in $T$ down to zero and resolving the multifurcation in one of the two possible ways.
-We note that this definition implies the existence of such an interval in $T$, that is, the existence of an internal node $a$ the parent of which is the immediate successor of $a$ in $\rt(T)$.
+We say that two trees $T$ and $R$ are {\em NNI neighbours} if $\rt(T) \ne \rt(R)$ and tree $R$ is obtained from tree $T$ by sending the length of an intercoalescent interval $I$ between an internal node and its parent in $T$ down to zero and resolving the multifurcation in one of the two possible ways.
+We note that this definition implies the existence of such an interval $I$ in $T$, that is, the existence of an internal node $a$ the parent of which is the immediate successor of $a$ in $\rt(T)$.
 In particular, the parent of $D$ in tree $T$ on Figure~\ref{dts_neighbours.pdf} gives an example of such a node $a$.
 Note also that the parent of $C$ in $T$ denoted by $b$ on Figure~\ref{dts_neighbours.pdf} does not satisfy this property, that is, the parent of $b$ is not its immediate successor in $\rt(T)$.
 Hence, the tree obtained from $T$ by cutting the edge adjacent to $C$ and regrafting it to the edge between the aunt of $b$ and the root does not give an NNI neighbour of $T$ in this sense.
@@ -134,6 +134,8 @@ Then
 \[2(n-1) \leq \deg(T) \leq 5n-6\] in $\dts$ and $\mdts$ space,
 \[\deg(T) = 2(n-2)\] in $\nni$ space, and
 \[n-1\leq \deg(T) \leq3n-4\] in $\rnni$ space.
+
+All boundaries are tight.
 \end{lemma}
 
 \proof
@@ -168,13 +170,19 @@ We will need the following obvious corollaries for our analysis of curvature.
 \begin{corollary}\label{degreeBounds}
 The following are satisfied in both $\dts$ and $\mdts$ spaces for any trees $T$ and $R$.
 \begin{enumerate}[(1)]
-\item $deg(T)-deg(R) \leq 3(n-1)$.
-\item $\dfrac25 \leq \dfrac{\deg(T)}{deg(R)} \leq \dfrac52$, and the equality is attained for both bounds and all $n$.
+\item $deg(T)-deg(R) \leq 3n-4$.
+\item $\dfrac25 < \dfrac{\deg(T)}{deg(R)} < \dfrac52$, and the inequalities are tight.
 \end{enumerate}
 \end{corollary}
 
 \proof
-Follows from Lemma~\ref{neighBound}.
+(1) follows from Lemma~\ref{neighBound} immediately.
+
+For (2) we note that
+\[
+\frac{\deg(T)}{deg(R)} \geq \frac{2(n-1)}{5n-6} = \frac25 (1 + \frac{1}{5n-6}) \searrow \frac 25 \mbox{ when } n\to\infty
+\]
+The upper bound follows similarly.
 \endproof
 
 For $\nni$ space, Lemma~\ref{neighBound} implies that $deg(T)-deg(R) = 0$ and $\frac{\deg(T)}{deg(R)} = 1$.
@@ -182,13 +190,13 @@ For $\nni$ space, Lemma~\ref{neighBound} implies that $deg(T)-deg(R) = 0$ and $\
 \begin{corollary}\label{degreeBoundsNNI}
 The following are satisfied in $\rnni$ space.
 \begin{enumerate}[(1)]
-\item $deg(T)-deg(R) \leq 2(n-2)$.
-\item $\dfrac13 \leq \dfrac{\deg(T)}{deg(R)} \leq 3$, and the equality is attained for both bounds and all $n$.
+\item $deg(T)-deg(R) \leq 2n-3$.
+\item $\dfrac13 < \dfrac{\deg(T)}{deg(R)} < 3$, and the inequalities are tight.
 \end{enumerate}
 \end{corollary}
 
 \proof
-Follows from Lemma~\ref{neighBound}.
+Follows from Lemma~\ref{neighBound} using a similar note as in the proof of Corollary~\ref{degreeBounds}.
 \endproof
 
 Let $N(T)$ be the set of trees at distance one from $T$, that is, the set of trees adjacent to $T$ in the corresponding graph.
@@ -290,7 +298,7 @@ in $\rnni$ space.
 
 %\todo{This can get confusing fast. Please see \url{https://matsengrp.slack.com/files/matsen/F04J79F5A/pasted_image_at_2015_04_27_07_08_am.png} for definition of asymptotic ricci curvature. I suggest using $\operatorname{ric}$ for this quantity.} AG: fixed.
 
-We follow Loisel and Romon~\cite{Loisel2014-gu} and define {\em asymptotic Ricci-Ollivier curvature} $\ric$ of a metric space with uniform $p$-lazy random walk by 
+We follow Loisel and Romon~\cite{Loisel2014-gu} and define \todo{This should probably go to intro where we say what we are looking at in this paper.} {\em asymptotic Ricci-Ollivier curvature} $\ric$ of a metric space with uniform $p$-lazy random walk by 
 \[
 \ric(x,y) = \lim_{p\to0} \frac{\kappa(x,y)}{p}
 \]
@@ -300,7 +308,7 @@ In this case the asymptotic curvature between adjacent trees in $\dts$ and $\mdt
 \frac{1}{2(n-1)}
 \]
 
-Following Loisel and Romon~\cite{Loisel2014-gu}, we will refer to non-asymptotic curvature as {\em coarse curvature} \todo{Should this go into the intro? AG tends to leave it here because otherwise the reader will have to go back at this point to refresh the def's.} to distinguish between the two alternative notions of curvature.
+Following Loisel and Romon~\cite{Loisel2014-gu}, we will refer to non-asymptotic curvature as {\em coarse curvature} to distinguish between the two alternative notions of curvature.
 
 
 Thus, the upper bound of asymptotic curvature of $\nni$, $\rnni$, $\dts$, and $\mdts$ spaces coincides with the coarse curvatures of the spaces.
