@@ -25,31 +25,64 @@
 \newcommand{\ric}{\operatorname{ric}}
 \newcommand{\rt}{\mathrm{rt}}
 \newcommand{\tp}{\mathrm{tp}}
+\newcommand{\W}{\mathcal{W}}
+\newcommand{\M}{\mathcal{M}}
 
 \renewcommand{\O}{\mathcal{O}}
 
 \begin{document}
 
 \section{Introduction}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In this paper we study Ricci-Ollivier curvature of Markov chains over phylogenetic trees \cite{Ollivier2009-cj}.
-We formalize different spaces of phylogenetic trees as graphs, where the adjacency
-relation is given by a tree move. Those graphs can be also seen as metric
-spaces where the distance between two points is given by the length of a
-shortest path connecting them. All graphs we are considering in this paper are
-connected, so thus defined distance is indeed a metric.
+In this paper we study Ricci-Ollivier curvature~\cite{Ollivier2009-cj} of Markov chains over phylogenetic trees~\cite{Semple2003-nj}.
+We formalise different spaces of phylogenetic trees as graphs, where the adjacency relation is given by a tree move.
+Those graphs can be also seen as metric spaces where the distance between two points is given by the length of a shortest path connecting them.
+All graphs we are considering in this paper are connected, so thus defined distance is indeed a metric.
 
-A Markov chain (often a random walk in our case) is defined on a graph by its
-proposal mechanism, which is a functional $m$ that maps vertices of the graph to
-the set of measures on this graph. In other words, for every vertex $v$,
-$m_v(w)$ is the probability of moving from $v$ to $w$ in one step.
-Given a graph with vertices ${u, v, \ldots}$, a \emph{coupling} $\{p_{u,v}\}$ between two measures $\mu$ and $\nu$ is a probability measure on $V(G) \times V(G)$ that is $\mu$ after marginalizing over the second component, and $\nu$ after marginalizing over the first.
+A Markov chain (often a random walk in our case) is defined on a metric space by its proposal mechanism, which is a functional $m$ that maps points of the space to the set of measures on this space.
+In other words, for every point $v$ in the space, $m_v(w)$ is the probability of the random walk getting from $v$ to $w$ in one step.
+Given a metric space\footnote{Since all metric spaces considered in this paper are finite, they can be seen as graphs.}
+$(V,d)$, a \emph{coupling} $\mu$ between two measures $\mu_1$ and $\mu_2$ on $V$ is a probability measure on the set of pairs of points $V \times V$ that is $\mu_1$ after marginalizing over the second component, and $\mu_2$ after marginalizing over the first, that is, $\sum\limits_{y \in V}\mu(x,y) = \mu_1(x)$ and $\sum\limits_{y \in V}\mu(y,x) = \mu_2(x)$ for all $x \in V$.
+A coupling can be seen as a scenario of transforming the measure $\mu_1$ on $V$ to $\mu_2$ by looking at $\mu(x,y)$ as the probability mass that has to be moved from $x$ to $y$ under the scenario.
 
-We consider a number of Markov chains that arise in phylogenetic Bayesian inference and investigate the curvature of those chains with the eventual goal of the efficiency properties of the corresponding inference methods.
+Using these notations, we define the {\em work} $\W_\mu$ needed to be done to transform $\mu_1$ to $\mu_2$ via coupling $\mu$ by setting $\W_\mu(\mu_1,\mu_2) = \sum\limits_{x,y\in V}\mu(x,y) d(x,y)$.
+Let $\M$ be the set of all couplings between measures $\mu_1$ and $\mu_2$.
+Then the {\em Wasserstein distance} $W$ between $\mu_1$ and $\mu_2$ is defined to be $W(\mu_1,\mu_2) = \inf\limits_{\mu\in\M}\W_\mu(\mu_1,\mu_2)$.
+
+We are now ready to introduce two main notions we are studying in this paper.
+Let $m$ be a random walk on a metric space $(V,d)$.
+Then the {\em coarse Ricci-Ollivier curvature} between two points $x$ and $y$ from $V$ with the random walk $m$ is
+\[
+\kappa(m;x,y) = 1 - \frac{W(m_x,m_y)}{d(x,y)}
+\]
+
+The second main notion of this paper is that of asymptotic curvature.
+The following random walk $m$ is called a {\em uniform $p$-lazy random walk} on a metric space $(V,d)$.
+\[
+m_x(y) =
+\begin{cases}
+1-p				& \mbox{ if } x=y \\
+0   				& \mbox{ if } d(x,y) > 1 \\
+\dfrac{p}{|N(x)|}  & \mbox{ if } d(x,y) = 1 \\
+\end{cases}
+\]
+where $x,y \in V$ and $N(x) = \{y \mid d(x,y) = 1\}$.
+
+We follow Loisel and Romon~\cite{Loisel2014-gu} and define {\em asymptotic Ricci-Ollivier curvature} $\ric$ between points $x,y$ from a metric space with uniform $p$-lazy random walk $m$ by 
+\[
+\ric(x,y) = \lim_{p\to0} \frac{\kappa(m;x,y)}{p}
+\]
+
+One of the central properties of Ricci-Olliveir curvature is that the curvature is a local property~\cite{Ollivier2009-cj}.
+For finite metric spaces that means that for all distinct $u$ and $v$,
+\[
+\inf\{\kappa(m;x,y)\mid d(x,y) = 1\} \leq \kappa(m;u,v).
+\]
+Hence, we define the {\em coarse Ricci-Ollivier curvature of a metric space} with a random walk $m$ to be $\inf\{\kappa(m;x,y)\mid d(x,y) = 1\}$ and the {\em asymptotic Ricci-Ollivier curvature of a metric space} to be $\inf\{\ric(x,y)\mid d(x,y) = 1\}$.
+
+In the rest of the paper, we consider a number of Markov chains that arise in phylogenetic Bayesian inference and investigate the curvature of those chains with the eventual goal of the efficiency properties of the corresponding inference methods.
 
 \section{Discrete time-tree space and its variants}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In this section we introduce a discrete analogue of the space of time-trees and establish several graph-theoretic properties of this space, which will be used to study the curvature of certain random walks on the space.
 We also consider three other tree spaces, which have similar properties as time-trees, as we shall see.
@@ -57,10 +90,10 @@ We also consider three other tree spaces, which have similar properties as time-
 It is generally assumed that a time-tree is an ultrametric phylogenetic tree, that is, a tree with all leaves sampled at present.
 All results in this paper can be derived for the discrete counterpart of such space.
 However, there is no need to restrict ourselves by the ultrametricity property, as the results can be obtained in the more general setting of rooted phylogenetic trees with branch lengths.
-Moreover, many biological application explicitly require the restriction imposed by ultrmetricity to be dropped~\cite{}.
+Moreover, many biological application explicitly require the restriction imposed by ultrametricity to be dropped~\cite{Gavryushkina2014-xd}.
 Hence, by a time-tree in this paper we mean a rooted phylogenetic tree.
 
-\todo[inline]{Should we add some other trees? Ultrametric trees? Ranked NNI as Chris initially understood it?}
+\todo[inline]{Should we add ultrametric trees? The degree bounds will be different for them.}
 
 In short, the {\em discrete time-tree space,} or $\dts$ space, is the $\tau$-space defined in~\cite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only two length values, $1$ and $2$.
 In other words, to define a tree in $\dts$, we first fix a ranked tree topology with all nodes being of different ranks and then assign a number from $\{1,2\}$ to every intercoalescent interval.
@@ -157,10 +190,6 @@ The neighborhood size then follows because the root and its two children have no
 
 The lower bound in $\rnni$ space is attained by the caterpillar-tree where taxa get ranks $1, 2, 4, 6, \ldots$ and internal nodes get ranks $3, 5, 7, \ldots$
 In other words, the coalescent events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence$\ldots$
-%\todo{EM: A little more detail, please? The nodes are numbered so far, not the intervals\\ 
-%AG: fixed.\\
-%EM: OK, thanks, though in the next sentence you still do talk about even and odd {\em intervals}.\\
-%AG: fixed.}
 In this case, intervals bounded by a taxon from below add nothing to the degree of the tree and intervals bounded from below by an internal node add one each, hence $n-1$ in total.
 The upper bound is obtained in the same way as for $\dts$ and $\mdts$ spaces.
 \endproof
@@ -211,7 +240,6 @@ If $d(T,R) = 1$ then $|N(T)\cap N(R)|\in\{0,1\}$.
 Suppose $T$ and $R$ are neighbours.
 If the trees differ by a single branch length or rank change then the fact that NNI moves only apply to short branches implies that any shared neighbour $S$ would have to match the length or rank of one of the trees. As $S$ must differ from both trees, they do not have a neighbour in common.
 If $T$ and $R$ are NNI-neighbours, there is precisely one tree which is a neighbour of both $T$ and $R$, namely the third tree that can be obtained by resolving the interval that connects $T$ and $R$.
-%\todo[inline]{EM: Clarify please?} CW&AG: Fixed.
 \endproof
 
 The following general lemma is true for all graphs, particularly, for those we consider in this paper.
@@ -277,8 +305,6 @@ It follows from Lemma~\ref{neighBound} that the maximal mass we can allocate und
 The lemma follows.
 \endproof
 
-%\todo[inline]{You use "corollary" in a different sense than I've seen before. I have only seen it used to mean "follows directly from the theorem/lemma but you seem to use it as "follows from a similar line of argument."} AG: fixed.
-
 This lemma and corollary provide tighter upper bounds for the curvature than Lemma~\ref{curvBoundGeneral} for all $n$.
 
 It is easy to generalise the lemma to the uniform $p$-lazy random walk.
@@ -296,9 +322,7 @@ in $\nni$ space, and
 \]
 in $\rnni$ space.
 
-%\todo{This can get confusing fast. Please see \url{https://matsengrp.slack.com/files/matsen/F04J79F5A/pasted_image_at_2015_04_27_07_08_am.png} for definition of asymptotic ricci curvature. I suggest using $\operatorname{ric}$ for this quantity.} AG: fixed.
-
-We follow Loisel and Romon~\cite{Loisel2014-gu} and define \todo{This should probably go to intro where we say what we are looking at in this paper.} {\em asymptotic Ricci-Ollivier curvature} $\ric$ of a metric space with uniform $p$-lazy random walk by 
+We recall that the {\em asymptotic Ricci-Ollivier curvature}~\cite{Loisel2014-gu} $\ric$ of a metric space with uniform $p$-lazy random walk is defined by
 \[
 \ric(x,y) = \lim_{p\to0} \frac{\kappa(x,y)}{p}
 \]
@@ -328,15 +352,13 @@ The bounds are tight.
 \end{lemma}
 
 \proof
-Let $T$ and $R$ be two adjacent trees. To minimise the curvature, we have
-to maximise $W(m_T, m_R)$ across $T$ and $R$. The latter is maximised when the probability mass
-on trees $E\in N(T)$ such that $d(E, N(R)) > d(T, R)$, is
-maximised\footnote{If $x$ is a point of a metric space $(M,d)$ and
-$S \subseteq M$ then by $d(x,S)$ we denote $\inf\limits_{s \in S} d(x,s)$.}.
-Since $d(T, R) = 1$, the maximum possible number of such trees $E$ is
-\todo{Explain this. EM skipped pending explanation.}
-$8$. To make $W(m_T,m_R)$ being as large as possible, we have to assume
-$d(S, N(R)) = 1$ for the rest of the trees $S$ from $N(T)$.
+Let $T$ and $R$ be two adjacent trees. 
+To minimise the curvature, we have to maximise $W(m_T, m_R)$ across $T$ and $R$. 
+The latter is maximised when the probability mass on trees $E\in N(T)$ such that $d(E, N(R)) > d(T, R)$, is maximised\footnote{If $x$ is a point of a metric space $(M,d)$ and $S \subseteq M$ then by $d(x,S)$ we denote $\inf\limits_{s \in S} d(x,s)$.}.
+Since $d(T, R) = 1$, the maximum possible number of such trees $E$ is \todo{Explain this.
+EM skipped pending explanation.}
+$8$.
+To make $W(m_T,m_R)$ being as large as possible, we have to assume $d(S, N(R)) = 1$ for the rest of the trees $S$ from $N(T)$.
 Hence for the uniform random walk we have:
 \[
 W(m_T,m_R)\leq 8 \cdot 2 \cdot \frac{1}{|N(T)|} +
@@ -395,7 +417,6 @@ scenario for $W(m_x,m_y)$. Then
 W(m_{x_n},m_{y_n}) = \sum_{I_0} d_i x_i p_{x_i} + \sum_{I_1} d_i x_i p_{x_i} +
 \sum_{I_2} d_i x_i p_{x_i}.
 \]
-%\todo{I'm not sure why \ref{intersec}) is needed here.} AG: the typo fixed.
 It follows from~(\ref{intersec}) and~(\ref{dist2}) that the first and the last sums
 are $\O(1)$ when $n\to\infty$. This together with property~(\ref{difference})
 implies that the middle sum tends to $1$ when $n\to\infty$ because the number of
@@ -410,7 +431,6 @@ However, we prove below (Theorem~\ref{zero-in-the-limit}) a much stronger proper
 We first bound the number of neighbors of a tree $x$ in $\dts$-space that are closer than $x$ to a given tree $y$.
 We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
 These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
-%\todo{I put this here for now, but it will have to go earlier.} AG: fixed.
 
 \begin{theorem}
 \label{max_good_neighbors}
@@ -455,11 +475,9 @@ Therefore, there are at most $|I| + |R| + |L| \le 2d(x,y) + d(x,y) + d(x,y) = 4d
 The statement for the other three spaces follows similarly: for $\nni$ we need to count only for trees from $I$, for $\rnni$ we need to count only for trees from $I$ and $R$, for $\mdts$ we will have to add $2d(x,y)$ instead of $d(x,y)$ for $L$.
 \end{proof}
 
-%\todo[inline]{I suggest folding all of this into the above theorem, along with a statement in the proof saying that the extra statements follow similarly.}
-%Note that this implies the following corollaries for $\nni$, $\rnni$ and $\mdts$ spaces. AG: fixed.
-
 We now use Theorem~\ref{max_good_neighbors} to prove the following.
-\todo[inline]{v This must be true for $p$-lazy walk as well.}
+
+\todo[inline]{$\downarrow$ This must be true for $p$-lazy walk as well.}
 
 \begin{theorem}\label{zero-in-the-limit}
 Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of $\dts$-trees on $n$ taxa.
@@ -467,13 +485,7 @@ Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$ for the uniform random walk
 \end{theorem}
 
 \proof
-One of the main properties of Ollivier-Ricci curvature\footnote{Note that we are considering only finite metric spaces.
-However, the result holds true for all metric spaces.}
-is that the curvature is a local property~\cite{Ollivier2009-cj}, that is, for all distinct $u$ and $v$,
-\[
-\inf\{\kappa(x,y)\mid d(x,y) = 1\} \leq \kappa(u,v).
-\]
-Hence, it follows from Lemma~\ref{uniformLower} that $\kappa(T_n,R_n) \geq -\dfrac{4}{n-1}$ for all $n$.
+Since the curvature is a local property, it follows from Lemma~\ref{uniformLower} that $\kappa(T_n,R_n) \geq -\dfrac{4}{n-1}$ for all $n$.
 To finish the proof, we need to bound the sequence $\kappa(T_n,R_n)$ from above by another sequence which tends to zero.
 
 Let us fix an $n$ and let $U$ be the set of trees $E \in N(T)$ such that $d_\dts(E,R_n) \leq d_\dts(T_n,R_n)$ as in Theorem~\ref{max_good_neighbors}, and $B$ be the rest of trees $N(T_n)\setminus U$ from $N(T_n)$.
@@ -501,11 +513,8 @@ Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of trees on $n$ taxa.
 Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$ for $\nni$, $\rnni$, and $\mdts$ distances.
 \end{corollary}
 
-We now estimate the curvature of the Metropolis-Hastings random walk, which
-proposes a tree in the one-neighbourhood uniformly at random and
-accepts the proposal with probability
-$\min\left(1, \dfrac{|N(T_{old})|}{|N(T_{new})|}\right)$. We denote the corresponding
-curvature by $\kappa(\MH;T,R)$.
+We now estimate the curvature of the Metropolis-Hastings random walk, which proposes a tree in the one-neighbourhood uniformly at random and accepts the proposal with probability $\min\left(1, \dfrac{|N(T_{old})|}{|N(T_{new})|}\right)$.
+We denote the corresponding curvature by $\kappa(\MH;T,R)$.
 
 \begin{lemma}
 The following inequalities are satisfied in both $\dts$ and $\mdts$ spaces.
@@ -542,7 +551,6 @@ Use Corollary~\ref{degreeBoundsNNI}.
 \endproof
 
 \section{Some other spaces}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Several important proposal mechanisms used in phylogenetic Bayesian inference by
 popular software packages such as BEAST2~\cite{beast2} favour topological moves
