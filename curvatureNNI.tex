@@ -297,11 +297,13 @@ The bounds are tight.
 \end{lemma}
 
 \proof
-To maximise the curvature $\kappa(T,R)$, we have to minimise $W(m_T,m_R)$.
-The latter is minimised when the probability mass on trees of distance zero or one away from $R$ is maximized.
-\todo{TODO: clarify this. We should be talking about where the mass is in the coupling.}
-Since $d(T,R) = 1$, it follows from Lemma~\ref{intersecNeighb} that this probability mass is positive only when $|N(T) \cap N(R)| = 1$. 
-It follows from Lemma~\ref{neighBound} that the maximal mass we can allocate under a uniform random walk to the tree in $N(T) \cap N(R)$ is $\frac{1}{2(n-1)}$ in $\dts$ and $\mdts$ spaces, $\frac{1}{2(n-2)}$ in $\nni$ space, and $\frac{1}{n-1}$ in $\rnni$ space.
+To maximise the curvature $\kappa(T,R)$, we have to minimise $W(m_T,m_R) = \inf\limits_{\mu\in\M} \sum\limits_{x,y\in V}\mu(x,y) d(x,y)$.
+The latter is minimised when the probability mass $\mu(x,y)$ to be moved at shorter distance $d(x,y)$ is maximised.
+Since $d(T,R) = 1$, it follows from Lemma~\ref{intersecNeighb} that the smallest possible value of $d(x,y)$ is $0$ (the case when $|N(T) \cap N(R)| = 1$).
+Hence, to maximise the curvature we are to maximise the probability mass allocated to the tree $E$ in the intersection $N(T) \cap N(R)$.
+It follows from Lemma~\ref{neighBound} that the maximal mass $p_E$ we can allocate under a uniform random walk to the tree $E$ is $\frac{1}{2(n-1)}$ in $\dts$ and $\mdts$ spaces, $\frac{1}{2(n-2)}$ in $\nni$ space, and $\frac{1}{n-1}$ in $\rnni$ space.
+It is not hard to see that trees $T$ and $R$ can be chosen so that $d(x,y) = 1$ for all $x,y$ which are different from $E$ and for which $\mu(x,y) > 0$.
+Hence, $\kappa(T, R) = 1 - (\sum\limits_{x,y\in V\setminus\{E\}}\mu(x,y)\cdot 1 + p_E \cdot 0) = 1 - (1-p_E) = p_E$.
 The lemma follows.
 \endproof
 
