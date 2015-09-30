@@ -27,8 +27,11 @@
 \newcommand{\tp}{\mathrm{tp}}
 \newcommand{\W}{\mathcal{W}}
 \newcommand{\M}{\mathcal{M}}
+\newcommand{\dom}{\mathrm{dom}}
 
 \renewcommand{\O}{\mathcal{O}}
+
+\sloppy
 
 \begin{document}
 
@@ -93,7 +96,8 @@ However, there is no need to restrict ourselves by the ultrametricity property, 
 Moreover, many biological application explicitly require the restriction imposed by ultrametricity to be dropped~\cite{Gavryushkina2014-xd}.
 Hence, by a time-tree in this paper we mean a rooted phylogenetic tree.
 
-\todo[inline]{Should we add ultrametric trees? The degree bounds will be different for them.}
+\todo[inline]{Should we add ultrametric trees?
+The degree bounds will be different for them.}
 
 In short, the {\em discrete time-tree space,} or $\dts$ space, is the $\tau$-space defined in~\cite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only two length values, $1$ and $2$.
 In other words, to define a tree in $\dts$, we first fix a ranked tree topology with all nodes being of different ranks and then assign a number from $\{1,2\}$ to every intercoalescent interval.
@@ -162,7 +166,7 @@ All of these can be considered as either a graph or a metric space, and we will 
 By $n$ we denote the number of taxa and assume $n \geq 3$ throughout the paper.
 
 \begin{lemma}\label{neighBound}
-Let $T$ be a tree on $n$ leaves. 
+Let $T$ be a tree on $n$ leaves.
 Then
 \[2(n-1) \leq \deg(T) \leq 5n-6\] in $\dts$ and $\mdts$ space,
 \[\deg(T) = 2(n-2)\] in $\nni$ space, and
@@ -238,7 +242,8 @@ If $d(T,R) = 1$ then $|N(T)\cap N(R)|\in\{0,1\}$.
 
 \proof
 Suppose $T$ and $R$ are neighbours.
-If the trees differ by a single branch length or rank change then the fact that NNI moves only apply to short branches implies that any shared neighbour $S$ would have to match the length or rank of one of the trees. As $S$ must differ from both trees, they do not have a neighbour in common.
+If the trees differ by a single branch length or rank change then the fact that NNI moves only apply to short branches implies that any shared neighbour $S$ would have to match the length or rank of one of the trees.
+As $S$ must differ from both trees, they do not have a neighbour in common.
 If $T$ and $R$ are NNI-neighbours, there is precisely one tree which is a neighbour of both $T$ and $R$, namely the third tree that can be obtained by resolving the interval that connects $T$ and $R$.
 \endproof
 
@@ -246,34 +251,31 @@ The following general lemma is true for all graphs, particularly, for those we c
 By {\em distance-one random walk}, we mean a random walk $(m_x)_{x \in X}$ satisfying $m_x(y) = 0$ for all $x$ and $y$ such that $d(x,y) > 1$.
 
 \begin{lemma}\label{curvBoundGeneral}
-Let $(M,d)$ be a finite metric space and $x,y$ a pair of points from $M$. If
-$(m_x)_{x \in M}$ is a distance-one random walk on $M$, then the curvature
-$\kappa$ of the random walk satisfies the following boundary conditions.
+Let $(M,d)$ be a finite metric space and $x,y$ a pair of points from $M$.
+If $(m_x)_{x \in M}$ is a distance-one random walk on $M$, then the curvature $\kappa$ of the random walk satisfies the following boundary conditions.
 \[
 \dfrac{-2}{d(x,y)} \leq \kappa(x,y) \leq \dfrac{2}{d(x,y)}.
 \]
 \end{lemma}
 
 \proof
-Let $x$, $y$, $u$, and $v$ be arbitrary points from $M$ such that both $m_x(u)$
-and $m_y(v)$ are positive. Since $m$ is a distance-one random walk,
-$d(u,v) \leq d(x,y) + 2$. Hence for any coupling $\{p_{u,v}\}$,
+Let $x$, $y$, $u$, and $v$ be arbitrary points from $M$ such that both $m_x(u)$ and $m_y(v)$ are positive.
+Since $m$ is a distance-one random walk, $d(u,v) \leq d(x,y) + 2$.
+Hence for any coupling $\{p_{u,v}\}$,
 \[
 W(m_x,m_y) \leq \sum p_{u,v} d(u,v) \leq (d(x,y)+2)\sum p_{u,v} = d(x,y) + 2,
 \]
-where the sum is taken over a correspondence between the set of $u \in N(x)$ and
-$v \in N(y)$. So, $\kappa(x,y) \geq - 2/d(x,y)$. The lower bound follows
-similarly from $d(u,v) \geq d(x,y) - 2$.
+where the sum is taken over a correspondence between the set of $u \in N(x)$ and $v \in N(y)$.
+So, $\kappa(x,y) \geq - 2/d(x,y)$.
+The lower bound follows similarly from $d(u,v) \geq d(x,y) - 2$.
 \endproof
 
-Note that this lemma can be generalised to {\em distance-$d$} random walks,
-which are those satisfying $m_x(y) = 0$ for all $x$ and $y$ such that
-$d(x,y) > d$. In this case, the curvature bounds are
+Note that this lemma can be generalised to {\em distance-$d$} random walks, which are those satisfying $m_x(y) = 0$ for all $x$ and $y$ such that $d(x,y) > d$.
+In this case, the curvature bounds are
 \[
 -\dfrac{2d}{d(x,y)} \leq \kappa(x,y) \leq \dfrac{2d}{d(x,y)}.
 \]
-For one needs to notice that in the notations of the lemma,
-$d(u,v) \leq d(x,y) + 2d$.
+For one needs to notice that in the notations of the lemma, $d(u,v) \leq d(x,y) + 2d$.
 
 As we will see in the next few lemmas, these bounds can be improved for certain random walks on the graphs under consideration.
 
@@ -347,17 +349,19 @@ Then both the asymptotic curvature of the space with $p$-lazy uniform random wal
 \begin{enumerate}[(i)]
 \item $-\dfrac{4}{n-1}$ in $\dts$ and $\mdts$ spaces,
 \item $-\dfrac{4}{n-2}$ in $\nni$ space,
-\item $-\dfrac{8}{n-1}$ in $\rnni$ space. 
+\item $-\dfrac{8}{n-1}$ in $\rnni$ space.
 \end{enumerate}
 
 The bounds are tight.
 \end{lemma}
 
 \proof
-Let $T$ and $R$ be two adjacent trees. 
-To minimise the curvature, we have to maximise $W(m_T, m_R)$ across $T$ and $R$. 
-The latter is maximised when the probability mass on trees $E\in N(T)$ such that $d(E, N(R)) > d(T, R)$, is maximised\footnote{If $x$ is a point of a metric space $(M,d)$ and $S \subseteq M$ then by $d(x,S)$ we denote $\inf\limits_{s \in S} d(x,s)$.}.
-Since $d(T, R) = 1$, the maximum possible number of such trees $E$ is \todo{Explain this.
+Let $T$ and $R$ be two adjacent trees.
+To minimise the curvature, we have to maximise $W(m_T, m_R)$ across $T$ and $R$.
+The latter is maximised when the probability mass on trees $E\in N(T)$ such that $d(E, N(R)) > d(T, R)$, is
+maximised\footnote{If $x$ is a point of a metric space $(M,d)$ and $S \subseteq M$ then by $d(x,S)$ we denote $\inf\limits_{s \in S} d(x,s)$.}.
+Since $d(T, R) = 1$, the maximum possible number of such trees $E$ is
+\todo{Explain this.
 EM skipped pending explanation.}
 $8$.
 To make $W(m_T,m_R)$ being as large as possible, we have to assume $d(S, N(R)) = 1$ for the rest of the trees $S$ from $N(T)$.
@@ -373,16 +377,15 @@ A similar reasoning applies for the $p$-lazy random walk:
 W(m_T,m_R)\leq 8 \cdot 2 \cdot \frac{p}{|N(T)|} +
 (|N(T)| - 7) \cdot \frac{p}{|N(T)|} + (1-p) - \frac{p}{|N(T)|} =
 \]
-$1 + \dfrac{8p}{|N(T)|}$. Hence,
-$\ric(T,R) = \lim\limits_{p\to0}\left(1 - W(m_T,m_R)\right) \geq - \dfrac{8}{|N(T)|}$.
+$1 + \dfrac{8p}{|N(T)|}$.
+Hence, $\ric(T,R) = \lim\limits_{p\to0}\left(1 - W(m_T,m_R)\right) \geq - \dfrac{8}{|N(T)|}$.
 
 It remains to note that Lemma~\ref{neighBound} gives us an estimate $|N(T)| \geq 2(n-1)$ in $\dts$ and $\mdts$, $|N(T)| \geq 2(n-2)$ in $\nni$, and $|N(T)| \geq n-1$ in $\rnni$ space.
 The lemma follows.
 \endproof
 
 \begin{corollary}\label{flatInLimDTS}
-Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of trees such that
-$d(T_n,R_n) = 1$ in $\nni$, $\rnni$, $\dts$, or $\mdts$ space.
+Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of trees such that $d(T_n,R_n) = 1$ in $\nni$, $\rnni$, $\dts$, or $\mdts$ space.
 Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = \lim\limits_{n \to \infty}\ric(T_n,R_n) = 0$.
 \end{corollary}
 
@@ -395,9 +398,7 @@ This corollary is also true in the SPR space of rooted trees~\cite{Whidden2015-e
 Actually, this property can be derived from the following general statement for all spaces mentioned, as well as for many others.
 
 \begin{proposition}\label{flatInLimGen}
-Let $(M_n,d_n)_{n \in \omega}$ be a sequence of finite metric spaces and
-$(x_n, y_n)$ a sequence of adjacent vertices from $M_n$,
-that is $d_n(x_n,y_n) = 1$, such that
+Let $(M_n,d_n)_{n \in \omega}$ be a sequence of finite metric spaces and $(x_n, y_n)$ a sequence of adjacent vertices from $M_n$, that is $d_n(x_n,y_n) = 1$, such that
 \begin{enumerate}[(1)]
 \item\label{intersec} $\big|N(x_n) \cap N(y_n)\big| = o(|N(x_n)|)$
 \item\label{difference} $\big||N(x_n)| - |N(y_n)|\big| = o(|N(x_n)|)$
@@ -410,20 +411,14 @@ Then $\lim\limits_{n \to \infty} \kappa(x_n, y_n) = 0$.
 
 \proof
 Consider an arbitrary $n$ and the pair of points $x_n,y_n$.
-Set $I_0 = N(x_n) \cap N(y_n)$, denote by $I_1$ the set of points
-$z$ such that the probability mass is moved from $z$ at distance one under the
-optimum coupling for $W(m_{x_n},m_{y_n})$, by $I_2$ the set of points $z$ such that
-the probability mass is moved from $z$ a distance $\geq 2$ under the optimum
-scenario for $W(m_x,m_y)$. Then
+Set $I_0 = N(x_n) \cap N(y_n)$, denote by $I_1$ the set of points $z$ such that the probability mass is moved from $z$ at distance one under the optimum coupling for $W(m_{x_n},m_{y_n})$, by $I_2$ the set of points $z$ such that the probability mass is moved from $z$ a distance $\geq 2$ under the optimum scenario for $W(m_x,m_y)$.
+Then
 \[
 W(m_{x_n},m_{y_n}) = \sum_{I_0} d_i x_i p_{x_i} + \sum_{I_1} d_i x_i p_{x_i} +
 \sum_{I_2} d_i x_i p_{x_i}.
 \]
-It follows from~(\ref{intersec}) and~(\ref{dist2}) that the first and the last sums
-are $\O(1)$ when $n\to\infty$. This together with property~(\ref{difference})
-implies that the middle sum tends to $1$ when $n\to\infty$ because the number of
-points $z$ such that the probability mass has to travel at distance one under an
-optimum scenario, divided by $|N(x_n)|$, tends to $1$ when $n\to\infty$.
+It follows from~(\ref{intersec}) and~(\ref{dist2}) that the first and the last sums are $\O(1)$ when $n\to\infty$.
+This together with property~(\ref{difference}) implies that the middle sum tends to $1$ when $n\to\infty$ because the number of points $z$ such that the probability mass has to travel at distance one under an optimum scenario, divided by $|N(x_n)|$, tends to $1$ when $n\to\infty$.
 \endproof
 
 We note that in both Corollary~\ref{flatInLimDTS} and Proposition~\ref{flatInLimGen}, the assumption of being at distance one can be relaxed by that of being at a distance uniformly bounded by a slowly growing function.
@@ -491,7 +486,8 @@ Since the curvature is a local property, it follows from Lemma~\ref{uniformLower
 To finish the proof, we need to bound the sequence $\kappa(T_n,R_n)$ from above by another sequence which tends to zero.
 
 Let us fix an $n$ and let $U$ be the set of trees $E \in N(T)$ such that $d_\dts(E,R_n) \leq d_\dts(T_n,R_n)$ as in Theorem~\ref{max_good_neighbors}, and $B$ be the rest of trees $N(T_n)\setminus U$ from $N(T_n)$.
-Let's denote $d_\dts(T_n,R_n)$ by $d$. Then
+Let's denote $d_\dts(T_n,R_n)$ by $d$.
+Then
 \[
 W(m_{T_n},m_{R_n}) = \sum_{i\in U} p_i d_i + \sum_{j\in B} p_j d_j \geq
 \sum_{i\in U} p_i (d-2) + \sum_{j\in B} p_j d =
@@ -530,11 +526,8 @@ The following inequalities are satisfied in both $\dts$ and $\mdts$ spaces.
 \end{lemma}
 
 \proof
-From Corollary~\ref{degreeBounds} we have that
-$\frac{|N(T_{old})|}{|N(T_{new})|} \geq \frac{2}{5}$, so the probability
-mass that an MH move leaves at $T_{old}$ is not greater than $\frac35$.
-The rest of the
-proof follows the proof of Lemma~V.8 in~\cite{Whidden2015-es} literally.
+From Corollary~\ref{degreeBounds} we have that $\frac{|N(T_{old})|}{|N(T_{new})|} \geq \frac{2}{5}$, so the probability mass that an MH move leaves at $T_{old}$ is not greater than $\frac35$.
+The rest of the proof follows the proof of Lemma~V.8 in~\cite{Whidden2015-es} literally.
 \endproof
 
 \begin{corollary}
@@ -552,30 +545,56 @@ The following inequalities are satisfied in $\rnni$ \todo{What about NNI?} space
 Use Corollary~\ref{degreeBoundsNNI}.
 \endproof
 
+\section{Efficient algorithm for computing $\rnni$ graphs}
+
+We use the following algorithm designed in~\cite{Whidden2015-es} to compute the $\rnni$ graph on $n$ leaves.
+The input to our algorithm is a set $S$ of ranked phylogenetic tree topologies in the format described in~\cite{Semple2003-nj,Gavryushkin2014-bw}.
+A tree is hence given by a sequence of sets of taxa~\cite{Gavryushkin2014-bw}. For example, the representation of the tree on Figure~\ref{T5.pdf} is $(\{A\}, \{C\}, \{D\}, \{B\}, \{E\}, \{A,B\}, \{D,E\}, \{C, D, E\}, \{F\}, \{A,B,F\}, \{A,B,C,D,E,F\})$, or
+$(\{A,B\}, \{D,E\}, \{C, D, E\}, \{A,B,F\}, \{A,B,C,D,E,F\})$ if we make the tree ultrametric by placing all taxa below the most recent divergence event.
+Using this representation of trees we construct a map $\nu : S \to \omega$, where $\omega$ is the set of non-negative integers.
+This maps allows us to determine whether or not a tree is already a vertex of the graph.
+
+The high-level steps of the algorithm are the same as in~\cite{Whidden2015-es}, where the correctness of the algorithm is established.
+
+\textsc{Construct-$\rnni$-Graph($S$)}
+\begin{enumerate}[1.]
+	\item Let $G$ be an empty graph.
+	\item Let $\nu$ be an empty mapping from trees to integers.
+	\item Let $i = 0$.
+	\item For each of the $m$ trees: \vspace{-0.2em}
+		\begin{enumerate}
+			\item Add a vertex $i$ to $G$ representing the current tree $T_i$.
+			\item Add $T_i \rightarrow i$ to $\nu$.
+			\item For each neighbour $T_j$ of $T_i$:
+				\begin{enumerate}
+					\item[(j)] If $T_j$ is in $\dom(\nu)$ then add an edge $(i, \nu(T_j))$ to $G$.
+				\end{enumerate}
+		\item $i = i + 1$.
+		\end{enumerate}
+\end{enumerate}
+
+We implemented this procedure in the Python programme \texttt{tau\_graph}
+\todo{Check the name.}
+of the software package \texttt{tTauCurvature}~\cite{tTauCurvature},
+\todo{Learn how to get DOI for Github.}
+which outputs an edge list format graph suitable for input to other software.
+
 \section{Some other spaces}
 
-Several important proposal mechanisms used in phylogenetic Bayesian inference by
-popular software packages such as BEAST2~\cite{beast2} favour topological moves
-or tree moves depending on various conditions. All tree moves we have been
-considering so far do not make an explicit distinction between topological
-changes and branch length changes. To address this issue\todo{issue?}, we
-consider the
-following tree move that explicitly allows distributing the acceptance
-probability between topological and branch length moves.
+Several important proposal mechanisms used in phylogenetic Bayesian inference by popular software packages such as BEAST2~\cite{beast2} favour topological moves or tree moves depending on various conditions.
+All tree moves we have been considering so far do not make an explicit distinction between topological changes and branch length changes.
+To address this issue\todo{issue?}, we consider the following tree move that explicitly allows distributing the acceptance probability between topological and branch length moves.
 
-{\bf Lazy walk.} Let $p$ be the laziness probability, that is, we do nothing
-with probability $1-p$ and distribute the probability $p$ as follows.
-We decide first on what type of move we want to perform: choose a topological
-move with probability $q$ and a length move otherwise, that is, $q \leq p$
-and the probability of a length move is $p-q$. The proposal is rejected if
-a topological move is impossible.
+{\bf Lazy walk.}
+Let $p$ be the laziness probability, that is, we do nothing with probability $1-p$ and distribute the probability $p$ as follows.
+We decide first on what type of move we want to perform: choose a topological move with probability $q$ and a length move otherwise, that is, $q \leq p$ and the probability of a length move is $p-q$.
+The proposal is rejected if a topological move is impossible.
 
-{\bf tau move.} Choose a coordinate uniformly at random. Increase the
-coordinate by $1$ with probability $p$ and decrease it by $1$ otherwise.
-If the coordinate becomes $0$, resolve the multifurcation uniformly at
-random and set the new coordinate to $1$. Note that this mechanism
-does not bound edge lengths from above and favours topological moves when
-$p<1/2$.
+{\bf tau move.}
+Choose a coordinate uniformly at random.
+Increase the coordinate by $1$ with probability $p$ and decrease it by $1$ otherwise.
+If the coordinate becomes $0$, resolve the multifurcation uniformly at random and set the new coordinate to $1$.
+Note that this mechanism does not bound edge lengths from above and favours topological moves when $p<1/2$.
 
 \bibliography{curvatureNNI}
 \bibliographystyle{alpha}
