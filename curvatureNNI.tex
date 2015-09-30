@@ -550,6 +550,7 @@ Use Corollary~\ref{degreeBoundsNNI}.
 We use the following algorithm designed in~\cite{Whidden2015-es} to compute the $\rnni$ graph on $n$ leaves.
 The input to our algorithm is a set $S$ of ranked phylogenetic tree topologies in the format described in~\cite{Semple2003-nj,Gavryushkin2014-bw}.
 A tree is hence given by a sequence of sets of taxa~\cite{Gavryushkin2014-bw}.
+Assuming that taxa is ordered, this gives a unique representation of a tree as a string.
 For example, the representation of the tree on Figure~\ref{T5.pdf} is $(\{A\}, \{C\}, \{D\}, \{B\}, \{E\}, \{A,B\}, \{D,E\}, \{C, D, E\}, \{F\}, \{A,B,F\}, \{A,B,C,D,E,F\})$, or
 $(\{A,B\}, \{D,E\}, \{C, D, E\}, \{A,B,F\}, \{A,B,C,D,E,F\})$ if we make the tree ultrametric by placing all taxa below the most recent divergence event.
 Using this representation of trees we construct a map $\nu : S \to \omega$, where $\omega$ is the set of non-negative integers.
