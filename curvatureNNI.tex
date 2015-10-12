@@ -8,7 +8,7 @@
 \usepackage[notref,notcite]{showkeys}
 \usepackage{enumerate}
 \usepackage{url}
-\usepackage[colorlinks=true]{hyperref}
+\usepackage[colorlinks=false]{hyperref}
 \usepackage{graphicx}
 
 \newtheorem{lemma}{Lemma}
@@ -17,10 +17,13 @@
 \newtheorem{corollary}[lemma]{Corollary}
 \newtheorem{theorem}[lemma]{Theorem}
 
-\newcommand{\dts}{\mathrm{DtT}}
+\newcommand{\dts}{\mathrm{2DtT}}
 \newcommand{\nni}{\mathrm{NNI}}
+\newcommand{\nniu}{\mathrm{NNIu}}
 \newcommand{\rnni}{\mathrm{rNNI}}
+\newcommand{\rnniu}{\mathrm{rNNIu}}
 \newcommand{\mdts}{\mathrm{mDtT}}
+\newcommand{\mdtsu}{\mathrm{mDtTu}}
 \newcommand{\MH}{\mathrm{MH}}
 \newcommand{\ric}{\operatorname{ric}}
 \newcommand{\rt}{\mathrm{rt}}
@@ -34,6 +37,28 @@
 \sloppy
 
 \begin{document}
+
+\title{Random walks over discrete time-trees}
+
+\author{Alex Gavryushkin}
+\address{Department of Computer Science, The University of Auckland, New Zealand}
+\email{a.gavruskin@auckland.ac.nz}
+
+\author{Chris Whidden}
+\address{Program in Computational Biology, Fred Hutchinson Cancer Research Center, Seattle, WA 98109}
+\email{cwhidden@fredhutch.org}
+
+\author{Frederick A Matsen IV}
+%\address{Program in Computational Biology, Fred Hutchinson Cancer Research Center, Seattle, WA 98109}
+\email{matsen@fredhutch.org}
+
+
+\begin{abstract}
+We introduce and study various discrete approximations of the space of time-trees, with $\nni$-space being a roughest approximation.
+We design a heuristic for generating these spaces and study, analytically and computationally, the Ricci-Ollivier curvature of basic random walks on the spaces.
+\end{abstract}
+
+\maketitle
 
 \section{Introduction}
 
@@ -90,23 +115,27 @@ In the rest of the paper, we consider a number of Markov chains that arise in ph
 In this section we introduce a discrete analogue of the space of time-trees and establish several graph-theoretic properties of this space, which will be used to study the curvature of certain random walks on the space.
 We also consider three other tree spaces, which have similar properties as time-trees, as we shall see.
 
-It is generally assumed that a time-tree is an ultrametric phylogenetic tree, that is, a tree with all leaves sampled at present.
-All results in this paper can be derived for the discrete counterpart of such space.
-However, there is no need to restrict ourselves by the ultrametricity property, as the results can be obtained in the more general setting of rooted phylogenetic trees with branch lengths.
-Moreover, many biological application explicitly require the restriction imposed by ultrametricity to be dropped~\cite{Gavryushkina2014-xd}.
-Hence, by a time-tree in this paper we mean a rooted phylogenetic tree.
+By a {\em time tree} we mean a rooted phylogenetic tree with all internal nodes equiped with absolute divergence times and external nodes---with sampled times.
+Although most of the results in this paper can be generalised to the class of sampled ancestor trees~\cite{Gavryushkina2014-xd}, we do not make this generalisation, as currently very few methods of sampling the space of sampled ancestor trees are known~\cite{Gavryushkina2014-xd} and the geometry of the space is poorly understood~\cite{Gavryushkin2014-bw}.
 
-\todo[inline]{Should we add ultrametric trees?
-The degree bounds will be different for them.}
+Although the investigation of curvature and convergence properties of random walks over the space of time-trees is interesting and important, the geometry necessary for these investigations is yet to be developed to the necessary level~\cite{Gavryushkin2014-bw}.
+Hence, instead of considering the space in full, we approximate the space by a sequence of finite spaces and study the geometry and convergence of random walks over these approximations.
+Specifically, we fix a number $m$ and consider the space of time-trees where times between divergence events are bound to $m$ values.
+At the bottom level of this hierarchy, when $m = 1$, we have the space of ranked tree topologies.
+We extend the hierarchy by assuming that when $m = 0$, we have the $\nni$ space on rooted tree topologies.
 
-In short, the {\em discrete time-tree space,} or $\dts$ space, is the $\tau$-space defined in~\cite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only two length values, $1$ and $2$.
-In other words, to define a tree in $\dts$, we first fix a ranked tree topology with all nodes being of different ranks and then assign a number from $\{1,2\}$ to every intercoalescent interval.
-Intuitively, we have only two options for the length of an intercoalescent interval, which can be thought of as short and long.
-We shall describe the numbers assigned to the intercoalescent intervals as to the {\em lengths} of those intervals.
+Many biological investigations are restricted to ultrametric, or equidistant, trees.
+Furthermore, many geometric and algorithmic properties vary substantially for ultrametric and non-ultrametric trees~\cite{Gavryushkin2014-bw}.
+Hence, we consider the case of ultrametric trees separately, and indeed establish further differences.
 
-We now go on to defining the adjacency relation of the graph $\dts$, the set of vertices of which consists of $\dts$ trees.
-In short, two trees in $\dts$ are adjacent if the $\tau$-geodesic, defined in~\cite{Gavryushkin2014-bw}, crosses precisely one face of co-dimension $1$.
-To make this paper self-contained, we provide a complete definition below, for which the following notions are needed.
+In short, the {\em discrete time-tree space,} or $\mdts$ space, is the $\tau$-space defined in~\cite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only $m$ possible length values: $1,\ldots,m$.
+In other words, to define a tree in $\mdts$, we first fix a ranked tree topology with all nodes being of different ranks and then assign a number from $\{1, \ldots, m\}$ to every intercoalescent interval.
+Intuitively, for $m = 2$ we have only two options for the length of an intercoalescent interval, which can be thought of as short and long.
+We shall describe the numbers assigned to the intercoalescent intervals as {\em lengths} of those intervals.
+
+We may think of the $\mdts$ space as of a graph, the set of vertices of which consists of $\mdts$ trees, and define the adjacency relation as follows.
+In short, two trees in $\mdts$ are adjacent if the $\tau$-geodesic between them, defined in~\cite{Gavryushkin2014-bw}, crosses precisely one face and the face is of co-dimension $1$.
+To make this paper self-contained, we provide a complete definition below, for which the following notions are necessary.
 Let $T$ be a rooted phylogenetic tree with branch lengths such that the ranked topology of $T$ inherited from its branch lengths does not have two nodes (including taxa) of the same rank.
 We denote this ranked topology by $\rt(T)$ and assume that all nodes of the tree (including taxa) are assigned ranks $0,1,\ldots$
 The node of rank $0$ is seen as being at the present, so the root has the highest rank and is the oldest node of the tree.
@@ -119,7 +148,7 @@ In the same way we write $\tp(T) = \tp(R)$ when trees $T$ and $R$ have the same 
 \begin{figure}
 \centering
 \includegraphics[width=0.7\textwidth]{T5.pdf}
-\caption{Intercoalescent intervals with their lengths of a tree from $\dts$ on $6$ taxa.}
+\caption{Intercoalescent intervals with their lengths of a tree from $\mdts$ on $6$ taxa.}
 \label{T5.pdf}
 \end{figure}
 
@@ -131,44 +160,45 @@ Hence, the tree obtained from $T$ by cutting the edge adjacent to $C$ and regraf
 Note that the definition of NNI neighbours implies $\ell_T(J) = \ell_R(J)$ for each interval $J \ne I$, and the ranks of all nodes present in both $T$ and $R$ coincide.
 If trees $T$ and $R$ are NNI neighbours and tree $R$ is obtained by suppressing an interval $I$ in $T$ then we say that the {\em NNI move is performed on interval $I$}.
 
-Two trees $T$ and $R$ from $\dts$ are adjacent if and only if precisely one of the following conditions is satisfied.
+Two trees $T$ and $R$ from $\mdts$ are adjacent if and only if precisely one of the following conditions is satisfied.
 \begin{enumerate}[(1)]
 \item $\rt(T) = \rt(R)$ and there exists a unique intercoalescent interval $I$ such that $|\ell_T(I) - \ell_R(I)| = 1$.
 \item $\tp(T) = \tp(R)$, there exists a unique pair of nodes $a,b$ with consecutive ranks in $\rt(T)$ such that the ranks of $a$ and $b$ are swapped in $R$, the intercoalescent interval $I$ between $a$ and $b$ satisfies $\ell_T(I) = \ell_R(I) = 1$, and $\ell_T(J) = \ell_R(J)$ for all other intervals $J \ne I$.
 \item $T$ and $R$ are NNI neighbours and $\ell_T(I) = \ell_R(I) = 1$ where the NNI move is performed on interval $I$.
 \end{enumerate}
 
-In other words, by going from one tree to an adjacent tree in $\dts$ graph we can either change the length of one intercoalescent interval by one unit or we can send the length of an intercoalescent interval of minimal length down to zero and then resolve the multifurcation to either of the two possible topologies (one possible topology if there is no multifurcation) and assign the minimal length to the new interval.
-See Figure~\ref{dts_neighbours.pdf} for an example of a pair of trees $T,R$ at $\dts$ distance $3$, where one has to apply all of the three possible cases from the definition above to obtain a path from $T$ to $R$ in $\dts$.
+In other words, by going from one tree to an adjacent tree in $\mdts$ graph we can either change the length of one intercoalescent interval by one unit or we can send the length of an intercoalescent interval of minimal length down to zero and then resolve the multifurcation to either of the two possible topologies (one possible topology if there is no multifurcation) and assign the minimal length to the new interval.
+See Figure~\ref{dts_neighbours.pdf} for an example of a pair of trees $T,R$ at $\mdts$ distance $3$, where one has to apply all of the three possible cases from the definition above to obtain a path from $T$ to $R$ in $\mdts$.
 
 \begin{figure}
 \centering
 \includegraphics[width=0.7\textwidth]{dts_neighbours.pdf}
-\caption{Trees $T$ and $R$ are at $\dts$ distance $3$.
-To move from $T$ to $R$ in $\dts$, one must decrease the length of interval $I$, swap the ranks of nodes $A$ and $C$ bounding the interval $J$, and perform an NNI move on interval $K$, resolving nodes $C$ and $D$.}
+\caption{Trees $T$ and $R$ are at $\mdts$ distance $3$.
+To move from $T$ to $R$ in $\mdts$, one must decrease the length of interval $I$, swap the ranks of nodes $A$ and $C$ bounding the interval $J$, and perform an NNI move on interval $K$, resolving nodes $C$ and $D$.}
 \label{dts_neighbours.pdf}
 \end{figure}
 
-Thus we have defined a graph, which we denote by $\dts$.
-Since a graph can also be seen as a metric space where the distance is given by the length of a shortest path, we will refer to $\dts$ as both.
+Thus we have defined a graph, which we denote by $\mdts$.
+Since a graph can also be seen as a metric space where the distance is given by the length of a shortest path, we will refer to $\mdts$ as both.
 
-One might suggest that geometrically and graph-theoretically $\dts$ is similar to NNI space on (rooted) tree topologies, to ranked NNI space, and to $\dts$ space with an arbitrary (but finite) number of intercoalescent interval lengths.
+One might suggest that geometrically and graph-theoretically $\mdts$ is similar to NNI space on (rooted) tree topologies, to ranked NNI space, and to $\mdts$ space on ultrametric trees.
 That is so indeed.
 As we shall see, the results and proofs in this paper can be straightforwardly adapted to the spaces mentioned.
 Furthermore, as the NNI space of unrooted tree topologies with $n-1$ leaves is isomorphic (as a graph) to the NNI space of rooted tree topologies with $n$ leaves, all our results immediately imply their counterparts in unrooted NNI space.
 We omit from the text the exact formulations for unrooted trees, as they can be obtained in the obvious way.
-We will provide complete proofs for $\dts$ space and draw the corresponding results for the other three treespaces simultaneously.
+We will provide complete proofs for $\mdts$ space and draw the corresponding results for the other three treespaces simultaneously.
 
-We denote NNI space on rooted tree topologies by $\nni$.
-The $\dts$ space with only short branches is denoted by $\rnni$ and called {\em ranked NNI} space.
-The space of $\dts$ trees with $m$ branch lengths is denoted by $\mdts$.
+The $\mdts$ space on ultrametric trees is denoted by $\mdtsu$.
+We denote NNI space on (ultrametric) rooted tree topologies by $\nni$ ($\nniu$).
+The $\mdts$ space (on ultrametric trees) with only short branches is denoted by $\rnni$ ($\rnniu$) and called {\em ranked NNI} space (on ultrametric trees).
+
 All of these can be considered as either a graph or a metric space, and we will refer to them as both.
 By $n$ we denote the number of taxa and assume $n \geq 3$ throughout the paper.
 
 \begin{lemma}\label{neighBound}
 Let $T$ be a tree on $n$ leaves.
 Then
-\[2(n-1) \leq \deg(T) \leq 5n-6\] in $\dts$ and $\mdts$ space,
+\[2(n-1) \leq \deg(T) \leq 5n-6\] in $\mdts$ space,
 \[\deg(T) = 2(n-2)\] in $\nni$ space, and
 \[n-1\leq \deg(T) \leq3n-4\] in $\rnni$ space.
 
@@ -176,7 +206,7 @@ All boundaries are tight.
 \end{lemma}
 
 \proof
-The lower bound in $\dts$ and $\mdts$ spaces is attained by any tree with all intercoalescent intervals being long.
+The lower bound in $\mdts$ space is attained by any tree with all intercoalescent intervals being long.
 In this case, $\deg(T)$ is simply the number of intercoalescent intervals, since every intercoalescent interval adds $1$ to the total degree of the tree.
 Other trees have the same or more possible intercoalescent interval changes, showing that this is a lower bound.
 The upper bound is attained by a caterpillar tree with all intervals short and no coalescent event being younger than a taxon.
@@ -185,23 +215,20 @@ In total, $2(n-1) + 2(n-2) + n = 5n-6$.
 Note that this is an upper bound indeed, as each of the $2(n-2)$ intervals excluding the most recent can contribute either a rank change or $2$ NNI moves.
 Clearly, the tree described maximises the number of intervals that contribute $2$ NNI moves and enables the rest of intervals to contribute a rank change.
 
-Note also that no other tree class attains the upper bound in $\dts$ space.\todo{This is actually the only property mentioned so far that distinguish DtT and mDtT.
-This should be taken care of when we decide what spaces we keep.}
-
 Since every NNI move results in two neighbours, the equality $\deg(T) = 2(n-2)$ follows.
-Indeed, it is not hard to see that the set of NNI moves that only consider moving a subtree to its aunt captures the full set of NNI neighbors with no duplicates.
-The neighborhood size then follows because the root and its two children have no aunt.
+Indeed, it is not hard to see that the set of NNI moves that only consider moving a subtree to its aunt captures the full set of NNI neighbours with no duplicates.
+The neighbourhood size then follows because the root and its two children have no aunt.
 
 The lower bound in $\rnni$ space is attained by the caterpillar-tree where taxa get ranks $1, 2, 4, 6, \ldots$ and internal nodes get ranks $3, 5, 7, \ldots$
 In other words, the coalescent events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence$\ldots$
 In this case, intervals bounded by a taxon from below add nothing to the degree of the tree and intervals bounded from below by an internal node add one each, hence $n-1$ in total.
-The upper bound is obtained in the same way as for $\dts$ and $\mdts$ spaces.
+The upper bound is obtained in the same way as for $\mdts$ space.
 \endproof
 
-We will need the following obvious corollaries for our analysis of curvature.
+We need the following obvious corollaries for our analysis of curvature.
 
 \begin{corollary}\label{degreeBounds}
-The following are satisfied in both $\dts$ and $\mdts$ spaces for any trees $T$ and $R$.
+The following are satisfied in $\mdts$ space for every pair of trees $T$ and $R$.
 \begin{enumerate}[(1)]
 \item $deg(T)-deg(R) \leq 3n-4$.
 \item $\dfrac25 < \dfrac{\deg(T)}{deg(R)} < \dfrac52$, and the inequalities are tight.
@@ -229,14 +256,14 @@ The following are satisfied in $\rnni$ space.
 \end{corollary}
 
 \proof
-Follows from Lemma~\ref{neighBound} using a similar note as in the proof of Corollary~\ref{degreeBounds}.
+Follows from Lemma~\ref{neighBound} using a similar observation as in the proof of Corollary~\ref{degreeBounds}.
 \endproof
 
 Let $N(T)$ be the set of trees at distance one from $T$, that is, the set of trees adjacent to $T$ in the corresponding graph.
 The following lemma describes how many trees the tree neighbourhoods can have in common.
 
 \begin{lemma}\label{intersecNeighb}
-The following is true for all four spaces $\nni$, $\rnni$, $\dts$, and $\mdts$.
+The following is true for all four spaces $\nni$, $\rnni$, and $\mdts$.
 If $d(T,R) = 1$ then $|N(T)\cap N(R)|\in\{0,1\}$.
 \end{lemma}
 
@@ -281,11 +308,11 @@ As we will see in the next few lemmas, these bounds can be improved for certain 
 
 \begin{lemma}\label{uniformUpper}
 Let $T$ and $R$ be adjacent trees.
-Then the curvature of the spaces with uniform random walk satisfy
+Then the curvature of the following spaces with uniform random walk satisfy
 \[
 \kappa(T,R) \leq \dfrac{1}{2(n-1)}
 \]
-for $\dts$ and $\mdts$ spaces,
+for $\mdts$ space,
 \[
 \kappa(T,R) \leq \dfrac{1}{2(n-2)}
 \]
@@ -303,7 +330,7 @@ To maximise the curvature $\kappa(T,R)$, we have to minimise $W(m_T,m_R) = \inf\
 The latter is minimised when the probability mass $\mu(x,y)$ to be moved at shorter distance $d(x,y)$ is maximised.
 Since $d(T,R) = 1$, it follows from Lemma~\ref{intersecNeighb} that the smallest possible value of $d(x,y)$ is $0$ (the case when $|N(T) \cap N(R)| = 1$).
 Hence, to maximise the curvature we are to maximise the probability mass allocated to the tree $E$ in the intersection $N(T) \cap N(R)$.
-It follows from Lemma~\ref{neighBound} that the maximal mass $p_E$ we can allocate under a uniform random walk to the tree $E$ is $\frac{1}{2(n-1)}$ in $\dts$ and $\mdts$ spaces, $\frac{1}{2(n-2)}$ in $\nni$ space, and $\frac{1}{n-1}$ in $\rnni$ space.
+It follows from Lemma~\ref{neighBound} that the maximal mass $p_E$ we can allocate under a uniform random walk to the tree $E$ is $\frac{1}{2(n-1)}$ in $\mdts$ space, $\frac{1}{2(n-2)}$ in $\nni$ space, and $\frac{1}{n-1}$ in $\rnni$ space.
 It is not hard to see that trees $T$ and $R$ can be chosen so that $d(x,y) = 1$ for all $x,y$ which are different from $E$ and for which $\mu(x,y) > 0$.
 Hence, $\kappa(T, R) = 1 - (\sum\limits_{x,y\in V\setminus\{E\}}\mu(x,y)\cdot 1 + p_E \cdot 0) = 1 - (1-p_E) = p_E$.
 The lemma follows.
@@ -312,11 +339,11 @@ The lemma follows.
 This lemma and corollary provide tighter upper bounds for the curvature than Lemma~\ref{curvBoundGeneral} for all $n$.
 
 It is easy to generalise the lemma to the uniform $p$-lazy random walk.
-Indeed, by looking at the proof of the lemma, one can notice that the curvature between adjacent trees $T$ and $R$ under a uniform $p$-lazy random walk satisfies
+Indeed, we observe that the curvature between adjacent trees $T$ and $R$ under a uniform $p$-lazy random walk satisfies
 \[
 \kappa(T,R) \leq \frac{p}{2(n-1)}
 \]
-in $\dts$ and $\mdts$ spaces,
+in $\mdts$ space,
 \[
 \kappa(T,R) \leq \frac{p}{2(n-2)}
 \]
@@ -331,7 +358,7 @@ We recall that the {\em asymptotic Ricci-Ollivier curvature}~\cite{Loisel2014-gu
 \ric(x,y) = \lim_{p\to0} \frac{\kappa(x,y)}{p}
 \]
 
-In this case the asymptotic curvature between adjacent trees in $\dts$ and $\mdts$ with uniform $p$-lazy random walk is bounded from above by
+In this case the asymptotic curvature between adjacent trees in $\mdts$ with uniform $p$-lazy random walk is bounded from above by
 \[
 \frac{1}{2(n-1)}
 \]
@@ -339,7 +366,7 @@ In this case the asymptotic curvature between adjacent trees in $\dts$ and $\mdt
 Following Loisel and Romon~\cite{Loisel2014-gu}, we will refer to non-asymptotic curvature as {\em coarse curvature} to distinguish between the two alternative notions of curvature.
 
 
-Thus, the upper bound of asymptotic curvature of $\nni$, $\rnni$, $\dts$, and $\mdts$ spaces coincides with the coarse curvatures of the spaces.
+Thus, the upper bound of asymptotic curvature of $\nni$, $\rnni$, and $\mdts$ spaces coincides with the coarse curvatures of the spaces.
 
 We continue with lower bounds on curvature of spaces with uniform lazy random walks.
 
@@ -347,7 +374,7 @@ We continue with lower bounds on curvature of spaces with uniform lazy random wa
 Let $T$ and $R$ be adjacent trees.
 Then both the asymptotic curvature of the space with $p$-lazy uniform random walk and the curvature of the space with uniform random walk are at least 
 \begin{enumerate}[(i)]
-\item $-\dfrac{4}{n-1}$ in $\dts$ and $\mdts$ spaces,
+\item $-\dfrac{4}{n-1}$ in $\mdts$ space,
 \item $-\dfrac{4}{n-2}$ in $\nni$ space,
 \item $-\dfrac{8}{n-1}$ in $\rnni$ space.
 \end{enumerate}
@@ -380,12 +407,12 @@ W(m_T,m_R)\leq 8 \cdot 2 \cdot \frac{p}{|N(T)|} +
 $1 + \dfrac{8p}{|N(T)|}$.
 Hence, $\ric(T,R) = \lim\limits_{p\to0}\left(1 - W(m_T,m_R)\right) \geq - \dfrac{8}{|N(T)|}$.
 
-It remains to note that Lemma~\ref{neighBound} gives us an estimate $|N(T)| \geq 2(n-1)$ in $\dts$ and $\mdts$, $|N(T)| \geq 2(n-2)$ in $\nni$, and $|N(T)| \geq n-1$ in $\rnni$ space.
+It remains to note that Lemma~\ref{neighBound} gives us an estimate $|N(T)| \geq 2(n-1)$ in $\mdts$, $|N(T)| \geq 2(n-2)$ in $\nni$, and $|N(T)| \geq n-1$ in $\rnni$ space.
 The lemma follows.
 \endproof
 
 \begin{corollary}\label{flatInLimDTS}
-Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of trees such that $d(T_n,R_n) = 1$ in $\nni$, $\rnni$, $\dts$, or $\mdts$ space.
+Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of trees such that $d(T_n,R_n) = 1$ in $\nni$, $\rnni$, or $\mdts$ space.
 Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = \lim\limits_{n \to \infty}\ric(T_n,R_n) = 0$.
 \end{corollary}
 
@@ -393,7 +420,7 @@ Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = \lim\limits_{n \to \infty}\ric
 Follows from Lemma~\ref{uniformUpper} and Lemma~\ref{uniformLower}.
 \endproof
 
-As we have just proved, the corollary above holds true in $\nni$, $\rnni$, $\dts$, and $\mdts$ spaces.
+As we have just proved, the corollary above holds true in $\nni$, $\rnni$, and $\mdts$ spaces.
 This corollary is also true in the SPR space of rooted trees~\cite{Whidden2015-es}.
 Actually, this property can be derived from the following general statement for all spaces mentioned, as well as for many others.
 
