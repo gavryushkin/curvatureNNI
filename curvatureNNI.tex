@@ -19,11 +19,10 @@
 
 \newcommand{\dts}{\mathrm{2DtT}}
 \newcommand{\nni}{\mathrm{NNI}}
-\newcommand{\nniu}{\mathrm{NNIu}}
 \newcommand{\rnni}{\mathrm{rNNI}}
 \newcommand{\rnniu}{\mathrm{rNNIu}}
-\newcommand{\mdts}{\mathrm{mDtT}}
-\newcommand{\mdtsu}{\mathrm{mDtTu}}
+\newcommand{\mdts}{\mathrm{DtT}}
+\newcommand{\mdtsu}{\mathrm{DtTu}}
 \newcommand{\MH}{\mathrm{MH}}
 \newcommand{\ric}{\operatorname{ric}}
 \newcommand{\rt}{\mathrm{rt}}
@@ -178,7 +177,7 @@ To move from $T$ to $R$ in $\mdts$, one must decrease the length of interval $I$
 \label{dts_neighbours.pdf}
 \end{figure}
 
-Thus we have defined a graph, which we denote by $\mdts$.
+Thus we have defined a graph, which we denote by $\mdts$ for $m \geq 2$.
 Since a graph can also be seen as a metric space where the distance is given by the length of a shortest path, we will refer to $\mdts$ as both.
 
 One might suggest that geometrically and graph-theoretically $\mdts$ is similar to NNI space on (rooted) tree topologies, to ranked NNI space, and to $\mdts$ space on ultrametric trees.
@@ -189,8 +188,8 @@ We omit from the text the exact formulations for unrooted trees, as they can be 
 We will provide complete proofs for $\mdts$ space and draw the corresponding results for the other three treespaces simultaneously.
 
 The $\mdts$ space on ultrametric trees is denoted by $\mdtsu$.
-We denote NNI space on (ultrametric) rooted tree topologies by $\nni$ ($\nniu$).
 The $\mdts$ space (on ultrametric trees) with only short branches is denoted by $\rnni$ ($\rnniu$) and called {\em ranked NNI} space (on ultrametric trees).
+The NNI space on rooted tree topologies by $\nni$.
 
 All of these can be considered as either a graph or a metric space, and we will refer to them as both.
 By $n$ we denote the number of taxa and assume $n \geq 3$ throughout the paper.
@@ -198,15 +197,18 @@ By $n$ we denote the number of taxa and assume $n \geq 3$ throughout the paper.
 \begin{lemma}\label{neighBound}
 Let $T$ be a tree on $n$ leaves.
 Then
-\[2(n-1) \leq \deg(T) \leq 5n-6\] in $\mdts$ space,
-\[\deg(T) = 2(n-2)\] in $\nni$ space, and
-\[n-1\leq \deg(T) \leq3n-4\] in $\rnni$ space.
-
+\begin{align*}
+& 2(n-1) \leq \deg(T) \leq 5n-6 	&&	\mbox{in $\mdts$ space,}\\
+& n-1 \leq deg(T) \leq 3n-5		&&	\mbox{in $\mdtsu$ space,}\\
+& n-1\leq \deg(T) \leq3n-4 		&&	\mbox{in $\rnni$ space,}\\
+& n-1 \leq \deg(T) \leq 2(n-2) 	&&	\mbox{in $\rnniu$ space, and}\\
+& \deg(T) = 2(n-2) 			&&	\mbox{in $\nni$ space.}
+\end{align*}
 All boundaries are tight.
 \end{lemma}
 
 \proof
-The lower bound in $\mdts$ space is attained by any tree with all intercoalescent intervals being long.
+The lower bound in $\mdts$ space is attained by any tree with all intercoalescent intervals being of length $m$.
 In this case, $\deg(T)$ is simply the number of intercoalescent intervals, since every intercoalescent interval adds $1$ to the total degree of the tree.
 Other trees have the same or more possible intercoalescent interval changes, showing that this is a lower bound.
 The upper bound is attained by a caterpillar tree with all intervals short and no coalescent event being younger than a taxon.
@@ -215,55 +217,55 @@ In total, $2(n-1) + 2(n-2) + n = 5n-6$.
 Note that this is an upper bound indeed, as each of the $2(n-2)$ intervals excluding the most recent can contribute either a rank change or $2$ NNI moves.
 Clearly, the tree described maximises the number of intervals that contribute $2$ NNI moves and enables the rest of intervals to contribute a rank change.
 
-Since every NNI move results in two neighbours, the equality $\deg(T) = 2(n-2)$ follows.
+For ultrametric trees, this sum would be $n-1 + 2(n-2) = 3n-5$.
+
+Since every NNI move results in two neighbours, the equality $\deg(T) = 2(n-2)$ follows for $\nni$ space.
 Indeed, it is not hard to see that the set of NNI moves that only consider moving a subtree to its aunt captures the full set of NNI neighbours with no duplicates.
 The neighbourhood size then follows because the root and its two children have no aunt.
 
 The lower bound in $\rnni$ space is attained by the caterpillar-tree where taxa get ranks $1, 2, 4, 6, \ldots$ and internal nodes get ranks $3, 5, 7, \ldots$
 In other words, the coalescent events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence$\ldots$
 In this case, intervals bounded by a taxon from below add nothing to the degree of the tree and intervals bounded from below by an internal node add one each, hence $n-1$ in total.
-The upper bound is obtained in the same way as for $\mdts$ space.
+The upper bound for both $\rnni$ and $\rnniu$ is obtained in the same way as for $\mdts$ space.
+
+For the lower bound in $\rnniu$, we note that the oldest intercoalescent interval (the one adjacent to the root) necessarily contributes $2$ to the degree.
+Hence the lower bound can be reached by a tree such that no other interval contributes more than 1.
+The degree of such a tree is $n-1$ in $\rnniu$.
 \endproof
 
 We need the following obvious corollaries for our analysis of curvature.
 
 \begin{corollary}\label{degreeBounds}
 The following are satisfied in $\mdts$ space for every pair of trees $T$ and $R$.
-\begin{enumerate}[(1)]
-\item $deg(T)-deg(R) \leq 3n-4$.
-\item $\dfrac25 < \dfrac{\deg(T)}{deg(R)} < \dfrac52$, and the inequalities are tight.
-\end{enumerate}
+\begin{align*}
+& \deg(T)-\deg(R) \leq 3n-4		&& \mbox{in $\mdts$ space,}\\
+& \deg(T)-\deg(R) \leq 2n-4		&& \mbox{in $\mdtsu$ space,}\\
+& \deg(T)-\deg(R) \leq 2n-3		&& \mbox{in $\rnni$ space,}\\
+& \deg(T)-\deg(R) \leq n-3			&& \mbox{in $\rnniu$ space,}\\
+& \dfrac25 < \dfrac{\deg(T)}{\deg(R)} < \dfrac52		&& \mbox{in $\mdts$ space,}\\
+& \dfrac13 < \dfrac{\deg(T)}{\deg(R)} < 3			&& \mbox{in $\mdtsu$ and $\rnni$ spaces,}\\
+& \dfrac12 < \dfrac{\deg(T)}{\deg(R)} < 2			&& \mbox{in $\rnniu$ space,}\\
+\end{align*}
+and all inequalities are tight.
 \end{corollary}
 
 \proof
-(1) follows from Lemma~\ref{neighBound} immediately.
+The first four inequalities follow from Lemma~\ref{neighBound} immediately.
 
-For (2) we note that
+For the fifth inequality we note that
 \[
 \frac{\deg(T)}{deg(R)} \geq \frac{2(n-1)}{5n-6} = \frac25 (1 + \frac{1}{5n-6}) \searrow \frac 25 \mbox{ when } n\to\infty
 \]
-The upper bound follows similarly.
+The upper bound follows similarly, as well as the rest of inequalities.
 \endproof
 
 For $\nni$ space, Lemma~\ref{neighBound} implies that $deg(T)-deg(R) = 0$ and $\frac{\deg(T)}{deg(R)} = 1$.
-
-\begin{corollary}\label{degreeBoundsNNI}
-The following are satisfied in $\rnni$ space.
-\begin{enumerate}[(1)]
-\item $deg(T)-deg(R) \leq 2n-3$.
-\item $\dfrac13 < \dfrac{\deg(T)}{deg(R)} < 3$, and the inequalities are tight.
-\end{enumerate}
-\end{corollary}
-
-\proof
-Follows from Lemma~\ref{neighBound} using a similar observation as in the proof of Corollary~\ref{degreeBounds}.
-\endproof
 
 Let $N(T)$ be the set of trees at distance one from $T$, that is, the set of trees adjacent to $T$ in the corresponding graph.
 The following lemma describes how many trees the tree neighbourhoods can have in common.
 
 \begin{lemma}\label{intersecNeighb}
-The following is true for all four spaces $\nni$, $\rnni$, and $\mdts$.
+The following is true for all the spaces $\nni$, $\rnni$, $\rnniu$, $\mdts$, and $\mdtsu$.
 If $d(T,R) = 1$ then $|N(T)\cap N(R)|\in\{0,1\}$.
 \end{lemma}
 
@@ -309,19 +311,11 @@ As we will see in the next few lemmas, these bounds can be improved for certain 
 \begin{lemma}\label{uniformUpper}
 Let $T$ and $R$ be adjacent trees.
 Then the curvature of the following spaces with uniform random walk satisfy
-\[
-\kappa(T,R) \leq \dfrac{1}{2(n-1)}
-\]
-for $\mdts$ space,
-\[
-\kappa(T,R) \leq \dfrac{1}{2(n-2)}
-\]
-for $\nni$ space, and
-\[
-\kappa(T,R) \leq \dfrac{1}{n-1}
-\]
-for $\rnni$ space.
-
+\begin{align*}
+& \kappa(T,R) \leq \dfrac{1}{2(n-1)}	&& \mbox{for $\mdts$ space,}\\
+& \kappa(T,R) \leq \dfrac{1}{2(n-2)}	&& \mbox{for $\nni$ space, and}\\
+& \kappa(T,R) \leq \dfrac{1}{n-1}	&& \mbox{for $\rnni$, $\rnniu$, and $\mdtsu$ spaces.}
+\end{align*}
 The bounds are tight.
 \end{lemma}
 
@@ -330,7 +324,7 @@ To maximise the curvature $\kappa(T,R)$, we have to minimise $W(m_T,m_R) = \inf\
 The latter is minimised when the probability mass $\mu(x,y)$ to be moved at shorter distance $d(x,y)$ is maximised.
 Since $d(T,R) = 1$, it follows from Lemma~\ref{intersecNeighb} that the smallest possible value of $d(x,y)$ is $0$ (the case when $|N(T) \cap N(R)| = 1$).
 Hence, to maximise the curvature we are to maximise the probability mass allocated to the tree $E$ in the intersection $N(T) \cap N(R)$.
-It follows from Lemma~\ref{neighBound} that the maximal mass $p_E$ we can allocate under a uniform random walk to the tree $E$ is $\frac{1}{2(n-1)}$ in $\mdts$ space, $\frac{1}{2(n-2)}$ in $\nni$ space, and $\frac{1}{n-1}$ in $\rnni$ space.
+It follows from Lemma~\ref{neighBound} that the maximal mass $p_E$ we can allocate under a uniform random walk to the tree $E$ is $\frac{1}{2(n-1)}$ in $\mdts$ space, $\frac{1}{2(n-2)}$ in $\nni$ space, and $\frac{1}{n-1}$ in $\rnni$, $\rnniu$, and $\mdtsu$ spaces.
 It is not hard to see that trees $T$ and $R$ can be chosen so that $d(x,y) = 1$ for all $x,y$ which are different from $E$ and for which $\mu(x,y) > 0$.
 Hence, $\kappa(T, R) = 1 - (\sum\limits_{x,y\in V\setminus\{E\}}\mu(x,y)\cdot 1 + p_E \cdot 0) = 1 - (1-p_E) = p_E$.
 The lemma follows.
@@ -340,18 +334,11 @@ This lemma and corollary provide tighter upper bounds for the curvature than Lem
 
 It is easy to generalise the lemma to the uniform $p$-lazy random walk.
 Indeed, we observe that the curvature between adjacent trees $T$ and $R$ under a uniform $p$-lazy random walk satisfies
-\[
-\kappa(T,R) \leq \frac{p}{2(n-1)}
-\]
-in $\mdts$ space,
-\[
-\kappa(T,R) \leq \frac{p}{2(n-2)}
-\]
-in $\nni$ space, and
-\[
-\kappa(T,R) \leq \frac{p}{n-1}
-\]
-in $\rnni$ space.
+\begin{align*}
+& \kappa(T,R) \leq \frac{p}{2(n-1)}	&& \mbox{in $\mdts$ space,}\\
+& \kappa(T,R) \leq \frac{p}{2(n-2)}	&& \mbox{in $\nni$ space, and}\\
+& \kappa(T,R) \leq \frac{p}{n-1}		&& \mbox{in $\rnni$, $\rnniu$, and $\mdtsu$ spaces.}
+\end{align*}
 
 We recall that the {\em asymptotic Ricci-Ollivier curvature}~\cite{Loisel2014-gu} $\ric$ of a metric space with uniform $p$-lazy random walk is defined by
 \[
@@ -366,7 +353,7 @@ In this case the asymptotic curvature between adjacent trees in $\mdts$ with uni
 Following Loisel and Romon~\cite{Loisel2014-gu}, we will refer to non-asymptotic curvature as {\em coarse curvature} to distinguish between the two alternative notions of curvature.
 
 
-Thus, the upper bound of asymptotic curvature of $\nni$, $\rnni$, and $\mdts$ spaces coincides with the coarse curvatures of the spaces.
+Thus, the upper bounds of asymptotic curvatures of $\nni$, $\rnni$, $\rnniu$, $\mdts$, and $\mdtsu$ spaces coincides with the coarse curvatures of the spaces.
 
 We continue with lower bounds on curvature of spaces with uniform lazy random walks.
 
@@ -452,9 +439,9 @@ We note that in both Corollary~\ref{flatInLimDTS} and Proposition~\ref{flatInLim
 But since the primary focus of this paper is on the spaces under consideration, we will not \todo{Should we?} include the statement in general terms of metric spaces.
 However, we prove below (Theorem~\ref{zero-in-the-limit}) a much stronger property of the spaces, namely, that the curvature tends to zero when the tree size tends to infinity does not matter what distance between the trees is.
 
-We first bound the number of neighbors of a tree $x$ in $\dts$-space that are closer than $x$ to a given tree $y$.
-We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
-These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
+We first bound the number of neighbours of a tree $x$ in $\dts$-space that are closer than $x$ to a given tree $y$.
+We show that the maximum fraction of neighbours that tend closer to $y$ grows linearly with respect to $d(x,y)$.
+These subsets of neighbours are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
 
 \begin{theorem}
 \label{max_good_neighbors}
@@ -472,7 +459,7 @@ Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
 \begin{proof}
 We first prove the statement for $\dts$ space.
 
-Let $U$ be the set of neighbors $u$ of $x$ such that $d(u,y) \le d(x,y)$, as stated in the theorem.
+Let $U$ be the set of neighbours $u$ of $x$ such that $d(u,y) \le d(x,y)$, as stated in the theorem.
 We partition $U$ into three sets of trees---$I$, $R$, and $L$---obtained from $x$ by a single NNI move, rank change, or length change, respectively.
 We then prove the theorem by bounding the size of each partition by $2d(x,y)$, $d(x,y)$, and $d(x,y)$, respectively.
 
@@ -481,12 +468,12 @@ Observe that at most $d(x,y)$ bipartitions differ between $x$ and $y$, as each N
 Now, observe that no minimal length path from $x$ to $y$ will replace a bipartition that is common to $x$ and $y$, as any path including such a replacement can be made shorter by removing the replacement move (and subsequent moves that reintroduce the bipartition).
 
 We are now ready to bound the sizes of each partition $I$, $R$, and $L$.
-First, consider the subset $I$ of closer neighbors obtained via NNI moves.
+First, consider the subset $I$ of closer neighbours obtained via NNI moves.
 By our observations above, $|I|$ is bounded by the number of NNI operations that modify one of the at most $d(x,y)$ bipartitions of $x$ that are not a bipartition of $y$.
-There are two neighbors of $x$ that lack any given bipartition (obtained by moving either the left or right subtree located below the bipartition).
+There are two neighbours of $x$ that lack any given bipartition (obtained by moving either the left or right subtree located below the bipartition).
 Therefore, $|I| \le 2d(x,y)$.
 
-Second, consider the subset $R$ of closer neighbors obtained via rank change moves.
+Second, consider the subset $R$ of closer neighbours obtained via rank change moves.
 These operate either on one of $x$'s unique bipartitions or a bipartition common to $x$ and $y$ that differs in rank.
 As observed above, the number of unique bipartitions is bounded by the maximum number of NNI moves on any minimal $x$ to $y$ path.
 Any such path must fix the ranks of each common edge.
