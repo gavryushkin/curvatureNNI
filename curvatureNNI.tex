@@ -61,10 +61,10 @@ We design a heuristic for generating these spaces and study, analytically and co
 
 \section{Introduction}
 
-In this paper we study Ricci-Ollivier curvature~\cite{Ollivier2009-cj} of Markov chains over phylogenetic trees~\cite{Semple2003-nj}.
+In this paper we study Ricci-Ollivier curvature~\cite{Ollivier2009-cj} of Markov chains over phylogenetic trees~\cite{Semple2003-nj}\todo{CW: Depending on venue, this sentence should probably be expanded to a paragraph motivating phylogenies, particularly time-trees.}.
 We formalise different spaces of phylogenetic trees as graphs, where the adjacency relation is given by a tree move.
 Those graphs can be also seen as metric spaces where the distance between two points is given by the length of a shortest path connecting them.
-All graphs we are considering in this paper are connected, so thus defined distance is indeed a metric.
+All graphs we are considering in this paper are connected, so this defined distance is indeed a metric.
 
 A Markov chain (often a random walk in our case) is defined on a metric space by its proposal mechanism, which is a functional $m$ that maps points of the space to the set of measures on this space.
 In other words, for every point $v$ in the space, $m_v(w)$ is the probability of the random walk getting from $v$ to $w$ in one step.
@@ -107,7 +107,7 @@ For finite metric spaces that means that for all distinct $u$ and $v$,
 \]
 Hence, we define the {\em coarse Ricci-Ollivier curvature of a metric space} with a random walk $m$ to be $\inf\{\kappa(m;x,y)\mid d(x,y) = 1\}$ and the {\em asymptotic Ricci-Ollivier curvature of a metric space} to be $\inf\{\ric(x,y)\mid d(x,y) = 1\}$.
 
-In the rest of the paper, we consider a number of Markov chains that arise in phylogenetic Bayesian inference and investigate the curvature of those chains with the eventual goal of the efficiency properties of the corresponding inference methods.
+In the rest of the paper, we consider a number of Markov chains that arise in phylogenetic Bayesian inference and investigate the curvature of those chains with the eventual goal of the efficiency properties of the corresponding inference methods\todo{CW: I suggest summarizing the major results here, particularly any that only make sense after curvature is defined and thus don't belong in the abstract. This could wait until the analytical results are ready though.}.
 
 \section{Discrete time-tree space and its variants}
 
@@ -117,8 +117,8 @@ We also consider three other tree spaces, which have similar properties as time-
 By a {\em time tree} we mean a rooted phylogenetic tree with all internal nodes equiped with absolute divergence times and external nodes---with sampled times.
 Although most of the results in this paper can be generalised to the class of sampled ancestor trees~\cite{Gavryushkina2014-xd}, we do not make this generalisation, as currently very few methods of sampling the space of sampled ancestor trees are known~\cite{Gavryushkina2014-xd} and the geometry of the space is poorly understood~\cite{Gavryushkin2014-bw}.
 
-Although the investigation of curvature and convergence properties of random walks over the space of time-trees is interesting and important, the geometry necessary for these investigations is yet to be developed to the necessary level~\cite{Gavryushkin2014-bw}.
-Hence, instead of considering the space in full, we approximate the space by a sequence of finite spaces and study the geometry and convergence of random walks over these approximations.
+Although the investigation of curvature and convergence properties of random walks over the space of time-trees is interesting and important\todo{CW: Why? this needs to be justified either here or in the introduction}, the geometry necessary for these investigations is yet to be developed to the necessary level~\cite{Gavryushkin2014-bw}.
+As a first step towards understanding the space in full, we approximate the space by a sequence of finite spaces and study the geometry and convergence of random walks over these approximations.
 Specifically, we fix a number $m$ and consider the space of time-trees where times between divergence events are bound to $m$ values.
 At the bottom level of this hierarchy, when $m = 1$, we have the space of ranked tree topologies.
 We extend the hierarchy by assuming that when $m = 0$, we have the $\nni$ space on rooted tree topologies.
@@ -136,7 +136,7 @@ We may think of the $\mdts$ space as of a graph, the set of vertices of which co
 In short, two trees in $\mdts$ are adjacent if the $\tau$-geodesic between them, defined in~\cite{Gavryushkin2014-bw}, crosses precisely one face and the face is of co-dimension $1$.
 To make this paper self-contained, we provide a complete definition below, for which the following notions are necessary.
 Let $T$ be a rooted phylogenetic tree with branch lengths such that the ranked topology of $T$ inherited from its branch lengths does not have two nodes (including taxa) of the same rank.
-We denote this ranked topology by $\rt(T)$ and assume that all nodes of the tree (including taxa) are assigned ranks $0,1,\ldots$
+We denote this ranked topology by $\rt(T)$ and assume that all nodes of the tree (including taxa) are assigned ranks $0,1,\ldots,2(n-1)$, where $n$ is the number of taxa.
 The node of rank $0$ is seen as being at the present, so the root has the highest rank and is the oldest node of the tree.
 An {\em intercoalescent interval} of $T$ is an interval between any two nodes of consecutive ranks.
 Intercoalescent intervals of a tree on $6$ taxa are depicted on Figure~\ref{T5.pdf}.
@@ -166,7 +166,8 @@ Two trees $T$ and $R$ from $\mdts$ are adjacent if and only if precisely one of 
 \item $T$ and $R$ are NNI neighbours and $\ell_T(I) = \ell_R(I) = 1$ where the NNI move is performed on interval $I$.
 \end{enumerate}
 
-In other words, by going from one tree to an adjacent tree in $\mdts$ graph we can either change the length of one intercoalescent interval by one unit or we can send the length of an intercoalescent interval of minimal length down to zero and then resolve the multifurcation to either of the two possible topologies (one possible topology if there is no multifurcation) and assign the minimal length to the new interval.
+In other words, by going from one tree to an adjacent tree in the $\mdts$ graph we can either change the length of one intercoalescent interval by one unit, swap the rank of two nodes, or send the length of an intercoalescent interval of minimal length down to zero and then resolve the multifurcation to either of the two possible topologies.
+In the latter case, the new interval is of minimal length.
 See Figure~\ref{dts_neighbours.pdf} for an example of a pair of trees $T,R$ at $\mdts$ distance $3$, where one has to apply all of the three possible cases from the definition above to obtain a path from $T$ to $R$ in $\mdts$.
 
 \begin{figure}
@@ -212,19 +213,19 @@ The lower bound in $\mdts$ space is attained by any tree with all intercoalescen
 In this case, $\deg(T)$ is simply the number of intercoalescent intervals, since every intercoalescent interval adds $1$ to the total degree of the tree.
 Other trees have the same or more possible intercoalescent interval changes, showing that this is a lower bound.
 The upper bound is attained by a caterpillar tree with all intervals short and no coalescent event being younger than a taxon.
-In this case, $\deg(T)$ is $2(n-1)$, the number of intervals---comes from the interval length changes, plus $2(n-2)$, the maximal possible number of NNI neighbours, plus $n$, the number of rank changes between taxa.
-In total, $2(n-1) + 2(n-2) + n = 5n-6$.
+In this case, $\deg(T)$ is bounded by the sum of the $2(n-1)$ possible interval length changes, the at most $2(n-2)$ NNI neighbours, and at most $n$ rank changes that can occur between the $n$ taxa.
+In total, $\deg(T) \le 2(n-1) + 2(n-2) + n = 5n-6$.
 Note that this is an upper bound indeed, as each of the $2(n-2)$ intervals excluding the most recent can contribute either a rank change or $2$ NNI moves.
-Clearly, the tree described maximises the number of intervals that contribute $2$ NNI moves and enables the rest of intervals to contribute a rank change.
+The caterpillar tree described above maximises the number of intervals that contribute $2$ NNI moves and enables the rest of intervals to contribute a rank change.
 
-For ultrametric trees, this sum would be $n-1 + 2(n-2) = 3n-5$.
+For ultrametric trees, this sum would be $n-1 + 2(n-2) = 3n-5$\todo{CW: Why? please add a brief breakdown for these terms as with the other spaces.}.
 
 Since every NNI move results in two neighbours, the equality $\deg(T) = 2(n-2)$ follows for $\nni$ space.
 Indeed, it is not hard to see that the set of NNI moves that only consider moving a subtree to its aunt captures the full set of NNI neighbours with no duplicates.
 The neighbourhood size then follows because the root and its two children have no aunt.
 
-The lower bound in $\rnni$ space is attained by the caterpillar-tree where taxa get ranks $1, 2, 4, 6, \ldots$ and internal nodes get ranks $3, 5, 7, \ldots$
-In other words, the coalescent events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence$\ldots$
+The lower bound in $\rnni$ space is attained by the caterpillar-tree where taxa get ranks $1, 2, 4, 6, \ldots$ and internal nodes get ranks $3, 5, 7, \ldots$. \todo{CW: didn't we define ranks to start from 0? Please standardize on one or the other. Also, please add the end values of these sequences after you do so.}
+In other words, the coalescent events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence, and so on.
 In this case, intervals bounded by a taxon from below add nothing to the degree of the tree and intervals bounded from below by an internal node add one each, hence $n-1$ in total.
 The upper bound for both $\rnni$ and $\rnniu$ is obtained in the same way as for $\mdts$ space.
 
@@ -233,10 +234,10 @@ Hence the lower bound can be reached by a tree such that no other interval contr
 The degree of such a tree is $n-1$ in $\rnniu$.
 \endproof
 
-We need the following obvious corollaries for our analysis of curvature.
+We need the following corollaries for our analysis of curvature.
 
 \begin{corollary}\label{degreeBounds}
-The following are satisfied in $\mdts$ space for every pair of trees $T$ and $R$.
+	The following are satisfied in $\mdts$ space for every pair of trees $T$ and $R$.\todo{CW: Please standardize the terms here. Do we want to use e.g. $2n-4$ or $2(n-2)$. Some of these are different from those in the lemma.}
 \begin{align*}
 & \deg(T)-\deg(R) \leq 3n-4		&& \mbox{in $\mdts$ space,}\\
 & \deg(T)-\deg(R) \leq 2n-4		&& \mbox{in $\mdtsu$ space,}\\
@@ -254,7 +255,7 @@ The first four inequalities follow from Lemma~\ref{neighBound} immediately.
 
 For the fifth inequality we note that
 \[
-\frac{\deg(T)}{deg(R)} \geq \frac{2(n-1)}{5n-6} = \frac25 (1 + \frac{1}{5n-6}) \searrow \frac 25 \mbox{ when } n\to\infty
+\frac{\deg(T)}{deg(R)} \geq \frac{2(n-1)}{5n-6} = \frac25 \left(1 + \frac{1}{5n-6}\right) \searrow \frac 25 \mbox{ when } n\to\infty
 \]
 The upper bound follows similarly, as well as the rest of inequalities.
 \endproof
@@ -300,11 +301,11 @@ The lower bound follows similarly from $d(u,v) \geq d(x,y) - 2$.
 \endproof
 
 Note that this lemma can be generalised to {\em distance-$d$} random walks, which are those satisfying $m_x(y) = 0$ for all $x$ and $y$ such that $d(x,y) > d$.
-In this case, the curvature bounds are
+In this case, using the notations of the lemma, $d(u,v) \leq d(x,y) + 2d$.
+Thus,
 \[
 -\dfrac{2d}{d(x,y)} \leq \kappa(x,y) \leq \dfrac{2d}{d(x,y)}.
 \]
-For one needs to notice that in the notations of the lemma, $d(u,v) \leq d(x,y) + 2d$.
 
 As we will see in the next few lemmas, these bounds can be improved for certain random walks on the graphs under consideration.
 
@@ -326,7 +327,7 @@ Since $d(T,R) = 1$, it follows from Lemma~\ref{intersecNeighb} that the smallest
 Hence, to maximise the curvature we are to maximise the probability mass allocated to the tree $E$ in the intersection $N(T) \cap N(R)$.
 It follows from Lemma~\ref{neighBound} that the maximal mass $p_E$ we can allocate under a uniform random walk to the tree $E$ is $\frac{1}{2(n-1)}$ in $\mdts$ space, $\frac{1}{2(n-2)}$ in $\nni$ space, and $\frac{1}{n-1}$ in $\rnni$, $\rnniu$, and $\mdtsu$ spaces.
 It is not hard to see that trees $T$ and $R$ can be chosen so that $d(x,y) = 1$ for all $x,y$ which are different from $E$ and for which $\mu(x,y) > 0$.
-Hence, $\kappa(T, R) = 1 - (\sum\limits_{x,y\in V\setminus\{E\}}\mu(x,y)\cdot 1 + p_E \cdot 0) = 1 - (1-p_E) = p_E$.
+Hence, $\kappa(T, R) = 1 - \left(\sum\limits_{x,y\in V\setminus\{E\}}\mu(x,y)\cdot 1 + p_E \cdot 0\right) = 1 - (1-p_E) = p_E$.
 The lemma follows.
 \endproof
 
