@@ -226,7 +226,7 @@ Since every NNI move results in two neighbours, the equality $\deg(T) = 2(n-2)$ 
 Indeed, it is not hard to see that the set of NNI moves that only consider moving a subtree to its aunt captures the full set of NNI neighbours with no duplicates.
 The neighbourhood size then follows because the root and its two children have no aunt.
 
-The lower bound in $\rnni$ space is attained by the caterpillar-tree where taxa get ranks $1, 2, 4, 6, \ldots$ and internal nodes get ranks $3, 5, 7, \ldots$. \todo{CW: didn't we define ranks to start from 0? Please standardize on one or the other. Also, please add the end values of these sequences after you do so.}
+The lower bound in $\rnni$ space is attained by the caterpillar-tree where taxa get ranks $0, 1, 3, 5, \ldots, 2n-3$ and internal nodes get ranks $2, 4, 6, \ldots, 2n-2$.
 In other words, the coalescent events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence, and so on.
 In this case, intervals bounded by a taxon from below add nothing to the degree of the tree and intervals bounded from below by an internal node add one each, hence $n-1$ in total.
 The upper bound for both $\rnni$ and $\rnniu$ is obtained in the same way as for $\mdts$ space.
