@@ -218,7 +218,9 @@ In total, $\deg(T) \le 2(n-1) + 2(n-2) + n = 5n-6$.
 Note that this is an upper bound indeed, as each of the $2(n-2)$ intervals excluding the most recent can contribute either a rank change or $2$ NNI moves.
 The caterpillar tree described above maximises the number of intervals that contribute $2$ NNI moves and enables the rest of intervals to contribute a rank change.
 
-For ultrametric trees, this sum would be $n-1 + 2(n-2) = 3n-5$\todo{CW: Why? please add a brief breakdown for these terms as with the other spaces.}.
+For ultrametric trees, the number of intercoalescent intervals is $n-1$, hence they add $n-1$ to the degree of the caterpillar tree from interval changes.
+The number of intervals on which an NNI move is possible is $n-2$ for ultrametric trees, hence they contribute $2(n-2)$ to the degree.
+In total, this gives the upper bound of $3n-5$ for ultrametric trees.
 
 Since every NNI move results in two neighbours, the equality $\deg(T) = 2(n-2)$ follows for $\nni$ space.
 Indeed, it is not hard to see that the set of NNI moves that only consider moving a subtree to its aunt captures the full set of NNI neighbours with no duplicates.
