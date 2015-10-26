@@ -59,7 +59,9 @@ We introduce and study various discrete approximations of the space of time tree
 We design a heuristic for generating these spaces and study, analytically and computationally, the Ricci-Ollivier curvature of basic random walks on the spaces.
 \end{abstract}
 
+
 \maketitle
+
 
 \section{Introduction}
 The last ten years have seen an explosion of methods for inferring demographic model parameters from sequence data by sampling phylogenetic trees \autocite{Kuhner1995-mj,Kuhner1998-tq,Kuhner2000-af,Beerli2001-sc,Kuhner2006-vx,Drummond2005-ks,Drummond2006-oa,Minin2008-wz}.
@@ -102,82 +104,39 @@ We will study Ricci-Ollivier curvature \autocite{Ollivier2009-cj} of Markov chai
 By a {\em time tree} we mean a rooted phylogenetic tree with all internal nodes equiped with absolute divergence times and external nodes---with sampled times.
 Although most of the results in this paper can be generalised to the class of sampled ancestor trees \autocite{Gavryushkina2014-xd}, we do not make this generalisation, as currently very few methods of sampling the space of sampled ancestor trees are known \autocite{Gavryushkina2015-vq} and the geometry of the space is poorly understood \autocite{Gavryushkin2014-bw}.
 
-As described in the introduction, we will discretize the geometry necessary for these investigations is yet to be developed to the necessary level~\cite{Gavryushkin2014-bw}.
+As described in the introduction, we will discretize the geometry necessary for these investigations is yet to be developed to the necessary level \autocite{Gavryushkin2014-bw}.
 As a first step towards understanding the space in full, we approximate the space by a sequence of finite spaces and study the geometry and convergence of random walks over these approximations.
 Specifically, we fix a number $m$ and consider the space of time trees where times between divergence events are bound to $m$ values.
 At the bottom level of this hierarchy, when $m = 1$, we have the space of ranked tree topologies.
 We extend the hierarchy by assuming that when $m = 0$, we have the $\nni$ space on rooted tree topologies.
 
 Many biological investigations are restricted to ultrametric, or equidistant, trees.
-Furthermore, many geometric and algorithmic properties vary substantially for ultrametric and non-ultrametric trees~\cite{Gavryushkin2014-bw}.
+Furthermore, many geometric and algorithmic properties vary substantially for ultrametric and non-ultrametric trees, as shown by \textcite{Gavryushkin2014-bw}.
 Hence, we consider the case of ultrametric trees separately, and indeed establish further differences.
 
-In short, the {\em discrete time tree space,} or $\mdts$ space, is the $\tau$-space defined in~\cite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only $m$ possible length values: $1,\ldots,m$.
+In short, the {\em discrete time tree space,} or $\mdts$ space, is the $\tau$-space defined by \textcite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only $m$ possible length values: $1,\ldots,m$.
 In other words, to define a tree in $\mdts$, we first fix a ranked tree topology with all nodes being of different ranks and then assign a number from $\{1, \ldots, m\}$ to every intercoalescent interval.
 Intuitively, for $m = 2$ we have only two options for the length of an intercoalescent interval, which can be thought of as short and long.
 We shall describe the numbers assigned to the intercoalescent intervals as {\em lengths} of those intervals.
 
 We may think of the $\mdts$ space as of a graph, the set of vertices of which consists of $\mdts$ trees, and define the adjacency relation as follows.
-In short, two trees in $\mdts$ are adjacent if the $\tau$-geodesic between them, defined in~\cite{Gavryushkin2014-bw}, crosses precisely one face and the face is of co-dimension $1$.
+In short, two trees in $\mdts$ are adjacent if the $\tau$-geodesic between them, as defined by \textcite{Gavryushkin2014-bw}, crosses precisely one face and the face is of co-dimension $1$.
 To make this paper self-contained, we provide a complete definition below, for which the following notions are necessary.
+
 Let $T$ be a rooted phylogenetic tree with branch lengths such that the ranked topology of $T$ inherited from its branch lengths does not have two nodes (including taxa) of the same rank.
-We denote this ranked topology by $\rt(T)$ and assume that all nodes of the tree (including taxa) are assigned ranks $0,1,\ldots,2(n-1)$, where $n$ is the number of taxa.
-The node of rank $0$ is seen as being at the present, so the root has the highest rank and is the oldest node of the tree.
+We denote this ranked topology by $\rt(T)$ and assume that all nodes of the tree (including taxa) are assigned ranks $0,1,\ldots,2n-2$, where $n$ is the number of taxa.
+The node of rank $0$ is seen as being at the present, so the root has the highest rank and is therefore the oldest node of the tree.
 An {\em intercoalescent interval} of $T$ is an interval between any two nodes of consecutive ranks.
 Intercoalescent intervals of a tree on $6$ taxa are depicted on Figure~\ref{T5.pdf}.
-By $\ell_T(I)$ we denote the length of the intercoalescent interval $I$ in tree $T$.
+By $\ell_T(I)$ we denote the length of intercoalescent interval $I$ in tree $T$.
 We say that two trees $T$ and $R$ {\em have the same ranked topology} and write $\rt(T) = \rt(R)$ if the tree topologies are isomorphic as directed graphs and the isomorphism preserves ranks of the nodes.
 In the same way we write $\tp(T) = \tp(R)$ when trees $T$ and $R$ have the same rooted tree topology (that is, ranks are ignored).
 
-
-\subsection{Ricci-Ollivier curvature}
-A Markov chain (often a random walk in our case) is defined on a metric space by its proposal mechanism, which is a functional $m$ that maps points of the space to the set of measures on this space.
-In other words, for every point $v$ in the space, $m_v(w)$ is the probability of the random walk getting from $v$ to $w$ in one step.
-Given a metric space\footnote{Since all metric spaces considered in this paper are finite, they can be seen as graphs.}
-$(V,d)$, a \emph{coupling} $\mu$ between two measures $\mu_1$ and $\mu_2$ on $V$ is a probability measure on the set of pairs of points $V \times V$ that is $\mu_1$ after marginalizing over the second component, and $\mu_2$ after marginalizing over the first, that is, $\sum\limits_{y \in V}\mu(x,y) = \mu_1(x)$ and $\sum\limits_{y \in V}\mu(y,x) = \mu_2(x)$ for all $x \in V$.
-A coupling can be seen as a scenario of transforming the measure $\mu_1$ on $V$ to $\mu_2$ by looking at $\mu(x,y)$ as the probability mass that has to be moved from $x$ to $y$ under the scenario.
-
-Using these notations, we define the {\em work} $\W_\mu$ needed to be done to transform $\mu_1$ to $\mu_2$ via coupling $\mu$ by setting $\W_\mu(\mu_1,\mu_2) = \sum\limits_{x,y\in V}\mu(x,y) d(x,y)$.
-Let $\M$ be the set of all couplings between measures $\mu_1$ and $\mu_2$.
-Then the {\em Wasserstein distance} $W$ between $\mu_1$ and $\mu_2$ is defined to be $W(\mu_1,\mu_2) = \inf\limits_{\mu\in\M}\W_\mu(\mu_1,\mu_2)$.
-
-We are now ready to introduce two main notions we are studying in this paper.
-Let $m$ be a random walk on a metric space $(V,d)$.
-Then the {\em coarse Ricci-Ollivier curvature} between two points $x$ and $y$ from $V$ with the random walk $m$ is
-\[
-\kappa(m;x,y) = 1 - \frac{W(m_x,m_y)}{d(x,y)}
-\]
-
-The second main notion of this paper is that of asymptotic curvature.
-The following random walk $m$ is called a {\em uniform $p$-lazy random walk} on a metric space $(V,d)$.
-\[
-m_x(y) =
-\begin{cases}
-1-p				& \mbox{ if } x=y \\
-0   				& \mbox{ if } d(x,y) > 1 \\
-\dfrac{p}{|N(x)|}  & \mbox{ if } d(x,y) = 1 \\
-\end{cases}
-\]
-where $x,y \in V$ and $N(x) = \{y \mid d(x,y) = 1\}$.
-
-We follow Loisel and Romon~\cite{Loisel2014-gu} and define {\em asymptotic Ricci-Ollivier curvature} $\ric$ between points $x,y$ from a metric space with uniform $p$-lazy random walk $m$ by
-\[
-\ric(x,y) = \lim_{p\to0} \frac{\kappa(m;x,y)}{p}
-\]
-
-One of the central properties of Ricci-Ollivier curvature is that the curvature is a local property~\cite{Ollivier2009-cj}.
-For finite metric spaces that means that for all distinct $u$ and $v$,
-\[
-\inf\{\kappa(m;x,y)\mid d(x,y) = 1\} \leq \kappa(m;u,v).
-\]
-Hence, we define the {\em coarse Ricci-Ollivier curvature of a metric space} with a random walk $m$ to be $\inf\{\kappa(m;x,y)\mid d(x,y) = 1\}$ and the {\em asymptotic Ricci-Ollivier curvature of a metric space} to be $\inf\{\ric(x,y)\mid d(x,y) = 1\}$.
-
-
 We say that two trees $T$ and $R$ are {\em NNI neighbours} if $\rt(T) \ne \rt(R)$ and tree $R$ is obtained from tree $T$ by sending the length of an intercoalescent interval $I$ between an internal node and its parent in $T$ down to zero and resolving the multifurcation in one of the two possible ways.
 We note that this definition implies the existence of such an interval $I$ in $T$, that is, the existence of an internal node $a$ the parent of which is the immediate successor of $a$ in $\rt(T)$.
-In particular, the parent of $D$ in tree $T$ on Figure~\ref{dts_neighbours.pdf} gives an example of such a node $a$.
-Note also that the parent of $C$ in $T$ denoted by $b$ on Figure~\ref{dts_neighbours.pdf} does not satisfy this property, that is, the parent of $b$ is not its immediate successor in $\rt(T)$.
-Hence, the tree obtained from $T$ by cutting the edge adjacent to $C$ and regrafting it to the edge between the aunt of $b$ and the root does not give an NNI neighbour of $T$ in this sense.
+In particular, the parent $a$ of taxon $D$ in tree $T$ on Figure~\ref{dts_neighbours.pdf} gives an example of such a node.
+Note also that the parent $b$ of taxon $C$ in $T$ on Figure~\ref{dts_neighbours.pdf} does not satisfy this property, that is, the parent of $b$ is not its immediate successor in $\rt(T)$.
+Hence, the tree obtained from $T$ by cutting the edge adjacent to taxon $C$ and regrafting it to the edge between the aunt of $b$ and the root does not give an NNI neighbour of $T$ in this sense.
 Note that the definition of NNI neighbours implies $\ell_T(J) = \ell_R(J)$ for each interval $J \ne I$, and the ranks of all nodes present in both $T$ and $R$ coincide.
 If trees $T$ and $R$ are NNI neighbours and tree $R$ is obtained by suppressing an interval $I$ in $T$ then we say that the {\em NNI move is performed on interval $I$}.
 
@@ -192,7 +151,7 @@ In other words, by going from one tree to an adjacent tree in the $\mdts$ graph 
 In the latter case, the new interval is of minimal length.
 See Figure~\ref{dts_neighbours.pdf} for an example of a pair of trees $T,R$ at $\mdts$ distance $3$, where one has to apply all of the three possible cases from the definition above to obtain a path from $T$ to $R$ in $\mdts$.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.7\textwidth]{dts_neighbours.pdf}
 \caption{Trees $T$ and $R$ are at $\mdts$ distance $3$.
@@ -216,6 +175,55 @@ The NNI space on rooted tree topologies by $\nni$.
 
 All of these can be considered as either a graph or a metric space, and we will refer to them as both.
 By $n$ we denote the number of taxa and assume $n \geq 3$ throughout the paper.
+
+
+\subsection{Ricci-Ollivier curvature}
+A Markov chain (often a random walk in our case) is defined on a metric space by its proposal mechanism, which is a functional $m$ that maps points of the space to the set of measures on this space.
+In other words, for every point $v$ in the space, $m(v,w)$, which we denote by $m_v(w)$, is the probability of the random walk getting from $v$ to $w$ in one step.
+Given a metric space\footnote{Since all metric spaces considered in this paper are finite, they can be seen as graphs by making points at distance one adjacent.}
+$(V,d)$, a \emph{coupling} $\mu$ between two measures $\mu_1$ and $\mu_2$ on $V$ is a probability measure on the set of pairs of points $V \times V$ that is $\mu_1$ after marginalising over the second component, and $\mu_2$ after marginalising over the first component, that is, $\sum\limits_{y \in V}\mu(x,y) = \mu_1(x)$ and $\sum\limits_{y \in V}\mu(y,x) = \mu_2(x)$ for all $x \in V$.
+A coupling can be seen as a scenario of transforming the measure $\mu_1$ on $V$ to $\mu_2$ by looking at $\mu(x,y)$ as the probability mass that has to be moved from $x$ to $y$ under the scenario.
+
+Using these notations, we define the {\em work} $\W_\mu$ needed to be done to transform $\mu_1$ to $\mu_2$ via coupling $\mu$ by setting $\W_\mu(\mu_1,\mu_2) = \sum\limits_{x,y\in V}\mu(x,y) d(x,y)$.
+Let $\M$ be the set of all couplings between measures $\mu_1$ and $\mu_2$.
+Then the {\em earth mover's distance} $W$ between $\mu_1$ and $\mu_2$ is defined to be $W(\mu_1,\mu_2) = \inf\limits_{\mu\in\M}\W_\mu(\mu_1,\mu_2)$.
+
+We are now ready to introduce two main notions we are studying in this paper.
+Let $m$ be a random walk on a metric space $(V,d)$.
+Then the {\em coarse Ricci-Ollivier curvature} between two points $x$ and $y$ from $V$ with the random walk $m$ is
+\[
+\kappa(m;x,y) = 1 - \frac{W(m_x,m_y)}{d(x,y)}
+\]
+
+Another important notion of this paper is that of asymptotic curvature.
+The following random walk $m$ is called a {\em uniform $p$-lazy random walk} on a metric space $(V,d)$:
+\[
+m_x(y) =
+\begin{cases}
+1-p				& \mbox{ if } x=y \\
+0   				& \mbox{ if } d(x,y) > 1 \\
+\dfrac{p}{|N(x)|}		& \mbox{ if } d(x,y) = 1 \\
+\end{cases}
+\]
+where $x,y \in V$ and $N(x) = \{y \mid d(x,y) = 1\}$.
+
+We follow \textcite{Loisel2014-gu} and define {\em asymptotic Ricci-Ollivier curvature} $\ric$ between points $x,y$ from a metric space with uniform $p$-lazy random walk $m$ by
+\[
+\ric(x,y) = \lim_{p\to0} \frac{\kappa(m;x,y)}{p}
+\]
+
+One of the central properties of Ricci-Ollivier curvature is that the curvature is a local property \autocite{Ollivier2009-cj}.
+For finite metric spaces that means that for all distinct $u$ and $v$,
+\[
+\inf\{\kappa(m;x,y)\mid d(x,y) = 1\} \leq \kappa(m;u,v).
+\]
+Hence, we define the {\em coarse Ricci-Ollivier curvature of a metric space} with a random walk $m$ to be $\inf\{\kappa(m;x,y)\mid d(x,y) = 1\}$ and the {\em asymptotic Ricci-Ollivier curvature of a metric space} to be $\inf\{\ric(x,y)\mid d(x,y) = 1\}$.
+
+
+\section{Geometry of space of discrete time trees}
+
+We start with the following lemma that bounds the sizes of one-neighbourhoods if various discretisations of the space of time trees.
+The lemma is of the the most important tools for estimating the curvature of various random walks later in the paper.
 
 \begin{lemma}\label{neighBound}
 Let $T$ be a tree on $n$ leaves.
@@ -584,6 +592,7 @@ The following inequalities are satisfied in $\rnni$ \todo{What about NNI?} space
 Use Corollary~\ref{degreeBoundsNNI}.
 \endproof
 
+
 \section{Efficient algorithm for computing $\rnni$ graphs}
 
 We use the following algorithm designed in~\cite{Whidden2015-es} to compute the $\rnni$ graph on $n$ leaves.
@@ -619,6 +628,7 @@ We implemented this procedure for ultrametric trees in the Python programme \tex
 of the software package \texttt{tTauCurvature}~\cite{tTauCurvature},
 \todo{Learn how to get DOI for Github.}
 which outputs an edge list format graph suitable for input to other software.
+
 
 \section{Some other spaces}
 
