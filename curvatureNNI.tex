@@ -4,12 +4,14 @@
 
 \usepackage{amsmath,amsthm}
 \usepackage{todonotes}
-\usepackage{natbib}
 \usepackage[notref,notcite]{showkeys}
 \usepackage{enumerate}
 \usepackage{url}
 \usepackage[colorlinks=false]{hyperref}
 \usepackage{graphicx}
+\usepackage[style=authoryear-icomp,ibidtracker=false]{biblatex}
+
+\addbibresource{curvatureNNI.bib}
 
 \newtheorem{lemma}{Lemma}
 \newtheorem{question}[lemma]{Question}
@@ -37,7 +39,7 @@
 
 \begin{document}
 
-\title{Random walks over discrete time-trees}
+\title{Random walks over discrete time trees}
 
 \author{Alex Gavryushkin}
 \address{Department of Computer Science, The University of Auckland, New Zealand}
@@ -53,42 +55,45 @@
 
 
 \begin{abstract}
-We introduce and study various discrete approximations of the space of time-trees, with $\nni$-space being a roughest approximation.
+We introduce and study various discrete approximations of the space of time trees, with $\nni$-space being a roughest approximation.
 We design a heuristic for generating these spaces and study, analytically and computationally, the Ricci-Ollivier curvature of basic random walks on the spaces.
 \end{abstract}
 
 \maketitle
 
 \section{Introduction}
-The last ten years have seen an explosion of methods for inferring demographic model parameters from sequence data by sampling phylogenetic trees \cite{Kuhner1995-mj,Kuhner1998-tq,Kuhner2000-af,Beerli2001-sc,Kuhner2006-vx,Drummond2005-ks,Drummond2006-oa,Minin2008-wz}.
-Dates defined in phylogenetic terms, such as time to a most recent common ancestor of human HIV group M viruses \cite{Worobey2008-rt,Baele2013-op}, are an important such parameter.
-Thus the {\em time tree} --- a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates --- has become an important object of interest.
-Posterior distributions on time trees, as well as classical phylogenetic trees equipped with branch lengths quantifying the amount of molecular substitution along a branch are estimated using Markov chain Monte Carlo \cite{Mau1997-sq,Yang1997-gv,Drummond2006-oa}.
+The last ten years have seen an explosion of methods for inferring demographic model parameters from sequence data by sampling phylogenetic trees \autocite{Kuhner1995-mj,Kuhner1998-tq,Kuhner2000-af,Beerli2001-sc,Kuhner2006-vx,Drummond2005-ks,Drummond2006-oa,Minin2008-wz}.
+Dates defined in phylogenetic terms, such as time to a most recent common ancestor of human HIV group M viruses \autocite{Worobey2008-rt,Baele2013-op}, are an important such parameter.
+Thus the {\em time tree}---a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates---has become an important object of interest.
+Posterior distributions on time trees, as well as classical phylogenetic trees equipped with branch lengths quantifying the amount of molecular substitution along a branch are estimated using Markov chain Monte Carlo \autocite{Mau1997-sq,Yang1997-gv,Drummond2006-oa}.
 Although Markov chain Monte Carlo (MCMC) is guaranteed to sample the posterior given an infinite run time, it is important to understand mixing properties of the chain, which determine sampling properties for a finite time run.
 
 \begin{figure}
 \centering
 \includegraphics[width=0.7\textwidth]{T5.pdf}
-\caption{A time tree on $6$ taxa.}
+\caption{Time tree on $6$ taxa.}
 \label{T5.pdf}
 \end{figure}
 
-The mixing properties of phylogenetic MCMC have, in the classical unrooted case, been a major area of research from both the theoretical perspective of mixing time bounds~\cite{Mossel2005-ly,Mossel2006-fo,Stefankovic2011-hu,spade2014note} and the practical perspective of performance on real data~\cite{beiko2006searching,Ronquist2006-fv,lakner2008efficiency,Whidden2015-yi}.
+The mixing properties of phylogenetic MCMC have, in the classical unrooted case, been a major area of research from both the theoretical perspective of mixing time bounds \autocite{Mossel2005-ly,Mossel2006-fo,Stefankovic2011-hu,spade2014note} and the practical perspective of performance on real data \autocite{beiko2006searching,Ronquist2006-fv,lakner2008efficiency,Whidden2015-yi}.
 This research has focused on mixing over the set of discrete phylogenetic tree graph structures, which is the primary obstruction to MCMC convergence.
 Classical phylogenetic trees discretize naturally as simply the graph structure underlying that phylogenetic tree.
-MCMC moves between classical phylogenetic trees are typically defined in terms of this discretization, such as the \emph{subtree prune regraft} (SPR) move, that cuts a subtree off and reattaches it at another location.
+MCMC moves between classical phylogenetic trees are typically defined in terms of this discretization, such as the \emph{subtree prune and regraft} (SPR) move, that cuts a subtree off and reattaches it at another location.
 On the other hand, moves between time trees are also defined in terms of their timing information.
-For example, \cite{Hohna2008-vl} show that SPR-like moves that reattach subtrees at the same divergence time are more effective than ones that do not.
+For example, \textcite{Hohna2008-vl} show that SPR-like moves that reattach subtrees at the same divergence time are more effective than ones that do not.
 This sort of move cannot be expressed using the type of discretization used thus far in which all continuous information is lost, and so the previous work on MCMC mixing cannot be applied.
 
 However, one can discretize time trees in a way that does preserve some of the information.
-For example, by retaining the order of internal nodes forward in time one obtains a so-called \emph{ranked tree}, cite{}.
-A sequence of time trees sampled using MCMC projects to a collection of movements on a graph in which each vertex is a discretized time tree and each edge is a discretized version of a MCMC move on time trees.
+For example, by retaining the order of internal nodes forward in time one obtains a so-called \emph{ranked tree} \autocite{Semple2003-nj}.
+A sequence of time trees sampled using MCMC projects to a collection of movements on a graph in which each vertex is a discretized time tree and each edge is a discretized version of an MCMC move on time trees.
+
+Another possible way to make a less rough approximation of a time tree is to allow the time periods between nodes of the tree to take only finitely many possible values.
+The graph build on such trees provides a further refined discretisation of the space of time trees.
 We call such a graph a \emph{discretized time tree graph}.
 
 In this paper we explore various discretized time tree graphs, derive some of their properties, initiate the mathematical study of random walks on these spaces, and compare these results to those in the classical phylogenetic setting.
-In particular, we focus on ... these graphs...
-We will study Ricci-Ollivier curvature~\cite{Ollivier2009-cj} of Markov chains on the graphs, which quantifies to what extent random walking brings points together.
+In particular, we focus on ranked trees, discretised time trees (as defined above), and the ultrametric versions of those types of trees.
+We will study Ricci-Ollivier curvature \autocite{Ollivier2009-cj} of Markov chains on the graphs, which quantifies to what extent random walking brings points together.
 
 
 \section{Technical introduction}
@@ -99,7 +104,7 @@ Although most of the results in this paper can be generalised to the class of sa
 
 As described in the introduction, we will discretize the geometry necessary for these investigations is yet to be developed to the necessary level~\cite{Gavryushkin2014-bw}.
 As a first step towards understanding the space in full, we approximate the space by a sequence of finite spaces and study the geometry and convergence of random walks over these approximations.
-Specifically, we fix a number $m$ and consider the space of time-trees where times between divergence events are bound to $m$ values.
+Specifically, we fix a number $m$ and consider the space of time trees where times between divergence events are bound to $m$ values.
 At the bottom level of this hierarchy, when $m = 1$, we have the space of ranked tree topologies.
 We extend the hierarchy by assuming that when $m = 0$, we have the $\nni$ space on rooted tree topologies.
 
@@ -107,7 +112,7 @@ Many biological investigations are restricted to ultrametric, or equidistant, tr
 Furthermore, many geometric and algorithmic properties vary substantially for ultrametric and non-ultrametric trees~\cite{Gavryushkin2014-bw}.
 Hence, we consider the case of ultrametric trees separately, and indeed establish further differences.
 
-In short, the {\em discrete time-tree space,} or $\mdts$ space, is the $\tau$-space defined in~\cite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only $m$ possible length values: $1,\ldots,m$.
+In short, the {\em discrete time tree space,} or $\mdts$ space, is the $\tau$-space defined in~\cite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only $m$ possible length values: $1,\ldots,m$.
 In other words, to define a tree in $\mdts$, we first fix a ranked tree topology with all nodes being of different ranks and then assign a number from $\{1, \ldots, m\}$ to every intercoalescent interval.
 Intuitively, for $m = 2$ we have only two options for the length of an intercoalescent interval, which can be thought of as short and long.
 We shall describe the numbers assigned to the intercoalescent intervals as {\em lengths} of those intervals.
@@ -632,8 +637,10 @@ Increase the coordinate by $1$ with probability $p$ and decrease it by $1$ other
 If the coordinate becomes $0$, resolve the multifurcation uniformly at random and set the new coordinate to $1$.
 Note that this mechanism does not bound edge lengths from above and favours topological moves when $p<1/2$.
 
-\bibliography{curvatureNNI}
-\bibliographystyle{alpha}
+%\bibliography{curvatureNNI}
+%\bibliographystyle{alpha}
+
+\printbibliography
 
 \end{document}
 
