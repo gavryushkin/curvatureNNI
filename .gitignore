@@ -114,3 +114,12 @@ sympy-plots-for-*.tex/
 # Matsen group
 .sconsign.dblite
 SConstruct
+
+# @gavruskin
+tmp/
+.DS_Store
+.idea
+__pycache__
+*.pyc
+*.local
+
