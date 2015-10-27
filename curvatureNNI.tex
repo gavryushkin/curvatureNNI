@@ -65,11 +65,12 @@ We design a heuristic for generating these spaces and study, analytically and co
 
 
 \section{Introduction}
-The last ten years have seen an explosion of methods for inferring demographic model parameters from sequence data by sampling phylogenetic trees \autocite{Kuhner1995-mj,Kuhner1998-tq,Kuhner2000-af,Beerli2001-sc,Kuhner2006-vx,Drummond2005-ks,Drummond2006-oa,Minin2008-wz}.
+The last ten years have seen an explosion of methods using sequence data to infer demographic model parameters by sampling phylogenetic trees \autocite{Kuhner1995-mj,Kuhner1998-tq,Kuhner2000-af,Beerli2001-sc,Kuhner2006-vx,Drummond2005-ks,Drummond2006-oa,Minin2008-wz}.
 Dates defined in phylogenetic terms, such as time to a most recent common ancestor of human HIV group M viruses \autocite{Worobey2008-rt,Baele2013-op}, are an important such parameter.
 Thus the {\em time tree}---a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates---has become an important object of interest.
-Posterior distributions on time trees, as well as classical phylogenetic trees equipped with branch lengths quantifying the amount of molecular substitution along a branch are estimated using Markov chain Monte Carlo \autocite{Mau1997-sq,Yang1997-gv,Drummond2006-oa}.
-Although Markov chain Monte Carlo (MCMC) is guaranteed to sample the posterior given an infinite run time, it is important to understand mixing properties of the chain, which determine sampling properties for a finite time run.
+This is in contrast to classical phylogenetic trees in which branch lengths quantify the amount of molecular substitution along a branch.
+Posterior distributions on both time trees and classical trees are estimated using Markov chain Monte Carlo \autocite{Mau1997-sq,Yang1997-gv,Drummond2006-oa}.
+Although Markov chain Monte Carlo (MCMC) is guaranteed to sample from the true posterior given an infinite run time, it is important to understand mixing properties of the chain, which determine sampling properties for a finite time run.
 
 \begin{figure}
 \centering
@@ -91,49 +92,46 @@ For example, by retaining the order of internal nodes forward in time one obtain
 A sequence of time trees sampled using MCMC projects to a collection of movements on a graph in which each vertex is a discretized time tree and each edge is a discretized version of an MCMC move on time trees.
 
 Another possible way to make a less rough approximation of a time tree is to allow the time periods between nodes of the tree to take only finitely many possible values.
-The graph build on such trees provides a further refined discretisation of the space of time trees.
+The graph built on such trees provides a further refined discretisation of the space of time trees.
 We call such a graph a \emph{discretized time tree graph}.
 
 In this paper we explore various discretized time tree graphs, derive some of their properties, initiate the mathematical study of random walks on these spaces, and compare these results to those in the classical phylogenetic setting.
 In particular, we focus on ranked trees, discretised time trees (as defined above), and the ultrametric versions of those types of trees.
-We will study Ricci-Ollivier curvature \autocite{Ollivier2009-cj} of Markov chains on the graphs, which quantifies to what extent random walking brings points together.
+We will study Ricci-Ollivier curvature \autocite{Ollivier2009-cj} of Markov chains on the graphs, which quantifies to what extent random walking brings unit balls together.
 
 
 \section{Technical introduction}
 \subsection{Spaces of discretized time trees}
 
-By a {\em time tree} we mean a rooted phylogenetic tree with all internal nodes equiped with absolute divergence times and external nodes---with sampled times.
-Although most of the results in this paper can be generalised to the class of sampled ancestor trees \autocite{Gavryushkina2014-xd}, we do not make this generalisation, as currently very few methods of sampling the space of sampled ancestor trees are known \autocite{Gavryushkina2015-vq} and the geometry of the space is poorly understood \autocite{Gavryushkin2014-bw}.
-
-As described in the introduction, we will discretize the geometry necessary for these investigations is yet to be developed to the necessary level \autocite{Gavryushkin2014-bw}.
-As a first step towards understanding the space in full, we approximate the space by a sequence of finite spaces and study the geometry and convergence of random walks over these approximations.
+By a {\em time tree} we mean a rooted phylogenetic tree with all internal nodes equipped with absolute divergence times and external nodes---with sampled times.
+As a first step towards understanding the full space of time trees \autocite{Gavryushkin2014-bw}, we approximate the space by a sequence of finite spaces and study the geometry and convergence of random walks over these approximations.
 Specifically, we fix a number $m$ and consider the space of time trees where times between divergence events are bound to $m$ values.
 At the bottom level of this hierarchy, when $m = 1$, we have the space of ranked tree topologies.
 We extend the hierarchy by assuming that when $m = 0$, we have the $\nni$ space on rooted tree topologies.
 
-Many biological investigations are restricted to ultrametric, or equidistant, trees.
-Furthermore, many geometric and algorithmic properties vary substantially for ultrametric and non-ultrametric trees, as shown by \textcite{Gavryushkin2014-bw}.
+Many biological investigations are restricted to ultrametric, or equidistant, trees: trees for which the distance of every leaf to the root is the same.
+Furthermore, many geometric and algorithmic properties differ substantially between ultrametric and non-ultrametric trees, as shown by \textcite{Gavryushkin2014-bw}.
 Hence, we consider the case of ultrametric trees separately, and indeed establish further differences.
 
 In short, the {\em discrete time tree space,} or $\mdts$ space, is the $\tau$-space defined by \textcite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only $m$ possible length values: $1,\ldots,m$.
 In other words, to define a tree in $\mdts$, we first fix a ranked tree topology with all nodes being of different ranks and then assign a number from $\{1, \ldots, m\}$ to every intercoalescent interval.
 Intuitively, for $m = 2$ we have only two options for the length of an intercoalescent interval, which can be thought of as short and long.
-We shall describe the numbers assigned to the intercoalescent intervals as {\em lengths} of those intervals.
+We shall describe the integers assigned to the intercoalescent intervals as {\em lengths} of those intervals.
 
 We may think of the $\mdts$ space as of a graph, the set of vertices of which consists of $\mdts$ trees, and define the adjacency relation as follows.
 In short, two trees in $\mdts$ are adjacent if the $\tau$-geodesic between them, as defined by \textcite{Gavryushkin2014-bw}, crosses precisely one face and the face is of co-dimension $1$.
 To make this paper self-contained, we provide a complete definition below, for which the following notions are necessary.
 
-Let $T$ be a rooted phylogenetic tree with branch lengths such that the ranked topology of $T$ inherited from its branch lengths does not have two nodes (including taxa) of the same rank.
+Let $T$ be a rooted phylogenetic tree with branch lengths \todo{so not a time tree?} such that the ranked topology of $T$ inherited from its branch lengths does not have two nodes (including taxa) of the same rank.
 We denote this ranked topology by $\rt(T)$ and assume that all nodes of the tree (including taxa) are assigned ranks $0,1,\ldots,2n-2$, where $n$ is the number of taxa.
+\todo[inline]{Am I missing something something or wouldn't it be simpler to have a definition of the ranked topology of a time tree? If this is the definition it needs to be made more clear.}
 The node of rank $0$ is seen as being at the present, so the root has the highest rank and is therefore the oldest node of the tree.
-An {\em intercoalescent interval} of $T$ is an interval between any two nodes of consecutive ranks.
-Intercoalescent intervals of a tree on $6$ taxa are depicted on Figure~\ref{T5.pdf}.
+An {\em intercoalescent interval} of $T$ is an interval between any two nodes of consecutive ranks (Figure~\ref{T5.pdf}).
 By $\ell_T(I)$ we denote the length of intercoalescent interval $I$ in tree $T$.
 We say that two trees $T$ and $R$ {\em have the same ranked topology} and write $\rt(T) = \rt(R)$ if the tree topologies are isomorphic as directed graphs and the isomorphism preserves ranks of the nodes.
 In the same way we write $\tp(T) = \tp(R)$ when trees $T$ and $R$ have the same rooted tree topology (that is, ranks are ignored).
 
-We say that two trees $T$ and $R$ are {\em NNI neighbours} if $\rt(T) \ne \rt(R)$ and tree $R$ is obtained from tree $T$ by sending the length of an intercoalescent interval $I$ between an internal node and its parent in $T$ down to zero and resolving the multifurcation in one of the two possible ways.
+We say that two trees \todo{... but these are time trees?} $T$ and $R$ are {\em NNI neighbours} if $\rt(T) \ne \rt(R)$ and tree $R$ is obtained from tree $T$ by sending the length of an intercoalescent interval $I$ between an internal node and its parent in $T$ down to zero and resolving the multifurcation in one of the two possible ways.
 We note that this definition implies the existence of such an interval $I$ in $T$, that is, the existence of an internal node $a$ the parent of which is the immediate successor of $a$ in $\rt(T)$.
 In particular, the parent $a$ of taxon $D$ in tree $T$ on Figure~\ref{dts_neighbours.pdf} gives an example of such a node.
 Note also that the parent $b$ of taxon $C$ in $T$ on Figure~\ref{dts_neighbours.pdf} does not satisfy this property, that is, the parent of $b$ is not its immediate successor in $\rt(T)$.
@@ -699,6 +697,11 @@ Choose a coordinate uniformly at random.
 Increase the coordinate by $1$ with probability $p$ and decrease it by $1$ otherwise.
 If the coordinate becomes $0$, resolve the multifurcation uniformly at random and set the new coordinate to $1$.
 Note that this mechanism does not bound edge lengths from above and favours topological moves when $p<1/2$.
+
+
+\section{Discussion}
+Most of the results in this paper can be generalised to the class of sampled ancestor trees \autocite{Gavryushkina2014-xd}.
+However, currently very few methods of sampling the space of sampled ancestor trees are known \autocite{Gavryushkina2015-vq} and the geometry of the space is poorly understood \autocite{Gavryushkin2014-bw}.
 
 %\bibliography{curvatureNNI}
 %\bibliographystyle{alpha}
