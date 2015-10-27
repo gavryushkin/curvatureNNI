@@ -65,11 +65,11 @@ We design a heuristic for generating these spaces and study, analytically and co
 
 
 \section{Introduction}
-The last ten years have seen an explosion of methods using sequence data to infer demographic model parameters by sampling phylogenetic trees \autocite{Kuhner1995-mj,Kuhner1998-tq,Kuhner2000-af,Beerli2001-sc,Kuhner2006-vx,Drummond2005-ks,Drummond2006-oa,Minin2008-wz}.
-Dates defined in phylogenetic terms, such as time to a most recent common ancestor of human HIV group M viruses \autocite{Worobey2008-rt,Baele2013-op}, are an important such parameter.
+The last ten years have seen an explosion of methods using sequence data to infer demographic model parameters by sampling phylogenetic trees \autocite{Kuhner1995-mj,Kuhner1998-tq,Kuhner2000-af,Beerli2001-sc,Kuhner2006-vx,Drummond2002,Drummond2005-ks,Drummond2006-oa,Minin2008-wz}.
+Dates defined in phylogenetic terms, such as time to a most recent common ancestor of human HIV group M viruses \autocite{Worobey2008-rt,Baele2013-op}, are essential parameters of such inference.
 Thus the {\em time tree}---a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates---has become an important object of interest.
 This is in contrast to classical phylogenetic trees in which branch lengths quantify the amount of molecular substitution along a branch.
-Posterior distributions on both time trees and classical trees are estimated using Markov chain Monte Carlo \autocite{Mau1997-sq,Yang1997-gv,Drummond2006-oa}.
+Posterior distributions on both time trees and classical trees are estimated using Markov chain Monte Carlo \autocite{Mau1997-sq,Yang1997-gv,Drummond2002}.
 Although Markov chain Monte Carlo (MCMC) is guaranteed to sample from the true posterior given an infinite run time, it is important to understand mixing properties of the chain, which determine sampling properties for a finite time run.
 
 \begin{figure}
