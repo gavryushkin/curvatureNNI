@@ -424,7 +424,7 @@ Indeed, we observe that the curvature between adjacent trees $T$ and $R$ under a
 & \kappa(T,R) \leq \frac{p}{n-1}		&& \mbox{in $\rnni$, $\rnniu$, and $\mdtsu$ spaces.}
 \end{align*}
 
-We recall that the {\em asymptotic Ricci-Ollivier curvature}~\cite{Loisel2014-gu} $\ric$ of a metric space with uniform $p$-lazy random walk is defined by
+We recall that the {\em asymptotic Ricci-Ollivier curvature}~\autocite{Loisel2014-gu} $\ric$ of a metric space with uniform $p$-lazy random walk is defined by
 \[
 \ric(x,y) = \lim_{p\to0} \frac{\kappa(x,y)}{p}
 \]
@@ -434,7 +434,7 @@ In this case the asymptotic curvature between adjacent trees in $\mdts$ with uni
 \frac{1}{2(n-1)}
 \]
 
-Following Loisel and Romon~\cite{Loisel2014-gu}, we will refer to non-asymptotic curvature as {\em coarse curvature} to distinguish between the two alternative notions of curvature.
+Following \textcite{Loisel2014-gu}, we will refer to non-asymptotic curvature as {\em coarse curvature} to distinguish between the two alternative notions of curvature.
 
 
 Thus, the upper bounds of asymptotic curvatures of $\nni$, $\rnni$, $\rnniu$, $\mdts$, and $\mdtsu$ spaces coincides with the coarse curvatures of the spaces.
@@ -492,7 +492,7 @@ Follows from Lemma~\ref{uniformUpper} and Lemma~\ref{uniformLower}.
 \endproof
 
 As we have just proved, the corollary above holds true in $\nni$, $\rnni$, and $\mdts$ spaces.
-This corollary is also true in the SPR space of rooted trees~\cite{Whidden2015-es}.
+This corollary is also true in the SPR space of rooted trees \autocite{Whidden2015-es}.
 Actually, this property can be derived from the following general statement for all spaces mentioned, as well as for many others.
 
 \begin{proposition}\label{flatInLimGen}
@@ -625,7 +625,7 @@ The following inequalities are satisfied in both $\dts$ and $\mdts$ spaces.
 
 \proof
 From Corollary~\ref{degreeBounds} we have that $\frac{|N(T_{old})|}{|N(T_{new})|} \geq \frac{2}{5}$, so the probability mass that an MH move leaves at $T_{old}$ is not greater than $\frac35$.
-The rest of the proof follows the proof of Lemma~V.8 in~\cite{Whidden2015-es} literally.
+The rest of the proof follows \autocite[][Proof of Lemma~V.8]{Whidden2015-es} literally.
 \endproof
 
 \begin{corollary}
@@ -646,16 +646,15 @@ Use Corollary~\ref{degreeBoundsNNI}.
 
 \section{Efficient algorithm for computing $\rnni$ graphs}
 
-We use the following algorithm designed in~\cite{Whidden2015-es} to compute the $\rnni$ graph on $n$ leaves.
-The input to our algorithm is a set $S$ of ranked phylogenetic tree topologies in the format described in~\cite{Semple2003-nj,Gavryushkin2014-bw}.
-A tree is hence given by a sequence of sets of taxa~\cite{Gavryushkin2014-bw}.
-Assuming that taxa is ordered, this gives a unique representation of a tree as a string.
+We use the following algorithm designed by \textcite{Whidden2015-es} to compute the $\rnni$ graph on $n$ leaves.
+The input to our algorithm is a set $S$ of ranked phylogenetic tree topologies in the format described by \textcite{Gavryushkin2014-bw} \autocite[see also][]{Semple2003-nj}.
+A tree is hence given by a sequence of sets of taxa, and thus obtained representation is unique.
 For example, the representation of the tree on Figure~\ref{T5.pdf} is $(\{A\}, \{C\}, \{D\}, \{B\}, \{E\}, \{A,B\}, \{D,E\}, \{C, D, E\}, \{F\}, \{A,B,F\}, \{A,B,C,D,E,F\})$, or
 $(\{A,B\}, \{D,E\}, \{C, D, E\}, \{A,B,F\}, \{A,B,C,D,E,F\})$ if we make the tree ultrametric by placing all taxa below the most recent divergence event.
 Using this representation of trees we construct a map $\nu : S \to \omega$, where $\omega$ is the set of non-negative integers.
 This maps allows us to determine whether or not a tree is already a vertex of the graph.
 
-The high-level steps of the algorithm are the same as in~\cite{Whidden2015-es}, where the correctness of the algorithm is established.
+The high-level steps of the algorithm follow \textcite{Whidden2015-es} literally, as well as the proof of correctness of the algorithm.
 
 \textsc{Construct-$\rnni$-Graph($S$)}
 \begin{enumerate}[1.]
@@ -676,14 +675,14 @@ The high-level steps of the algorithm are the same as in~\cite{Whidden2015-es}, 
 
 We implemented this procedure for ultrametric trees in the Python programme \texttt{tau\_graph}
 \todo{Check the name.}
-of the software package \texttt{tTauCurvature}~\cite{tTauCurvature},
+of the software package \texttt{tTauCurvature} \autocite{tTauCurvature},
 \todo{Learn how to get DOI for Github.}
 which outputs an edge list format graph suitable for input to other software.
 
 
 \section{Some other spaces}
 
-Several important proposal mechanisms used in phylogenetic Bayesian inference by popular software packages such as BEAST2~\cite{beast2} favour topological moves or tree moves depending on various conditions.
+Several important proposal mechanisms used in phylogenetic Bayesian inference by popular software packages such as BEAST2 \autocite{beast2} favour topological moves or tree moves depending on various conditions.
 All tree moves we have been considering so far do not make an explicit distinction between topological changes and branch length changes.
 To address this issue\todo{issue?}, we consider the following tree move that explicitly allows distributing the acceptance probability between topological and branch length moves.
 
