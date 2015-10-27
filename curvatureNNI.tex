@@ -122,16 +122,16 @@ We may think of the $\mdts$ space as of a graph, the set of vertices of which co
 In short, two trees in $\mdts$ are adjacent if the $\tau$-geodesic between them, as defined by \textcite{Gavryushkin2014-bw}, crosses precisely one face and the face is of co-dimension $1$.
 To make this paper self-contained, we provide a complete definition below, for which the following notions are necessary.
 
-Let $T$ be a rooted phylogenetic tree with branch lengths \todo{so not a time tree?} such that the ranked topology of $T$ inherited from its branch lengths does not have two nodes (including taxa) of the same rank.
+Let $T$ be a time tree such that no two nodes of $T$ are of the same time, that is, no two divergence or sample events coincide.
+We define the {\em ranked topology of tree} $T$ to be the directed graph induced by the topology of $T$ such that the set of nodes of this graph is linearly ordered with respect to their time order in $T$.
 We denote this ranked topology by $\rt(T)$ and assume that all nodes of the tree (including taxa) are assigned ranks $0,1,\ldots,2n-2$, where $n$ is the number of taxa.
-\todo[inline]{Am I missing something something or wouldn't it be simpler to have a definition of the ranked topology of a time tree? If this is the definition it needs to be made more clear.}
 The node of rank $0$ is seen as being at the present, so the root has the highest rank and is therefore the oldest node of the tree.
 An {\em intercoalescent interval} of $T$ is an interval between any two nodes of consecutive ranks (Figure~\ref{T5.pdf}).
 By $\ell_T(I)$ we denote the length of intercoalescent interval $I$ in tree $T$.
 We say that two trees $T$ and $R$ {\em have the same ranked topology} and write $\rt(T) = \rt(R)$ if the tree topologies are isomorphic as directed graphs and the isomorphism preserves ranks of the nodes.
 In the same way we write $\tp(T) = \tp(R)$ when trees $T$ and $R$ have the same rooted tree topology (that is, ranks are ignored).
 
-We say that two trees \todo{... but these are time trees?} $T$ and $R$ are {\em NNI neighbours} if $\rt(T) \ne \rt(R)$ and tree $R$ is obtained from tree $T$ by sending the length of an intercoalescent interval $I$ between an internal node and its parent in $T$ down to zero and resolving the multifurcation in one of the two possible ways.
+We say that two trees $T$ and $R$ are {\em NNI neighbours} if $\rt(T) \ne \rt(R)$ and tree $R$ is obtained from tree $T$ by sending the length of an intercoalescent interval $I$ between an internal node and its parent in $T$ down to zero and resolving the multifurcation in one of the two possible ways.
 We note that this definition implies the existence of such an interval $I$ in $T$, that is, the existence of an internal node $a$ the parent of which is the immediate successor of $a$ in $\rt(T)$.
 In particular, the parent $a$ of taxon $D$ in tree $T$ on Figure~\ref{dts_neighbours.pdf} gives an example of such a node.
 Note also that the parent $b$ of taxon $C$ in $T$ on Figure~\ref{dts_neighbours.pdf} does not satisfy this property, that is, the parent of $b$ is not its immediate successor in $\rt(T)$.
