@@ -70,7 +70,7 @@ Dates defined in phylogenetic terms, such as time to a most recent common ancest
 Thus the {\em time tree}---a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates---has become an important object of interest.
 This is in contrast to classical phylogenetic trees in which branch lengths quantify the amount of molecular substitution along a branch.
 Posterior distributions on both time trees and classical trees are estimated using Markov chain Monte Carlo \autocite{Mau1997-sq,Yang1997-gv,Drummond2002}.
-Although Markov chain Monte Carlo (MCMC) is guaranteed to sample from the true posterior given an infinite run time, it is important to understand mixing properties of the chain, which determine sampling properties for a finite time run.
+Although Markov chain Monte Carlo (MCMC) is guaranteed to sample from the true posterior given an infinite run time, it is important to understand mixing properties of the chain, which determine sampling properties for a finite time run.\todo{CW: Figure 1 doesn't match the intro, where we define a time tree as ``a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates''. I suggest either adding a new figure here and moving this one to the technical introduction (where it is first referenced) or adding a time axis to the figure. If we leave it here, then the caption needs to be expanded as well.}
 
 \begin{figure}
 \centering
@@ -82,7 +82,8 @@ Although Markov chain Monte Carlo (MCMC) is guaranteed to sample from the true p
 The mixing properties of phylogenetic MCMC have, in the classical unrooted case, been a major area of research from both the theoretical perspective of mixing time bounds \autocite{Mossel2005-ly,Mossel2006-fo,Stefankovic2011-hu,spade2014note} and the practical perspective of performance on real data \autocite{beiko2006searching,Ronquist2006-fv,lakner2008efficiency,Whidden2015-yi}.
 This research has focused on mixing over the set of discrete phylogenetic tree graph structures, which is the primary obstruction to MCMC convergence.
 Classical phylogenetic trees discretise naturally as simply the graph structure underlying that phylogenetic tree.
-MCMC moves between classical phylogenetic trees are typically defined in terms of this discretisation, such as the \emph{subtree prune and regraft} (SPR) move, that cuts a subtree off and reattaches it at another location.
+MCMC moves between classical phylogenetic trees are typically defined in terms of this discretisation.
+Common moves include \emph{subtree prune and regraft} (SPR) moves, which cut a subtree off and reattach it at another location, and the subset of SPR moves called \emph{nearest-neighbor interchange} (NNI) moves.
 On the other hand, moves between time trees are also defined in terms of their timing information.
 For example, \textcite{Hohna2008-vl} show that SPR-like moves that reattach subtrees at the same divergence time are more effective than ones that do not.
 This sort of move cannot be expressed using the type of discretisation used thus far in which all continuous information is lost, and so the previous work on MCMC mixing cannot be applied.
@@ -97,13 +98,15 @@ We call such a graph a \emph{discretised time tree graph}.
 
 In this paper we explore various discretised time tree graphs, derive some of their properties, initiate the mathematical study of random walks on these spaces, and compare these results to those in the classical phylogenetic setting.
 In particular, we focus on ranked trees, discretised time trees (as defined above), and the ultrametric versions of those types of trees.
-We will study Ricci-Ollivier curvature \autocite{Ollivier2009-cj} of Markov chains on the graphs, which quantifies to what extent random walking brings unit balls together.
+We study Ricci-Ollivier curvature \autocite{Ollivier2009-cj} of Markov chains on these graphs, a formalism which quantifies to what extent random walking brings unit balls together.
+This formalism has recently been applied to Markov chains on graphs of classical phylogenetic trees \autocite{Whidden2015-es}. 
+
 
 
 \section{Technical introduction}
 \subsection{Spaces of discretised time trees}
 
-By a {\em time tree} we mean a rooted phylogenetic tree with all internal nodes equipped with absolute divergence times and external nodes---with sampled times.
+By a {\em time tree} we refer to a rooted phylogenetic tree with all internal nodes equipped with absolute divergence times and all external nodes equipped with sampled times.
 As a first step towards understanding the full space of time trees \autocite{Gavryushkin2014-bw}, we approximate the space by a sequence of finite spaces and study the geometry and convergence of random walks over these approximations.
 Specifically, we fix a number $m$ and consider the space of time trees where times between divergence events are bound to $m$ values.
 At the bottom level of this hierarchy, when $m = 1$, we have the space of ranked tree topologies.
@@ -178,7 +181,7 @@ By $n$ we denote the number of taxa and assume $n \geq 3$ throughout the paper.
 
 \subsection{Ricci-Ollivier curvature}
 A Markov chain (often a random walk in our case) is defined on a metric space by its proposal mechanism, which is a functional $m$ that maps points of the space to the set of measures on this space.
-In other words, for every point $v$ in the space, $m(v,w)$, which we denote by $m_v(w)$, is the probability of the random walk getting from $v$ to $w$ in one step.
+In other words, for every point $v$ in the space, $m(v,w)$, which we denote by $m_v(w)$, is the probability of the random walk moving from $v$ to $w$ in one step.
 Given a metric space\footnote{Since all metric spaces considered in this paper are finite, they can be seen as graphs by making points at distance one adjacent.}
 $(V,d)$, a \emph{coupling} $\mu$ between two measures $\mu_1$ and $\mu_2$ on $V$ is a probability measure on the set of pairs of points $V \times V$ that is $\mu_1$ after marginalising over the second component, and $\mu_2$ after marginalising over the first component, that is, $\sum\limits_{y \in V}\mu(x,y) = \mu_1(x)$ and $\sum\limits_{y \in V}\mu(y,x) = \mu_2(x)$ for all $x \in V$.
 A coupling can be seen as a scenario of transforming the measure $\mu_1$ on $V$ to $\mu_2$ by looking at $\mu(x,y)$ as the probability mass that has to be moved from $x$ to $y$ under the scenario.
