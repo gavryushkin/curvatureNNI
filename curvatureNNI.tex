@@ -180,13 +180,16 @@ By $n$ we denote the number of taxa and assume $n \geq 3$ throughout the paper.
 
 
 \subsection{Ricci-Ollivier curvature}
-A Markov chain (often a random walk in our case) is defined on a metric space by its proposal mechanism, which is a functional $m$ that maps points of the space to the set of measures on this space.
+A Markov chain (often a random walk in our case) is defined on a metric space by its proposal mechanism, which is a functional $m$ that maps points of the space to the set of measures on this space. \todo{Note that Ollivier has a specific definition of the term "random walk" that I think would be good to use here as well.}
 In other words, for every point $v$ in the space, $m(v,w)$, which we denote by $m_v(w)$, is the probability of the random walk moving from $v$ to $w$ in one step.
-Given a metric space\footnote{Since all metric spaces considered in this paper are finite, they can be seen as graphs by making points at distance one adjacent.}
+Given a metric space\footnote{Since all metric spaces considered in this paper are finite, they can be seen as graphs by making points at distance one adjacent.} \todo{Er, not all finite metric spaces can be turned into such a graph}
 $(V,d)$, a \emph{coupling} $\mu$ between two measures $\mu_1$ and $\mu_2$ on $V$ is a probability measure on the set of pairs of points $V \times V$ that is $\mu_1$ after marginalising over the second component, and $\mu_2$ after marginalising over the first component, that is, $\sum\limits_{y \in V}\mu(x,y) = \mu_1(x)$ and $\sum\limits_{y \in V}\mu(y,x) = \mu_2(x)$ for all $x \in V$.
 A coupling can be seen as a scenario of transforming the measure $\mu_1$ on $V$ to $\mu_2$ by looking at $\mu(x,y)$ as the probability mass that has to be moved from $x$ to $y$ under the scenario.
 
-Using these notations, we define the {\em work} $\W_\mu$ needed to be done to transform $\mu_1$ to $\mu_2$ via coupling $\mu$ by setting $\W_\mu(\mu_1,\mu_2) = \sum\limits_{x,y\in V}\mu(x,y) d(x,y)$.
+Using these notations, we define the {\em work} $\W_\mu$ needed to be done to transform $\mu_1$ to $\mu_2$ via coupling $\mu$ by setting
+\[
+\W_\mu(\mu_1,\mu_2) = \sum\limits_{x,y\in V}\mu(x,y) d(x,y).
+\]
 Let $\M$ be the set of all couplings between measures $\mu_1$ and $\mu_2$.
 Then the {\em earth mover's distance} $W$ between $\mu_1$ and $\mu_2$ is defined to be $W(\mu_1,\mu_2) = \inf\limits_{\mu\in\M}\W_\mu(\mu_1,\mu_2)$.
 
@@ -225,17 +228,15 @@ Hence, we define the {\em coarse Ricci-Ollivier curvature of a metric space} wit
 \section{Geometry of space of discrete time trees}
 
 In this section we look at some geometric properties of the graphs introduced in the introduction.
-An important notion for the study of mixing properties of Markov chains on graphs is the notions of distance.
-A natural distance on a graph is given by the length of a shortest path between two vertices.
-Hence, finding this shortest path is an important computational problem in the study of efficiency properties of the space.
-It is well-known that this problem is NP-hard in $\nni$ space \autocite{Dasgupta2000-xa}.
+We begin by considering the shortest path distance on the graphs.
+It is well-known that computing distance is NP-hard in $\nni$ space \autocite{Dasgupta2000-xa}.
 Hence, for each of the possible discretisations of the time tree space, a natural question is the following.
 
 \begin{problem}
 What is the complexity of computing the distance between two trees in discrete time tree space?
 \end{problem}
 
-Although we approach this problem by solving it in a partial case, a complete answer is yet to be discovered.
+We are not aware of a complete answer to this question, but we we approach this problem by solving it in a partial case.
 
 \begin{proposition}\label{propCaterpillarComplexity}
 The problem of finding the distance between two caterpillar trees is constant-time computable in all spaces $\mdts$, $\mdtsu$, $\rnni$, and $\rnniu$.
@@ -246,6 +247,7 @@ The problem of finding the distance between two caterpillar trees is constant-ti
 \endproof
 
 We are not aware whether the complexity of finding the distance between two trees in $\nni$ space is known, but as the following example suggests it is unlikely that the distance is constant-time computable.
+\todo{Wait, I thought you just said that it was NP-complete.}
 Let $T$ be the ultrametric tree $((((((1, 2), 3), 4), 5), 6), 7)$ and $R$ be the ultrametric tree $((((((1, 4), 5), 6), 2), 3), 7)$.
 Then a shortest $\nni$ path is given by first making a cherry $(2,3)$, then moving the cherry up to the split $1456 \mid 7$, and then resolving the cherry back.
 While in $\rnniu$ this path is not shortest, and a shortest path would move the parents of $2$ and $3$ independently.
@@ -276,8 +278,7 @@ Hence, we prove the rest...
 
 \section{Ricci-Ollivier curvature of discrete time trees}
 
-We start with the following lemma that bounds the sizes of one-neighbourhoods if various discretisations of the space of time trees.
-The lemma is of the the most important tools for estimating the curvature of various random walks later in the paper.
+We start with the following bounds on the sizes of one-neighbourhoods of various discretisations of the space of time trees, which are one of the most important tools for estimating the curvature of various random walks later in the paper.
 
 \begin{lemma}\label{neighBound}
 Let $T$ be a tree on $n$ leaves.
