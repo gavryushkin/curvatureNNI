@@ -72,7 +72,7 @@ This is in contrast to classical phylogenetic trees in which branch lengths quan
 Posterior distributions on both time trees and classical trees are estimated using Markov chain Monte Carlo \autocite{Mau1997-sq,Yang1997-gv,Drummond2002}.
 Although Markov chain Monte Carlo (MCMC) is guaranteed to sample from the true posterior given an infinite run time, it is important to understand mixing properties of the chain, which determine sampling properties for a finite time run.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=0.7\textwidth]{timeTree.eps}
 \caption{Time tree on $6$ taxa.
@@ -134,7 +134,7 @@ By $\ell_T(I)$ we denote the length of intercoalescent interval $I$ in tree $T$.
 We say that two trees $T$ and $R$ {\em have the same ranked topology} and write $\rt(T) = \rt(R)$ if the tree topologies are isomorphic as directed graphs and the isomorphism preserves ranks of the nodes.
 In the same way we write $\tp(T) = \tp(R)$ when trees $T$ and $R$ have the same rooted tree topology (that is, ranks are ignored).
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=0.7\textwidth]{T5.pdf}
 \caption{Discretised time tree on $6$ taxa.
@@ -161,7 +161,7 @@ In other words, by going from one tree to an adjacent tree in the $\mdts$ graph 
 In the latter case, the new interval is of minimal length.
 See Figure~\ref{dts_neighbours.pdf} for an example of a pair of trees $T,R$ at $\mdts$ distance $3$, where one has to apply all of the three possible cases from the definition above to obtain a path from $T$ to $R$ in $\mdts$.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=0.7\textwidth]{dts_neighbours.pdf}
 \caption{Trees $T$ and $R$ are at $\mdts$ distance $3$.
@@ -259,7 +259,7 @@ We are not aware whether the complexity of finding the distance between two cate
 Let $T$ be the ultrametric tree $((((((1, 2), 3), 4), 5), 6), 7)$ and $R$ be the ultrametric tree $((((((1, 4), 5), 6), 2), 3), 7)$.
 Then a shortest $\nni$ path is given by first making a cherry $(2,3)$, then moving the cherry up to the split $1456 \mid 7$, and then resolving the cherry back.
 While in $\rnniu$ this path is not shortest, and a shortest path would move the parents of $2$ and $3$ independently.
-See Figure~\ref{blah} for more details.
+%See Figure~\ref{} for more details.
 \todo{Draw the figure.}
 
 These observations suggest that $\nni$ space is substantially different from the other four spaces.
@@ -651,7 +651,7 @@ The following inequalities are satisfied in $\rnni$ \todo{What about NNI?} space
 \end{corollary}
 
 \proof
-Use Corollary~\ref{degreeBoundsNNI}.
+Use Corollary~\ref{degreeBounds}.
 \endproof
 
 
