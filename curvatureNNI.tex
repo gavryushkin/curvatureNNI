@@ -70,13 +70,14 @@ Dates defined in phylogenetic terms, such as time to a most recent common ancest
 Thus the {\em time tree}---a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates---has become an important object of interest.
 This is in contrast to classical phylogenetic trees in which branch lengths quantify the amount of molecular substitution along a branch.
 Posterior distributions on both time trees and classical trees are estimated using Markov chain Monte Carlo \autocite{Mau1997-sq,Yang1997-gv,Drummond2002}.
-Although Markov chain Monte Carlo (MCMC) is guaranteed to sample from the true posterior given an infinite run time, it is important to understand mixing properties of the chain, which determine sampling properties for a finite time run.\todo{CW: Figure 1 doesn't match the intro, where we define a time tree as ``a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates''. I suggest either adding a new figure here and moving this one to the technical introduction (where it is first referenced) or adding a time axis to the figure. If we leave it here, then the caption needs to be expanded as well.}
+Although Markov chain Monte Carlo (MCMC) is guaranteed to sample from the true posterior given an infinite run time, it is important to understand mixing properties of the chain, which determine sampling properties for a finite time run.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
-\includegraphics[width=0.7\textwidth]{T5.pdf}
-\caption{Time tree on $6$ taxa.}
-\label{T5.pdf}
+\includegraphics[width=0.7\textwidth]{timeTree.eps}
+\caption{Time tree on $6$ taxa.
+Time is measured by nonnegative real numbers.}
+\label{timeTree.eps}
 \end{figure}
 
 The mixing properties of phylogenetic MCMC have, in the classical unrooted case, been a major area of research from both the theoretical perspective of mixing time bounds \autocite{Mossel2005-ly,Mossel2006-fo,Stefankovic2011-hu,spade2014note} and the practical perspective of performance on real data \autocite{beiko2006searching,Ronquist2006-fv,lakner2008efficiency,Whidden2015-yi}.
@@ -100,7 +101,6 @@ In this paper we explore various discretised time tree graphs, derive some of th
 In particular, we focus on ranked trees, discretised time trees (as defined above), and the ultrametric versions of those types of trees.
 We study Ricci-Ollivier curvature \autocite{Ollivier2009-cj} of Markov chains on these graphs, a formalism which quantifies to what extent random walking brings unit balls together.
 This formalism has recently been applied to Markov chains on graphs of classical phylogenetic trees \autocite{Whidden2015-es}. 
-
 
 
 \section{Technical introduction}
@@ -133,6 +133,14 @@ An {\em intercoalescent interval} of $T$ is an interval between any two nodes of
 By $\ell_T(I)$ we denote the length of intercoalescent interval $I$ in tree $T$.
 We say that two trees $T$ and $R$ {\em have the same ranked topology} and write $\rt(T) = \rt(R)$ if the tree topologies are isomorphic as directed graphs and the isomorphism preserves ranks of the nodes.
 In the same way we write $\tp(T) = \tp(R)$ when trees $T$ and $R$ have the same rooted tree topology (that is, ranks are ignored).
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{T5.pdf}
+\caption{Discretised time tree on $6$ taxa.
+Intervals between divergence and sample events can take only finitely many values (two in this example).}
+\label{T5.pdf}
+\end{figure}
 
 We say that two trees $T$ and $R$ are {\em NNI neighbours} if $\rt(T) \ne \rt(R)$ and tree $R$ is obtained from tree $T$ by sending the length of an intercoalescent interval $I$ between an internal node and its parent in $T$ down to zero and resolving the multifurcation in one of the two possible ways.
 We note that this definition implies the existence of such an interval $I$ in $T$, that is, the existence of an internal node $a$ the parent of which is the immediate successor of $a$ in $\rt(T)$.
@@ -180,9 +188,10 @@ By $n$ we denote the number of taxa and assume $n \geq 3$ throughout the paper.
 
 
 \subsection{Ricci-Ollivier curvature}
-A Markov chain (often a random walk in our case) is defined on a metric space by its proposal mechanism, which is a functional $m$ that maps points of the space to the set of measures on this space. \todo{Note that Ollivier has a specific definition of the term "random walk" that I think would be good to use here as well.}
+A random walk on a metric space is defined by its proposal mechanism, which is a functional $m$ that maps points of the space to the set of measures on this space \autocite[see][]{Ollivier2009-cj}.
 In other words, for every point $v$ in the space, $m(v,w)$, which we denote by $m_v(w)$, is the probability of the random walk moving from $v$ to $w$ in one step.
-Given a metric space\footnote{Since all metric spaces considered in this paper are finite, they can be seen as graphs by making points at distance one adjacent.} \todo{Er, not all finite metric spaces can be turned into such a graph}
+Given a metric space\footnote{Every connected graph can be seen as a metric space with the distance between two points given by the length of a shortest path between them.
+All graphs considered in this paper are connected.}
 $(V,d)$, a \emph{coupling} $\mu$ between two measures $\mu_1$ and $\mu_2$ on $V$ is a probability measure on the set of pairs of points $V \times V$ that is $\mu_1$ after marginalising over the second component, and $\mu_2$ after marginalising over the first component, that is, $\sum\limits_{y \in V}\mu(x,y) = \mu_1(x)$ and $\sum\limits_{y \in V}\mu(y,x) = \mu_2(x)$ for all $x \in V$.
 A coupling can be seen as a scenario of transforming the measure $\mu_1$ on $V$ to $\mu_2$ by looking at $\mu(x,y)$ as the probability mass that has to be moved from $x$ to $y$ under the scenario.
 
@@ -246,8 +255,7 @@ The problem of finding the distance between two caterpillar trees is constant-ti
 
 \endproof
 
-We are not aware whether the complexity of finding the distance between two trees in $\nni$ space is known, but as the following example suggests it is unlikely that the distance is constant-time computable.
-\todo{Wait, I thought you just said that it was NP-complete.}
+We are not aware whether the complexity of finding the distance between two caterpillar trees in $\nni$ space is known, but as the following example suggests it is unlikely that the distance is constant-time computable.
 Let $T$ be the ultrametric tree $((((((1, 2), 3), 4), 5), 6), 7)$ and $R$ be the ultrametric tree $((((((1, 4), 5), 6), 2), 3), 7)$.
 Then a shortest $\nni$ path is given by first making a cherry $(2,3)$, then moving the cherry up to the split $1456 \mid 7$, and then resolving the cherry back.
 While in $\rnniu$ this path is not shortest, and a shortest path would move the parents of $2$ and $3$ independently.
@@ -271,7 +279,6 @@ Every split present in both trees $T$ and $R$ presents in all trees along every 
 
 \proof
 The counter example for $\nni$ space is constructed by \textcite{li1996some}.
-\todo{Find}
 Hence, we prove the rest...
 \endproof
 
