@@ -2,7 +2,7 @@
 
 \synctex=1
 
-\usepackage{amsmath,amsthm}
+\usepackage{amsmath,amsthm,amssymb}
 \usepackage{todonotes}
 \usepackage[notref,notcite]{showkeys}
 \usepackage{enumerate}
@@ -282,10 +282,7 @@ The counter example for $\nni$ space is constructed by \textcite{li1996some}.
 Hence, we prove the rest...
 \endproof
 
-
-\section{Ricci-Ollivier curvature of discrete time trees}
-
-We start with the following bounds on the sizes of one-neighbourhoods of various discretisations of the space of time trees, which are one of the most important tools for estimating the curvature of various random walks later in the paper.
+We continue with the following bounds on the sizes of one-neighbourhoods of various discretisations of the space of time trees, which are one of the most important tools for estimating the curvature of various random walks later in the paper.
 
 \begin{lemma}\label{neighBound}
 Let $T$ be a tree on $n$ leaves.
@@ -327,6 +324,31 @@ For the lower bound in $\rnniu$, we note that the oldest intercoalescent interva
 Hence the lower bound can be reached by a tree such that no other interval contributes more than 1.
 The degree of such a tree is $n-1$ in $\rnniu$.
 \endproof
+
+We finish this section with the following proposition that suggests that the graphs under consideration have ``bottlenecks''.
+To make this statement precise we need to introduce the following notion.
+Let $G = (V, E)$ be an undirected graph and $S$ a subset of the set of vertices $V$.
+The boundary $\partial S$ of S is the set of edges ``pointing our from $S$'': $\partial S = \{(v,w) \in E \mid v \in S ~\&~ w \notin S\}$.
+Then the {\em isoperimetric number} $h(G)$ of $G$ is defined by
+\[
+h(G) = \inf\limits_{0 < |S| \leq \frac12|V|} \frac{|\partial S|}{|S|}.
+\]
+
+\begin{proposition}
+Let $G_n$ be $\mdts$, $\mdtsu$, $\rnni$, $\rnniu$, or $\nni$ graph on trees with $n$ taxa.
+Then $\lim_n h(G_n) = 0$.
+\end{proposition}
+
+\proof
+We assume that the taxa set is $\{1,\ldots,n\}$ and denote the set $\{1,\ldots,\lfloor \frac n2 \rfloor\} \leftrightharpoons A$ and $\{\lfloor \frac n2 \rfloor + 1,\ldots, n\} \leftrightharpoons B$.
+Let $S$ be the set of trees $T$ such that $T$ has the split $A \mid B$.
+Clearly, $\lim_n \frac{|\partial S|}{|S|} = 0$ for all graphs under consideration.
+\endproof
+
+This proposition implies for phylogenetic graphs that the isoperimetric number is asymptotically as small as possible, which can be interpreted as that the graphs have as strong bottleneck as possible.
+
+
+\section{Ricci-Ollivier curvature of discrete time trees}
 
 We need the following corollaries for our analysis of curvature.
 
