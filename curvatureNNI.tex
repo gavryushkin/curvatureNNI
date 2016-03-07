@@ -7,7 +7,7 @@
 \usepackage[notref,notcite]{showkeys}
 \usepackage{enumerate}
 \usepackage{url}
-\usepackage[colorlinks=false]{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage{graphicx}
 \usepackage[style=authoryear-icomp,ibidtracker=false]{biblatex}
 
@@ -245,33 +245,12 @@ Hence, for each of the possible discretisations of the time tree space, a natura
 What is the complexity of computing the distance between two trees in discrete time tree space?
 \end{problem}
 
-We are not aware of a complete answer to this question, but we we approach this problem by solving it in a partial case.
+Although we do not know the complexity of finding the distance between two caterpillar trees in $\nni$ space, the following example suggests that the problem has higher complexity in $\nni$ than in $\rnni$.
 
-\begin{proposition}\label{propCaterpillarComplexity}
-The problem of finding the distance between two caterpillar trees is constant-time computable in all spaces $\mdts$, $\mdtsu$, $\rnni$, and $\rnniu$.
-\end{proposition}
-
-\proof
-
-\endproof
-
-We are not aware whether the complexity of finding the distance between two caterpillar trees in $\nni$ space is known, but as the following example suggests it is unlikely that the distance is constant-time computable.
-Let $T$ be the ultrametric tree $((((((1, 2), 3), 4), 5), 6), 7)$ and $R$ be the ultrametric tree $((((((1, 4), 5), 6), 2), 3), 7)$.
-Then a shortest $\nni$ path is given by first making a cherry $(2,3)$, then moving the cherry up to the split $1456 \mid 7$, and then resolving the cherry back.
-While in $\rnniu$ this path is not shortest, and a shortest path would move the parents of $2$ and $3$ independently.
-%See Figure~\ref{} for more details.
-\todo{Draw the figure.}
-
-These observations suggest that $\nni$ space is substantially different from the other four spaces.
-To understand the reason for this difference, we provide the following observations.
-
-\begin{proposition}
-Every tree on a shortest path between two caterpillar trees is a caterpillar tree in $\mdts$, $\mdtsu$, $\rnni$, and $\rnniu$, but not in $\nni$.
-\end{proposition}
-
-\proof
-Immediately follows from Proposition~\ref{propCaterpillarComplexity}.
-\endproof
+Let $T$ be the ultrametric tree $(((((((1, 2), 3), 4), 5), 6), 7), 8)$ and $R$ be the ultrametric tree $((((((1, 2), 5), 6), 2), 3), 4), 7)$.
+Then a shortest $\nni$ path is given by first making a cherry $(3,4)$, then moving the cherry up to the split $14567 \mid 8$, and then resolving the cherry back.
+While in $\rnniu$ this path is not shortest, and a shortest path would move the parents of $3$ and $4$ independently.
+\todo{Make this an $\backslash$example}
 
 \begin{proposition}
 Every split present in both trees $T$ and $R$ presents in all trees along every shortest path between $T$ and $R$ in $\mdts$, $\mdtsu$, $\rnni$, and $\rnniu$, but not in $\nni$.
@@ -281,6 +260,13 @@ Every split present in both trees $T$ and $R$ presents in all trees along every 
 The counter example for $\nni$ space is constructed by \textcite{li1996some}.
 Hence, we prove the rest...
 \endproof
+
+\begin{proposition}
+Ranked trees don't have non-trivial symmetries, hence tanglegrams don't help.
+\todo{Make this formal}
+\end{proposition}
+
+These observations suggest that $\nni$ space is geometrically and algorithmically different from the other four spaces.
 
 We continue with the following bounds on the sizes of one-neighbourhoods of various discretisations of the space of time trees, which are one of the most important tools for estimating the curvature of various random walks later in the paper.
 
