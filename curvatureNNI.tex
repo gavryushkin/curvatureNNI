@@ -251,10 +251,12 @@ Although we do not solve this problem in this paper, we demonstrate that the sol
 Particularly, we demonstrate in the following example that even for caterpillar trees the solution could be non-obvious.
 
 \begin{example}
-Let $T$ be the ultrametric tree $(((((((1, 2), 3), 4), 5), 6), 7), 8)$ and $R$ be the ultrametric tree $((((((1, 2), 5), 6), 2), 3), 4), 7)$.
-Then a shortest $\nni$ path is given by first making a cherry $(3,4)$, then moving the cherry up to the split $14567 \mid 8$, and then resolving the cherry back.
-While in $\rnniu$ this path is not shortest, and a shortest path would move the parents of $3$ and $4$ independently.
+Let $T$ be the ultrametric tree $((((((1, 2), 3), 4), 5), 6), 7)$ and $R$ be the ultrametric tree $((((((1, 4), 5), 6), 2), 3), 7)$.
+Then a shortest $\nni$ path is given by first making a cherry $(2,3)$, then moving the cherry up to the split $1456 \mid 7$, and then resolving the cherry back.
+While in $\rnniu$ this path is not shortest, and a shortest path would be to move up the parents of $2$ and $3$ independently.
 \end{example}
+
+With this example in mind, it is not hart to see that the set of trees of the form $(\ldots(1, i_2), \ldots, i_{n-1}), n)$, where $\{i_2, \ldots, i_{n-1}\} = \{2, \ldots, n-1\}$, is convex in the space of discrete time-trees and is not convex in $\nni$.
 
 \begin{proposition}
 Every split present in both trees $T$ and $R$ presents in all trees along every shortest path between $T$ and $R$ in $\mdts$, $\mdtsu$, $\rnni$, and $\rnniu$, but not in $\nni$.
