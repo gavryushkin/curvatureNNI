@@ -18,7 +18,10 @@
 \newtheorem{proposition}[lemma]{Proposition}
 \newtheorem{corollary}[lemma]{Corollary}
 \newtheorem{theorem}[lemma]{Theorem}
-\newtheorem{problem}{Problem}
+\newtheorem{problem}[lemma]{Problem}
+
+\theoremstyle{definition}
+\newtheorem{example}[lemma]{Example}
 
 \newcommand{\dts}{\mathrm{2DtT}}
 \newcommand{\nni}{\mathrm{NNI}}
@@ -28,11 +31,11 @@
 \newcommand{\mdtsu}{\mathrm{DtTu}}
 \newcommand{\MH}{\mathrm{MH}}
 \newcommand{\ric}{\operatorname{ric}}
-\newcommand{\rt}{\mathrm{rt}}
-\newcommand{\tp}{\mathrm{tp}}
+\newcommand{\rt}{\operatorname{rt}}
+\newcommand{\tp}{\operatorname{tp}}
 \newcommand{\W}{\mathcal{W}}
 \newcommand{\M}{\mathcal{M}}
-\newcommand{\dom}{\mathrm{dom}}
+\newcommand{\dom}{\operatorname{dom}}
 
 \renewcommand{\O}{\mathcal{O}}
 
@@ -100,14 +103,14 @@ We call such a graph a \emph{discretized time-tree graph}.
 In this paper we explore various discretized time-tree graphs, derive some of their properties, initiate the mathematical study of random walks on these spaces, and compare these results to those in the classical phylogenetic setting.
 In particular, we focus on ranked trees, discretized time-trees (as defined above), and the ultrametric versions of those types of trees.
 We study Ricci-Ollivier curvature \autocite{Ollivier2009-cj} of Markov chains on these graphs, a formalism which quantifies to what extent random walking brings unit balls together.
-This formalism has recently been applied to Markov chains on graphs of classical phylogenetic trees \autocite{Whidden2015-es}. 
+This formalism has recently been applied to Markov chains on graphs of classical phylogenetic trees \autocite{Whidden2015-es}.
 
 
 \section{Technical introduction}
 \subsection{Spaces of discretized time-trees}
 
-By a {\em time-tree} we refer to a rooted phylogenetic tree with all internal nodes equipped with absolute divergence times and all external nodes equipped with sampled times.
-As a first step towards understanding the full space of time-trees \autocite{Gavryushkin2014-bw}, we approximate the space by a sequence of finite spaces and study the geometry and convergence of random walks over these approximations.
+By a {\em time-tree} we mean a rooted phylogenetic tree with all internal nodes equipped with absolute divergence times and all external nodes equipped with sampled times.
+As a first step toward understanding the full space of time-trees \autocite{Gavryushkin2014-bw}, we approximate the space by a sequence of finite spaces and study the geometry and convergence of random walks over those approximations.
 Specifically, we fix a number $m$ and consider the space of time-trees where times between divergence events are bound to $m$ values.
 At the bottom level of this hierarchy, when $m = 1$, we have the space of ranked tree topologies.
 We extend the hierarchy by assuming that when $m = 0$, we have the $\nni$ space on rooted tree topologies.
@@ -116,22 +119,24 @@ Many biological investigations are restricted to ultrametric, or equidistant, tr
 Furthermore, many geometric and algorithmic properties differ substantially between ultrametric and non-ultrametric trees, as shown by \textcite{Gavryushkin2014-bw}.
 Hence, we consider the case of ultrametric trees separately, and indeed establish further differences.
 
-In short, the {\em discrete time-tree space,} or $\mdts$ space, is the $\tau$-space defined by \textcite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only $m$ possible length values: $1,\ldots,m$.
+In short, the {\em discrete time-tree space,} or $\mdts$ space, is the
+$\tau$-space\footnote{Note that (interestingly) discretized versions of $\tau$- and $\mathrm t$-space from \autocite{Gavryushkin2014-bw} coincide.}
+defined by \textcite{Gavryushkin2014-bw}, where the real-valued parameters (length intercoalescent intervals) are allowed to take only $m$ possible values: $1,\ldots,m$.
 In other words, to define a tree in $\mdts$, we first fix a ranked tree topology with all nodes being of different ranks and then assign a number from $\{1, \ldots, m\}$ to every intercoalescent interval.
 Intuitively, for $m = 2$ we have only two options for the length of an intercoalescent interval, which can be thought of as short and long.
 We shall describe the integers assigned to the intercoalescent intervals as {\em lengths} of those intervals.
 
 We may think of the $\mdts$ space as of a graph, the set of vertices of which consists of $\mdts$ trees, and define the adjacency relation as follows.
 In short, two trees in $\mdts$ are adjacent if the $\tau$-geodesic between them, as defined by \textcite{Gavryushkin2014-bw}, crosses precisely one face and the face is of co-dimension $1$.
-To make this paper self-contained, we provide a complete definition below, for which the following notions are necessary.
+To make this paper self-contained, we provide a complete definition below.
 
 Let $T$ be a time-tree such that no two nodes of $T$ are of the same time, that is, no two divergence or sample events coincide.
-We define the {\em ranked topology of tree} $T$ to be the directed graph induced by the topology of $T$ such that the set of nodes of this graph is linearly ordered with respect to their time order in $T$.
+We define the {\em ranked topology of tree} $T$ to be the (directed) graph induced by the topology of $T$ such that the set of nodes of this graph is linearly ordered with respect to their time order in $T$.
 We denote this ranked topology by $\rt(T)$ and assume that all nodes of the tree (including taxa) are assigned ranks $0,1,\ldots,2n-2$, where $n$ is the number of taxa.
 The node of rank $0$ is seen as being at the present, so the root has the highest rank and is therefore the oldest node of the tree.
 An {\em intercoalescent interval} of $T$ is an interval between any two nodes of consecutive ranks (Figure~\ref{T5.pdf}).
 By $\ell_T(I)$ we denote the length of intercoalescent interval $I$ in tree $T$.
-We say that two trees $T$ and $R$ {\em have the same ranked topology} and write $\rt(T) = \rt(R)$ if the tree topologies are isomorphic as directed graphs and the isomorphism preserves ranks of the nodes.
+We say that two trees $T$ and $R$ {\em have the same ranked topology} and write $\rt(T) = \rt(R)$ if the tree topologies are isomorphic as (directed) graphs and the isomorphism preserves ranks of the nodes.
 In the same way we write $\tp(T) = \tp(R)$ when trees $T$ and $R$ have the same rooted tree topology (that is, ranks are ignored).
 
 \begin{figure}[ht]
@@ -181,7 +186,7 @@ We will provide complete proofs for $\mdts$ space and draw the corresponding res
 
 The $\mdts$ space on ultrametric trees is denoted by $\mdtsu$.
 The $\mdts$ space (on ultrametric trees) with only short branches is denoted by $\rnni$ ($\rnniu$) and called {\em ranked NNI} space (on ultrametric trees).
-The NNI space on rooted tree topologies by $\nni$.
+The $\nni$ space on rooted tree topologies is denoted by $\nni$.
 
 All of these can be considered as either a graph or a metric space, and we will refer to them as both.
 By $n$ we denote the number of taxa and assume $n \geq 3$ throughout the paper.
@@ -190,9 +195,7 @@ By $n$ we denote the number of taxa and assume $n \geq 3$ throughout the paper.
 \subsection{Ricci-Ollivier curvature}
 A random walk on a metric space is defined by its proposal mechanism, which is a functional $m$ that maps points of the space to the set of measures on this space \autocite[see][]{Ollivier2009-cj}.
 In other words, for every point $v$ in the space, $m(v,w)$, which we denote by $m_v(w)$, is the probability of the random walk moving from $v$ to $w$ in one step.
-Given a metric space\footnote{Every connected graph can be seen as a metric space with the distance between two points given by the length of a shortest path between them.
-All graphs considered in this paper are connected.}
-$(V,d)$, a \emph{coupling} $\mu$ between two measures $\mu_1$ and $\mu_2$ on $V$ is a probability measure on the set of pairs of points $V \times V$ that is $\mu_1$ after marginalizing over the second component, and $\mu_2$ after marginalizing over the first component, that is, $\sum\limits_{y \in V}\mu(x,y) = \mu_1(x)$ and $\sum\limits_{y \in V}\mu(y,x) = \mu_2(x)$ for all $x \in V$.
+Given a metric space $(V,d)$, a \emph{coupling} $\mu$ between two measures $\mu_1$ and $\mu_2$ on $V$ is a probability measure on the set of pairs of points $V \times V$ that is $\mu_1$ after marginalizing over the second component, and $\mu_2$ after marginalizing over the first component, that is, $\sum\limits_{y \in V}\mu(x,y) = \mu_1(x)$ and $\sum\limits_{y \in V}\mu(y,x) = \mu_2(x)$ for all $x \in V$.
 A coupling can be seen as a scenario of transforming the measure $\mu_1$ on $V$ to $\mu_2$ by looking at $\mu(x,y)$ as the probability mass that has to be moved from $x$ to $y$ under the scenario.
 
 Using these notations, we define the {\em work} $\W_\mu$ needed to be done to transform $\mu_1$ to $\mu_2$ via coupling $\mu$ by setting
@@ -202,7 +205,7 @@ Using these notations, we define the {\em work} $\W_\mu$ needed to be done to tr
 Let $\M$ be the set of all couplings between measures $\mu_1$ and $\mu_2$.
 Then the {\em earth mover's distance} $W$ between $\mu_1$ and $\mu_2$ is defined to be $W(\mu_1,\mu_2) = \inf\limits_{\mu\in\M}\W_\mu(\mu_1,\mu_2)$.
 
-We are now ready to introduce two main notions we are studying in this paper.
+We are now ready to introduce two curvature notions that we are studying in this paper.
 Let $m$ be a random walk on a metric space $(V,d)$.
 Then the {\em coarse Ricci-Ollivier curvature} between two points $x$ and $y$ from $V$ with the random walk $m$ is
 \[
@@ -214,9 +217,9 @@ The following random walk $m$ is called a {\em uniform $p$-lazy random walk} on 
 \[
 m_x(y) =
 \begin{cases}
-1-p				& \mbox{ if } x=y \\
-0   				& \mbox{ if } d(x,y) > 1 \\
-\dfrac{p}{|N(x)|}		& \mbox{ if } d(x,y) = 1 \\
+1-p			& \mbox{ if } x=y \\
+0   			& \mbox{ if } d(x,y) > 1 \\
+\dfrac{p}{|N(x)|}	& \mbox{ if } d(x,y) = 1 \\
 \end{cases}
 \]
 where $x,y \in V$ and $N(x) = \{y \mid d(x,y) = 1\}$.
@@ -236,21 +239,22 @@ Hence, we define the {\em coarse Ricci-Ollivier curvature of a metric space} wit
 
 \section{Geometry of space of discrete time-trees}
 
-In this section we look at some geometric properties of the graphs introduced in the introduction.
-We begin by considering the shortest path distance on the graphs.
+We begin with considering the shortest path distance on the graphs.
 It is well-known that computing distance is NP-hard in $\nni$ space \autocite{Dasgupta2000-xa}.
-Hence, for each of the possible discretization of the time-tree space, a natural question is the following.
+Hence, for each of the possible discretizations of the time-tree space, a natural question is the following.
 
 \begin{problem}
-What is the complexity of computing the distance between two trees in discrete time-tree space?
+What is the complexity of computing the distance between two discrete time-trees?
 \end{problem}
 
-Although we do not know the complexity of finding the distance between two caterpillar trees in $\nni$ space, the following example suggests that the problem has higher complexity in $\nni$ than in $\rnni$.
+Although we do not solve this problem in this paper, we demonstrate that the solution could be different for different versions of time-trees.
+Particularly, we demonstrate in the following example that even for caterpillar trees the solution could be non-obvious.
 
+\begin{example}
 Let $T$ be the ultrametric tree $(((((((1, 2), 3), 4), 5), 6), 7), 8)$ and $R$ be the ultrametric tree $((((((1, 2), 5), 6), 2), 3), 4), 7)$.
 Then a shortest $\nni$ path is given by first making a cherry $(3,4)$, then moving the cherry up to the split $14567 \mid 8$, and then resolving the cherry back.
 While in $\rnniu$ this path is not shortest, and a shortest path would move the parents of $3$ and $4$ independently.
-\todo{Make this an $\backslash$example}
+\end{example}
 
 \begin{proposition}
 Every split present in both trees $T$ and $R$ presents in all trees along every shortest path between $T$ and $R$ in $\mdts$, $\mdtsu$, $\rnni$, and $\rnniu$, but not in $\nni$.
