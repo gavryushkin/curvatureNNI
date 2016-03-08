@@ -40,7 +40,7 @@
 
 \begin{document}
 
-\title{Random walks over discrete time trees}
+\title{Random walks over discrete time-trees}
 
 \author{Alex Gavryushkin}
 \address{Department of Computer Science, The University of Auckland, New Zealand}
@@ -56,7 +56,7 @@
 
 
 \begin{abstract}
-We introduce and study various discrete approximations of the space of time trees, with $\nni$-space being a roughest approximation.
+We introduce and study various discrete approximations of the space of time-trees, with $\nni$-space being a roughest approximation.
 We design a heuristic for generating these spaces and study, analytically and computationally, the Ricci-Ollivier curvature of basic random walks on the spaces.
 \end{abstract}
 
@@ -67,9 +67,9 @@ We design a heuristic for generating these spaces and study, analytically and co
 \section{Introduction}
 The last ten years have seen an explosion of methods using sequence data to infer demographic model parameters by sampling phylogenetic trees \autocite{Kuhner1995-mj,Kuhner1998-tq,Kuhner2000-af,Beerli2001-sc,Kuhner2006-vx,Drummond2002,Drummond2005-ks,Drummond2006-oa,Minin2008-wz}.
 Dates defined in phylogenetic terms, such as time to a most recent common ancestor of human HIV group M viruses \autocite{Worobey2008-rt,Baele2013-op}, are essential parameters of such inference.
-Thus the {\em time tree}---a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates---has become an important object of interest.
+Thus the {\em time-tree}---a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates---has become an important object of interest.
 This is in contrast to classical phylogenetic trees in which branch lengths quantify the amount of molecular substitution along a branch.
-Posterior distributions on both time trees and classical trees are estimated using Markov chain Monte Carlo \autocite{Mau1997-sq,Yang1997-gv,Drummond2002}.
+Posterior distributions on both time-trees and classical trees are estimated using Markov chain Monte Carlo \autocite{Mau1997-sq,Yang1997-gv,Drummond2002}.
 Although Markov chain Monte Carlo (MCMC) is guaranteed to sample from the true posterior given an infinite run time, it is important to understand mixing properties of the chain, which determine sampling properties for a finite time run.
 
 \begin{figure}[ht]
@@ -82,33 +82,33 @@ Time is measured by nonnegative real numbers.}
 
 The mixing properties of phylogenetic MCMC have, in the classical unrooted case, been a major area of research from both the theoretical perspective of mixing time bounds \autocite{Mossel2005-ly,Mossel2006-fo,Stefankovic2011-hu,spade2014note} and the practical perspective of performance on real data \autocite{beiko2006searching,Ronquist2006-fv,lakner2008efficiency,Whidden2015-yi}.
 This research has focused on mixing over the set of discrete phylogenetic tree graph structures, which is the primary obstruction to MCMC convergence.
-Classical phylogenetic trees discretise naturally as simply the graph structure underlying that phylogenetic tree.
-MCMC moves between classical phylogenetic trees are typically defined in terms of this discretisation.
+Classical phylogenetic trees discretize naturally as simply the graph structure underlying that phylogenetic tree.
+MCMC moves between classical phylogenetic trees are typically defined in terms of this discretization.
 Common moves include \emph{subtree prune and regraft} (SPR) moves, which cut a subtree off and reattach it at another location, and the subset of SPR moves called \emph{nearest-neighbor interchange} (NNI) moves.
-On the other hand, moves between time trees are also defined in terms of their timing information.
+On the other hand, moves between time-trees are also defined in terms of their timing information.
 For example, \textcite{Hohna2008-vl} show that SPR-like moves that reattach subtrees at the same divergence time are more effective than ones that do not.
-This sort of move cannot be expressed using the type of discretisation used thus far in which all continuous information is lost, and so the previous work on MCMC mixing cannot be applied.
+This sort of move cannot be expressed using the type of discretization used thus far in which all continuous information is lost, and so the previous work on MCMC mixing cannot be applied.
 
-However, one can discretise time trees in a way that does preserve some of the information.
+However, one can discretize time-trees in a way that does preserve some of the information.
 For example, by retaining the order of internal nodes forward in time one obtains a so-called \emph{ranked tree} \autocite{Semple2003-nj}.
-A sequence of time trees sampled using MCMC projects to a collection of movements on a graph in which each vertex is a discretised time tree and each edge is a discretised version of an MCMC move on time trees.
+A sequence of time-trees sampled using MCMC projects to a collection of movements on a graph in which each vertex is a discretized time-tree and each edge is a discretized version of an MCMC move on time-trees.
 
-Another possible way to make a less rough approximation of a time tree is to allow the time periods between nodes of the tree to take only finitely many possible values.
-The graph built on such trees provides a further refined discretisation of the space of time trees.
-We call such a graph a \emph{discretised time tree graph}.
+Another possible way to make a less rough approximation of a time-tree is to allow the time periods between nodes of the tree to take only finitely many possible values.
+The graph built on such trees provides a further refined discretization of the space of time-trees.
+We call such a graph a \emph{discretized time-tree graph}.
 
-In this paper we explore various discretised time tree graphs, derive some of their properties, initiate the mathematical study of random walks on these spaces, and compare these results to those in the classical phylogenetic setting.
-In particular, we focus on ranked trees, discretised time trees (as defined above), and the ultrametric versions of those types of trees.
+In this paper we explore various discretized time-tree graphs, derive some of their properties, initiate the mathematical study of random walks on these spaces, and compare these results to those in the classical phylogenetic setting.
+In particular, we focus on ranked trees, discretized time-trees (as defined above), and the ultrametric versions of those types of trees.
 We study Ricci-Ollivier curvature \autocite{Ollivier2009-cj} of Markov chains on these graphs, a formalism which quantifies to what extent random walking brings unit balls together.
 This formalism has recently been applied to Markov chains on graphs of classical phylogenetic trees \autocite{Whidden2015-es}. 
 
 
 \section{Technical introduction}
-\subsection{Spaces of discretised time trees}
+\subsection{Spaces of discretized time-trees}
 
-By a {\em time tree} we refer to a rooted phylogenetic tree with all internal nodes equipped with absolute divergence times and all external nodes equipped with sampled times.
-As a first step towards understanding the full space of time trees \autocite{Gavryushkin2014-bw}, we approximate the space by a sequence of finite spaces and study the geometry and convergence of random walks over these approximations.
-Specifically, we fix a number $m$ and consider the space of time trees where times between divergence events are bound to $m$ values.
+By a {\em time-tree} we refer to a rooted phylogenetic tree with all internal nodes equipped with absolute divergence times and all external nodes equipped with sampled times.
+As a first step towards understanding the full space of time-trees \autocite{Gavryushkin2014-bw}, we approximate the space by a sequence of finite spaces and study the geometry and convergence of random walks over these approximations.
+Specifically, we fix a number $m$ and consider the space of time-trees where times between divergence events are bound to $m$ values.
 At the bottom level of this hierarchy, when $m = 1$, we have the space of ranked tree topologies.
 We extend the hierarchy by assuming that when $m = 0$, we have the $\nni$ space on rooted tree topologies.
 
@@ -116,7 +116,7 @@ Many biological investigations are restricted to ultrametric, or equidistant, tr
 Furthermore, many geometric and algorithmic properties differ substantially between ultrametric and non-ultrametric trees, as shown by \textcite{Gavryushkin2014-bw}.
 Hence, we consider the case of ultrametric trees separately, and indeed establish further differences.
 
-In short, the {\em discrete time tree space,} or $\mdts$ space, is the $\tau$-space defined by \textcite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only $m$ possible length values: $1,\ldots,m$.
+In short, the {\em discrete time-tree space,} or $\mdts$ space, is the $\tau$-space defined by \textcite{Gavryushkin2014-bw}, where the intercoalescent intervals are allowed to take only $m$ possible length values: $1,\ldots,m$.
 In other words, to define a tree in $\mdts$, we first fix a ranked tree topology with all nodes being of different ranks and then assign a number from $\{1, \ldots, m\}$ to every intercoalescent interval.
 Intuitively, for $m = 2$ we have only two options for the length of an intercoalescent interval, which can be thought of as short and long.
 We shall describe the integers assigned to the intercoalescent intervals as {\em lengths} of those intervals.
@@ -125,7 +125,7 @@ We may think of the $\mdts$ space as of a graph, the set of vertices of which co
 In short, two trees in $\mdts$ are adjacent if the $\tau$-geodesic between them, as defined by \textcite{Gavryushkin2014-bw}, crosses precisely one face and the face is of co-dimension $1$.
 To make this paper self-contained, we provide a complete definition below, for which the following notions are necessary.
 
-Let $T$ be a time tree such that no two nodes of $T$ are of the same time, that is, no two divergence or sample events coincide.
+Let $T$ be a time-tree such that no two nodes of $T$ are of the same time, that is, no two divergence or sample events coincide.
 We define the {\em ranked topology of tree} $T$ to be the directed graph induced by the topology of $T$ such that the set of nodes of this graph is linearly ordered with respect to their time order in $T$.
 We denote this ranked topology by $\rt(T)$ and assume that all nodes of the tree (including taxa) are assigned ranks $0,1,\ldots,2n-2$, where $n$ is the number of taxa.
 The node of rank $0$ is seen as being at the present, so the root has the highest rank and is therefore the oldest node of the tree.
@@ -137,24 +137,24 @@ In the same way we write $\tp(T) = \tp(R)$ when trees $T$ and $R$ have the same 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.7\textwidth]{T5.pdf}
-\caption{Discretised time tree on $6$ taxa.
+\caption{Discretized time-tree on $6$ taxa.
 Intervals between divergence and sample events can take only finitely many values (two in this example).}
 \label{T5.pdf}
 \end{figure}
 
-We say that two trees $T$ and $R$ are {\em NNI neighbours} if $\rt(T) \ne \rt(R)$ and tree $R$ is obtained from tree $T$ by sending the length of an intercoalescent interval $I$ between an internal node and its parent in $T$ down to zero and resolving the multifurcation in one of the two possible ways.
+We say that two trees $T$ and $R$ are {\em NNI neighbors} if $\rt(T) \ne \rt(R)$ and tree $R$ is obtained from tree $T$ by sending the length of an intercoalescent interval $I$ between an internal node and its parent in $T$ down to zero and resolving the multifurcation in one of the two possible ways.
 We note that this definition implies the existence of such an interval $I$ in $T$, that is, the existence of an internal node $a$ the parent of which is the immediate successor of $a$ in $\rt(T)$.
 In particular, the parent $a$ of taxon $D$ in tree $T$ on Figure~\ref{dts_neighbours.pdf} gives an example of such a node.
 Note also that the parent $b$ of taxon $C$ in $T$ on Figure~\ref{dts_neighbours.pdf} does not satisfy this property, that is, the parent of $b$ is not its immediate successor in $\rt(T)$.
-Hence, the tree obtained from $T$ by cutting the edge adjacent to taxon $C$ and regrafting it to the edge between the aunt of $b$ and the root does not give an NNI neighbour of $T$ in this sense.
-Note that the definition of NNI neighbours implies $\ell_T(J) = \ell_R(J)$ for each interval $J \ne I$, and the ranks of all nodes present in both $T$ and $R$ coincide.
-If trees $T$ and $R$ are NNI neighbours and tree $R$ is obtained by suppressing an interval $I$ in $T$ then we say that the {\em NNI move is performed on interval $I$}.
+Hence, the tree obtained from $T$ by cutting the edge adjacent to taxon $C$ and regrafting it to the edge between the aunt of $b$ and the root does not give an NNI neighbor of $T$ in this sense.
+Note that the definition of NNI neighbors implies $\ell_T(J) = \ell_R(J)$ for each interval $J \ne I$, and the ranks of all nodes present in both $T$ and $R$ coincide.
+If trees $T$ and $R$ are NNI neighbors and tree $R$ is obtained by suppressing an interval $I$ in $T$ then we say that the {\em NNI move is performed on interval $I$}.
 
 Two trees $T$ and $R$ from $\mdts$ are adjacent if and only if precisely one of the following conditions is satisfied.
 \begin{enumerate}[(1)]
 \item $\rt(T) = \rt(R)$ and there exists a unique intercoalescent interval $I$ such that $|\ell_T(I) - \ell_R(I)| = 1$.
 \item $\tp(T) = \tp(R)$, there exists a unique pair of nodes $a,b$ with consecutive ranks in $\rt(T)$ such that the ranks of $a$ and $b$ are swapped in $R$, the intercoalescent interval $I$ between $a$ and $b$ satisfies $\ell_T(I) = \ell_R(I) = 1$, and $\ell_T(J) = \ell_R(J)$ for all other intervals $J \ne I$.
-\item $T$ and $R$ are NNI neighbours and $\ell_T(I) = \ell_R(I) = 1$ where the NNI move is performed on interval $I$.
+\item $T$ and $R$ are NNI neighbors and $\ell_T(I) = \ell_R(I) = 1$ where the NNI move is performed on interval $I$.
 \end{enumerate}
 
 In other words, by going from one tree to an adjacent tree in the $\mdts$ graph we can either change the length of one intercoalescent interval by one unit, swap the rank of two nodes, or send the length of an intercoalescent interval of minimal length down to zero and then resolve the multifurcation to either of the two possible topologies.
@@ -192,7 +192,7 @@ A random walk on a metric space is defined by its proposal mechanism, which is a
 In other words, for every point $v$ in the space, $m(v,w)$, which we denote by $m_v(w)$, is the probability of the random walk moving from $v$ to $w$ in one step.
 Given a metric space\footnote{Every connected graph can be seen as a metric space with the distance between two points given by the length of a shortest path between them.
 All graphs considered in this paper are connected.}
-$(V,d)$, a \emph{coupling} $\mu$ between two measures $\mu_1$ and $\mu_2$ on $V$ is a probability measure on the set of pairs of points $V \times V$ that is $\mu_1$ after marginalising over the second component, and $\mu_2$ after marginalising over the first component, that is, $\sum\limits_{y \in V}\mu(x,y) = \mu_1(x)$ and $\sum\limits_{y \in V}\mu(y,x) = \mu_2(x)$ for all $x \in V$.
+$(V,d)$, a \emph{coupling} $\mu$ between two measures $\mu_1$ and $\mu_2$ on $V$ is a probability measure on the set of pairs of points $V \times V$ that is $\mu_1$ after marginalizing over the second component, and $\mu_2$ after marginalizing over the first component, that is, $\sum\limits_{y \in V}\mu(x,y) = \mu_1(x)$ and $\sum\limits_{y \in V}\mu(y,x) = \mu_2(x)$ for all $x \in V$.
 A coupling can be seen as a scenario of transforming the measure $\mu_1$ on $V$ to $\mu_2$ by looking at $\mu(x,y)$ as the probability mass that has to be moved from $x$ to $y$ under the scenario.
 
 Using these notations, we define the {\em work} $\W_\mu$ needed to be done to transform $\mu_1$ to $\mu_2$ via coupling $\mu$ by setting
@@ -234,15 +234,15 @@ For finite metric spaces that means that for all distinct $u$ and $v$,
 Hence, we define the {\em coarse Ricci-Ollivier curvature of a metric space} with a random walk $m$ to be $\inf\{\kappa(m;x,y)\mid d(x,y) = 1\}$ and the {\em asymptotic Ricci-Ollivier curvature of a metric space} to be $\inf\{\ric(x,y)\mid d(x,y) = 1\}$.
 
 
-\section{Geometry of space of discrete time trees}
+\section{Geometry of space of discrete time-trees}
 
 In this section we look at some geometric properties of the graphs introduced in the introduction.
 We begin by considering the shortest path distance on the graphs.
 It is well-known that computing distance is NP-hard in $\nni$ space \autocite{Dasgupta2000-xa}.
-Hence, for each of the possible discretisations of the time tree space, a natural question is the following.
+Hence, for each of the possible discretization of the time-tree space, a natural question is the following.
 
 \begin{problem}
-What is the complexity of computing the distance between two trees in discrete time tree space?
+What is the complexity of computing the distance between two trees in discrete time-tree space?
 \end{problem}
 
 Although we do not know the complexity of finding the distance between two caterpillar trees in $\nni$ space, the following example suggests that the problem has higher complexity in $\nni$ than in $\rnni$.
@@ -268,7 +268,7 @@ Ranked trees don't have non-trivial symmetries, hence tanglegrams don't help.
 
 These observations suggest that $\nni$ space is geometrically and algorithmically different from the other four spaces.
 
-We continue with the following bounds on the sizes of one-neighbourhoods of various discretisations of the space of time trees, which are one of the most important tools for estimating the curvature of various random walks later in the paper.
+We continue with the following bounds on the sizes of one-neighborhoods of various discretization of the space of time-trees, which are one of the most important tools for estimating the curvature of various random walks later in the paper.
 
 \begin{lemma}\label{neighBound}
 Let $T$ be a tree on $n$ leaves.
@@ -288,18 +288,18 @@ The lower bound in $\mdts$ space is attained by any tree with all intercoalescen
 In this case, $\deg(T)$ is simply the number of intercoalescent intervals, since every intercoalescent interval adds $1$ to the total degree of the tree.
 Other trees have the same or more possible intercoalescent interval changes, showing that this is a lower bound.
 The upper bound is attained by a caterpillar tree with all intervals short and no coalescent event being younger than a taxon.
-In this case, $\deg(T)$ is bounded by the sum of the $2(n-1)$ possible interval length changes, the at most $2(n-2)$ NNI neighbours, and at most $n$ rank changes that can occur between the $n$ taxa.
+In this case, $\deg(T)$ is bounded by the sum of the $2(n-1)$ possible interval length changes, the at most $2(n-2)$ NNI neighbors, and at most $n$ rank changes that can occur between the $n$ taxa.
 In total, $\deg(T) \le 2(n-1) + 2(n-2) + n = 5n-6$.
 Note that this is an upper bound indeed, as each of the $2(n-2)$ intervals excluding the most recent can contribute either a rank change or $2$ NNI moves.
-The caterpillar tree described above maximises the number of intervals that contribute $2$ NNI moves and enables the rest of intervals to contribute a rank change.
+The caterpillar tree described above maximizes the number of intervals that contribute $2$ NNI moves and enables the rest of intervals to contribute a rank change.
 
 For ultrametric trees, the number of intercoalescent intervals is $n-1$, hence they add $n-1$ to the degree of the caterpillar tree from interval changes.
 The number of intervals on which an NNI move is possible is $n-2$ for ultrametric trees, hence they contribute $2(n-2)$ to the degree.
 In total, this gives the upper bound of $3n-5$ for ultrametric trees.
 
-Since every NNI move results in two neighbours, the equality $\deg(T) = 2(n-2)$ follows for $\nni$ space.
-Indeed, it is not hard to see that the set of NNI moves that only consider moving a subtree to its aunt captures the full set of NNI neighbours with no duplicates.
-The neighbourhood size then follows because the root and its two children have no aunt.
+Since every NNI move results in two neighbors, the equality $\deg(T) = 2(n-2)$ follows for $\nni$ space.
+Indeed, it is not hard to see that the set of NNI moves that only consider moving a subtree to its aunt captures the full set of NNI neighbors with no duplicates.
+The neighborhood size then follows because the root and its two children have no aunt.
 
 The lower bound in $\rnni$ space is attained by the caterpillar-tree where taxa get ranks $0, 1, 3, 5, \ldots, 2n-3$ and internal nodes get ranks $2, 4, 6, \ldots, 2n-2$.
 In other words, the coalescent events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence, and so on.
@@ -334,7 +334,7 @@ Clearly, $\lim_n \frac{|\partial S|}{|S|} = 0$ for all graphs under consideratio
 This proposition implies for phylogenetic graphs that the isoperimetric number is asymptotically as small as possible, which can be interpreted as that the graphs have as strong bottleneck as possible.
 
 
-\section{Ricci-Ollivier curvature of discrete time trees}
+\section{Ricci-Ollivier curvature of discrete time-trees}
 
 We need the following corollaries for our analysis of curvature.
 
@@ -365,7 +365,7 @@ The upper bound follows similarly, as well as the rest of inequalities.
 For $\nni$ space, Lemma~\ref{neighBound} implies that $deg(T)-deg(R) = 0$ and $\frac{\deg(T)}{deg(R)} = 1$.
 
 Let $N(T)$ be the set of trees at distance one from $T$, that is, the set of trees adjacent to $T$ in the corresponding graph.
-The following lemma describes how many trees the tree neighbourhoods can have in common.
+The following lemma describes how many trees the tree neighborhoods can have in common.
 
 \begin{lemma}\label{intersecNeighb}
 The following is true for all the spaces $\nni$, $\rnni$, $\rnniu$, $\mdts$, and $\mdtsu$.
@@ -373,10 +373,10 @@ If $d(T,R) = 1$ then $|N(T)\cap N(R)|\in\{0,1\}$.
 \end{lemma}
 
 \proof
-Suppose $T$ and $R$ are neighbours.
-If the trees differ by a single branch length or rank change then the fact that NNI moves only apply to short branches implies that any shared neighbour $S$ would have to match the length or rank of one of the trees.
-As $S$ must differ from both trees, they do not have a neighbour in common.
-If $T$ and $R$ are NNI-neighbours, there is precisely one tree which is a neighbour of both $T$ and $R$, namely the third tree that can be obtained by resolving the interval that connects $T$ and $R$.
+Suppose $T$ and $R$ are neighbors.
+If the trees differ by a single branch length or rank change then the fact that NNI moves only apply to short branches implies that any shared neighbor $S$ would have to match the length or rank of one of the trees.
+As $S$ must differ from both trees, they do not have a neighbor in common.
+If $T$ and $R$ are NNI-neighbors, there is precisely one tree which is a neighbor of both $T$ and $R$, namely the third tree that can be obtained by resolving the interval that connects $T$ and $R$.
 \endproof
 
 The following general lemma is true for all graphs, particularly, for those we consider in this paper.
@@ -402,7 +402,7 @@ So, $\kappa(x,y) \geq - 2/d(x,y)$.
 The lower bound follows similarly from $d(u,v) \geq d(x,y) - 2$.
 \endproof
 
-Note that this lemma can be generalised to {\em distance-$d$} random walks, which are those satisfying $m_x(y) = 0$ for all $x$ and $y$ such that $d(x,y) > d$.
+Note that this lemma can be generalized to {\em distance-$d$} random walks, which are those satisfying $m_x(y) = 0$ for all $x$ and $y$ such that $d(x,y) > d$.
 In this case, using the notations of the lemma, $d(u,v) \leq d(x,y) + 2d$.
 Thus,
 \[
@@ -423,10 +423,10 @@ The bounds are tight.
 \end{lemma}
 
 \proof
-To maximise the curvature $\kappa(T,R)$, we have to minimise $W(m_T,m_R) = \inf\limits_{\mu\in\M} \sum\limits_{x,y\in V}\mu(x,y) d(x,y)$.
-The latter is minimised when the probability mass $\mu(x,y)$ to be moved at shorter distance $d(x,y)$ is maximised.
+To maximize the curvature $\kappa(T,R)$, we have to minimize $W(m_T,m_R) = \inf\limits_{\mu\in\M} \sum\limits_{x,y\in V}\mu(x,y) d(x,y)$.
+The latter is minimized when the probability mass $\mu(x,y)$ to be moved at shorter distance $d(x,y)$ is maximized.
 Since $d(T,R) = 1$, it follows from Lemma~\ref{intersecNeighb} that the smallest possible value of $d(x,y)$ is $0$ (the case when $|N(T) \cap N(R)| = 1$).
-Hence, to maximise the curvature we are to maximise the probability mass allocated to the tree $E$ in the intersection $N(T) \cap N(R)$.
+Hence, to maximize the curvature we are to maximize the probability mass allocated to the tree $E$ in the intersection $N(T) \cap N(R)$.
 It follows from Lemma~\ref{neighBound} that the maximal mass $p_E$ we can allocate under a uniform random walk to the tree $E$ is $\frac{1}{2(n-1)}$ in $\mdts$ space, $\frac{1}{2(n-2)}$ in $\nni$ space, and $\frac{1}{n-1}$ in $\rnni$, $\rnniu$, and $\mdtsu$ spaces.
 It is not hard to see that trees $T$ and $R$ can be chosen so that $d(x,y) = 1$ for all $x,y$ which are different from $E$ and for which $\mu(x,y) > 0$.
 Hence, $\kappa(T, R) = 1 - \left(\sum\limits_{x,y\in V\setminus\{E\}}\mu(x,y)\cdot 1 + p_E \cdot 0\right) = 1 - (1-p_E) = p_E$.
@@ -435,7 +435,7 @@ The lemma follows.
 
 This lemma and corollary provide tighter upper bounds for the curvature than Lemma~\ref{curvBoundGeneral} for all $n$.
 
-It is easy to generalise the lemma to the uniform $p$-lazy random walk.
+It is easy to generalize the lemma to the uniform $p$-lazy random walk.
 Indeed, we observe that the curvature between adjacent trees $T$ and $R$ under a uniform $p$-lazy random walk satisfies
 \begin{align*}
 & \kappa(T,R) \leq \frac{p}{2(n-1)}	&& \mbox{in $\mdts$ space,}\\
@@ -474,9 +474,9 @@ The bounds are tight.
 
 \proof
 Let $T$ and $R$ be two adjacent trees.
-To minimise the curvature, we have to maximise $W(m_T, m_R)$ across $T$ and $R$.
-The latter is maximised when the probability mass on trees $E\in N(T)$ such that $d(E, N(R)) > d(T, R)$, is
-maximised\footnote{If $x$ is a point of a metric space $(M,d)$ and $S \subseteq M$ then by $d(x,S)$ we denote $\inf\limits_{s \in S} d(x,s)$.}.
+To minimize the curvature, we have to maximize $W(m_T, m_R)$ across $T$ and $R$.
+The latter is maximized when the probability mass on trees $E\in N(T)$ such that $d(E, N(R)) > d(T, R)$, is
+maximized\footnote{If $x$ is a point of a metric space $(M,d)$ and $S \subseteq M$ then by $d(x,S)$ we denote $\inf\limits_{s \in S} d(x,s)$.}.
 Since $d(T, R) = 1$, the maximum possible number of such trees $E$ is
 \todo{Explain this.
 EM skipped pending explanation.}
@@ -542,9 +542,9 @@ We note that in both Corollary~\ref{flatInLimDTS} and Proposition~\ref{flatInLim
 But since the primary focus of this paper is on the spaces under consideration, we will not \todo{Should we?} include the statement in general terms of metric spaces.
 However, we prove below (Theorem~\ref{zero-in-the-limit}) a much stronger property of the spaces, namely, that the curvature tends to zero when the tree size tends to infinity does not matter what distance between the trees is.
 
-We first bound the number of neighbours of a tree $x$ in $\dts$-space that are closer than $x$ to a given tree $y$.
-We show that the maximum fraction of neighbours that tend closer to $y$ grows linearly with respect to $d(x,y)$.
-These subsets of neighbours are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
+We first bound the number of neighbors of a tree $x$ in $\dts$-space that are closer than $x$ to a given tree $y$.
+We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
+These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
 
 \begin{theorem}
 \label{max_good_neighbours}
@@ -562,7 +562,7 @@ Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
 \begin{proof}
 We first prove the statement for $\dts$ space.
 
-Let $U$ be the set of neighbours $u$ of $x$ such that $d(u,y) \le d(x,y)$, as stated in the theorem.
+Let $U$ be the set of neighbors $u$ of $x$ such that $d(u,y) \le d(x,y)$, as stated in the theorem.
 We partition $U$ into three sets of trees---$I$, $R$, and $L$---obtained from $x$ by a single NNI move, rank change, or length change, respectively.
 We then prove the theorem by bounding the size of each partition by $2d(x,y)$, $d(x,y)$, and $d(x,y)$, respectively.
 
@@ -571,12 +571,12 @@ Observe that at most $d(x,y)$ bipartitions differ between $x$ and $y$, as each N
 Now, observe that no minimal length path from $x$ to $y$ will replace a bipartition that is common to $x$ and $y$, as any path including such a replacement can be made shorter by removing the replacement move (and subsequent moves that reintroduce the bipartition).
 
 We are now ready to bound the sizes of each partition $I$, $R$, and $L$.
-First, consider the subset $I$ of closer neighbours obtained via NNI moves.
+First, consider the subset $I$ of closer neighbors obtained via NNI moves.
 By our observations above, $|I|$ is bounded by the number of NNI operations that modify one of the at most $d(x,y)$ bipartitions of $x$ that are not a bipartition of $y$.
-There are two neighbours of $x$ that lack any given bipartition (obtained by moving either the left or right subtree located below the bipartition).
+There are two neighbors of $x$ that lack any given bipartition (obtained by moving either the left or right subtree located below the bipartition).
 Therefore, $|I| \le 2d(x,y)$.
 
-Second, consider the subset $R$ of closer neighbours obtained via rank change moves.
+Second, consider the subset $R$ of closer neighbors obtained via rank change moves.
 These operate either on one of $x$'s unique bipartitions or a bipartition common to $x$ and $y$ that differs in rank.
 As observed above, the number of unique bipartitions is bounded by the maximum number of NNI moves on any minimal $x$ to $y$ path.
 Any such path must fix the ranks of each common edge.
@@ -628,7 +628,7 @@ Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of trees on $n$ taxa.
 Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$ for $\nni$, $\rnni$, and $\mdts$ distances.
 \end{corollary}
 
-We now estimate the curvature of the Metropolis-Hastings random walk, which proposes a tree in the one-neighbourhood uniformly at random and accepts the proposal with probability $\min\left(1, \dfrac{|N(T_{old})|}{|N(T_{new})|}\right)$.
+We now estimate the curvature of the Metropolis-Hastings random walk, which proposes a tree in the one-neighborhood uniformly at random and accepts the proposal with probability $\min\left(1, \dfrac{|N(T_{old})|}{|N(T_{new})|}\right)$.
 We denote the corresponding curvature by $\kappa(\MH;T,R)$.
 
 \begin{lemma}
@@ -684,7 +684,7 @@ The high-level steps of the algorithm follow \textcite{Whidden2015-es} literally
 		\begin{enumerate}
 			\item Add a vertex $i$ to $G$ representing the current tree $T_i$.
 			\item Add $T_i \rightarrow i$ to $\nu$.
-			\item For each neighbour $T_j$ of $T_i$:
+			\item For each neighbor $T_j$ of $T_i$:
 				\begin{enumerate}
 					\item[(j)] If $T_j$ is in $\dom(\nu)$ then add an edge $(i, \nu(T_j))$ to $G$.
 				\end{enumerate}
@@ -692,16 +692,16 @@ The high-level steps of the algorithm follow \textcite{Whidden2015-es} literally
 		\end{enumerate}
 \end{enumerate}
 
-We implemented this procedure for ultrametric trees in the Python programme \texttt{tau\_graph}
+We implemented this procedure for ultrametric trees in the Python program \texttt{tau\_graph}
 \todo{Check the name.}
 of the software package \texttt{tTauCurvature} \autocite{tTauCurvature},
-\todo{Learn how to get DOI for Github.}
+\todo{Get DOI for Github.}
 which outputs an edge list format graph suitable for input to other software.
 
 
 \section{Some other spaces}
 
-Several important proposal mechanisms used in phylogenetic Bayesian inference by popular software packages such as BEAST2 \autocite{beast2} favour topological moves or tree moves depending on various conditions.
+Several important proposal mechanisms used in phylogenetic Bayesian inference by popular software packages such as BEAST2 \autocite{beast2} favor topological moves or tree moves depending on various conditions.
 All tree moves we have been considering so far do not make an explicit distinction between topological changes and branch length changes.
 To address this issue\todo{issue?}, we consider the following tree move that explicitly allows distributing the acceptance probability between topological and branch length moves.
 
@@ -714,11 +714,11 @@ The proposal is rejected if a topological move is impossible.
 Choose a coordinate uniformly at random.
 Increase the coordinate by $1$ with probability $p$ and decrease it by $1$ otherwise.
 If the coordinate becomes $0$, resolve the multifurcation uniformly at random and set the new coordinate to $1$.
-Note that this mechanism does not bound edge lengths from above and favours topological moves when $p<1/2$.
+Note that this mechanism does not bound edge lengths from above and favors topological moves when $p<1/2$.
 
 
 \section{Discussion}
-Most of the results in this paper can be generalised to the class of sampled ancestor trees \autocite{Gavryushkina2014-xd}.
+Most of the results in this paper can be generalized to the class of sampled ancestor trees \autocite{Gavryushkina2014-xd}.
 However, currently very few methods of sampling the space of sampled ancestor trees are known \autocite{Gavryushkina2015-vq} and the geometry of the space is poorly understood \autocite{Gavryushkin2014-bw}.
 
 %\bibliography{curvatureNNI}
@@ -732,3 +732,4 @@ However, currently very few methods of sampling the space of sampled ancestor tr
 In the rest of the paper, we consider a number of Markov chains that arise in phylogenetic Bayesian inference and investigate the curvature of those chains with the eventual goal of the efficiency properties of the corresponding inference methods.
 Those graphs can be also seen as metric spaces where the distance between two points is given by the length of a shortest path connecting them.
 All graphs we are considering in this paper are connected, so this defined distance is indeed a metric.
+
