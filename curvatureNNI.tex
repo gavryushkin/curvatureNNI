@@ -254,6 +254,13 @@ Particularly, we demonstrate in the following example that even for caterpillar 
 Let $T$ be the ultrametric tree $((((((1, 2), 3), 4), 5), 6), 7)$ and $R$ be the ultrametric tree $((((((1, 4), 5), 6), 2), 3), 7)$.
 Then a shortest $\nni$ path is given by first making a cherry $(2,3)$, then moving the cherry up to the split $1456 \mid 7$, and then resolving the cherry back.
 While in $\rnniu$ this path is not shortest, and a shortest path would be to move up the parents of $2$ and $3$ independently.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{NNI_VS_rNNI.pdf}
+\caption{No shortest $\nni$ path is shortest in $\rnni$.}
+\label{NNI_VS_rNNI.pdf}
+\end{figure}
 \end{example}
 
 With this example in mind, it is not hart to see that the set of trees of the form $(\ldots(1, i_2), \ldots, i_{n-1}), n)$, where $\{i_2, \ldots, i_{n-1}\} = \{2, \ldots, n-1\}$, is convex in the space of discrete time-trees and is not convex in $\nni$.
