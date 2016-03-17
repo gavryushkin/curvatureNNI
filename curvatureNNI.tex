@@ -149,8 +149,8 @@ Intervals between divergence and sample events can take only finitely many value
 
 We say that two trees $T$ and $R$ are {\em NNI neighbors} if $\rt(T) \ne \rt(R)$ and tree $R$ is obtained from tree $T$ by sending the length of an intercoalescent interval $I$ between an internal node and its parent in $T$ down to zero and resolving the multifurcation in one of the two possible ways.
 We note that this definition implies the existence of such an interval $I$ in $T$, that is, the existence of an internal node $a$ the parent of which is the immediate successor of $a$ in $\rt(T)$.
-In particular, the parent $a$ of taxon $D$ in tree $T$ on Figure~\ref{dts_neighbours.pdf} gives an example of such a node.
-Note also that the parent $b$ of taxon $C$ in $T$ on Figure~\ref{dts_neighbours.pdf} does not satisfy this property, that is, the parent of $b$ is not its immediate successor in $\rt(T)$.
+In particular, the parent $a$ of taxon $D$ in tree $T$ on Figure~\ref{dts_neighbors.pdf} gives an example of such a node.
+Note also that the parent $b$ of taxon $C$ in $T$ on Figure~\ref{dts_neighbors.pdf} does not satisfy this property, that is, the parent of $b$ is not its immediate successor in $\rt(T)$.
 Hence, the tree obtained from $T$ by cutting the edge adjacent to taxon $C$ and regrafting it to the edge between the aunt of $b$ and the root does not give an NNI neighbor of $T$ in this sense.
 Note that the definition of NNI neighbors implies $\ell_T(J) = \ell_R(J)$ for each interval $J \ne I$, and the ranks of all nodes present in both $T$ and $R$ coincide.
 If trees $T$ and $R$ are NNI neighbors and tree $R$ is obtained by suppressing an interval $I$ in $T$ then we say that the {\em NNI move is performed on interval $I$}.
@@ -164,14 +164,14 @@ Two trees $T$ and $R$ from $\mdts$ are adjacent if and only if precisely one of 
 
 In other words, by going from one tree to an adjacent tree in the $\mdts$ graph we can either change the length of one intercoalescent interval by one unit, swap the rank of two nodes, or send the length of an intercoalescent interval of minimal length down to zero and then resolve the multifurcation to either of the two possible topologies.
 In the latter case, the new interval is of minimal length.
-See Figure~\ref{dts_neighbours.pdf} for an example of a pair of trees $T,R$ at $\mdts$ distance $3$, where one has to apply all of the three possible cases from the definition above to obtain a path from $T$ to $R$ in $\mdts$.
+See Figure~\ref{dts_neighbors.pdf} for an example of a pair of trees $T,R$ at $\mdts$ distance $3$, where one has to apply all of the three possible cases from the definition above to obtain a path from $T$ to $R$ in $\mdts$.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.7\textwidth]{dts_neighbours.pdf}
+\includegraphics[width=0.7\textwidth]{dts_neighbors.pdf}
 \caption{Trees $T$ and $R$ are at $\mdts$ distance $3$.
 To move from $T$ to $R$ in $\mdts$, one must decrease the length of interval $I$, swap the ranks of nodes $A$ and $C$ bounding the interval $J$, and perform an NNI move on interval $K$, resolving nodes $C$ and $D$.}
-\label{dts_neighbours.pdf}
+\label{dts_neighbors.pdf}
 \end{figure}
 
 Thus we have defined a graph, which we denote by $\mdts$ for $m \geq 2$.
@@ -263,21 +263,36 @@ While in $\rnniu$ this path is not shortest, and a shortest path would be to mov
 \end{figure}
 \end{example}
 
-With this example in mind, it is not hart to see that the set of trees of the form $(\ldots(1, i_2), \ldots, i_{n-1}), n)$, where $\{i_2, \ldots, i_{n-1}\} = \{2, \ldots, n-1\}$, is convex in the space of discrete time-trees and is not convex in $\nni$.
+With this example in mind, it is not hard to see that the set of trees of the form $(\ldots(1, i_2), \ldots, i_{n-1}), n)$, where $\{i_2, \ldots, i_{n-1}\} = \{2, \ldots, n-1\}$, is convex in the space of discrete time-trees and is not convex in $\nni$.
 
 \begin{proposition}
 Every split present in both trees $T$ and $R$ presents in all trees along every shortest path between $T$ and $R$ in $\mdts$, $\mdtsu$, $\rnni$, and $\rnniu$, but not in $\nni$.
 \end{proposition}
 
 \proof
-The counter example for $\nni$ space is constructed by \textcite{li1996some}.
+The counter-example for $\nni$ space is constructed by \textcite{li1996some}.
 Hence, we prove the rest...
 \endproof
 
+Non-ranked trees have a symmetry associated with every internal node.
+Those symmetries can be employed to substantially reduce the search space of pairs of trees.
+This approach uses tanglegrams \autocite{Matsen2015-fn} and is applied to reduce the number of pairs of tree for computing the curvature \autocite{Whidden2015-es}.
+As the following proposition shows, ranked trees are free from all but one of those symmetries, hence the tanglegram approach is not applicable in this case.
+
 \begin{proposition}
-Ranked trees don't have non-trivial symmetries, hence tanglegrams don't help.
-\todo{Make this formal}
+Let $T$ be a tree from $\mdts$, $\mdtsu$, $\rnni$, or $\rnniu$ and $\sigma$ a permutation of taxa of $T$.
+Let $T_\sigma$ be the tree obtained from $T$ by permuting the taxa using $\sigma$.
+Then $T = T_\sigma$ if and only if $\sigma$ is a transposition of a pair of taxa that form a
+cherry\footnote{A {\em cherry} is a pair of taxa adjacent to a common internal node in the tree.}
+in $T$.
 \end{proposition}
+
+\proof
+The sufficiency if obvious.
+For necessity, assume that $\sigma$ transpose taxa $i,j$ such that $i,j$ is not a cherry in $T$.
+This implies that $i$ and $j$ have different parents.
+Hence $T \ne T_\sigma$ because the ranks of the parents of $i$ and $j$ are different in $T$ and $T_\sigma$.
+\endproof
 
 These observations suggest that $\nni$ space is geometrically and algorithmically different from the other four spaces.
 
@@ -287,11 +302,11 @@ We continue with the following bounds on the sizes of one-neighborhoods of vario
 Let $T$ be a tree on $n$ leaves.
 Then
 \begin{align*}
-& 2(n-1) \leq \deg(T) \leq 5n-6 	&&	\mbox{in $\mdts$ space,}\\
+& 2(n-1) \leq \deg(T) \leq 5n-6	&&	\mbox{in $\mdts$ space,}\\
 & n-1 \leq \deg(T) \leq 3n-5	&&	\mbox{in $\mdtsu$ space,}\\
-& n-1\leq \deg(T) \leq3n-4 		&&	\mbox{in $\rnni$ space,}\\
+& n-1\leq \deg(T) \leq3n-4 	&&	\mbox{in $\rnni$ space,}\\
 & n-1 \leq \deg(T) \leq 2n-4 	&&	\mbox{in $\rnniu$ space, and}\\
-& \deg(T) = 2n-4 			&&	\mbox{in $\nni$ space.}
+& \deg(T) = 2n-4 		&&	\mbox{in $\nni$ space.}
 \end{align*}
 All bounds are tight.
 \end{lemma}
