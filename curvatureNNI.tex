@@ -282,14 +282,14 @@ As the following proposition shows, ranked trees are free from all but one of th
 \begin{proposition}
 Let $T$ be a tree from $\mdts$, $\mdtsu$, $\rnni$, or $\rnniu$ and $\sigma$ a permutation of taxa of $T$.
 Let $T_\sigma$ be the tree obtained from $T$ by permuting the taxa using $\sigma$.
-Then $T = T_\sigma$ if and only if $\sigma$ is a transposition of a pair of taxa that form a
+Then $T = T_\sigma$ if and only if $\sigma$ is either the identity permutation or a transposition of a pair of taxa that form a
 cherry\footnote{A {\em cherry} is a pair of taxa adjacent to a common internal node in the tree.}
 in $T$.
 \end{proposition}
 
 \proof
 The sufficiency if obvious.
-For necessity, assume that $\sigma$ transpose taxa $i,j$ such that $i,j$ is not a cherry in $T$.
+For the necessity, assume that $\sigma$ transpose taxa $i,j$ such that $i,j$ is not a cherry in $T$.
 This implies that $i$ and $j$ have different parents.
 Hence $T \ne T_\sigma$ because the ranks of the parents of $i$ and $j$ are different in $T$ and $T_\sigma$.
 \endproof
