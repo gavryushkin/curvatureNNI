@@ -272,7 +272,25 @@ Every split present in both trees $T$ and $R$ presents in all trees along every 
 
 \proof
 The counter-example for $\nni$ space is constructed by \textcite{li1996some}.
-Hence, we prove the rest...
+Hence, we prove the rest.
+
+Suppose there exists a pair of trees $T,R$ sharing a split $A \mid B$ such that no tree on a shortest path between $T$ and $R$ has split $A \mid B$.
+Let $T_A$ be the subtree of $T$ on taxa $A$ and $T_B$, $R_A$, $R_B$ are defined analogously.
+
+Road map:
+\begin{enumerate}[(1)]
+\item We can assume that the size of $A$ is $\lfloor\frac n2\rfloor$.
+\item We can assume that there exists trees $\operatorname{join}(T_A, T_B)$ and $\operatorname{join}(R_A, R_B)$ on the shortest path from $T$ to $R$ such that
+\[
+d(T,\operatorname{join}(T_A, T_B)), d(R,\operatorname{join}(R_A, R_B)) \ge  n^2/8 + n/4.
+\]
+\item The splitless distance is then at least
+\[
+n^2/8 + n/4 + d(T_A, R_A) + n^2/8 + n/4
+\]
+and the length of the path that maintains the split is $2d(T_A, R_A)$.
+\item Hence, for this proof to work the diameter of the space on $n$ taxa must be bounded by $n^2$, and we only have $3n^2$---see Lemma~\ref{diameterUpperBound}.
+\end{enumerate}
 \endproof
 
 Non-ranked trees have a symmetry associated with every internal node.
@@ -364,6 +382,10 @@ Hence, after $2n^2$ we have $T$ and $R$ connected to two caterpillar trees.
 It takes up to $n^2$ to connect two caterpillar trees.
 \endproof
 
+
+---------------[AG]
+
+
 We finish this section with the following proposition that suggests that the graphs under consideration have ``bottlenecks''.
 To make this statement precise we need to introduce the following notion.
 Let $G = (V, E)$ be an undirected graph and $S$ a subset of the set of vertices $V$.
@@ -381,7 +403,7 @@ Then $\lim_n h(G_n) = 0$.
 \proof
 We assume that the taxa set is $\{1,\ldots,n\}$ and denote the set $\{1,\ldots,\lfloor \frac n2 \rfloor\} \leftrightharpoons A$ and $\{\lfloor \frac n2 \rfloor + 1,\ldots, n\} \leftrightharpoons B$.
 Let $S$ be the set of trees $T$ such that $T$ has the split $A \mid B$.
-Clearly, $\lim_n \frac{|\partial S|}{|S|} = 0$ for all graphs under consideration.
+Then $\lim_n \frac{|\partial S|}{|S|} = 0$ for all graphs under consideration.
 \endproof
 
 This proposition implies for phylogenetic graphs that the isoperimetric number is asymptotically as small as possible, which can be interpreted as that the graphs have as strong bottleneck as possible.
