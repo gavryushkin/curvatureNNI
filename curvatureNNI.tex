@@ -289,7 +289,7 @@ d(T,\operatorname{join}(T_A, T_B)), d(R,\operatorname{join}(R_A, R_B)) \ge  n^2/
 n^2/8 + n/4 + d(T_A, R_A) + n^2/8 + n/4
 \]
 and the length of the path that maintains the split is $2d(T_A, R_A)$.
-\item Hence, for this proof to work the diameter of the space on $n$ taxa must be bounded by $n^2$, and we only have $3n^2$---see Lemma~\ref{diameterUpperBound}.
+\item Since the diameter of the space is bounded from above by $15/16n^2$---see Lemma~\ref{diameterUpperBound}---the proposition is proved.
 \end{enumerate}
 \endproof
 
@@ -383,6 +383,7 @@ It takes up to $n^2$ to connect two caterpillar trees.
 \endproof
 
 This bound can be improved by going to a double caterpillar instead of caterpillar if the trees are sufficiently balanced!
+It seems the bound is $15/16 n^2$ in this case, which does the job.
 
 
 \bigskip
