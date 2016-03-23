@@ -22,6 +22,7 @@
 
 \theoremstyle{definition}
 \newtheorem{example}[lemma]{Example}
+\newtheorem{conjecture}[lemma]{Conjecture}
 
 \newcommand{\dts}{\mathrm{2DtT}}
 \newcommand{\nni}{\mathrm{NNI}}
@@ -266,7 +267,17 @@ While in $\rnniu$ this path is not shortest, and a shortest path would be to mov
 
 With this example in mind, it is not hard to see that the set of trees of the form $(\ldots(1, i_2), \ldots, i_{n-1}), n)$, where $\{i_2, \ldots, i_{n-1}\} = \{2, \ldots, n-1\}$, is convex in the space of discrete time-trees and is not convex in $\nni$.
 
-\begin{proposition}
+\begin{conjecture}
+\begin{enumerate}[(1)]
+The list of conjectures that would nice to settle in this paper:
+\item Let $r \le \Delta(\nni)$, then $|\delta_\nni(r, T)| \ge |\delta_\rnni(r, T)|$ for all ranked trees $T$, where $|\delta_\G(d, X)|$ is the number of trees at distance $d$ from $X$ in $\G$.
+\item Proposition~\ref{splitPropo}.
+\item Lemma~\ref{diameterUpperBound}.
+\item Proposition~\ref{isoperiPropo}.
+\end{enumerate}
+\end{conjecture}
+
+\begin{proposition}\label{splitPropo}
 Every split present in both trees $T$ and $R$ presents in all trees along every shortest path between $T$ and $R$ in $\mdts$, $\mdtsu$, $\rnni$, and $\rnniu$, but not in $\nni$.
 \end{proposition}
 
@@ -293,7 +304,7 @@ and the length of the path that maintains the split is $2d(T_A, R_A)$.
 \end{enumerate}
 \endproof
 
-Non-ranked trees have a symmetry associated with every internal node.
+A non-ranked tree has a symmetry associated with every internal node.
 Those symmetries can be employed to substantially reduce the search space of pairs of trees.
 This approach uses tanglegrams \autocite{Matsen2015-fn} and is applied to reduce the number of pairs of tree for computing the curvature \autocite{Whidden2015-es}.
 As the following proposition shows, ranked trees are free from all but one of those symmetries, hence the tanglegram approach is not applicable in this case.
@@ -372,7 +383,7 @@ The degree of such a tree is $n-1$ in $\rnniu$.
 
 \begin{lemma}\label{diameterUpperBound}
 Let $\Delta(\G)$ be the diameter of graph $\G$.
-Then $\Delta(\rnniu) \le 3n^2$.
+Then $\Delta(\rnniu) \le 15/16 n^2$.
 \end{lemma}
 
 \proof
@@ -380,16 +391,15 @@ Let $T,R$ be a pair of trees from $\rnniu$.
 It takes up to $n^2$ steps to connect a tree from $\rnniu$ to a caterpillar tree.
 Hence, after $2n^2$ we have $T$ and $R$ connected to two caterpillar trees.
 It takes up to $n^2$ to connect two caterpillar trees.
+This gives $3n^2$.
+
+If every node goes up to the root and then to its place in the destination tree, the bound is $(n-2)^2$.
+
+This bound can still be improved by noting that at most half of the nodes have to cross the root, that is, go up to the root and back:\\
+* Those that have to cross the root go up.\\
+* Those that don't---rearrange.\\
+* Those that have to cross the root go down.
 \endproof
-
-This bound can be improved by going to a double caterpillar instead of caterpillar if the trees are sufficiently balanced!
-It seems the bound is $15/16 n^2$ in this case, which does the job.
-
-
-\bigskip
----------------[AG]
-\bigskip
-
 
 We finish this section with the following proposition that suggests that the graphs under consideration have ``bottlenecks''.
 To make this statement precise we need to introduce the following notion.
@@ -400,7 +410,7 @@ Then the {\em isoperimetric number} $h(G)$ of $G$ is defined by
 h(G) = \inf\limits_{0 < |S| \leq \frac12|V|} \frac{|\partial S|}{|S|}.
 \]
 
-\begin{proposition}
+\begin{proposition}\label{isoperiPropo}
 Let $G_n$ be $\mdts$, $\mdtsu$, $\rnni$, $\rnniu$, or $\nni$ graph on trees with $n$ taxa.
 Then $\lim_n h(G_n) = 0$.
 \end{proposition}
