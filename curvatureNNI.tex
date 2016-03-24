@@ -271,6 +271,9 @@ With this example in mind, it is not hard to see that the set of trees of the fo
 \begin{enumerate}[(1)]
 The list of conjectures that would nice to settle in this paper:
 \item Let $r \le \Delta(\nni)$, then $|\delta_\nni(r, T)| \ge |\delta_\rnni(r, T)|$ for all ranked trees $T$, where $|\delta_\G(d, X)|$ is the number of trees at distance $d$ from $X$ in $\G$.
+\item A more useful version of the previous one:
+The number of trees at the distance up-to $m$ from any given tree is at most $3^{f(n)}2^g(m)$, where both $f$ and $g$ are linear.
+Can this be derived directly from Lemma~1 in \autocite{li1996some}, or we have to encode ranks of the nodes into the graph structure of the tree and apply Sleator--Tarjan--Thurston?
 \item Proposition~\ref{splitPropo}.
 \item Lemma~\ref{diameterUpperBound}.
 \item Proposition~\ref{isoperiPropo}.
@@ -318,10 +321,10 @@ in $T$.
 \end{proposition}
 
 \proof
-The sufficiency if obvious.
+The sufficiency is obvious.
 For the necessity, assume that $\sigma$ transpose taxa $i,j$ such that $i,j$ is not a cherry in $T$.
 This implies that $i$ and $j$ have different parents.
-Hence $T \ne T_\sigma$ because the ranks of the parents of $i$ and $j$ are different in $T$ and $T_\sigma$.
+Hence $T \ne T_\sigma$ because the ranks of the parent of $i$ are different in $T$ and $T_\sigma$.
 \endproof
 
 These observations suggest that $\nni$ space is geometrically and algorithmically different from the other four spaces.
