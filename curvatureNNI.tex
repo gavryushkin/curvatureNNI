@@ -271,9 +271,10 @@ With this example in mind, it is not hard to see that the set of trees of the fo
 \begin{enumerate}[(1)]
 The list of conjectures that would nice to settle in this paper:
 \item Let $r \le \Delta(\nni)$, then $|\delta_\nni(r, T)| \ge |\delta_\rnni(r, T)|$ for all ranked trees $T$, where $|\delta_\G(d, X)|$ is the number of trees at distance $d$ from $X$ in $\G$.
-\item A more useful version of the previous one:
-The number of trees at the distance up-to $m$ from any given tree is at most $3^{f(n)}2^g(m)$, where both $f$ and $g$ are linear.
-Can this be derived directly from Lemma~1 in \autocite{li1996some}, or we have to encode ranks of the nodes into the graph structure of the tree and apply Sleator--Tarjan--Thurston?
+\item A more useful version of the previous one:\\
+The number of trees at the distance up-to $r$ from any given tree is at most $3^{f(n)}2^{g(r)}$, where both $f$ and $g$ are linear.\\
+Can this be derived directly from Lemma~1 in \autocite{li1996some}, or we have to encode ranks of the nodes into the graph structure of the tree and apply Sleator--Tarjan--Thurston?\\
+The latter gives $3^{2(n-2)} 2^{4r}$ if we use an extra vertex for every internal node of the tree to encode its rank. Is this an overkill?
 \item Proposition~\ref{splitPropo}.
 \item Lemma~\ref{diameterUpperBound}.
 \item Proposition~\ref{isoperiPropo}.
