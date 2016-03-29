@@ -267,21 +267,48 @@ While in $\rnniu$ this path is not shortest, and a shortest path would be to mov
 
 With this example in mind, it is not hard to see that the set of trees of the form $(\ldots(1, i_2), \ldots, i_{n-1}), n)$, where $\{i_2, \ldots, i_{n-1}\} = \{2, \ldots, n-1\}$, is convex in the space of discrete time-trees and is not convex in $\nni$.
 
+The following theorem bounds the sizes of neighborhoods.
+
+\begin{theorem}\label{neighSizeTh}
+The number of trees within distance $r$ from any given tree is at most
+\begin{itemize}
+\item[] $3^{n+2r-1}$ in $\rnniu$,
+\item[] $3^{2n+2r-2}$ in $\rnni$,
+\item[] TBA in $\mdts$,
+\item[] TBA in $\mdtsu$.
+\end{itemize}
+\end{theorem}
+
+\proof
+We prove the theorem in $\rnniu$.
+The theorem will follow similarly in the other three spaces.
+The proof employs the technique from \autocite{Sleator1992-bp} for counting paths in a graph.
+
+In terms of the terminology of \textcite{Sleator1992-bp}, it is enough to note the following.
+Three labels $1,2,3$ are enough.
+Indeed, our configurations are pairs of nodes of consecutive ranks.
+We call them the {\em top} and the {\em bottom} node of the configuration according to their ranks.
+A configuration is ready if the label of the bottom node is $1$ and the label of the top node is either $2$ or $3$.
+The three productions of our grammar correspond to two possible $\nni$ moves and one possible rank move.
+If two consecutive nodes are not connected by an edge and the configuration is ready, only the rank move is possible.
+If they are, the type of the rank move is determined by the label of the top node.
+Hence, the right-hand sides of all productions have two nodes.
+In total, $n-1$ internal nodes result in $3^{n-1}$ possible labellings of the initial tree, plus every move creates two new nodes, each of which can have three possible labellings, hence the number of canonical paths is $3^{n-1} \cdot 3^{2r}$.
+
+To make this paper self-containing, we provide a detailed proof:
+\todo{Do we need this?} 
+
+%Let $T = T_1,\ldots, T_r$ be a path of length $r$ in $\rnniu$ (hence, $d_\rnniu(T, T_r) \le r$).
+%We assume that the path is {\em canonical} meaning that if several moves to be applied on disjoint intervals, they are applied in the order of the ranks of nodes involved.
+%Since, every path between a pair of trees can be converted to a unique canonical path, the number of canonical paths from tree $T$ of length up to $r$ bounds the number of trees withing distance $r$ from $T$ from above.
+
+%We now fix a tree $T$ an encode every canonical of length $r$ starting in $T$ by a ternary sequence of length $n+2m-1$.
+\endproof
+
 \begin{conjecture}
 \begin{enumerate}[(1)]
 The list of conjectures that would nice to settle in this paper:
 \item Let $r \le \Delta(\nni)$, then $|\delta_\nni(r, T)| \ge |\delta_\rnni(r, T)|$ for all ranked trees $T$, where $|\delta_\G(d, X)|$ is the number of trees at distance $d$ from $X$ in $\G$.
-\item A more useful version of the previous one:\\
-The number of trees at the distance up-to $r$ from any given tree is at most $3^{f(n)}2^{g(r)}$, where both $f$ and $g$ are linear.\\
-Can this be derived directly from Lemma~1 in \autocite{li1996some}, or we have to encode ranks of the nodes into the graph structure of the tree and apply Sleator--Tarjan--Thurston?\\
-The latter gives $3^{2(n-2)} 2^{4r}$ if we use an extra vertex for every internal node of the tree to encode its rank---see Figure~\ref{rankEncoding.pdf}.
-Is this an overkill?
-\begin{figure}
-\centering
-\includegraphics[width=.7\textwidth]{rankEncoding.pdf}
-\caption{Ranked tree represented as graph.}
-\label{rankEncoding.pdf}
-\end{figure}
 \item Proposition~\ref{splitPropo}.
 \item Lemma~\ref{diameterUpperBound}.
 \item Proposition~\ref{isoperiPropo}.
