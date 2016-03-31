@@ -304,7 +304,7 @@ This does not cause a problem because the nodes on the left side of the producti
 Maps $\to_i$ are shown by dashed lines.
 Edge-ends labeled by $3$ are mapped top to top, bottom to bottom.
 In the last production edge-ends marked by the same label are mapped to each other.
-All pairs on nodes on both sides of each production must be on consecutive ranks.
+All pairs of nodes on both sides of each production must be of consecutive ranks.
 First two productions correspond to $\nni$ move, last production corresponds to rank change.}
 \label{grammar_rNNIu.pdf}
 \end{figure}
@@ -330,12 +330,50 @@ Indeed, fist $n-1$ entries of the sequence are needed to encode all possible lab
 The number of this strings, $3^{n-1+2r}$, gives the desired improved bound.
 \endproof
 
+Theorem~\ref{neighSizeTh} provides a method for estimating the diameter of the space from below.
+Now we estimates the diameter from above.
+
+\begin{lemma}\label{diameterUpperBound}
+Let $\Delta(\G)$ be the diameter of graph $\G$.
+Then $\Delta(\rnniu) \le \frac34 (n-1)^2 + \frac14 (n-1)$.
+\end{lemma}
+
+\proof
+Let $T$ and $R$ be trees in $\rnniu$.
+We show that there exists a path between them of length $\frac34 n^2 + \frac14 n$ or shorter.
+We denote that taxa on one side from the root of $T$ by $A$ and the rest of taxa by $B$.
+Let $A = A_1 \cup A_2$ and $B = B_1 \cup B_2$ so that the root of $R$ splits the taxa into $A_1 \cup B_1$ and $A_2 \cup B_2$.
+Note that all $A_i$'s and $B_i$'s have to be disjoint.
+We assume that $|A_1| = |A_2| = |B_1| = |B_2| = \frac{n-1}{4}$ and denote this number by $m$.
+We will see later in the proof that this assumption does not restrict the generality of our argument.
+
+We construct the path from $T$ to $R$ proceeding in the following seven steps:
+\begin{enumerate}[(1)]
+\item Move all the nodes adjacent to taxa in $A_2$ on top of all the other nodes in $T$, apart from the root.
+The tree restricted to $A_2$ is then a caterpillar tree.
+This can be done in $3m^2$ moves.
+
+\item Move the caterpillar tree on $A_2$ to the other side of the root.
+This can be done in $\frac12 m^2 + \frac12 m$ moves.
+
+\item Move all the nodes adjacent to taxa in $B_1$ on top of all nodes apart from those adjacent to taxa in $A_2$ and the root.
+The tree restricted to $B_1$ is then a caterpillar tree.
+This can be done in $2m^2$ moves.
+
+\item Swap the caterpillars on $A_2$ and $B_1$.
+This can be done in $m^2$ moves.
+
+\item Move the caterpillar tree on $B_1$ to the other side of the root.
+This can be done in $\frac12 m^2 + \frac12 m$ moves.
+
+\item 
+\end{enumerate}
+\endproof
+
 \begin{conjecture}
 \begin{enumerate}[(1)]
-The list of conjectures that would nice to settle in this paper:
-\item Let $r \le \Delta(\nni)$, then $|\delta_\nni(r, T)| \ge |\delta_\rnni(r, T)|$ for all ranked trees $T$, where $|\delta_\G(d, X)|$ is the number of trees at distance $d$ from $X$ in $\G$.
+The list of conjectures that would be nice to settle or refute in this paper:
 \item Proposition~\ref{splitPropo}.
-\item Lemma~\ref{diameterUpperBound}.
 \item Proposition~\ref{isoperiPropo}.
 \end{enumerate}
 \end{conjecture}
@@ -354,7 +392,7 @@ Let $T_A$ be the subtree of $T$ on taxa $A$ and $T_B$, $R_A$, $R_B$ are defined 
 Road map:
 \begin{enumerate}[(1)]
 \item We can assume that the size of $A$ is $\lfloor\frac n2\rfloor$.
-\item We can assume that there exists trees $\operatorname{join}(T_A, T_B)$ and $\operatorname{join}(R_A, R_B)$ on the shortest path from $T$ to $R$ such that
+\item We can assume that there exist trees $\operatorname{join}(T_A, T_B)$ and $\operatorname{join}(R_A, R_B)$ on the shortest path from $T$ to $R$ such that
 \[
 d(T,\operatorname{join}(T_A, T_B)), d(R,\operatorname{join}(R_A, R_B)) \ge  n^2/8 + n/4.
 \]
@@ -442,26 +480,6 @@ The upper bound for both $\rnni$ and $\rnniu$ is obtained in the same way as for
 For the lower bound in $\rnniu$, we note that the oldest intercoalescent interval (the one adjacent to the root) necessarily contributes $2$ to the degree.
 Hence the lower bound can be reached by a tree such that no other interval contributes more than 1.
 The degree of such a tree is $n-1$ in $\rnniu$.
-\endproof
-
-\begin{lemma}\label{diameterUpperBound}
-Let $\Delta(\G)$ be the diameter of graph $\G$.
-Then $\Delta(\rnniu) \le 15/16 n^2$.
-\end{lemma}
-
-\proof
-Let $T,R$ be a pair of trees from $\rnniu$.
-It takes up to $n^2$ steps to connect a tree from $\rnniu$ to a caterpillar tree.
-Hence, after $2n^2$ we have $T$ and $R$ connected to two caterpillar trees.
-It takes up to $n^2$ to connect two caterpillar trees.
-This gives $3n^2$.
-
-If every node goes up to the root and then to its place in the destination tree, the bound is $(n-2)^2$.
-
-This bound can still be improved by noting that at most half of the nodes have to cross the root, that is, go up to the root and back:\\
-* Those that have to cross the root go up.\\
-* Those that don't---rearrange.\\
-* Those that have to cross the root go down.
 \endproof
 
 We finish this section with the following proposition that suggests that the graphs under consideration have ``bottlenecks''.
