@@ -80,9 +80,9 @@ Although Markov chain Monte Carlo (MCMC) is guaranteed to sample from the true p
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.7\textwidth]{timeTree.eps}
+\label{timeTree.eps}
 \caption{Time tree on $6$ taxa.
 Time is measured by nonnegative real numbers.}
-\label{timeTree.eps}
 \end{figure}
 
 The mixing properties of phylogenetic MCMC have, in the classical unrooted case, been a major area of research from both the theoretical perspective of mixing time bounds \autocite{Mossel2005-ly,Mossel2006-fo,Stefankovic2011-hu,spade2014note} and the practical perspective of performance on real data \autocite{beiko2006searching,Ronquist2006-fv,lakner2008efficiency,Whidden2015-yi}.
@@ -144,9 +144,9 @@ In the same way we write $\tp(T) = \tp(R)$ when trees $T$ and $R$ have the same 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.7\textwidth]{T5.pdf}
+\label{T5.pdf}
 \caption{Discretized time-tree on $6$ taxa.
 Intervals between divergence and sample events can take only finitely many values (two in this example).}
-\label{T5.pdf}
 \end{figure}
 
 We say that two trees $T$ and $R$ are {\em NNI neighbors} if $\rt(T) \ne \rt(R)$ and tree $R$ is obtained from tree $T$ by sending the length of an intercoalescent interval $I$ between an internal node and its parent in $T$ down to zero and resolving the multifurcation in one of the two possible ways.
@@ -171,9 +171,9 @@ See Figure~\ref{dts_neighbors.pdf} for an example of a pair of trees $T,R$ at $\
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.7\textwidth]{dts_neighbors.pdf}
+\label{dts_neighbors.pdf}
 \caption{Trees $T$ and $R$ are at $\mdts$ distance $3$.
 To move from $T$ to $R$ in $\mdts$, one must decrease the length of interval $I$, swap the ranks of nodes $A$ and $C$ bounding the interval $J$, and perform an NNI move on interval $K$, resolving nodes $C$ and $D$.}
-\label{dts_neighbors.pdf}
 \end{figure}
 
 Thus we have defined a graph, which we denote by $\mdts$ for $m \geq 2$.
@@ -260,8 +260,8 @@ While in $\rnniu$ this path is not shortest, and a shortest path would be to mov
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{NNI_VS_rNNI.pdf}
-\caption{No shortest $\nni$ path is shortest in $\rnni$.}
 \label{NNI_VS_rNNI.pdf}
+\caption{No shortest $\nni$ path is shortest in $\rnni$.}
 \end{figure}
 \end{example}
 
@@ -300,13 +300,13 @@ This does not cause a problem because the nodes on the left side of the producti
 \begin{figure}
 \centering
 \includegraphics[width=0.7\textwidth]{grammar_rNNIu.pdf}
+\label{grammar_rNNIu.pdf}
 \caption{Graph grammar $\Gamma$ for $\rnniu$.
 Maps $\to_i$ are shown by dashed lines.
-Edge-ends labeled by $3$ are mapped top to top, bottom to bottom.
-In the last production edge-ends marked by the same label are mapped to each other.
+In the first two productions, the edge-ends marked by $2$ and $3$ without dashed lines are mapped to each other: top $3$ to top $3$, $2$ to $2$, bottom $3$ to bottom $3$.
+In the last production, edge-ends marked by the same label are mapped to each other.
 All pairs of nodes on both sides of each production must be of consecutive ranks.
 First two productions correspond to $\nni$ move, last production corresponds to rank change.}
-\label{grammar_rNNIu.pdf}
 \end{figure}
 
 The number of vertices in left sides of $\Gamma$ is $6$, the maximum number of vertices in any right side of a production of $\Gamma$ is $2$.
@@ -335,23 +335,34 @@ Now we estimates the diameter from above.
 
 \begin{lemma}\label{diameterUpperBound}
 Let $\Delta(\G)$ be the diameter of graph $\G$.
-Then $\Delta(\rnniu) \le \frac34 (n-1)^2 + \frac14 (n-1)$.
+Then $\Delta(\rnniu) \le (n-1)^2 + \frac14 (n-1)$.
 \end{lemma}
 
 \proof
 Let $T$ and $R$ be trees in $\rnniu$.
-We show that there exists a path between them of length $\frac34 n^2 + \frac14 n$ or shorter.
-We denote that taxa on one side from the root of $T$ by $A$ and the rest of taxa by $B$.
+We show that there exists a path between them of length $n^2 + \frac14 n$ or shorter.
+We denote the taxa on one side from the root of $T$ by $A$ and the rest of taxa by $B$.
 Let $A = A_1 \cup A_2$ and $B = B_1 \cup B_2$ so that the root of $R$ splits the taxa into $A_1 \cup B_1$ and $A_2 \cup B_2$.
 Note that all $A_i$'s and $B_i$'s have to be disjoint.
 We assume that $|A_1| = |A_2| = |B_1| = |B_2| = \frac{n-1}{4}$ and denote this number by $m$.
 We will see later in the proof that this assumption does not restrict the generality of our argument.
 
-We construct the path from $T$ to $R$ proceeding in the following seven steps:
+We construct the path from $T$ to $R$ proceeding in the following steps:
+
 \begin{enumerate}[(1)]
 \item Move all the nodes adjacent to taxa in $A_2$ on top of all the other nodes in $T$, apart from the root.
 The tree restricted to $A_2$ is then a caterpillar tree.
 This can be done in $3m^2$ moves.
+
+\item Move all the nodes adjacent to taxa in $A_1$ on top of all nodes in $T$, apart from the root and the nodes adjacent to taxa in $A_2$.
+The tree restricted to $A_1$ is then a caterpillar tree.
+This can be done in $2m^2$ moves.
+(We refer to this type of action at to ``move $A_1$ in between $A_2$ and $B$'')
+
+\item Move $B_1$ in between $A_1$ and $B_2$.
+This takes $m^2$ moves.
+
+\item
 
 \item Move the caterpillar tree on $A_2$ to the other side of the root.
 This can be done in $\frac12 m^2 + \frac12 m$ moves.
@@ -366,7 +377,7 @@ This can be done in $m^2$ moves.
 \item Move the caterpillar tree on $B_1$ to the other side of the root.
 This can be done in $\frac12 m^2 + \frac12 m$ moves.
 
-\item 
+\item
 \end{enumerate}
 \endproof
 
