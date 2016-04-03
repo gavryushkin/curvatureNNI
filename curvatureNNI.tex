@@ -335,34 +335,28 @@ Now we estimates the diameter from above.
 
 \begin{lemma}\label{diameterUpperBound}
 Let $\Delta(\G)$ be the diameter of graph $\G$.
-Then $\Delta(\rnniu) \le (n-1)^2 + \frac14 (n-1)$.
+Then
+\[
+\Delta(\rnniu) \le \frac{13}{14}n^2 - \frac{11}{4}n - \frac{9}{16}.
+\]
 \end{lemma}
 
 \proof
 Let $T$ and $R$ be trees in $\rnniu$.
-We show that there exists a path between them of length $n^2 + \frac14 n$ or shorter.
+We show that there exists a path between them of length $\frac{13}{14}n^2 - \frac{11}{4}n - \frac{9}{16}$ or shorter.
 We denote the taxa on one side from the root of $T$ by $A$ and the rest of taxa by $B$.
 Let $A = A_1 \cup A_2$ and $B = B_1 \cup B_2$ so that the root of $R$ splits the taxa into $A_1 \cup B_1$ and $A_2 \cup B_2$.
 Note that all $A_i$'s and $B_i$'s have to be disjoint.
 We assume that $|A_1| = |A_2| = |B_1| = |B_2| = \frac{n-1}{4}$ and denote this number by $m$.
 We will see later in the proof that this assumption does not restrict the generality of our argument.
 
-We construct the path from $T$ to $R$ proceeding in the following steps:
+We construct the path from $T$ to $R$ proceeding in the following steps.
+Let $f(n)$ be the desired upper bound.
 
 \begin{enumerate}[(1)]
 \item Move all the nodes adjacent to taxa in $A_2$ on top of all the other nodes in $T$, apart from the root.
 The tree restricted to $A_2$ is then a caterpillar tree.
 This can be done in $3m^2$ moves.
-
-\item Move all the nodes adjacent to taxa in $A_1$ on top of all nodes in $T$, apart from the root and the nodes adjacent to taxa in $A_2$.
-The tree restricted to $A_1$ is then a caterpillar tree.
-This can be done in $2m^2$ moves.
-(We refer to this type of action at to ``move $A_1$ in between $A_2$ and $B$'')
-
-\item Move $B_1$ in between $A_1$ and $B_2$.
-This takes $m^2$ moves.
-
-\item
 
 \item Move the caterpillar tree on $A_2$ to the other side of the root.
 This can be done in $\frac12 m^2 + \frac12 m$ moves.
@@ -370,6 +364,7 @@ This can be done in $\frac12 m^2 + \frac12 m$ moves.
 \item Move all the nodes adjacent to taxa in $B_1$ on top of all nodes apart from those adjacent to taxa in $A_2$ and the root.
 The tree restricted to $B_1$ is then a caterpillar tree.
 This can be done in $2m^2$ moves.
+(We refer to this type of action as to ``move $B_1$ in between $A_2$ and $A_1 \cup B_2$''.)
 
 \item Swap the caterpillars on $A_2$ and $B_1$.
 This can be done in $m^2$ moves.
@@ -377,9 +372,31 @@ This can be done in $m^2$ moves.
 \item Move the caterpillar tree on $B_1$ to the other side of the root.
 This can be done in $\frac12 m^2 + \frac12 m$ moves.
 
-\item
+\item Move $B_2$ in between of $A_2$ and $A_1$.
+This can be done in $m^2$ moves.
+
+\item Convert the subtree restricted to $A_1$ to that in $R$.
+Then convert the subtree restricted to $B_2$ to that in $R$
+This takes $2f(n/4)$ moves.
+
+\item Move $A_2$ to its place in $R$.
+This takes $2m^2$.
+
+\item Move $B_1$ to its place in $R$.
+This takes $3m^2$.
 \end{enumerate}
+
+In total we have a recursive equation $f(n) = 13m^2 + m + 2 f(n/4)$.\\
+The solution to this equation is
+\[
+f(n) = \frac{13}{14}n^2 - \frac{11}{4}n - \frac{9}{16}.
+\]
+\todo{Explain why the sizes of the splits can only decrease the distance.}
 \endproof
+
+\begin{corollary}
+$\Delta(\rnniu) < n^2$ for all $n$.
+\end{corollary}
 
 \begin{conjecture}
 \begin{enumerate}[(1)]
