@@ -400,43 +400,43 @@ Finally, the total length of the path is maximized when $|A_2| = |B_1|$ and $|A_
 Do we need that in the text?}
 \endproof
 
-\begin{corollary}
-$\Delta(\rnniu) < n^2$ for all $n$.
+\begin{corollary}\label{diameterUpperBoundCoro}
+$\Delta(\rnniu) < n^2 - \frac 14$ for all $n$.
 \end{corollary}
 
-\begin{conjecture}
-\begin{enumerate}[(1)]
-The list of conjectures that would be nice to settle or refute in this paper:
-\item Proposition~\ref{splitPropo}.
-\item Proposition~\ref{isoperiPropo}.
-\end{enumerate}
-\end{conjecture}
-
-\begin{proposition}\label{splitPropo}
+\begin{theorem}\label{splitTheo}
 Every split present in both trees $T$ and $R$ presents in all trees along every shortest path between $T$ and $R$ in $\mdts$, $\mdtsu$, $\rnni$, and $\rnniu$, but not in $\nni$.
-\end{proposition}
+\end{theorem}
 
 \proof
 The counter-example for $\nni$ space is constructed by \textcite{li1996some}.
 Hence, we prove the rest.
 
-Suppose there exists a pair of trees $T,R$ sharing a split $A \mid B$ such that no tree on a shortest path between $T$ and $R$ has split $A \mid B$.
-Let $T_A$ be the subtree of $T$ on taxa $A$ and $T_B$, $R_A$, $R_B$ are defined analogously.
+We prove the theorem in $\rnniu$ and note that for the other spaces, it follows similarly.
 
-Road map:
-\begin{enumerate}[(1)]
-\item We can assume that the size of $A$ is $\lfloor\frac n2\rfloor$.
-\item We can assume that there exist trees $\operatorname{join}(T_A, T_B)$ and $\operatorname{join}(R_A, R_B)$ on the shortest path from $T$ to $R$ such that
+Suppose there exists a pair of trees $T,R$ sharing a split $A \mid B$ such that there exists a shortest path between $T$ and $R$ and a tree $T'$ on this path such that $T'$ does not have $A \mid B$.
+Let $T_A$ be the subtree of $T$ on taxa $A$ and $T_B$, $R_A$, $R_B$ are defined analogously.
+We choose $T'$ to be a tree on the path from $T$ to $R$ that minimizes $\{|X| : X \mid Y \mbox{ is a split in $T'$ and } X \subseteq A\}$.
+Denote this number by $\sigma$.
+Without loss of generality, we can assume that $|A| = |B| = \frac n2$ and $\sigma = 1$.
+Indeed, this can be achieved by considering an appropriate subpath between appropriate subtrees of $T$ and $R$.
+
+First, we assume that all nodes of $T_A$ ($R_A$) have lower ranks than those in $T_B$ ($R_B$).
+Since $|A| = |B| = \frac n2$ and $\sigma = 1$,
 \[
-d(T,\operatorname{join}(T_A, T_B)), d(R,\operatorname{join}(R_A, R_B)) \ge  n^2/8 + n/4.
+d(T,T') \ge \frac{n^2}{8} - \frac 18.
 \]
-\item The splitless distance is then at least
+Furthermore,
 \[
-n^2/8 + n/4 + d(T_A, R_A) + n^2/8 + n/4
+d(T,R) \ge 2d(T,T') + d(T_A, R_A) \ge \frac{n^2}{4} - \frac 14 + d(T_A, R_A),
 \]
-and the length of the path that maintains the split is $2d(T_A, R_A)$.
-\item Since the diameter of the space is bounded from above by $15/16n^2$---see Lemma~\ref{diameterUpperBound}---the proposition is proved.
-\end{enumerate}
+We now apply Corollary~\ref{diameterUpperBoundCoro} and get
+\[
+d(T,R) > d(T_B, R_B) + d(T_A, R_A).
+\]
+This is however a contradiction because under our assumption about ranks of nodes in $T$ and $R$, we have that $d(T,R) \le d(T_A, R_A) + d(T_B, R_B)$ by converting $T_A$ to $R_A$ and then independently $T_B$ to $R_B$.
+
+The case when the assumption on ranks of $T$ and $R$ does not hold, follows similarly.
 \endproof
 
 A non-ranked tree has a symmetry associated with every internal node.
@@ -515,6 +515,14 @@ For the lower bound in $\rnniu$, we note that the oldest intercoalescent interva
 Hence the lower bound can be reached by a tree such that no other interval contributes more than 1.
 The degree of such a tree is $n-1$ in $\rnniu$.
 \endproof
+
+\begin{conjecture}
+\begin{enumerate}[(1)]
+The list of conjectures that would be nice to settle or refute in this paper:
+\item $d_\rnniu$ is polynomial.
+\item Proposition~\ref{isoperiPropo}.
+\end{enumerate}
+\end{conjecture}
 
 We finish this section with the following proposition that suggests that the graphs under consideration have ``bottlenecks''.
 To make this statement precise we need to introduce the following notion.
