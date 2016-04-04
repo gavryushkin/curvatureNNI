@@ -391,7 +391,13 @@ The solution to this equation is
 \[
 f(n) = \frac{13}{14}n^2 - \frac{11}{4}n - \frac{9}{16}.
 \]
-\todo{Explain why the sizes of the splits can only decrease the distance.}
+
+It remains to note that the assumption $|A_1| = |A_2| = |B_1| = |B_2| = \frac{n-1}{4}$ does not increase the distance between $T$ and $R$.
+Indeed, the sets can be chosen so that at most half of the nodes have to cross the root, that is, $|A_2 \cup B_1| \le \frac{n-1}{2}$.
+Furthermore, the smaller the size of $A_2 \cup B_1$ the shorter the path.
+Finally, the total length of the path is maximized when $|A_2| = |B_1|$ and $|A_1| = |B_2|$.
+\todo{A detailed proof includes a check of all 10 steps.
+Do we need that in the text?}
 \endproof
 
 \begin{corollary}
