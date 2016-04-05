@@ -404,7 +404,7 @@ Do we need that in the text?}
 \endproof
 
 \begin{corollary}\label{diameterUpperBoundCoro}
-$\Delta(\rnniu) < n^2 - \frac 14$ for all $n$.
+$\Delta(\rnniu) < n^2 - n$ for all $n$.
 \end{corollary}
 
 \begin{theorem}\label{splitTheo}
@@ -426,11 +426,11 @@ Indeed, this can be achieved by considering an appropriate subpath between appro
 First, we assume that all nodes of $T_A$ ($R_A$) have lower ranks than those in $T_B$ ($R_B$).
 Since $|A| = |B| = \frac n2$ and $\sigma = 1$,
 \[
-d(T,T') \ge \frac{n^2}{8} - \frac 18.
+d(T,T') \ge \frac{n^2}{8} - \frac n4.
 \]
 Furthermore,
 \[
-d(T,R) \ge 2d(T,T') + d(T_A, R_A) \ge \frac{n^2}{4} - \frac 14 + d(T_A, R_A),
+d(T,R) \ge 2d(T,T') + d(T_A, R_A) \ge \frac{n^2}{4} - \frac n2 + d(T_A, R_A),
 \]
 We now apply Corollary~\ref{diameterUpperBoundCoro} and get
 \[
