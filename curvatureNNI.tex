@@ -337,7 +337,7 @@ Now we estimates the diameter from above.
 Let $\Delta(\G)$ be the diameter of graph $\G$.
 Then for $n \ge 4$,
 \[
-\Delta(\rnniu) \le \frac{13}{14}n^2 - \frac{11}{4}n - \frac{9}{16}.
+\Delta(\rnniu) \le n^2 - 3n - \frac 58.
 \]
 \end{lemma}
 
@@ -379,6 +379,9 @@ This can be done in $m^2$ moves.
 Then convert the subtree restricted to $B_2$ to that in $R$
 This takes $2f(n/4)$ moves.
 
+\item Move $B_2$ to its place in $R$.
+This takes $m^2$ moves.
+
 \item Move $A_2$ to its place in $R$.
 This takes $2m^2$.
 
@@ -386,10 +389,10 @@ This takes $2m^2$.
 This takes $3m^2$.
 \end{enumerate}
 
-In total we have a recursive equation $f(n) = 13m^2 + m + 2 f(n/4)$.\\
+In total we have a recursive equation $f(n) = 14m^2 + m + 2 f(n/4)$.\\
 The solution to this equation is
 \[
-f(n) = \frac{13}{14}n^2 - \frac{11}{4}n - \frac{9}{16}.
+f(n) = n^2 - 3n - \frac 58.
 \]
 
 It remains to note that the assumption $|A_1| = |A_2| = |B_1| = |B_2| = \frac{n-1}{4}$ does not increase the distance between $T$ and $R$.
