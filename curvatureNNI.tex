@@ -410,8 +410,6 @@ Every split present in both trees $T$ and $R$ presents in all trees along every 
 
 \proof
 The counter-example for $\nni$ space is constructed by \textcite{li1996some}.
-Hence, we prove the rest.
-
 We prove the theorem in $\rnniu$ and note that for the other spaces, it follows similarly.
 
 Suppose there exists a pair of trees $T,R$ sharing a split $A \mid B$ such that there exists a shortest path between $T$ and $R$ and a tree $T'$ on this path such that $T'$ does not have $A \mid B$.
@@ -419,7 +417,7 @@ Let $T_A$ be the subtree of $T$ on taxa $A$ and $T_B$, $R_A$, $R_B$ are defined 
 We choose $T'$ to be a tree on the path from $T$ to $R$ that minimizes $\{|X| : X \mid Y \mbox{ is a split in $T'$ and } X \subseteq A\}$.
 Denote this number by $\sigma$.
 Without loss of generality, we can assume that $|A| = |B| = \frac n2$ and $\sigma = 1$.
-Indeed, this can be achieved by considering an appropriate subpath between appropriate subtrees of $T$ and $R$.
+Indeed, this can be achieved by considering an appropriate subpath between appropriate subtrees of $T$ and $R$ and collapsing parts of the tree that are moved together (or not moved at all) into a taxon.
 
 First, we assume that all nodes of $T_A$ ($R_A$) have lower ranks than those in $T_B$ ($R_B$).
 Since $|A| = |B| = \frac n2$ and $\sigma = 1$,
@@ -434,9 +432,9 @@ We now apply Corollary~\ref{diameterUpperBoundCoro} and get
 \[
 d(T,R) > d(T_B, R_B) + d(T_A, R_A).
 \]
-This is however a contradiction because under our assumption about ranks of nodes in $T$ and $R$, we have that $d(T,R) \le d(T_A, R_A) + d(T_B, R_B)$ by converting $T_A$ to $R_A$ and then independently $T_B$ to $R_B$.
+This is however a contradiction because under our assumption about ranks of nodes in $T$ and $R$, we have that $d(T,R) \le d(T_A, R_A) + d(T_B, R_B)$ by converting $T_A$ to $R_A$ and then independently $T_B$ to $R_B$ thus preserving the split along the path.
 
-The case when the assumption on ranks of $T$ and $R$ does not hold, follows similarly.
+The case when the assumption on ranks of nodes in $T$ and $R$ does not hold follows similarly by noting that the number of extra rank moves required for ``merging'' $T_A$ and $T_B$ is not less than the number or rank moves required to ``separate'' the nodes in $T_A$ from the nodes $T_B$ to then transform them independently.
 \endproof
 
 A non-ranked tree has a symmetry associated with every internal node.
