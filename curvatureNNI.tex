@@ -416,27 +416,27 @@ The counter-example for $\nni$ space is constructed by \textcite{li1996some}.
 We prove the theorem in $\rnniu$ and note that for the other spaces, it follows similarly.
 \todo{Explain this, as we don't have an upper bound for the diameter of the other spaces.}
 
-Suppose there exists a pair of trees $T,R$ sharing a split $A \mid B$ such that there exists a shortest path between $T$ and $R$ and a tree $T'$ on this path such that $T'$ does not have $A \mid B$.
-Let $T_A$ be the subtree of $T$ on taxa $A$ and $T_B$, $R_A$, $R_B$ are defined analogously.
-We choose $T'$ to be a tree on the path from $T$ to $R$ that minimizes $\{|X| : X \mid Y \mbox{ is a split in $T'$ and } X \subseteq A\}$.
-Denote this number by $\sigma$.
-Without loss of generality, we can assume that $|A| = |B| = \frac n2$ and $\sigma = 1$.
-Indeed, this can be achieved by considering an appropriate subpath between appropriate subtrees of $T$ and $R$ and collapsing parts of the tree that are moved together (or not moved at all) into a taxon.
+We need the following lemma, which we prove later.
 
-First, we assume that all nodes of $T_A$ ($R_A$) have lower ranks than those in $T_B$ ($R_B$).
-Since $|A| = |B| = \frac n2$ and $\sigma = 1$,
+\begin{lemma}
+Let $T$, $R$ be a pair of trees sharing a split $A \mid B$ such that there exists a shortest path $\gamma$ between $T$ and $R$ and a tree $S$ on $\gamma$ such that $S$ does not have $A \mid B$.
+Then there exist two disjoint sets of taxa $A'$, $B'$, trees $T'$, $R'$ on $A' \cup B'$, a shortest path $\gamma'$ from $T'$ to $R'$, and a number $n'$ such that $|A'| = |B'| = n'$, both $T'$ and $R'$ have the split $A'|B'$and
 \[
-d(T,T') \ge \frac{n^2}{8} - \frac n4.
+d(\gamma', A'|B') \ge \frac{n'^2}{8} - \frac{n'}{4},
 \]
-Furthermore,
+where $d(\gamma', A'|B') = \max\{d(T, A'|B') : T\in\gamma'\}$ and $d(T, A'|B') = \min\{d(T, S) : S \mbox{ has } A'|B'\}$.
+\end{lemma}
+
+It follows from this lemma that $\gamma'$ contains a tree $S'$ such that
 \[
-d(T,R) \ge 2d(T,T') + d(T_A, R_A) \ge \frac{n^2}{4} - \frac n2 + d(T_A, R_A),
+d(T',R') \ge 2d(T',S') + d(T'_{A'}, R'_{A'}) \ge \frac{n'^2}{4} - \frac{n'}{2} + d(T'_{A'}, R'_{A'}),
 \]
 We now apply Corollary~\ref{diameterUpperBoundCoro} and get
 \[
-d(T,R) > d(T_B, R_B) + d(T_A, R_A).
+d(T',R') > d(T'_{B'}, R'_{B'}) + d(T'_{A'}, R'_{A'}).
 \]
-This is however a contradiction because under our assumption about ranks of nodes in $T$ and $R$, we have that $d(T,R) \le d(T_A, R_A) + d(T_B, R_B)$ by converting $T_A$ to $R_A$ and then independently $T_B$ to $R_B$ thus preserving the split along the path.
+This is however a contradiction because $d(T',R') \le d(T'_{A'}, R'_{A'}) + d(T'_{B'}, R'_{B'})$ by converting $T'_{A'}$ to $R'_{A'}$ and then independently $T'_{B'}$ to $R'_{B'}$ thus preserving the split along the path.
+This contradiction proves the theorem.
 
 The case when the assumption on ranks of nodes in $T$ and $R$ does not hold follows similarly by noting that the number of extra rank moves required for ``merging'' $T_A$ and $T_B$ is not less than the number or rank moves required to ``separate'' the nodes in $T_A$ from the nodes $T_B$ to then transform them independently.
 \endproof
