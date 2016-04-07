@@ -416,29 +416,40 @@ The counter-example for $\nni$ space is constructed by \textcite{li1996some}.
 We prove the theorem in $\rnniu$ and note that for the other spaces, it follows similarly.
 \todo{Explain this, as we don't have an upper bound for the diameter of the other spaces.}
 
-We need the following lemma, which we prove later.
+Let $T = T_0, \ldots, T_k = R$ be an $\rnniu$ path (denote this path by $\gamma$) of length $k = d_\rnniu(T, R)$ such that both $T$ and $R$ have a split $A|B$ and there exists $r$ such that $T_r$ does not have the split $A|B$.
+Denote the restriction of $T$ to the set of taxa $A$ by $T_A$, and define $T_B$, $R_A$, and $R_B$ similarly.
+Our proof will proceed as follows.
+First we estimate how many $\rnniu$ steps it takes to ``merge'' $T_A$ and $T_B$, and then we show that this number of steps is strictly larger than the maximal possible distance between trees of size of $T_A$ and $T_B$.
+Hence, we conclude that the path that independently converts $T_A$ into $R_A$ and $T_B$ into $R_B$ is strictly shorter than $\gamma$.
 
-\begin{lemma}
-Let $T$, $R$ be a pair of trees sharing a split $A \mid B$ such that there exists a shortest path $\gamma$ between $T$ and $R$ and a tree $S$ on $\gamma$ such that $S$ does not have $A \mid B$.
-Then there exist two disjoint sets of taxa $A'$, $B'$, trees $T'$, $R'$ on $A' \cup B'$, a shortest path $\gamma'$ from $T'$ to $R'$, and a number $n'$ such that $|A'| = |B'| = n'$, both $T'$ and $R'$ have the split $A'|B'$and
-\[
-d(\gamma', A'|B') \ge \frac{n'^2}{8} - \frac{n'}{4},
-\]
-where $d(\gamma', A'|B') = \max\{d(T, A'|B') : T\in\gamma'\}$ and $d(T, A'|B') = \min\{d(T, S) : S \mbox{ has } A'|B'\}$.
-\end{lemma}
+We say that two taxa $a_1$, $a_2$ from $A$ are {\em siblings} for $\gamma$ if they have either an identical parent or adjacent parents in $T_i$ for all $i = 0,\ldots,k$.
+We define the notion of siblings for taxa in $B$ in the same way.
+Since siblings are never separated along $\gamma$, we can merge them and that path that is induced by $\gamma$ between the trees with merged siblings remains a shortest $\rnniu$ path.
+We proceed formally as follows.
+For every pair of siblings $a_1$ $a_2$ from $A$, we replace them by $a_1$ and merge their parents.
+Repeat this process for all siblings in $A$ and $B$ in both trees $T$ and $R$.
+Since the path induced by $\gamma$ induce a shortest path between trees without siblings, we assume from now on that trees $T$ and $R$ have no siblings.
 
-It follows from this lemma that $\gamma'$ contains a tree $S'$ such that
+Since neither $T$ nor $R$ have siblings, there exist numbers $r$ and $q$ such that
 \[
-d(T',R') \ge 2d(T',S') + d(T'_{A'}, R'_{A'}) \ge \frac{n'^2}{4} - \frac{n'}{2} + d(T'_{A'}, R'_{A'}),
+d(T, T_r) \le 1 + \ldots, + s = \frac 12 s (s+1),
 \]
-We now apply Corollary~\ref{diameterUpperBoundCoro} and get
+where $s$ is the number of internal nodes in $T_A$.
+By the same reason, $d(R_r, R) \le \frac 12 \ell (\ell + 1)$, where $\ell$ is the number of internal modes in $R_B$.
+Without loss of generality, can assume that $s = \ell = \frac n2 - 1$.
+Hence,
 \[
-d(T',R') > d(T'_{B'}, R'_{B'}) + d(T'_{A'}, R'_{A'}).
+d(T,R) \ge \frac{n^2}{8} - \frac n4 + d(T_r, R_q) + \frac{n^2}{8} - \frac n4 = \frac{n^2}{4} - \frac n2 + d(T_r, R_q).
 \]
-This is however a contradiction because $d(T',R') \le d(T'_{A'}, R'_{A'}) + d(T'_{B'}, R'_{B'})$ by converting $T'_{A'}$ to $R'_{A'}$ and then independently $T'_{B'}$ to $R'_{B'}$ thus preserving the split along the path.
-This contradiction proves the theorem.
-
-The case when the assumption on ranks of nodes in $T$ and $R$ does not hold follows similarly by noting that the number of extra rank moves required for ``merging'' $T_A$ and $T_B$ is not less than the number or rank moves required to ``separate'' the nodes in $T_A$ from the nodes $T_B$ to then transform them independently.
+Furthermore, $d(T_r, R_q) \ge \min(d(T_A, R_A), d(T_B, R_B))$.
+Corollary~\ref{diameterUpperBoundCoro} implies that
+\[
+\frac{n^2}{4} - \frac n2 > \max(d(T_A, R_A), d(T_B, R_B)).
+\]
+Thus, $d(T, R) > \min(d(T_A, R_A), d(T_B, R_B)) + \max(d(T_A, R_A), d(T_B, R_B)) = d(T_A, R_A) + d(T_B, R_B)$.
+His however is a contradiction because the latter quantity is the length of the path that maintains the split $A|B$ by converting $T_A$ to $R_A$ and $T_B$ to $R_B$ independently.
+\todo{This is true only when $T_A$ and $T_B$ are rank-separated.
+Add the general case.}
 \endproof
 
 A non-ranked tree has a symmetry associated with every internal node.
