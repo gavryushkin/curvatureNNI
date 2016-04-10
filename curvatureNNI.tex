@@ -414,55 +414,55 @@ Every split present in both trees $T$ and $R$ presents in all trees along every 
 \proof
 The counter-example for $\nni$ space is constructed by \textcite{li1996some}.
 We prove the theorem in $\rnniu$ and note that it follows similarly in the other three spaces.
-Indeed, a counter-example to the theorem in $\mdts$, $\mdtsu$, or $\rnni$ can immediately be modified to a counter-example in $\rnniu$.
+Indeed, a counter-example to the theorem's statement in $\mdts$, $\mdtsu$, or $\rnni$ can immediately be modified to a counter-example in $\rnniu$.
 
 We will write $d(\cdot, \cdot)$ instead of $d_\rnniu(\cdot, \cdot)$ in this proof.
 Let $T = T_0, \ldots, T_k = R$ be an $\rnniu$ path (denote it by $\gamma$) of length $k = d(T, R)$ such that both $T$ and $R$ have a split $A|B$ and there exists $r$ such that $T_r$ does not have the split $A|B$.
 Denote the restriction of $T$ to the set of taxa $A$ by $T_A$, and define $T_B$, $R_A$, and $R_B$ analogously.
 Our proof will proceed as follows.
-First we estimate how many $\rnniu$ steps it takes to ``merge'' $T_A$ and $T_B$, and then we show that this number of steps is strictly larger than the maximal possible distance between trees of size of $T_A$ and $T_B$.
+First we estimate the minimal number of $\rnniu$ steps it takes to ``sufficiently mix'' $T_A$ and $T_B$ and then to ``separate'' them, and second we show that this number of steps is strictly larger than the maximal possible distance between trees of size of $T_A$ and $T_B$.
 Hence, we conclude that the path that independently converts $T_A$ into $R_A$ and $T_B$ into $R_B$ is strictly shorter than $\gamma$.
 
-First, we assume every node in $T_A$ ($R_A$) has a lower rank than any node in $T_B$ ($R_B$).
+First, we assume that every node in $T_A$ ($R_A$) has a lower rank than any node in $T_B$ ($R_B$).
 We call this assumption {\em the rank assumption}.
 
 We now modify trees $T$ and $R$ in two steps: in the first step we drop ``inessential'' for $\gamma$ parts of the trees.
 We say that a taxon $a$ from $A$ is {\em inessential} for $\gamma$ if the rank of the parent of $a$ in $T_i$ is lower than the rank of the parent of a taxon $b$ for all $b \in B$ and all $i = 0,\ldots,k$.
 We define the notion of inessential for taxa in $B$ in the symmetric way.
-Since inessential taxa from $A$ ($B$) are never ``mixed'' with taxa from $B$ ($A$), we can drop them and the path that is induced by $\gamma$ between the trees with inessential taxa dropped remains a shortest $\rnniu$ path.
+Since inessential taxa from $A$ ($B$) are never ``mixed'' with taxa from $B$ ($A$) along $\gamma$, we can drop them and the path that is induced by $\gamma$ between the trees with inessential taxa dropped remains a shortest $\rnniu$ path.
 We proceed formally as follows.
-For every inessential taxon $a$ from $A$, we remove $a$ with the adjacent edge from both $T$ and $R$ and compress the internal nodes of degree two.
+For every inessential taxon $a$ from $A$, we delete $a$ along with the adjacent edge from both $T$ and $R$ and compress the internal nodes of degree two.
 Repeat this process for inessential taxa in $B$.
-If an inessential taxon is adjacent to the root, the other edge adjacent to the root as well.
-Since the path induced by $\gamma$ induces a shortest path between thus obtained trees without inessential taxa, we assume from now on that trees $T$ and $R$ have no inessential taxa.
+If an inessential taxon is adjacent to the root, we delete the other edge adjacent to the root as well.
+Since the path induced by $\gamma$ is a shortest path between thus obtained trees without inessential taxa, we assume from now on that trees $T$ and $R$ do not have inessential taxa.
 
 In the second step, we compress the parts of the trees that do not contribute enough to the ``mixing'' of $A$ and $B$.
 Let $b$ be a taxon from $B$.
-We define the {\em mixing contribution} of $b$, $c(b)$, to be the maximal number of taxa $a$ from $A$ such that the parents of all these $a$'s have higher ranks than the parent of $b$ in $T_i$ from some $i = 0,\ldots,k$.
+We define the {\em mixing contribution} of $b$, $c(b)$, to be the maximal (over $i = 0,\ldots,k$) number of taxa $a$ from $A$ such that the parents of all these $a$'s have higher ranks than the parent of $b$ in $T_i$.
 That is,
 \[
-c(b) = \max\limits_{i \in \{0,\ldots,k\}}|\{a : \operatorname{rank}(\operatorname{parent}_{T_i}(b)) \le \operatorname{rank}(\operatorname{parent}_{T_i}(a))\}|
+c(b) = \max\limits_{i \in \{0,\ldots,k\}} \Big| \big\{a : \operatorname{rank}(\operatorname{parent}_{T_i}(b)) \le \operatorname{rank}(\operatorname{parent}_{T_i}(a))\big\} \Big|
 \]
 We define the mixing contribution for taxa from $B$ in the symmetric way.
 Note first that since $T$ and $R$ do not have inessential nodes, no taxon has a mixing contribution equal to $0$.
 Furthermore, we can assume that for every pair of nodes $a_1,a_2 \in A$ and $b_1,b_2 \in B$, $c(a_1) \ne c(a_2)$ and $c(b_1) \ne c(b_2)$.
-Indeed,
-
-
----------
-
+Indeed, for every pair of taxa with the same contribution, we can delete one of the taxa in the same way we deleted inessential taxa and repeat this process until there is no such a pair.
+Again, an inductive argument shows that the path induced by $\gamma$ between the reduced trees is shortest.
+Thus, we assume that $T$ and $R$ do not have taxa with identical mixing contribution.
+\todo{Inessential nodes are exactly those with mixing contribution $0$.
+Should we unify the two steps?}
 
 In this case, there exist numbers $r$ and $q$ such that
 \[
-d(T, T_r) \le 1 + \ldots + s = \frac 12 s (s+1),
+d(T, T_r) \ge 1 + \ldots + s = \frac 12 s (s+1),
 \]
 \[
-d(T_q, R) \le \frac 12 \ell (\ell + 1),
+d(T_q, R) \ge \frac 12 \ell (\ell + 1),
 \]
 where $s$ is the number of internal nodes in $T_A$ and $\ell$---in $R_B$.
 Out of all such numbers $r$ and $q$, we choose the smallest possible $r$ and the greatest possible $q$.
 Without loss of generality, we can assume that $s = \ell = \frac n2 - 1$.
-Hence,
+Since $d(T,R) = d(T,T_r) + d(T_r,T_q) + d(T_q,R)$, we have that
 \[
 d(T,R) \ge \frac{n^2}{8} - \frac n4 + d(T_r, T_q) + \frac{n^2}{8} - \frac n4 = \frac{n^2}{4} - \frac n2 + d(T_r, T_q).
 \]
