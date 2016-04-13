@@ -447,6 +447,8 @@ We define the mixing contribution for taxa from $B$ in the symmetric way.
 Note first that since $T$ and $R$ do not have inessential nodes, no taxon has a mixing contribution equal to $0$.
 Furthermore, we can assume that for every pair of nodes $a_1,a_2 \in A$ and $b_1,b_2 \in B$, $c(a_1) \ne c(a_2)$ and $c(b_1) \ne c(b_2)$.
 Indeed, for every pair of taxa with the same contribution, we can delete one of the taxa in the same way we deleted inessential taxa and repeat this process until there is no such a pair.
+\todo{This could result in deleting all taxa, e.g.\ if the whole $B$ goes under $A$.
+This should be done more carefully.}
 Again, an inductive argument shows that the path induced by $\gamma$ between the reduced trees is shortest.
 \todo{This is the main ingredient of the proof, which so far remains illusive.}
 Thus, we assume that $T$ and $R$ do not have taxa with identical mixing contribution.
