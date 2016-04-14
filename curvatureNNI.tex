@@ -407,6 +407,51 @@ Do we need that in the text?}
 $\Delta(\rnniu) < n^2 - n$ for all $n$.
 \end{corollary}
 
+\textcite{li1996some} used the information about the diameter of the space and the sizes of neighborhoods to provide an example of trees every shortest $\nni$ path between which fails to maintain a split of taxa shared by the origin and destination trees.
+Specifically, they showed that sorting two caterpillar trees simultaneously is more efficient than sorting them independently, provided the size of the trees is large enough.
+In the following lemma, we show that the ranked versions of $\nni$ space maintain splits along shortest paths between caterpillar trees.
+
+\begin{lemma}\label{splitCatLemma}
+Let $T$ and $R$ be two caterpillar-trees sharing a split of taxa $A|B$.
+Then every tree on every shortest $\rnniu$ path between $T$ and $R$ has split $A|B$.
+\end{lemma}
+
+\proof
+Assume the contrary and let $T$, $R$, $A|B$, and $T = T_0, \ldots, T_r = R$ be the trees, split, and path that provide a counter-example.
+Let also the set $A$ be $\{0,\ldots,k\}$, $B$ be $\{k+1,\ldots,n\}$, $T$ be $(\ldots(0,1),\ldots,),n)$, and $R$ be $(\ldots(\sigma 0,\sigma 1),\ldots,),\sigma n)$, where $\sigma$ is a permutation of $(0,\ldots,n)$.
+Since $T$ and $R$ share the split $A|B$, $\sigma A = A$ and $\sigma B = B$.
+
+We say that two taxa in a tree are {\em adjacent} if they have either identical or adjacent parents.
+
+We can assume that there exist an $i_1$ such that taxon $1$ is adjacent to a taxon $x_1$ from $B$ in $T_{i_1}$, an $i_2$ such that taxon $2$ is adjacent to a taxon $x_2 \ne x_1$ from $B$ in $T_{i_2}$, $\ldots,$ and an $i_k$ such that taxon $k$ is adjacent to a taxon $x_k \notin \{x_1, \ldots, x_{k-1}\}$ in $T_{i_k}$.
+Furthermore, we can assume that $B = \{x_1, \ldots, x_k\}$.
+
+Indeed,\todo{}
+
+Moreover, we can rearrange the path from $T$ to $R$ so that $i_1 = \ldots = i_k$.
+Denote this number by $i_0$ and let $i$ be the smallest and $j$ be the greatest among such $i_0$'s.
+
+Clearly,
+\[
+d(T, T_i) \ge 1 + \ldots + k = \frac 12 k(k+1),
+\]
+and
+\[
+d(T_j, R) \ge \frac 12 k(k+1).
+\]
+
+We claim that $d(T_i, T_j) \ge d(T_A, R_A)$.
+Indeed,\todo{}
+
+Corollary~\ref{diameterUpperBoundCoro} implies that $d(T_B, R_B) < k(k+1)$.
+Hence, $r \ge k(k+1) + d(T_A, R_A) > d(T_B, R_B) + d(T_A, R_A)$.
+This however is a contradiction.
+\endproof
+
+\begin{corollary}
+The same is true in $\mdts$, $\mdtsu$, and $\rnni$.
+\end{corollary}
+
 A non-ranked tree has a symmetry associated with every internal node.
 Those symmetries can be employed to substantially reduce the search space of pairs of trees.
 This approach uses tanglegrams \autocite{Matsen2015-fn} and is applied to reduce the number of pairs of tree for computing the curvature \autocite{Whidden2015-es}.
@@ -500,11 +545,11 @@ Every split present in both trees $T$ and $R$ presents in all trees along every 
 \proof
 Let $A|B$ be the split under considertaion and $T_A$, $T_B$, $R_A$, $R_B$---corresponding restriction of trees $T$ and $R$.
 The arguments goes as follows.
-Assume the controrary: there exists a geodesic that does not maintain the split.
+Assume the contrary: there exists a geodesic that does not maintain the split.
 This path hence should first mix trees $T_A$ and $T_B$ together into a tree $T_A \oplus T_B$.
 Then convert $T_A \oplus T_B$ into $R_A \oplus R_B$ and then separate the latter tree into $R_A$ and $R_B$.
 The main ingradient of the proof is that mixing $T_A$ and $T_B$ together and then separating them into $R_A$ and $R_B$ takes more steps than just convert $T_A$ into $R_A$.
-Assuming $T_A$ and $R_A$ are of size $\frac n2$, it is enough to show that mixing + separating takes stricly more steps than the diameter of $\rnniu$ on $\frac n2$ taxa trees.
+Assuming $T_A$ and $R_A$ are of size $\frac n2$, it is enough to show that mixing + separating takes strictly more steps than the diameter of $\rnniu$ on $\frac n2$ taxa trees.
 
 The scenario works fine for many partial cases, e.g.\ double-caterpillar trees.
 The general case remain illusive.
