@@ -421,6 +421,7 @@ Indeed, a counter-example to the theorem's statement in $\mdts$, $\mdtsu$, or $\
 We will write $d(\cdot, \cdot)$ instead of $d_\rnniu(\cdot, \cdot)$ in this proof.
 Let $T = T_0, \ldots, T_k = R$ be an $\rnniu$ path (denote it by $\gamma$) of length $k = d(T, R)$ such that both $T$ and $R$ have a split $A|B$ and there exists $r$ such that $T_r$ does not have the split $A|B$.
 Denote the restriction of $T$ to the set of taxa $A$ by $T_A$, and define $T_B$, $R_A$, and $R_B$ analogously.
+We assume that the number of taxa $n$ is the smallest possible number that provide such a counter-example.
 Our proof will proceed as follows.
 First we estimate the minimal number of $\rnniu$ steps it takes to ``sufficiently mix'' $T_A$ and $T_B$ and then to ``separate'' them, and second we show that this number of steps is strictly larger than the maximal possible distance between trees of size of $T_A$ and $T_B$.
 Hence, we conclude that the path that independently converts $T_A$ into $R_A$ and $T_B$ into $R_B$ is strictly shorter than $\gamma$.
@@ -428,7 +429,7 @@ Hence, we conclude that the path that independently converts $T_A$ into $R_A$ an
 First, we assume that every node in $T_A$ ($R_A$) has a lower rank than any node in $T_B$ ($R_B$).
 We call this assumption {\em the rank assumption}.
 
-We now modify trees $T$ and $R$ in two steps: in the first step we drop ``inessential'' for $\gamma$ parts of the trees.
+We first note that the minimality of $n$ implies that trees $T$ and $R$ do not have parts that are ``inessential'' for $\gamma$.
 We say that a taxon $a$ from $A$ is {\em inessential} for $\gamma$ if the rank of the parent of $a$ in $T_i$ is lower than the rank of the parent of a taxon $b$ for all $b \in B$ and all $i = 0,\ldots,k$.
 We define the notion of inessential for taxa in $B$ in the symmetric way.
 Since inessential taxa from $A$ ($B$) are never ``mixed'' with taxa from $B$ ($A$) along $\gamma$, we can drop them and the path that is induced by $\gamma$ between the trees with inessential taxa dropped remains a shortest $\rnniu$ path.
@@ -438,7 +439,7 @@ Repeat this process for inessential taxa in $B$.
 If an inessential taxon is adjacent to the root, we delete the other edge adjacent to the root as well.
 Since the path induced by $\gamma$ is a shortest path between thus obtained trees without inessential taxa, we assume from now on that trees $T$ and $R$ do not have inessential taxa.
 
-In the second step, we compress the parts of the trees that do not contribute enough to the ``mixing'' of $A$ and $B$.
+We now note that the trees are free from parts that do not contribute enough to the ``mixing'' of $A$ and $B$.
 Let $b$ be a taxon from $B$.
 We define the {\em mixing contribution} of $b$, $c(b)$, to be the maximal (over $i = 0,\ldots,k$) number of taxa $a$ from $A$ such that the parents of all these $a$'s have higher ranks than the parent of $b$ in $T_i$.
 That is,
@@ -447,24 +448,28 @@ c(b) = \max\limits_{i \in \{0,\ldots,k\}} \Big| \big\{a : \operatorname{rank}(\o
 \]
 We define the mixing contribution for taxa from $B$ in the symmetric way.
 Note first that since $T$ and $R$ do not have inessential nodes, no taxon has a mixing contribution equal to $0$.
-Furthermore, we can assume that for every pair of nodes $a_1,a_2 \in A$ and $b_1,b_2 \in B$, $c(a_1) \ne c(a_2)$ and $c(b_1) \ne c(b_2)$.
-Indeed, for every pair of taxa with the same contribution, we can delete one of the taxa in the same way we deleted inessential taxa and repeat this process until there is no such a pair.
-\todo{This could result in deleting all taxa, e.g.\ if the whole $B$ goes under $A$.
-This should be done more carefully.}
-Again, an inductive argument shows that the path induced by $\gamma$ between the reduced trees is shortest.
-\todo{This is the main ingredient of the proof, which so far remains illusive.}
-Thus, we assume that $T$ and $R$ do not have taxa with identical mixing contribution.
-\todo{Inessential nodes are exactly those with mixing contribution $0$.
-Should we unify the two steps?}
 
-In this case, there exist numbers $r$ and $q$ such that
+Let $s$ be the number of internal nodes in $T_A$ (equals the number of internal nodes in $R_A$) and $\ell$ be the number of internal nodes in $T_B$ (equals the number of internal nodes in $R_B$).
+We assume that $s \le \ell$.
+The alternative case is similar.
+
+Since $n$ is the smallest number of taxa that provides a counter-example,
+\[
+\big|\{b \in B : c(b) \ge p\}\big| \ge s+1-p
+\tag{$\star$}
+\label{mixingInequa}
+\]
+for all $p \in \{1,\ldots,s\}$.
+Indeed, otherwise there would exist a $p \in \{1,\ldots,s\}$ such that the number of taxa $a \in A$ which parents' ranks are never above $p$ along $\gamma$ is greater than the number of taxa $b \in B$ which ranks are never equal or below $p$.
+This would imply that one of such taxa $a \in A$ can be dropped and the resulting trees would still provide a counter-example contradicting thus the minimality of $n$.
+
+The inequality~(\ref{mixingInequa}) implies that there exist numbers $r$ and $q$ such that
 \[
 d(T, T_r) \ge 1 + \ldots + s = \frac 12 s (s+1),
 \]
 \[
-d(T_q, R) \ge \frac 12 \ell (\ell + 1),
+d(T_q, R) \ge \frac 12 \ell (\ell + 1).
 \]
-where $s$ is the number of internal nodes in $T_A$ and $\ell$---in $R_B$.
 Out of all such numbers $r$ and $q$, we choose the smallest possible $r$ and the greatest possible $q$.
 Without loss of generality, we can assume that $s = \ell = \frac n2 - 1$.
 Since $d(T,R) = d(T,T_r) + d(T_r,T_q) + d(T_q,R)$, we have that
@@ -481,16 +486,6 @@ His however is a contradiction, because the latter quantity is the length of the
 
 We now consider the general situation when the rank assumption does not necessarily hold.
 \todo{Add this.}
-
-\noindent {\bf Main ingredient outline:}
-
-First prove:\\
-{\em If there exists a shortest splitless path $\alpha$, then there exists a splitless path $\gamma$ such that two nodes from $T_A$ and $T_B$ are never separated by $c$ ranks, where $c$ is a constant independent from $n$.}
-
-Then apply the argument above that pretty much says that:\\
-{\em When $n$ grows, the gap between ranks of nodes from $T_A$ (and $T_B$) must grow.}
-
-These two would imply that starting from some $n$, there exists no shortest splitless path.
 \endproof
 
 A non-ranked tree has a symmetry associated with every internal node.
