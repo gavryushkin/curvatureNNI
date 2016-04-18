@@ -406,7 +406,7 @@ Do we need that in the text?}
 \endproof
 
 \begin{corollary}\label{diameterUpperBoundCoro}
-$\Delta(\rnniu) < n^2 - n$ for all $n$.
+$\Delta(\rnniu) < n^2 - n - \frac 14$ for all $n$.
 \end{corollary}
 
 \begin{theorem}\label{splitTheo}
@@ -460,7 +460,7 @@ Since $n$ is the smallest number of taxa that provides a counter-example,
 \label{mixingInequa}
 \]
 for all $p \in \{1,\ldots,s\}$.
-Indeed, otherwise there would exist a $p \in \{1,\ldots,s\}$ such that the number of taxa $a \in A$ which parents' ranks are never above $p$ along $\gamma$ is greater than the number of taxa $b \in B$ which ranks are never equal or below $p$.
+Indeed, otherwise there would exist a $p \in \{1,\ldots,s\}$ such that the number of taxa $a \in A$ which parents' ranks are never above $p$ along $\gamma$ is greater than the number of taxa $b \in B$ which parents' ranks are never below or equal to $p$.
 This would imply that one of such taxa $a \in A$ can be dropped and the resulting trees would still provide a counter-example contradicting thus the minimality of $n$.
 
 The inequality~(\ref{mixingInequa}) implies that there exist numbers $r$ and $q$ such that
@@ -471,17 +471,21 @@ d(T, T_r) \ge 1 + \ldots + s = \frac 12 s (s+1),
 d(T_q, R) \ge \frac 12 \ell (\ell + 1).
 \]
 Out of all such numbers $r$ and $q$, we choose the smallest possible $r$ and the greatest possible $q$.
-Without loss of generality, we can assume that $s = \ell = \frac n2 - 1$.
-Since $d(T,R) = d(T,T_r) + d(T_r,T_q) + d(T_q,R)$, we have that
+Since $d(T,R) = d(T,T_r) + d(T_r,T_q) + d(T_q,R)$ and $s + \ell = n-1$, we have that
 \[
-d(T,R) \ge \frac{n^2}{8} - \frac n4 + d(T_r, T_q) + \frac{n^2}{8} - \frac n4 = \frac{n^2}{4} - \frac n2 + d(T_r, T_q).
+d(T,R) \ge \frac 12 s^2 + \frac 12 s + d(T_r, T_q) + \frac 12 (n-1-s)^2 + \frac 12 (n-1-s).
 \]
-Furthermore, $d(T_r, T_q) \ge \min(d(T_A, R_A), d(T_B, R_B))$.
+The latter is minimized when $s = \frac{n-1}{2}$.
+Hence,
+\[
+d(T,R) \ge \frac{n^2}{4} - \frac n2 - \frac 14 + d(T_r, T_q).
+\]
+Furthermore, $d(T_r, T_q) \ge \max(d(T_A, R_A), d(T_B, R_B))$.
 Corollary~\ref{diameterUpperBoundCoro} implies that
 \[
-\frac{n^2}{4} - \frac n2 > \max(d(T_A, R_A), d(T_B, R_B)).
+\frac{n^2}{4} - \frac n2 - \frac 14> \min(d(T_A, R_A), d(T_B, R_B)).
 \]
-Thus, $d(T, R) > \max(d(T_A, R_A), d(T_B, R_B)) + \min(d(T_A, R_A), d(T_B, R_B)) = d(T_A, R_A) + d(T_B, R_B)$.
+Thus, $d(T, R) > \min(d(T_A, R_A), d(T_B, R_B)) + \max(d(T_A, R_A), d(T_B, R_B)) = d(T_A, R_A) + d(T_B, R_B)$.
 His however is a contradiction, because the latter quantity is the length of the path that maintains the split $A|B$ by converting $T_A$ to $R_A$ and $T_B$ to $R_B$ independently.
 
 We now consider the general situation when the rank assumption does not necessarily hold.
