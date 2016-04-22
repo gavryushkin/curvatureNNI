@@ -71,7 +71,8 @@ We design a heuristic for generating these spaces and study, analytically and co
 
 \section{Introduction}
 The last ten years have seen an explosion of methods using sequence data to infer demographic model parameters by sampling phylogenetic trees \autocite{Kuhner1995-mj,Kuhner1998-tq,Kuhner2000-af,Beerli2001-sc,Kuhner2006-vx,Drummond2002,Drummond2005-ks,Drummond2006-oa,Minin2008-wz}.
-Dates defined in phylogenetic terms, such as time to a most recent common ancestor of human HIV group M viruses \autocite{Worobey2008-rt,Baele2013-op}, are essential parameters of such inference.
+These methods have had an especially significant impact in the study of quickly evolving organisms such as viruses, such as inferring historical epidemic spreading rates.
+For example, such methods can be used to infer time to a most recent common ancestor of human HIV group M viruses \autocite{Worobey2008-rt,Baele2013-op}.
 Thus the {\em time-tree}---a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates---has become an important object of interest.
 This is in contrast to classical phylogenetic trees in which branch lengths quantify the amount of molecular substitution along a branch.
 Posterior distributions on both time-trees and classical trees are estimated using Markov chain Monte Carlo \autocite{Mau1997-sq,Yang1997-gv,Drummond2002}.
@@ -102,27 +103,39 @@ Another possible way to make a less rough approximation of a time-tree is to all
 The graph built on such trees provides a further refined discretization of the space of time-trees.
 We call such a graph a \emph{discretized time-tree graph}.
 
+Although inferential algorithms have been doing MCMC on time-trees for over a decade, and graphs corresponding to discretizations of unrooted tree space have been studied for even longer, we are not aware of any work defining graphs from discretization of time-tree space or doing analysis of random walks thereupon.
+Having such a theory would provide a foundation for understanding the behavior of MCMC algorithms on time-trees, as has been done previously for graphs associated with unrooted phylogenetic trees.
+Up to now, the only discretization of time-tree space that has been studied is that of ranked trees \autocite{Ford2009-qi,Lambert2013-mr}, and that hasn't been from a graph-theoretic perspective.
+
 In this paper we explore various discretized time-tree graphs, derive some of their properties, initiate the mathematical study of random walks on these spaces, and compare these results to those in the classical phylogenetic setting.
 In particular, we focus on ranked trees, discretized time-trees (as defined above), and the ultrametric versions of those types of trees.
 We study Ricci-Ollivier curvature \autocite{Ollivier2009-cj} of Markov chains on these graphs, a formalism which quantifies to what extent random walking brings unit balls together.
 This formalism has recently been applied to Markov chains on graphs of classical phylogenetic trees \autocite{Whidden2015-es}.
+\todo[inline]{
+I suggest reorganizing into 1. a section on 1-neighborhood sizes, 2. a section on larger neighborhood sizes and diameter, 3. degreeBounds, intersecNeighb, and max good neighbors, 4. curvature.
+If there's something interesting to say about distances on rNNI, then add that too.
+}
 
 
 \section{Technical introduction}
 \subsection{Spaces of discretized time-trees}
 
-By a {\em time-tree} we mean a rooted phylogenetic tree with all internal nodes equipped with absolute divergence times and all external nodes equipped with sampled times.
+\todo[inline]{To submit to a CS journal, we'll need to define what trees and topologies are.}
+By a {\em time-tree} we mean a rooted phylogenetic tree with an absolute time associated with every node of the tree: for internal nodes these are (typically estimated) divergence times and external nodes are (typically known) sampling times.
+By ``absolute'' we clarify that these are not relative times, but rather actual times that can be put on a calendar.
 As a first step toward understanding the full space of time-trees \autocite{Gavryushkin2014-bw}, we approximate the space by a sequence of finite spaces and study the geometry and convergence of random walks over those approximations.
 Specifically, we fix a number $m$ and consider the space of time-trees where times between divergence events are bound to $m$ values.
 At the bottom level of this hierarchy, when $m = 1$, we have the space of ranked tree topologies.
 We extend the hierarchy by assuming that when $m = 0$, we have the $\nni$ space on rooted tree topologies.
 
 Many biological investigations are restricted to ultrametric, or equidistant, trees: trees for which the distance of every leaf to the root is the same.
-Furthermore, many geometric and algorithmic properties differ substantially between ultrametric and non-ultrametric trees, as shown by \textcite{Gavryushkin2014-bw}.
+This corresponds to situations where all sampling was done at the same time.
+Many geometric and algorithmic properties differ substantially between ultrametric and non-ultrametric trees, as shown by \textcite{Gavryushkin2014-bw}.
 Hence, we consider the case of ultrametric trees separately, and indeed establish further differences.
 
+\todo[inline]{I feel that it would be clearest to start with the "from scratch" discrete definition in this technical introduction and then describe how this relates to t and tau space, but happy to discuss.}
 In short, the {\em discrete time-tree space,} or $\mdts$ space, is the
-$\tau$-space\footnote{Note that (interestingly) discretized versions of $\tau$- and $\mathrm t$-space from \autocite{Gavryushkin2014-bw} coincide.}
+$\tau$-space\footnote{Conveniently, the discretized versions of $\tau$- and $\mathrm t$-space from \autocite{Gavryushkin2014-bw} coincide.}
 defined by \textcite{Gavryushkin2014-bw}, where the real-valued parameters (length intercoalescent intervals) are allowed to take only $m$ possible values: $1,\ldots,m$.
 In other words, to define a tree in $\mdts$, we first fix a ranked tree topology with all nodes being of different ranks and then assign a number from $\{1, \ldots, m\}$ to every intercoalescent interval.
 Intuitively, for $m = 2$ we have only two options for the length of an intercoalescent interval, which can be thought of as short and long.
@@ -132,8 +145,9 @@ We may think of the $\mdts$ space as of a graph, the set of vertices of which co
 In short, two trees in $\mdts$ are adjacent if the $\tau$-geodesic between them, as defined by \textcite{Gavryushkin2014-bw}, crosses precisely one face and the face is of co-dimension $1$.
 To make this paper self-contained, we provide a complete definition below.
 
+A {\em ranked topology} is a phylogenetic tree equipped with a total order on its nodes.
 Let $T$ be a time-tree such that no two nodes of $T$ are of the same time, that is, no two divergence or sample events coincide.
-We define the {\em ranked topology of tree} $T$ to be the (directed) graph induced by the topology of $T$ such that the set of nodes of this graph is linearly ordered with respect to their time order in $T$.
+We define the {\em ranked topology of tree} $T$ to be the (directed) graph induced by the topology of $T$ such that the set of nodes of this graph is totally ordered with respect to their time order in $T$.
 We denote this ranked topology by $\rt(T)$ and assume that all nodes of the tree (including taxa) are assigned ranks $0,1,\ldots,2n-2$, where $n$ is the number of taxa.
 The node of rank $0$ is seen as being at the present, so the root has the highest rank and is therefore the oldest node of the tree.
 An {\em intercoalescent interval} of $T$ is an interval between any two nodes of consecutive ranks (Figure~\ref{T5.pdf}).
@@ -149,6 +163,7 @@ In the same way we write $\tp(T) = \tp(R)$ when trees $T$ and $R$ have the same 
 Intervals between divergence and sample events can take only finitely many values (two in this example).}
 \end{figure}
 
+\todo[inline]{It would seem tidiest to me to just define discrete time trees as trees where the ranks can take values in the positive integers. The mdts is the subset of such trees where the interval between ranks is at most m.}
 We say that two trees $T$ and $R$ are {\em NNI neighbors} if $\rt(T) \ne \rt(R)$ and tree $R$ is obtained from tree $T$ by sending the length of an intercoalescent interval $I$ between an internal node and its parent in $T$ down to zero and resolving the multifurcation in one of the two possible ways.
 We note that this definition implies the existence of such an interval $I$ in $T$, that is, the existence of an internal node $a$ the parent of which is the immediate successor of $a$ in $\rt(T)$.
 In particular, the parent $a$ of taxon $D$ in tree $T$ on Figure~\ref{dts_neighbors.pdf} gives an example of such a node.
@@ -157,6 +172,7 @@ Hence, the tree obtained from $T$ by cutting the edge adjacent to taxon $C$ and 
 Note that the definition of NNI neighbors implies $\ell_T(J) = \ell_R(J)$ for each interval $J \ne I$, and the ranks of all nodes present in both $T$ and $R$ coincide.
 If trees $T$ and $R$ are NNI neighbors and tree $R$ is obtained by suppressing an interval $I$ in $T$ then we say that the {\em NNI move is performed on interval $I$}.
 
+\todo[inline]{Would be fun to have a diagram showing all of the neighbors of a tree obtained by modifying a given interval.}
 Two trees $T$ and $R$ from $\mdts$ are adjacent if and only if precisely one of the following conditions is satisfied.
 \begin{enumerate}[(1)]
 \item $\rt(T) = \rt(R)$ and there exists a unique intercoalescent interval $I$ such that $|\ell_T(I) - \ell_R(I)| = 1$.
@@ -179,15 +195,16 @@ To move from $T$ to $R$ in $\mdts$, one must decrease the length of interval $I$
 Thus we have defined a graph, which we denote by $\mdts$ for $m \geq 2$.
 Since a graph can also be seen as a metric space where the distance is given by the length of a shortest path, we will refer to $\mdts$ as both.
 
-One might suggest that geometrically and graph-theoretically $\mdts$ is similar to NNI space on (rooted) tree topologies, to ranked NNI space, and to $\mdts$ space on ultrametric trees.
+One might suggest that geometrically and graph-theoretically $\mdts$ is similar to NNI space on (rooted) tree topologies, to ranked NNI space, and to $\mdts$ space on ultrametric trees. \todo{This sentence is hard to parse!}
 That is so indeed.
 As we shall see, the results and proofs in this paper can be straightforwardly adapted to the spaces mentioned.
+\todo[inline]{Do you prove new results about (unranked) NNI? If so, would be great to point that out in the intro.}
 Furthermore, as the NNI space of unrooted tree topologies with $n-1$ leaves is isomorphic (as a graph) to the NNI space of rooted tree topologies with $n$ leaves, all our results immediately imply their counterparts in unrooted NNI space.
 We omit from the text the exact formulations for unrooted trees, as they can be obtained in the obvious way.
 We will provide complete proofs for $\mdts$ space and draw the corresponding results for the other three treespaces simultaneously.
 
 The $\mdts$ space on ultrametric trees is denoted by $\mdtsu$.
-The $\mdts$ space (on ultrametric trees) with only short branches is denoted by $\rnni$ ($\rnniu$) and called {\em ranked NNI} space (on ultrametric trees).
+The $\mdts$ space with all intercoalescent intervals of length one is denoted by $\rnni$ and called {\em ranked NNI} space; if this space is defined on ultrametric trees we will denote it $\rnniu$.
 The $\nni$ space on rooted tree topologies is denoted by $\nni$.
 
 All of these can be considered as either a graph or a metric space, and we will refer to them as both.
@@ -261,7 +278,7 @@ While in $\rnniu$ this path is not shortest, and a shortest path would be to mov
 \centering
 \includegraphics[width=\textwidth]{NNI_VS_rNNI.pdf}
 \label{NNI_VS_rNNI.pdf}
-\caption{No shortest $\nni$ path is shortest in $\rnni$.}
+\caption{Shortest paths in $\nni$ need not be shortest in $\rnni$.}
 \end{figure}
 \end{example}
 
@@ -306,7 +323,7 @@ Maps $\to_i$ are shown by dashed lines.
 In the first two productions, the edge-ends marked by $2$ and $3$ without dashed lines are mapped to each other: top $3$ to top $3$, $2$ to $2$, bottom $3$ to bottom $3$.
 In the last production, edge-ends marked by the same label are mapped to each other.
 All pairs of nodes on both sides of each production must be of consecutive ranks.
-First two productions correspond to $\nni$ move, last production corresponds to rank change.}
+The first two productions correspond to an $\nni$ move, while the last production corresponds to rank change.}
 \end{figure}
 
 The number of vertices in left sides of $\Gamma$ is $6$, the maximum number of vertices in any right side of a production of $\Gamma$ is $2$.
@@ -525,7 +542,7 @@ The general case remain illusive.
 We finish this section with the following proposition that suggests that the graphs under consideration have ``bottlenecks''.
 To make this statement precise we need to introduce the following notion.
 Let $G = (V, E)$ be an undirected graph and $S$ a subset of the set of vertices $V$.
-The boundary $\partial S$ of S is the set of edges ``pointing our from $S$'': $\partial S = \{(v,w) \in E \mid v \in S ~\&~ w \notin S\}$.
+The boundary $\partial S$ of $S$ is the set of edges ``pointing our from $S$'': $\partial S = \{(v,w) \in E \mid v \in S ~\&~ w \notin S\}$.
 Then the {\em isoperimetric number} $h(G)$ of $G$ is defined by
 \[
 h(G) = \inf\limits_{0 < |S| \leq \frac12|V|} \frac{|\partial S|}{|S|}.
