@@ -433,7 +433,19 @@ In the following lemma, we show that the ranked versions of $\nni$ space maintai
  \end{theorem}
 
 \proof
-The work-in-progress proof is on \url{https://github.com/gavruskin/curvatureNNI/tree/splitTheoProof} branch.
+The work-in-progress proof is on branch
+\url{https://github.com/gavruskin/curvatureNNI/tree/splitTheoProof} branch.
+
+Let $A|B$ be the split under considertaion and $T_A$, $T_B$, $R_A$, $R_B$---corresponding restriction of trees $T$ and $R$.
+The arguments goes as follows.
+Assume the contrary: there exists a geodesic that does not maintain the split.
+This path hence should first mix trees $T_A$ and $T_B$ together into a tree $T_A \oplus T_B$.
+Then convert $T_A \oplus T_B$ into $R_A \oplus R_B$ and then separate the latter tree into $R_A$ and $R_B$.
+The main ingradient of the proof is that mixing $T_A$ and $T_B$ together and then separating them into $R_A$ and $R_B$ takes more steps than just convert $T_A$ into $R_A$.
+Assuming $T_A$ and $R_A$ are of size $\frac n2$, it is enough to show that mixing + separating takes strictly more steps than the diameter of $\rnniu$ on $\frac n2$ taxa trees.
+
+The scenario works fine for many partial cases, e.g.\ double-caterpillar trees.
+The general case remain illusive.
 \endproof
 
 A non-ranked tree has a symmetry associated with every internal node.
@@ -521,23 +533,6 @@ The list of conjectures that would be nice to settle or refute in this paper:
 \item Proposition~\ref{isoperiPropo}.
 \end{enumerate}
 \end{conjecture}
-
-\begin{theorem}\label{splitTheo}
-Every split present in both trees $T$ and $R$ presents in all trees along every shortest path between $T$ and $R$ in $\mdts$, $\mdtsu$, $\rnni$, and $\rnniu$, but not in $\nni$.
-\end{theorem}
-
-\proof
-Let $A|B$ be the split under considertaion and $T_A$, $T_B$, $R_A$, $R_B$---corresponding restriction of trees $T$ and $R$.
-The arguments goes as follows.
-Assume the contrary: there exists a geodesic that does not maintain the split.
-This path hence should first mix trees $T_A$ and $T_B$ together into a tree $T_A \oplus T_B$.
-Then convert $T_A \oplus T_B$ into $R_A \oplus R_B$ and then separate the latter tree into $R_A$ and $R_B$.
-The main ingradient of the proof is that mixing $T_A$ and $T_B$ together and then separating them into $R_A$ and $R_B$ takes more steps than just convert $T_A$ into $R_A$.
-Assuming $T_A$ and $R_A$ are of size $\frac n2$, it is enough to show that mixing + separating takes strictly more steps than the diameter of $\rnniu$ on $\frac n2$ taxa trees.
-
-The scenario works fine for many partial cases, e.g.\ double-caterpillar trees.
-The general case remain illusive.
-\endproof
 
 We finish this section with the following proposition that suggests that the graphs under consideration have ``bottlenecks''.
 To make this statement precise we need to introduce the following notion.
