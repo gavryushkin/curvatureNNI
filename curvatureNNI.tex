@@ -89,8 +89,9 @@ Although Markov chain Monte Carlo (MCMC) is guaranteed to sample from the true p
 \centering
 \includegraphics[width=0.7\textwidth]{timeTree.eps}
 \label{timeTree.eps}
-\caption{Time tree on $6$ taxa.
-Time is measured by nonnegative real numbers.}
+\caption{Time-tree on $6$ leaves.
+Time is measured by non-negative real numbers.
+If time is restricted to integers, the tree becomes a discrete time-tree.}
 \end{figure}
 
 The mixing properties of phylogenetic MCMC have, in the classical unrooted case, been a major area of research from both the theoretical perspective of mixing time bounds \autocite{Mossel2005-ly,Mossel2006-fo,Stefankovic2011-hu,spade2014note} and the practical perspective of performance on real data \autocite{beiko2006searching,Ronquist2006-fv,lakner2008efficiency,Whidden2015-yi}.
@@ -144,15 +145,15 @@ We also assume that the set of $n$ constants that are used to mark the leaves is
 Hence, we say that two trees are isomorphic if they are isomorphic as graphs and the isomorphism maps leaves marked by the same constant to each other.
 We identify isomorphic trees.
 
-By a {\em time-tree} we mean a rooted phylogenetic tree with an absolute time associated with every node of the tree: for internal nodes these are (typically estimated) divergence times and external nodes are (typically known) sampling times.
+By a {\em time-tree} (see Figure~\ref{timeTree.eps}) we mean a rooted phylogenetic tree with an absolute time associated with every node of the tree: for internal nodes these are (typically estimated) divergence times and leaves are (typically known) sampling times.
 By ``absolute'' we clarify that these are not relative times, but rather actual times that can be put on a calendar.
 
 A {\em discrete time-tree} is a tree such that all its nodes are assigned distinct ranks from the set of non-negative integers with the property that for every pair of nodes $x,y$ if the shortest path from the root to $x$ passes $y$ than the rank of $y$ is greater than the rank of $x$.
 We say that a pair of nodes $x,y$ of a discrete time-tree is an {\em intercoalescent interval} if there exists no node $z$ such that the rank of $z$ is between the ranks of $x$ and $y$.
 We call the difference between the ranks of $x$ and $y$ the {\em length} of the interval $x,y$.
-We identify two discrete time-trees on the same set of leaf-labels 
+We identify two discrete time-trees if they are isomorphic as trees and the isomorphism preserves ranks of the nodes as well as intercoalescent interval lengths.
 
-Figure~\ref{T5.pdf} provides an example of a discrete time-tree.
+Figure~\ref{timeTree.eps} provides an example of a discrete time-tree.
 
 We are now ready to introduce a hierarchy of discrete time-trees.
 
@@ -183,10 +184,10 @@ By $\ell_T(I)$ we denote the length of intercoalescent interval $I$ in tree $T$.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.7\textwidth]{T5.pdf}
-\label{T5.pdf}
-\caption{Discretized time-tree from $\dtt_2$ on $6$ leaves.
-Intercoalescent intervals can take only finitely many values (two in this example).}
+\includegraphics[width=0.8\textwidth]{DtT.pdf}
+\label{DtT.pdf}
+\caption{All possible moves performed on interval $I$.
+Assuming that the length of all intercoalescent intervals is either $1$ or $2$, the outer trees are all possible neighbors in $\dtt$ of the tree in the middle corresponding to interval $I$.}
 \end{figure}
 
 \todo[inline]{It would seem tidiest to me to just define discrete time trees as trees where the ranks can take values in the positive integers. The mdts is the subset of such trees where the interval between ranks is at most m.}
@@ -919,7 +920,7 @@ Use Corollary~\ref{degreeBounds}.
 We use the following algorithm designed by \textcite{Whidden2015-es} to compute the $\rnni$ graph on $n$ leaves.
 The input to our algorithm is a set $S$ of ranked phylogenetic tree topologies in the format described by \textcite{Gavryushkin2014-bw} \autocite[see also][]{Semple2003-nj}.
 A tree is hence given by a sequence of sets of taxa, and thus obtained representation is unique.
-For example, the representation of the tree on Figure~\ref{T5.pdf} is $(\{A\}, \{C\}, \{D\}, \{B\}, \{E\}, \{A,B\}, \{D,E\}, \{C, D, E\}, \{F\}, \{A,B,F\}, \{A,B,C,D,E,F\})$, or
+For example, the representation of the tree on Figure~??\todo{} is $(\{A\}, \{C\}, \{D\}, \{B\}, \{E\}, \{A,B\}, \{D,E\}, \{C, D, E\}, \{F\}, \{A,B,F\}, \{A,B,C,D,E,F\})$, or
 $(\{A,B\}, \{D,E\}, \{C, D, E\}, \{A,B,F\}, \{A,B,C,D,E,F\})$ if we make the tree ultrametric by placing all taxa below the most recent divergence event.
 Using this representation of trees we construct a map $\nu : S \to \omega$, where $\omega$ is the set of non-negative integers.
 This maps allows us to determine whether or not a tree is already a vertex of the graph.
