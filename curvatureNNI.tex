@@ -270,32 +270,32 @@ Hence, we define the \emph{coarse Ricci-Ollivier curvature of a metric space} wi
 
 \section{Geometry and complexity of space of discrete time-trees}
 
-We begin with considering the shortest path distance on the graphs.
-It is well-known that computing distance is NP-hard in $\nni$ space \autocite{Dasgupta2000-xa}.
+We begin by considering the shortest path distance on the graphs.
+It is well-known that computing distances is NP-hard in $\nni$ space \autocite{Dasgupta2000-xa}.
 Hence the following question is natural.
 
 \begin{problem}
 What is the complexity of computing the distance between two discrete time-trees?
 \end{problem}
 
-Although this problem remains open, we make a progress towards the solution by establishing several geometric and algorithmic properties.
-Particularly, we demonstrate in the following example that even for caterpillar trees the complexity could not be derived from the complexity of $\nni$ distance.
+Although this problem remains open, we make progress towards the solution by establishing several geometric and algorithmic properties of these graphs.
+First, we demonstrate in the following example that even for caterpillar trees the complexity cannot be derived from the complexity of $\nni$ distance.
 
 \begin{example}
 Let $T$ be the ultrametric tree $((((((1, 2), 3), 4), 5), 6), 7)$ and $R$ be the ultrametric tree $((((((1, 4), 5), 6), 2), 3), 7)$.
 Then a shortest $\nni$ path is given by first making a cherry $(2,3)$, then moving the cherry up to the split $1456 \mid 7$, and then resolving the cherry back.
-While in $\rnniu$ this path is not shortest, and a shortest path would be to move up the parents of $2$ and $3$ independently.
+In $\rnniu$ this path is not shortest, and one shortest path moves the parents of $2$ and $3$ up independently.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{NNI_VS_rNNI.pdf}
-\caption{Shortest paths in $\nni$ need not be shortest in $\rnni$.}
+\caption{Shortest paths in $\nni$ may not be shortest in $\rnni$.}
 \label{NNI_VS_rNNI.pdf}
 \end{figure}
 \end{example}
 
-With this example in mind, it is not hard to see that the set of trees of the form $(\ldots(1, i_2), \ldots, i_{n-1}), n)$, where $\{i_2, \ldots, i_{n-1}\} = \{2, \ldots, n-1\}$, is convex in the space of discrete time-trees and is not convex in $\nni$.
-Hence, the complexity of the distance is likely to be different in the two spaces.
+With this example in mind, it is not hard to see that the set of trees of the form $(\ldots(1, i_2), \ldots, i_{n-1}), n)$, where $\{i_2, \ldots, i_{n-1}\} = \{2, \ldots, n-1\}$, is convex in the space of discrete time-trees and is not convex in $\nni$.~\todo{Can you explain why this is in a couple of sentences?}
+This basic difference in the structure of the two spaces suggests that the complexity of computing the distance is likely to be different in the two spaces.
 
 We proceed by establishing basic geometric properties of discrete time-trees.
 
@@ -373,7 +373,7 @@ The number of trees within distance $r$ from any given tree is at most
 
 \proof
 We prove the theorem in $\rnniu$ and it will follow similarly in the other three spaces.
-The proof employs the technique from \autocite{Sleator1992-bp} for counting paths in a graph: we first apply Theorem~2.3 of \textcite{Sleator1992-bp} and then improve the bound using specific properties of $\rnniu$ graph.
+The proof employs the technique from \autocite{Sleator1992-bp} for counting paths in a graph: we first apply Theorem~2.3 of \textcite{Sleator1992-bp} and then improve the bound using specific properties of the $\rnniu$ graph.
 
 We first need to introduce the \emph{graph grammar} for $\rnniu$.
 Recall that a graph grammar consists of a finite set of productions $\{L_i \to_i R_i\}$, where $L_i$ and $R_i$ are connected undirected edge-end labeled graphs and $\to_i$ is a one-to-one map between half-edges of $L_i$ and those of $R_i$.
@@ -406,9 +406,9 @@ Since the number of internal nodes of a tree on $n$ leaves in $\rnniu$ is $n-1$,
 
 This bound can be improved following the techniques developed in \autocite{Sleator1992-bp} after Theorem~2.3.
 Every node of a tree in any application of a production of grammar $\Gamma$ can play either of two roles: top node or bottom node.
-Hence to indicate that a pair of nodes is ready for being destroyed and replaces using a production, we must specify which node is the top and which is the bottom.
+Hence to indicate that a pair of nodes is ready for being destroyed and replaced using a production, we must specify which node is the top and which is the bottom.
 We use two vertex labels to identify these two roles.
-Furthermore, to distinguish which of the two possible $\nni$ moves has to be applied, we must employ another (third) vertex label.
+Furthermore, to distinguish which of the two possible $\nni$ moves is applied, we employ another (third) vertex label.
 We claim that tree labels $1,2,3$ for the vertices is enough.
 We must redefine the notion of readiness to verify this claim.
 We say that a pair of consecutive nodes is \emph{ready} if the label of the bottom node is $1$ and the label of the top node is either $2$ or $3$.
@@ -416,17 +416,17 @@ If two consecutive nodes are ready and not connected by an edge in the tree, the
 If they are, the type of the rank move is determined by the label of the top node.
 Hence, this notion of readiness uniquely identifies which of the three productions is applied.
 Furthermore, if we want to indicate that a pair of consecutive nodes is never destroyed, we give them identical labels.
-Thus, all possible configurations encoded by the six nodes on the left sides of the productions of $\Gamma$ can actually be encoded using three labels.
+Thus, all possible configurations encoded by the six nodes on the left sides of the productions of $\Gamma$ can be encoded using three labels.
 This implies that the derivation can be encoded by a ternary sequence of length $n-1+2r$.
-Indeed, fist $n-1$ entries of the sequence are needed to encode all possible labelings of the initial tree, plus two entries are needed for each of the $r$ applications of productions because every production creates two new nodes, each of which has to be labeled.
-The number of this strings, $3^{n-1+2r}$, gives the desired improved bound.
+Indeed, the first $n-1$ entries of the sequence are needed to encode all possible labelings of the initial tree, plus two entries are needed for each of the $r$ applications of productions because every production creates two new nodes, each of which has to be labeled.
+The number of such strings, $3^{n-1+2r}$, gives the desired improved bound.
 \endproof
 
 
 \subsection{Diameter of the space}
 
 Theorem~\ref{neighSizeTh} provides a method for estimating the diameter of the space from below.
-Now we estimates the diameter from above.
+Now we estimate the diameter from above.
 
 \begin{lemma}\label{diameterUpperBound}
 Let $\Delta(\G)$ be the diameter of graph $\G$.
@@ -471,7 +471,7 @@ This can be done in $\frac12 m^2 + \frac12 m$ moves.
 This can be done in $m^2$ moves.
 
 \item Convert the subtree restricted to $A_1$ to that in $R$.
-Then convert the subtree restricted to $B_2$ to that in $R$
+Then convert the subtree restricted to $B_2$ to that in $R$.
 This takes $2f(n/4)$ moves.
 
 \item Move $B_2$ to its place in $R$.
@@ -481,11 +481,11 @@ This takes $m^2$ moves.
 This takes $2m^2$.
 
 \item Move $B_1$ to its place in $R$.
-This takes $3m^2$.
+	This takes $3m^2$\todo[inline]{I don't quite follow. Are you assuming that the $A_i$'s and $B_i$'s are distinct subtrees in $R$? Don't you need to distribute their elements once you have them on the correct side of the root?}.
 \end{enumerate}
 
 In total we have a recursive equation $f(n) = 14m^2 + m + 2 f(n/4)$.\\
-The solution to this equation is
+The solution to this equation~\todo{How did you solve it?} is
 \[
 f(n) = n^2 - 3n - \frac 58.
 \]
@@ -494,8 +494,8 @@ It remains to note that the assumption $|A_1| = |A_2| = |B_1| = |B_2| = \frac{n-
 Indeed, the sets can be chosen so that at most half of the nodes have to cross the root, that is, $|A_2 \cup B_1| \le \frac{n-1}{2}$.
 Furthermore, the smaller the size of $A_2 \cup B_1$ the shorter the path.
 Finally, the total length of the path is maximized when $|A_2| = |B_1|$ and $|A_1| = |B_2|$.
-\todo{A detailed proof includes a check of all 10 steps.
-Do we need that in the text?}
+\todo[inline]{AG: A detailed proof includes a check of all 10 steps.
+Do we need that in the text? CW: I don't think a detailed check of all the steps is necessary and it would certainly have to be supplemental material. However, I do think you need more here. A figure would make this easier to follow.}
 \endproof
 
 \begin{corollary}\label{diameterUpperBoundCoro}
@@ -505,7 +505,7 @@ $\Delta(\rnniu) < n^2 - n$ for all $n$.
 
 \subsection{Split theorem}
 
-\textcite{li1996some} used the information about the diameter of the space and the sizes of neighborhoods to provide an example of trees every shortest $\nni$ path between which fails to maintain a split of taxa shared by the origin and destination trees.
+\textcite{li1996some} used the information about the diameter of the space and the sizes of neighborhoods to provide an example of trees such that every shortest $\nni$ path between the trees fails to maintain a split of taxa shared by the origin and destination trees.~\todo{You should mention the history of the problem either here or in the introduction (assuming we can prove the theorem).}
 Specifically, they showed that sorting two caterpillar trees simultaneously is more efficient than sorting them independently, provided the size of the trees is large enough.
 In the following lemma, we show that the ranked versions of $\nni$ space maintain splits along shortest paths between caterpillar trees.
 
@@ -534,7 +534,7 @@ The general case remain illusive.
 
 We first bound the number of neighbors of a tree $x$ in $\dts$-space that are closer than $x$ to a given tree $y$.
 We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
-These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
+These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.~\todo{curvature is mentioned here. This probably needs to be rewritten.}
 
 \begin{theorem}
 \label{max_good_neighbours}
