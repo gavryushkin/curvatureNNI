@@ -138,22 +138,26 @@ If there's something interesting to say about distances on rNNI, then add that t
 \subsection{Discrete time-trees}
 }{}
 
-Throughout the paper by a (phylogenetic) \emph{tree} we meant a rooted binary tree with designated leaves, that is, an undirected acyclic graph with the following properties:
+Throughout the paper by a (phylogenetic) \emph{tree} we mean a rooted binary tree with designated leaves, that is, an undirected acyclic graph with the following properties:
 (1) all nodes have degree $1$, $2$, or $3$; (2) there exists exactly one node of degree $2$, this node is called the \emph{root} of the tree; (3) all nodes of degree $1$ are marked by different constants, these nodes are called \emph{leaves}.
+The \emph{parent} of a node $x$ in a tree is the unique node $y$ that is both adjacent to $x$ and closer to the root of the tree than $x$.
+Every node of a tree has a parent except for the root.
 
 We fix the number of leaves of the trees and denote this number by $n$ throughout the paper.
-We also assume that the set of $n$ constants that are used to mark the leaves is everywhere the same.
+We also assume that each tree with $n$ leaves uses the same fixed set of $n$ constants to mark the leaves.
 Hence, we say that two trees are isomorphic if they are isomorphic as graphs and the isomorphism maps leaves marked by the same constant to each other.
 We identify isomorphic trees.
 
 By a \emph{time-tree} (see Figure~\ref{timeTree.eps}) we mean a tree with an absolute time associated with every node of the tree: for internal nodes these are (typically estimated) divergence times and for leaves---(typically known) sampling times.
 By ``absolute'' we clarify that these are not relative times, but rather actual times that can be put on a calendar.
 
-A \emph{discrete time-tree} is a tree such that all its nodes are assigned distinct times from the set of non-negative integers with the property that for every pair of nodes $x,y$ if the shortest path from the root to $x$ passes $y$ than the time of $y$ is greater than the time of $x$.
-The \emph{rank} of a node is the number of nodes in the tree with strictly smaller time.
+A \emph{discrete time-tree} is a tree such that all its nodes are assigned distinct times from the set of non-negative integers such that every node has a lesser time than its parent.
+Note that this implies that for every pair of nodes $x,y$ if the shortest path from the root to $x$ passes $y$ than the time of $y$ is greater than the time of $x$.
+The \emph{rank} of a node is the number of nodes in the tree with strictly smaller~\todo{lesser?} time.
 We say that a pair of nodes $x,y$ of a discrete time-tree is an \emph{intercoalescent interval} if there exists no node $z$ such that the time of $z$ is between the time of $x$ and $y$.
 The difference between the times of $x$ and $y$ is called the \emph{length} of the interval $x,y$.
-We identify two discrete time-trees if they are isomorphic as trees and the isomorphism preserves \textbf{ranks} of the nodes as well as intercoalescent interval lengths.
+The \emph{rank} of a node is its position in the total ordering of nodes with respect to times.
+We identify two discrete time-trees if they are isomorphic as trees and the isomorphism preserves ranks of the nodes as well as intercoalescent interval lengths.
 
 Figure~\ref{timeTree.eps} provides an example of a discrete time-tree.
 
@@ -166,22 +170,25 @@ We denote this space by $\dtt_0$.
 
 Level $m > 0$ of the hierarchy is the following graph $\dtt_m$.
 The set of vertices of the graph is the set of all discrete time-trees on $n$ leaves such that every intercoalescent interval has its length not greater than $m$.
-Two trees $T$ and $R$ are adjacent in $\dtt_m$ if either $R$ can be obtained from $T$ by changing the length of one intercoalescent interval by $1$ or there exist intercoalescent intervals $I$ and $J$ of length $1$ in $T$ and $R$, respectively, such that the graphs obtained by suppressing $I$ and $J$ are isomorphic and the isomorphism preserves the lengths of the intercoalescent intervals.
-In the former case we say that $R$ is obtained from $T$ by a \emph{length move performed on interval} $I$, while in the latter case we say that $R$ is obtained from $T$ by an \emph{$\nni$ move performed on interval $I$}.
+Two trees $T$ and $R$ are adjacent in $\dtt_m$ if $R$ can be obtained from $T$ by one of three operations: a \emph{length move performed on interval} $I$, \emph{swapping the rank of two nodes $x$ and $y$} or an \emph{$\nni$ move performed on interval $I$}.
+A length move changes the length of $I$ by 1.
+Swapping the rank of two nodes $x$ and $y$ swaps their times.
+$R$ can be obtained from $T$ by an $\nni$ move if there exists intercoalescent intervals $I$ and $J$ of length $1$ in $T$ and $R$, respectively, such that the graphs obtained by suppressing $I$ and $J$ are isomorphic and the isomorphism preserves the lengths of the intercoalescent intervals.
 
 Figure~\ref{DtT.pdf} illustrates all these notions.
 
-Since a graph can also be seen as a metric space where the distance is given by the length of a shortest path, we will refer to $\dtt_m$ as both.
+A graph can also be seen as a metric space where the distance is given by the length of a shortest path, so we will refer to $\dtt_m$ as both.
+\todo[inline]{The general identifier $\dtt$ is used throughout the paper (e.g. in the next figure caption) but not defined. Should we say here that $\dtt$ refers to $\dtt_m$ with an arbitrary $m$ for simplicity or switch all of the $\dtt$'s to $\dtt_m$?}
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.8\textwidth]{DtT.pdf}
 \caption{All possible moves performed on interval $I$.
-Assuming that the length of every intercoalescent intervals is either $1$ or $2$, the outer trees are all possible neighbors in $\dtt$ of the tree in the middle corresponding to interval $I$.}
+Assuming that the length of every intercoalescent interval is either $1$ or $2$, the outer trees are all possible neighbors in $\dtt$ of the tree in the middle corresponding to interval $I$.}
 \label{DtT.pdf}
 \end{figure}
 
-In other words, by going from one tree to an adjacent tree in $\dtt_m$ graph we can either change the length of one intercoalescent interval by one unit, swap the rank of two nodes, or send the length of an intercoalescent interval of minimal length down to zero and then resolve the multifurcation to either of the two possible trees.
+In other words, by going from one tree to an adjacent tree in the $\dtt_m$ graph we can either change the length of one intercoalescent interval by one unit, swap the rank of two nodes, or send the length of an intercoalescent interval of minimal length down to zero and then resolve the multifurcation to either of the two possible trees.
 In the latter case, the new interval is of minimal length.
 See Figure~\ref{dts_neighbors.pdf} for an example of the full variety of possible moves.
 
@@ -197,14 +204,14 @@ Note that $\dtt_0$ can be obtained from $\dtt_1$ by ``forgetting'' ranks and $\d
 In general, the graph structure for $m > 1$ can be understood by considering all diagrams as in Figure~\ref{DtT.pdf} and introducing an extra layer on nodes in the tail on the left of the diagram.
 \todo{Can this be stated (and proved?) formally?}
 
-This hierarchy can be seen as a set of discrete refinements of the full space of phylogenetic time-tree, where intercoalescent intervals can take an arbitrary real value.
+This hierarchy can be seen as a set of discrete refinements of the full space of phylogenetic time-trees, where intercoalescent intervals can take an arbitrary real value.
 Indeed, if we consider
 $\tau$-space\footnote{Conveniently, the discretized versions of $\tau$- and $\mathrm t$-space from \autocite{Gavryushkin2014-bw} coincide.}
-defined by \textcite{Gavryushkin2014-bw} and allow the real-valued parameters (length intercoalescent intervals) to take only $m$ possible values from $1,\ldots,m$ then we get $\dtt_m$.
+defined by \textcite{Gavryushkin2014-bw}~\todo{this is an odd reference format with the first name for one author.} and allow the real-valued parameters (length intercoalescent intervals) to take only $m$ possible values from $1,\ldots,m$ then we get $\dtt_m$.
 In this case, $\dtt_0$ is the graph with the vertices being the cubes of $\tau$-space and the adjacency relation being the relation of ``have a shared facet of co-dimension $1$''.
 
-The $\dtt_m$ space on ultrametric trees is denoted by $\dttu_m$.
-The $\dtt_1$ space is denoted by $\rnni$ and called \emph{ranked NNI} space; if this space is defined on ultrametric trees we will denote it $\rnniu$.
+The $\dtt_m$ space on ultrametric trees, that is the set of trees such that each leaf has the same time, is denoted by $\dttu_m$.
+The $\dtt_1$ space is denoted by $\rnni$ and called \emph{ranked NNI} space; on ultrametric trees we will denote it $\rnniu$.
 All of these can be considered as either a graph or a metric space, and we will refer to them as both.
 
 By $\ell_T(I)$ we denote the length of intercoalescent interval $I$ in tree $T$.
