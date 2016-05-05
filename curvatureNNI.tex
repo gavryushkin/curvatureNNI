@@ -134,7 +134,10 @@ If there's something interesting to say about distances on rNNI, then add that t
 
 
 \section{Technical introduction}
+\iftoggle{curvatureON}{
 \subsection{Discrete time-trees}
+}{}
+
 Throughout the paper by a (phylogenetic) \emph{tree} we meant a rooted binary tree with designated leaves, that is, an undirected acyclic graph with the following properties:
 (1) all nodes have degree $1$, $2$, or $3$; (2) there exists exactly one node of degree $2$, this node is called the \emph{root} of the tree; (3) all nodes of degree $1$ are marked by different constants, these nodes are called \emph{leaves}.
 
@@ -258,18 +261,18 @@ Hence, we define the \emph{coarse Ricci-Ollivier curvature of a metric space} wi
 }{}
 
 
-\section{Geometry of space of discrete time-trees}
+\section{Geometry and complexity of space of discrete time-trees}
 
 We begin with considering the shortest path distance on the graphs.
 It is well-known that computing distance is NP-hard in $\nni$ space \autocite{Dasgupta2000-xa}.
-Hence, for each of the possible discretizations of the time-tree space, a natural question is the following.
+Hence the following question is natural.
 
 \begin{problem}
 What is the complexity of computing the distance between two discrete time-trees?
 \end{problem}
 
-Although we do not solve this problem in this paper, we demonstrate that the solution could be different for different versions of time-trees.
-Particularly, we demonstrate in the following example that even for caterpillar trees the solution could be non-obvious.
+Although this problem remains open, we make a progress towards the solution by establishing several geometric and algorithmic properties.
+Particularly, we demonstrate in the following example that even for caterpillar trees the complexity could not be derived from the complexity of $\nni$ distance.
 
 \begin{example}
 Let $T$ be the ultrametric tree $((((((1, 2), 3), 4), 5), 6), 7)$ and $R$ be the ultrametric tree $((((((1, 4), 5), 6), 2), 3), 7)$.
@@ -285,6 +288,67 @@ While in $\rnniu$ this path is not shortest, and a shortest path would be to mov
 \end{example}
 
 With this example in mind, it is not hard to see that the set of trees of the form $(\ldots(1, i_2), \ldots, i_{n-1}), n)$, where $\{i_2, \ldots, i_{n-1}\} = \{2, \ldots, n-1\}$, is convex in the space of discrete time-trees and is not convex in $\nni$.
+Hence, the complexity of the distance is likely to be different in the two spaces.
+
+We proceed by establishing basic geometric properties of discrete time-trees.
+
+
+\subsection{Sizes of neighborhoods}
+
+\begin{lemma}[\textcite{Semple2003-nj}]\label{spaceSizes}
+Let $|V|$ be the number of vertices in the graph, then $|V|$ is equal to
+\begin{align*}
+& (n-1)! \cdot n! \cdot n!	&& \mbox{in $\dtt$,}\\
+& (n-1)! \cdot n!		&& \mbox{in $\dttu$,}\\
+& \frac{(n-1)!n!n!}{2^{n-1}}	&& \mbox{in $\rnni$,}\\
+& \frac{(n-1)!n!}{2^{n-1}}	&& \mbox{in $\rnniu$, and}\\
+& (2n - 3)!!			&& \mbox{in $\nni$.}
+\end{align*}
+\end{lemma}
+
+We continue with the following bounds on the sizes of one-neighborhoods of various discretization of the space of time-trees.
+We will use these bounds to estimate the curvature of various random walks later in the paper.
+
+\begin{lemma}\label{neighBound}
+Let $T$ be a tree on $n$ leaves.
+Then
+\begin{align*}
+& 2(n-1) \leq \deg(T) \leq 5n-6	&& \mbox{in $\dtt$,}\\
+& n-1 \leq \deg(T) \leq 3n-5	&& \mbox{in $\dttu$,}\\
+& n-1\leq \deg(T) \leq3n-4 	&& \mbox{in $\rnni$,}\\
+& n-1 \leq \deg(T) \leq 2n-4 	&& \mbox{in $\rnniu$, and}\\
+& \deg(T) = 2n-4 		&& \mbox{in $\nni$.}
+\end{align*}
+All bounds are tight.
+\end{lemma}
+
+\proof
+The lower bound in $\dtt$ space is attained by any tree with all intercoalescent intervals being of length $m$.
+In this case, $\deg(T)$ is simply the number of intercoalescent intervals, since every intercoalescent interval adds $1$ to the total degree of the tree.
+Other trees have the same or more possible intercoalescent interval changes, showing that this is a lower bound.
+The upper bound is attained by a caterpillar tree with all intervals short and no coalescent event being younger than a taxon.
+In this case, $\deg(T)$ is bounded by the sum of the $2(n-1)$ possible interval length changes, the at most $2(n-2)$ NNI neighbors, and at most $n$ rank changes that can occur between the $n$ taxa.
+In total, $\deg(T) \le 2(n-1) + 2(n-2) + n = 5n-6$.
+Note that this is an upper bound indeed, as each of the $2(n-2)$ intervals excluding the most recent can contribute either a rank change or $2$ NNI moves.
+The caterpillar tree described above maximizes the number of intervals that contribute $2$ NNI moves and enables the rest of intervals to contribute a rank change.
+
+For ultrametric trees, the number of intercoalescent intervals is $n-1$, hence they add $n-1$ to the degree of the caterpillar tree from interval changes.
+The number of intervals on which an NNI move is possible is $n-2$ for ultrametric trees, hence they contribute $2(n-2)$ to the degree.
+In total, this gives the upper bound of $3n-5$ for ultrametric trees.
+
+Since every NNI move results in two neighbors, the equality $\deg(T) = 2(n-2)$ follows for $\nni$ space.
+Indeed, it is not hard to see that the set of NNI moves that only consider moving a subtree to its aunt captures the full set of NNI neighbors with no duplicates.
+The neighborhood size then follows because the root and its two children have no aunt.
+
+The lower bound in $\rnni$ space is attained by the caterpillar-tree where taxa get ranks $0, 1, 3, 5, \ldots, 2n-3$ and internal nodes get ranks $2, 4, 6, \ldots, 2n-2$.
+In other words, the coalescent events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence, and so on.
+In this case, intervals bounded by a taxon from below add nothing to the degree of the tree and intervals bounded from below by an internal node add one each, hence $n-1$ in total.
+The upper bound for both $\rnni$ and $\rnniu$ is obtained in the same way as for $\dtt$ space.
+
+For the lower bound in $\rnniu$, we note that the oldest intercoalescent interval (the one adjacent to the root) necessarily contributes $2$ to the degree.
+Hence the lower bound can be reached by a tree such that no other interval contributes more than 1.
+The degree of such a tree is $n-1$ in $\rnniu$.
+\endproof
 
 The following theorem bounds the sizes of neighborhoods.
 \todo{Does this improve the best known bound for NNI?
@@ -350,6 +414,9 @@ This implies that the derivation can be encoded by a ternary sequence of length 
 Indeed, fist $n-1$ entries of the sequence are needed to encode all possible labelings of the initial tree, plus two entries are needed for each of the $r$ applications of productions because every production creates two new nodes, each of which has to be labeled.
 The number of this strings, $3^{n-1+2r}$, gives the desired improved bound.
 \endproof
+
+
+\subsection{Diameter of the space}
 
 Theorem~\ref{neighSizeTh} provides a method for estimating the diameter of the space from below.
 Now we estimates the diameter from above.
@@ -428,6 +495,9 @@ Do we need that in the text?}
 $\Delta(\rnniu) < n^2 - n$ for all $n$.
 \end{corollary}
 
+
+\subsection{Split theorem}
+
 \textcite{li1996some} used the information about the diameter of the space and the sizes of neighborhoods to provide an example of trees every shortest $\nni$ path between which fails to maintain a split of taxa shared by the origin and destination trees.
 Specifically, they showed that sorting two caterpillar trees simultaneously is more efficient than sorting them independently, provided the size of the trees is large enough.
 In the following lemma, we show that the ranked versions of $\nni$ space maintain splits along shortest paths between caterpillar trees.
@@ -452,6 +522,56 @@ The scenario works fine for many partial cases, e.g.\ double-caterpillar trees.
 The general case remain illusive.
 \endproof
 
+
+\subsection{Computing the distance}
+
+We first bound the number of neighbors of a tree $x$ in $\dts$-space that are closer than $x$ to a given tree $y$.
+We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
+These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
+
+\begin{theorem}
+\label{max_good_neighbours}
+Let $x$ and $y$ be two trees.
+Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
+\begin{enumerate}[(i)]
+\item $2d(x,y)$ in $\nni$ space,
+\item $3d(x,y)$ in $\rnni$ space,
+\item $4d(x,y)$ in $\dts$ space,
+\todo{How is this consistent with the $8$ in Lemma~\ref{uniformLower}?}
+\item $5d(x,y)$ in $\dtt$ space.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+We first prove the statement for $\dts$ space.
+
+Let $U$ be the set of neighbors $u$ of $x$ such that $d(u,y) \le d(x,y)$, as stated in the theorem.
+We partition $U$ into three sets of trees---$I$, $R$, and $L$---obtained from $x$ by a single NNI move, rank change, or length change, respectively.
+We then prove the theorem by bounding the size of each partition by $2d(x,y)$, $d(x,y)$, and $d(x,y)$, respectively.
+
+We first consider some basic properties of minimal length paths between $x$ and $y$.
+Observe that at most $d(x,y)$ bipartitions differ between $x$ and $y$, as each NNI operation replaces one bipartition with another (and rank and length changes do not modify bipartitions).
+Now, observe that no minimal length path from $x$ to $y$ will replace a bipartition that is common to $x$ and $y$, as any path including such a replacement can be made shorter by removing the replacement move (and subsequent moves that reintroduce the bipartition).
+
+We are now ready to bound the sizes of each partition $I$, $R$, and $L$.
+First, consider the subset $I$ of closer neighbors obtained via NNI moves.
+By our observations above, $|I|$ is bounded by the number of NNI operations that modify one of the at most $d(x,y)$ bipartitions of $x$ that are not a bipartition of $y$.
+There are two neighbors of $x$ that lack any given bipartition (obtained by moving either the left or right subtree located below the bipartition).
+Therefore, $|I| \le 2d(x,y)$.
+
+Second, consider the subset $R$ of closer neighbors obtained via rank change moves.
+These operate either on one of $x$'s unique bipartitions or a bipartition common to $x$ and $y$ that differs in rank.
+As observed above, the number of unique bipartitions is bounded by the maximum number of NNI moves on any minimal $x$ to $y$ path.
+Any such path must fix the ranks of each common edge.
+In other words, if $r_1$ is the number of trees in $U$ which are obtained from $x$ by a rank move corresponding to a common edge and $r_2$ is the number of trees in $U$ which are obtained from $x$ by a rank move corresponding to a unique edge of $x$, then $r_1 + r_2 \leq d(x,y)$, because the $r_1$ moves have to be done along every shortest path from $x$ to $y$.
+Thus, the total size of $R$ is bounded by $d(x,y)$.
+
+The bound of $d(x,y)$ on the number of length changes that can be applied to move $x$ closer to $y$ follows similarly.
+Therefore, there are at most $|I| + |R| + |L| \le 2d(x,y) + d(x,y) + d(x,y) = 4d(x,y)$ trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$.
+
+The statement for the other three spaces follows similarly: for $\nni$ we need to count only for trees from $I$, for $\rnni$ we need to count only for trees from $I$ and $R$, for $\dtt$ we will have to add $2d(x,y)$ instead of $d(x,y)$ for $L$.
+\end{proof}
+
 A non-ranked tree has a symmetry associated with every internal node.
 Those symmetries can be employed to substantially reduce the search space of pairs of trees.
 This approach uses tanglegrams \autocite{Matsen2015-fn} and is applied to reduce the number of pairs of tree for computing the curvature \autocite{Whidden2015-es}.
@@ -474,93 +594,8 @@ Hence $T \ne T_\sigma$ because the ranks of the parent of $i$ are different in $
 
 These observations suggest that $\nni$ space is geometrically and algorithmically different from the other four spaces.
 
-\begin{lemma}[\textcite{Semple2003-nj}]\label{spaceSizes}
-Let $|V|$ be the number of vertices in the graph, then $|V|$ is equal to
-\begin{align*}
-& (n-1)! \cdot n! \cdot n!	&& \mbox{in $\dtt$,}\\
-& (n-1)! \cdot n!		&& \mbox{in $\dttu$,}\\
-& \frac{(n-1)!n!n!}{2^{n-1}}	&& \mbox{in $\rnni$,}\\
-& \frac{(n-1)!n!}{2^{n-1}}	&& \mbox{in $\rnniu$, and}\\
-& (2n - 3)!!			&& \mbox{in $\nni$.}
-\end{align*}
-\end{lemma}
 
-We continue with the following bounds on the sizes of one-neighborhoods of various discretization of the space of time-trees.
-We will use these bounds to estimate the curvature of various random walks later in the paper.
-
-\begin{lemma}\label{neighBound}
-Let $T$ be a tree on $n$ leaves.
-Then
-\begin{align*}
-& 2(n-1) \leq \deg(T) \leq 5n-6	&& \mbox{in $\dtt$,}\\
-& n-1 \leq \deg(T) \leq 3n-5	&& \mbox{in $\dttu$,}\\
-& n-1\leq \deg(T) \leq3n-4 	&& \mbox{in $\rnni$,}\\
-& n-1 \leq \deg(T) \leq 2n-4 	&& \mbox{in $\rnniu$, and}\\
-& \deg(T) = 2n-4 		&& \mbox{in $\nni$.}
-\end{align*}
-All bounds are tight.
-\end{lemma}
-
-\proof
-The lower bound in $\dtt$ space is attained by any tree with all intercoalescent intervals being of length $m$.
-In this case, $\deg(T)$ is simply the number of intercoalescent intervals, since every intercoalescent interval adds $1$ to the total degree of the tree.
-Other trees have the same or more possible intercoalescent interval changes, showing that this is a lower bound.
-The upper bound is attained by a caterpillar tree with all intervals short and no coalescent event being younger than a taxon.
-In this case, $\deg(T)$ is bounded by the sum of the $2(n-1)$ possible interval length changes, the at most $2(n-2)$ NNI neighbors, and at most $n$ rank changes that can occur between the $n$ taxa.
-In total, $\deg(T) \le 2(n-1) + 2(n-2) + n = 5n-6$.
-Note that this is an upper bound indeed, as each of the $2(n-2)$ intervals excluding the most recent can contribute either a rank change or $2$ NNI moves.
-The caterpillar tree described above maximizes the number of intervals that contribute $2$ NNI moves and enables the rest of intervals to contribute a rank change.
-
-For ultrametric trees, the number of intercoalescent intervals is $n-1$, hence they add $n-1$ to the degree of the caterpillar tree from interval changes.
-The number of intervals on which an NNI move is possible is $n-2$ for ultrametric trees, hence they contribute $2(n-2)$ to the degree.
-In total, this gives the upper bound of $3n-5$ for ultrametric trees.
-
-Since every NNI move results in two neighbors, the equality $\deg(T) = 2(n-2)$ follows for $\nni$ space.
-Indeed, it is not hard to see that the set of NNI moves that only consider moving a subtree to its aunt captures the full set of NNI neighbors with no duplicates.
-The neighborhood size then follows because the root and its two children have no aunt.
-
-The lower bound in $\rnni$ space is attained by the caterpillar-tree where taxa get ranks $0, 1, 3, 5, \ldots, 2n-3$ and internal nodes get ranks $2, 4, 6, \ldots, 2n-2$.
-In other words, the coalescent events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence, and so on.
-In this case, intervals bounded by a taxon from below add nothing to the degree of the tree and intervals bounded from below by an internal node add one each, hence $n-1$ in total.
-The upper bound for both $\rnni$ and $\rnniu$ is obtained in the same way as for $\dtt$ space.
-
-For the lower bound in $\rnniu$, we note that the oldest intercoalescent interval (the one adjacent to the root) necessarily contributes $2$ to the degree.
-Hence the lower bound can be reached by a tree such that no other interval contributes more than 1.
-The degree of such a tree is $n-1$ in $\rnniu$.
-\endproof
-
-\begin{conjecture}
-\begin{enumerate}[(1)]
-The list of conjectures that would be nice to settle or refute in this paper:
-\item Theorem~\ref{splitTheo}.
-\item $d_\rnniu$ is polynomial.
-\item Proposition~\ref{isoperiPropo}.
-\end{enumerate}
-\end{conjecture}
-
-We finish this section with the following proposition that suggests that the graphs under consideration have ``bottlenecks''.
-To make this statement precise we need to introduce the following notion.
-Let $G = (V, E)$ be an undirected graph and $S$ a subset of the set of vertices $V$.
-The boundary $\partial S$ of $S$ is the set of edges ``pointing our from $S$'': $\partial S = \{(v,w) \in E \mid v \in S ~\&~ w \notin S\}$.
-Then the \emph{isoperimetric number} $h(G)$ of $G$ is defined by
-\[
-h(G) = \inf\limits_{0 < |S| \leq \frac12|V|} \frac{|\partial S|}{|S|}.
-\]
-
-\begin{proposition}\label{isoperiPropo}
-Let $G_n$ be $\dtt$, $\dttu$, $\rnni$, $\rnniu$, or $\nni$ graph on trees with $n$ taxa.
-Then $\lim_n h(G_n) = 0$.
-\end{proposition}
-
-\proof
-We assume that the taxa set is $\{1,\ldots,n\}$ and denote the set $\{1,\ldots,\lfloor \frac n2 \rfloor\} \leftrightharpoons A$ and $\{\lfloor \frac n2 \rfloor + 1,\ldots, n\} \leftrightharpoons B$.
-Let $S$ be the set of trees $T$ such that $T$ has the split $A \mid B$.
-Then $\lim_n \frac{|\partial S|}{|S|} = 0$ for all graphs under consideration.
-\endproof
-
-This proposition implies for phylogenetic graphs that the isoperimetric number is asymptotically as small as possible, which can be interpreted as that the graphs have as strong bottleneck as possible.
-
-
+\iftoggle{curvatureON}{
 \section{Ricci-Ollivier curvature of discrete time-trees}
 
 We need the following corollaries for our analysis of curvature.
@@ -768,54 +803,10 @@ This together with property~(\ref{difference}) implies that the middle sum tends
 We note that in both Corollary~\ref{flatInLimDTS} and Proposition~\ref{flatInLimGen}, the assumption of being at distance one can be relaxed by that of being at a distance uniformly bounded by a slowly growing function.
 But since the primary focus of this paper is on the spaces under consideration, we will not \todo{Should we?} include the statement in general terms of metric spaces.
 However, we prove below (Theorem~\ref{zero-in-the-limit}) a much stronger property of the spaces, namely, that the curvature tends to zero when the tree size tends to infinity does not matter what distance between the trees is.
+}
+{}
 
-We first bound the number of neighbors of a tree $x$ in $\dts$-space that are closer than $x$ to a given tree $y$.
-We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
-These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
-
-\begin{theorem}
-\label{max_good_neighbours}
-Let $x$ and $y$ be two trees.
-Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
-\begin{enumerate}[(i)]
-\item $2d(x,y)$ in $\nni$ space,
-\item $3d(x,y)$ in $\rnni$ space,
-\item $4d(x,y)$ in $\dts$ space,
-\todo{How is this consistent with the $8$ in Lemma~\ref{uniformLower}?}
-\item $5d(x,y)$ in $\dtt$ space.
-\end{enumerate}
-\end{theorem}
-
-\begin{proof}
-We first prove the statement for $\dts$ space.
-
-Let $U$ be the set of neighbors $u$ of $x$ such that $d(u,y) \le d(x,y)$, as stated in the theorem.
-We partition $U$ into three sets of trees---$I$, $R$, and $L$---obtained from $x$ by a single NNI move, rank change, or length change, respectively.
-We then prove the theorem by bounding the size of each partition by $2d(x,y)$, $d(x,y)$, and $d(x,y)$, respectively.
-
-We first consider some basic properties of minimal length paths between $x$ and $y$.
-Observe that at most $d(x,y)$ bipartitions differ between $x$ and $y$, as each NNI operation replaces one bipartition with another (and rank and length changes do not modify bipartitions).
-Now, observe that no minimal length path from $x$ to $y$ will replace a bipartition that is common to $x$ and $y$, as any path including such a replacement can be made shorter by removing the replacement move (and subsequent moves that reintroduce the bipartition).
-
-We are now ready to bound the sizes of each partition $I$, $R$, and $L$.
-First, consider the subset $I$ of closer neighbors obtained via NNI moves.
-By our observations above, $|I|$ is bounded by the number of NNI operations that modify one of the at most $d(x,y)$ bipartitions of $x$ that are not a bipartition of $y$.
-There are two neighbors of $x$ that lack any given bipartition (obtained by moving either the left or right subtree located below the bipartition).
-Therefore, $|I| \le 2d(x,y)$.
-
-Second, consider the subset $R$ of closer neighbors obtained via rank change moves.
-These operate either on one of $x$'s unique bipartitions or a bipartition common to $x$ and $y$ that differs in rank.
-As observed above, the number of unique bipartitions is bounded by the maximum number of NNI moves on any minimal $x$ to $y$ path.
-Any such path must fix the ranks of each common edge.
-In other words, if $r_1$ is the number of trees in $U$ which are obtained from $x$ by a rank move corresponding to a common edge and $r_2$ is the number of trees in $U$ which are obtained from $x$ by a rank move corresponding to a unique edge of $x$, then $r_1 + r_2 \leq d(x,y)$, because the $r_1$ moves have to be done along every shortest path from $x$ to $y$.
-Thus, the total size of $R$ is bounded by $d(x,y)$.
-
-The bound of $d(x,y)$ on the number of length changes that can be applied to move $x$ closer to $y$ follows similarly.
-Therefore, there are at most $|I| + |R| + |L| \le 2d(x,y) + d(x,y) + d(x,y) = 4d(x,y)$ trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$.
-
-The statement for the other three spaces follows similarly: for $\nni$ we need to count only for trees from $I$, for $\rnni$ we need to count only for trees from $I$ and $R$, for $\dtt$ we will have to add $2d(x,y)$ instead of $d(x,y)$ for $L$.
-\end{proof}
-
+\iftoggle{curvatureON}{
 We now use Theorem~\ref{max_good_neighbours} to prove the following.
 
 \todo[inline]{$\downarrow$ This must be true for $p$-lazy walk as well.}
@@ -888,14 +879,15 @@ The following inequalities are satisfied in $\rnni$ \todo{What about NNI?} space
 \proof
 Use Corollary~\ref{degreeBounds}.
 \endproof
+}{}
 
 
-\section{Efficient algorithm for computing $\rnni$ graphs}
+\subsection{Efficient algorithm for generating $\rnni$ graphs}
 
 We use the following algorithm designed by \textcite{Whidden2015-es} to compute the $\rnni$ graph on $n$ leaves.
 The input to our algorithm is a set $S$ of ranked phylogenetic tree topologies in the format described by \textcite{Gavryushkin2014-bw} \autocite[see also][]{Semple2003-nj}.
 A tree is hence given by a sequence of sets of taxa, and thus obtained representation is unique.
-For example, the representation of the tree on Figure~??\todo{} is $(\{A\}, \{C\}, \{D\}, \{B\}, \{E\}, \{A,B\}, \{D,E\}, \{C, D, E\}, \{F\}, \{A,B,F\}, \{A,B,C,D,E,F\})$, or
+For example, the representation of the tree on Figure~?? \todo{} is $(\{A\}, \{C\}, \{D\}, \{B\}, \{E\}, \{A,B\}, \{D,E\}, \{C, D, E\}, \{F\}, \{A,B,F\}, \{A,B,C,D,E,F\})$, or
 $(\{A,B\}, \{D,E\}, \{C, D, E\}, \{A,B,F\}, \{A,B,C,D,E,F\})$ if we make the tree ultrametric by placing all taxa below the most recent divergence event.
 Using this representation of trees we construct a map $\nu : S \to \omega$, where $\omega$ is the set of non-negative integers.
 This maps allows us to determine whether or not a tree is already a vertex of the graph.
@@ -926,6 +918,7 @@ of the software package \texttt{tTauCurvature} \autocite{tTauCurvature},
 which outputs an edge list format graph suitable for input to other software.
 
 
+\iftoggle{curvatureON}{
 \section{Some other spaces}
 
 Several important proposal mechanisms used in phylogenetic Bayesian inference by popular software packages such as BEAST2 \autocite{beast2} favor topological moves or tree moves depending on various conditions.
@@ -942,21 +935,50 @@ Choose a coordinate uniformly at random.
 Increase the coordinate by $1$ with probability $p$ and decrease it by $1$ otherwise.
 If the coordinate becomes $0$, resolve the multifurcation uniformly at random and set the new coordinate to $1$.
 Note that this mechanism does not bound edge lengths from above and favors topological moves when $p<1/2$.
+}{}
+
+
+\vskip10pt
+\todo[inline]{Conjectures won't go to the journal.}
+\subsection{Conjectures}
+\begin{conjecture}
+\begin{enumerate}[(1)]
+The list of conjectures that would be nice to settle or refute in this paper:
+\item Theorem~\ref{splitTheo}.
+\item $d_\rnniu$ is polynomial.
+\item Proposition~\ref{isoperiPropo}.
+\end{enumerate}
+\end{conjecture}
+
+We finish this section with the following proposition that suggests that the graphs under consideration have ``bottlenecks''.
+To make this statement precise we need to introduce the following notion.
+Let $G = (V, E)$ be an undirected graph and $S$ a subset of the set of vertices $V$.
+The boundary $\partial S$ of $S$ is the set of edges ``pointing our from $S$'': $\partial S = \{(v,w) \in E \mid v \in S ~\&~ w \notin S\}$.
+Then the \emph{isoperimetric number} $h(G)$ of $G$ is defined by
+\[
+h(G) = \inf\limits_{0 < |S| \leq \frac12|V|} \frac{|\partial S|}{|S|}.
+\]
+
+\begin{proposition}\label{isoperiPropo}
+Let $G_n$ be $\dtt$, $\dttu$, $\rnni$, $\rnniu$, or $\nni$ graph on trees with $n$ taxa.
+Then $\lim_n h(G_n) = 0$.
+\end{proposition}
+
+\proof
+We assume that the taxa set is $\{1,\ldots,n\}$ and denote the set $\{1,\ldots,\lfloor \frac n2 \rfloor\} \leftrightharpoons A$ and $\{\lfloor \frac n2 \rfloor + 1,\ldots, n\} \leftrightharpoons B$.
+Let $S$ be the set of trees $T$ such that $T$ has the split $A \mid B$.
+Then $\lim_n \frac{|\partial S|}{|S|} = 0$ for all graphs under consideration.
+\endproof
+
+This proposition implies for phylogenetic graphs that the isoperimetric number is asymptotically the smallest possible, which can be interpreted as that the graphs have as the tightest possible bottlenecks.
 
 
 \section{Discussion}
 Most of the results in this paper can be generalized to the class of sampled ancestor trees \autocite{Gavryushkina2014-xd}.
 However, currently very few methods of sampling the space of sampled ancestor trees are known \autocite{Gavryushkina2015-vq} and the geometry of the space is poorly understood \autocite{Gavryushkin2014-bw}.
 
-%\bibliography{curvatureNNI}
-%\bibliographystyle{alpha}
 
 \printbibliography
 
 \end{document}
-
-
-In the rest of the paper, we consider a number of Markov chains that arise in phylogenetic Bayesian inference and investigate the curvature of those chains with the eventual goal of the efficiency properties of the corresponding inference methods.
-Those graphs can be also seen as metric spaces where the distance between two points is given by the length of a shortest path connecting them.
-All graphs we are considering in this paper are connected, so this defined distance is indeed a metric.
 
