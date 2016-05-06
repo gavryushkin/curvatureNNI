@@ -150,19 +150,19 @@ We identify isomorphic trees.
 
 By a \emph{time-tree} (see Figure~\ref{timeTree.eps}) we mean a tree with an absolute time associated with every node of the tree: for internal nodes these are (typically estimated) divergence times and for leaves---(typically known) sampling times.
 By ``absolute'' we clarify that these are not relative times, but rather actual times that can be put on a calendar.
+We assume that time progresses forward, towards larger times, from the root to the leaves.
 
-A \emph{discrete time-tree} is a tree such that all its nodes are assigned distinct times from the set of non-negative integers such that every node has a lesser time than its parent.
+A \emph{discrete time-tree} is a tree such that all its nodes are assigned distinct times from the set of non-negative integers such that every node has a smaller time than its parent (Figure~\ref{timeTree.eps}).
 Note that this implies that for every pair of nodes $x,y$ if the shortest path from the root to $x$ passes $y$ than the time of $y$ is greater than the time of $x$.
-The \emph{rank} of a node is the number of nodes in the tree with strictly smaller~\todo{lesser?} time.
+The \emph{rank} of a node is the number of nodes in the tree with strictly smaller time.
 We say that a pair of nodes $x,y$ of a discrete time-tree is an \emph{intercoalescent interval} if there exists no node $z$ such that the time of $z$ is between the time of $x$ and $y$.
 The difference between the times of $x$ and $y$ is called the \emph{length} of the interval $x,y$.
 The \emph{rank} of a node is its position in the total ordering of nodes with respect to times.
 We identify two discrete time-trees if they are isomorphic as trees and the isomorphism preserves ranks of the nodes as well as intercoalescent interval lengths.
 
-Figure~\ref{timeTree.eps} provides an example of a discrete time-tree.
-
 We are now ready to introduce a hierarchy of discrete time-trees.
 
+%EM My preference would be to only use "space" for collections of trees with a continuous component.
 At the bottom level of our hierarchy is the well-known $\nni$ space\footnote{We use the words ``space'' and ``graph'' interchangeably.}.
 $\nni$ is a graph with the vertices being all trees on $n$ leaves.
 Two trees $T$ and $R$ are adjacent in $\nni$ if there exists an edge $e$ in $T$ and an edge $f$ in $R$ such that both edges are not adjacent to a leaf and the graph obtained from $T$ by suppressing $e$ is isomorphic to the graph obtained from $R$ by suppressing $f$.
@@ -170,16 +170,15 @@ We denote this space by $\dtt_0$.
 
 Level $m > 0$ of the hierarchy is the following graph $\dtt_m$.
 The set of vertices of the graph is the set of all discrete time-trees on $n$ leaves such that every intercoalescent interval has its length not greater than $m$.
-Two trees $T$ and $R$ are adjacent in $\dtt_m$ if $R$ can be obtained from $T$ by one of three operations: a \emph{length move performed on interval} $I$, \emph{swapping the rank of two nodes $x$ and $y$} or an \emph{$\nni$ move performed on interval $I$}.
+Two trees $T$ and $R$ are adjacent in $\dtt_m$ if $R$ can be obtained from $T$ by one of three operations: a \emph{length move performed on interval} $I$, \emph{swapping the rank of two nodes $x$ and $y$} or an \emph{$\nni$ move performed on interval $I$} (Figure~\ref{DtT.pdf}).
 A length move changes the length of $I$ by 1.
 Swapping the rank of two nodes $x$ and $y$ swaps their times.
 $R$ can be obtained from $T$ by an $\nni$ move if there exists intercoalescent intervals $I$ and $J$ of length $1$ in $T$ and $R$, respectively, such that the graphs obtained by suppressing $I$ and $J$ are isomorphic and the isomorphism preserves the lengths of the intercoalescent intervals.
 
-Figure~\ref{DtT.pdf} illustrates all these notions.
-
 A graph can also be seen as a metric space where the distance is given by the length of a shortest path, so we will refer to $\dtt_m$ as both.
 \todo[inline]{The general identifier $\dtt$ is used throughout the paper (e.g. in the next figure caption) but not defined. Should we say here that $\dtt$ refers to $\dtt_m$ with an arbitrary $m$ for simplicity or switch all of the $\dtt$'s to $\dtt_m$?}
 
+%EM This is a great figure-- I really like it-- but I think that there's a little "typo" on the right hand side. Aren't those two trees identical?
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.8\textwidth]{DtT.pdf}
@@ -209,6 +208,9 @@ Indeed, if we consider
 $\tau$-space\footnote{Conveniently, the discretized versions of $\tau$- and $\mathrm t$-space from \autocite{Gavryushkin2014-bw} coincide.}
 defined by \textcite{Gavryushkin2014-bw}~\todo{this is an odd reference format with the first name for one author.} and allow the real-valued parameters (length intercoalescent intervals) to take only $m$ possible values from $1,\ldots,m$ then we get $\dtt_m$.
 In this case, $\dtt_0$ is the graph with the vertices being the cubes of $\tau$-space and the adjacency relation being the relation of ``have a shared facet of co-dimension $1$''.
+%EM Relating to these notions of tau and t space, would it be worth describing, in broad strokes, how these graphs relate to BHV space directly?
+%EM Readers may be more familiar with that space.
+%EM It seems to me that one could do so by describing how the discrete time trees are a subset of the integer lattice on each orthant, and then we put an edge between every pair of vertices that are less than some distance apart?
 
 The $\dtt_m$ space on ultrametric trees, that is the set of trees such that each leaf has the same time, is denoted by $\dttu_m$.
 The $\dtt_1$ space is denoted by $\rnni$ and called \emph{ranked NNI} space; on ultrametric trees we will denote it $\rnniu$.
