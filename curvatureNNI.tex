@@ -153,7 +153,7 @@ By ``absolute'' we clarify that these are not relative times, but rather actual 
 We assume that time progresses forward, towards larger times, from the root to the leaves.
 
 A \emph{discrete time-tree} is a tree such that all its nodes are assigned distinct times from the set of non-negative integers such that every node has a smaller time than its parent (Figure~\ref{timeTree.eps}).
-Note that this implies that for every pair of nodes $x,y$ if the shortest path from the root to $x$ passes $y$ than the time of $y$ is greater than the time of $x$.
+Note that this implies that for every pair of nodes $x,y$ if the shortest path from the root to $x$ passes $y$ then the time of $y$ is greater than the time of $x$.
 The \emph{rank} of a node is the number of nodes in the tree with strictly smaller time.
 We say that a pair of nodes $x,y$ of a discrete time-tree is an \emph{intercoalescent interval} if there exists no node $z$ such that the time of $z$ is between the time of $x$ and $y$.
 The difference between the times of $x$ and $y$ is called the \emph{length} of the interval $x,y$.
@@ -178,7 +178,6 @@ $R$ can be obtained from $T$ by an $\nni$ move if there exists intercoalescent i
 A graph can also be seen as a metric space where the distance is given by the length of a shortest path, so we will refer to $\dtt_m$ as both.
 \todo[inline]{The general identifier $\dtt$ is used throughout the paper (e.g. in the next figure caption) but not defined. Should we say here that $\dtt$ refers to $\dtt_m$ with an arbitrary $m$ for simplicity or switch all of the $\dtt$'s to $\dtt_m$?}
 
-%EM This is a great figure-- I really like it-- but I think that there's a little "typo" on the right hand side. Aren't those two trees identical?
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.8\textwidth]{DtT.pdf}
