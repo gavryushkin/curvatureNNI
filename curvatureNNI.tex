@@ -9,8 +9,8 @@
 \usepackage{url}
 \usepackage[hidelinks]{hyperref}
 \usepackage{graphicx}
-\usepackage[style=authoryear-icomp,ibidtracker=false]{biblatex}
 \usepackage{etoolbox}
+\usepackage[style=authoryear-icomp,ibidtracker=false]{biblatex}
 
 \addbibresource{curvatureNNI.bib}
 
@@ -175,7 +175,7 @@ Swapping the rank of two nodes $x$ and $y$ swaps their times.
 $R$ can be obtained from $T$ by an $\nni$ move if there exists intercoalescent intervals $I$ and $J$ of length $1$ in $T$ and $R$, respectively, such that the graphs obtained by suppressing $I$ and $J$ are isomorphic and the isomorphism preserves the lengths of the intercoalescent intervals.
 
 A graph can also be seen as a metric space where the distance is given by the length of a shortest path, so we will refer to $\dtt_m$ as both.
-\todo[inline]{The general identifier $\dtt$ is used throughout the paper (e.g. in the next figure caption) but not defined. Should we say here that $\dtt$ refers to $\dtt_m$ with an arbitrary $m$ for simplicity or switch all of the $\dtt$'s to $\dtt_m$?}
+For simplicity, we use the general identifier $\dtt$ to refer to $\dtt_m$ with an arbitrary $m$.
 
 \begin{figure}[ht]
 \centering
@@ -204,7 +204,7 @@ In general, the graph structure for $m > 1$ can be understood by considering all
 This hierarchy can be seen as a set of discrete refinements of the full space of phylogenetic time-trees, where intercoalescent intervals can take an arbitrary real value.
 Indeed, if we consider
 $\tau$-space\footnote{Conveniently, the discretized versions of $\tau$- and $\mathrm t$-space from \autocite{Gavryushkin2014-bw} coincide.}
-defined by \textcite{Gavryushkin2014-bw}~\todo{this is an odd reference format with the first name for one author.} and allow the real-valued parameters (length intercoalescent intervals) to take only $m$ possible values from $1,\ldots,m$ then we get $\dtt_m$.
+defined by \textcite{Gavryushkin2014-bw} and allow the real-valued parameters (length intercoalescent intervals) to take only $m$ possible values from $1,\ldots,m$ then we get $\dtt_m$.
 In this case, $\dtt_0$ is the graph with the vertices being the cubes of $\tau$-space and the adjacency relation being the relation of ``have a shared facet of co-dimension $1$''.
 %EM Relating to these notions of tau and t space, would it be worth describing, in broad strokes, how these graphs relate to BHV space directly?
 %EM Readers may be more familiar with that space.
@@ -544,7 +544,6 @@ Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
 \item $2d(x,y)$ in $\nni$ space,
 \item $3d(x,y)$ in $\rnni$ space,
 \item $4d(x,y)$ in $\dts$ space,
-\todo{How is this consistent with the $8$ in Lemma~\ref{uniformLower}?}
 \item $5d(x,y)$ in $\dtt$ space.
 \end{enumerate}
 \end{theorem}
