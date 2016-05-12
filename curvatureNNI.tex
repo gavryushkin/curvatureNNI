@@ -25,7 +25,6 @@
 \newtheorem{example}[lemma]{Example}
 \newtheorem{conjecture}[lemma]{Conjecture}
 
-\newcommand{\dts}{\mathrm{2DtT}}
 \newcommand{\nni}{\mathrm{NNI}}
 \newcommand{\rnni}{\mathrm{rNNI}}
 \newcommand{\rnniu}{\mathrm{rNNIu}}
@@ -534,24 +533,29 @@ The general case remain illusive.
 
 \subsection{Computing the distance}
 
-We first bound the number of neighbors of a tree $x$ in $\dts$-space that are closer than $x$ to a given tree $y$.
+We first bound the number of neighbors of a tree $x$ in $\dtt_2$-space that are closer than $x$ to a given tree $y$.
 We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
-These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.~\todo{curvature is mentioned here. This probably needs to be rewritten.}
+\iftoggle{curvatureON}{
+These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
+}{
+When the graph is seen as a metric space, this property is important for the study of the curvature of the space as well as convergence properties of random walks over the space.
+However, these are the subject of a future work.
+}
 
 \begin{theorem}
-\label{max_good_neighbours}
+\label{max_good_neighbors}
 Let $x$ and $y$ be two trees.
 Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
 \begin{enumerate}[(i)]
-\item $2d(x,y)$ in $\nni$ space,
-\item $3d(x,y)$ in $\rnni$ space,
-\item $4d(x,y)$ in $\dts$ space,
-\item $5d(x,y)$ in $\dtt$ space.
+\item $2d(x,y)$ in $\nni$,
+\item $3d(x,y)$ in $\rnni$,
+\item $4d(x,y)$ in $\dtt_2$,
+\item $5d(x,y)$ in $\dtt_m$ for $m > 2$.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-We first prove the statement for $\dts$ space.
+We first prove the statement for $\dtt_2$ space.
 
 Let $U$ be the set of neighbors $u$ of $x$ such that $d(u,y) \le d(x,y)$, as stated in the theorem.
 We partition $U$ into three sets of trees---$I$, $R$, and $L$---obtained from $x$ by a single NNI move, rank change, or length change, respectively.
@@ -815,12 +819,12 @@ However, we prove below (Theorem~\ref{zero-in-the-limit}) a much stronger proper
 {}
 
 \iftoggle{curvatureON}{
-We now use Theorem~\ref{max_good_neighbours} to prove the following.
+We now use Theorem~\ref{max_good_neighbors} to prove the following.
 
 \todo[inline]{$\downarrow$ This must be true for $p$-lazy walk as well.}
 
 \begin{theorem}\label{zero-in-the-limit}
-Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of $\dts$-trees on $n$ taxa.
+Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of $\dtt_2$-trees on $n$ taxa.
 Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$ for the uniform random walk.
 \end{theorem}
 
@@ -828,8 +832,8 @@ Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$ for the uniform random walk
 Since the curvature is a local property, it follows from Lemma~\ref{uniformLower} that $\kappa(T_n,R_n) \geq -\dfrac{4}{n-1}$ for all $n$.
 To finish the proof, we need to bound the sequence $\kappa(T_n,R_n)$ from above by another sequence which tends to zero.
 
-Let us fix an $n$ and let $U$ be the set of trees $E \in N(T)$ such that $d_\dts(E,R_n) \leq d_\dts(T_n,R_n)$ as in Theorem~\ref{max_good_neighbours}, and $B$ be the rest of trees $N(T_n)\setminus U$ from $N(T_n)$.
-Let's denote $d_\dts(T_n,R_n)$ by $d$.
+Let us fix an $n$ and let $U$ be the set of trees $E \in N(T)$ such that $d_\dtt_2(E,R_n) \leq d_\dtt_2(T_n,R_n)$ as in Theorem~\ref{max_good_neighbors}, and $B$ be the rest of trees $N(T_n)\setminus U$ from $N(T_n)$.
+Let's denote $d_\dtt_2(T_n,R_n)$ by $d$.
 Then
 \[
 W(m_{T_n},m_{R_n}) = \sum_{i\in U} p_i d_i + \sum_{j\in B} p_j d_j \geq
@@ -842,7 +846,7 @@ Hence,
 1 - \frac{|U| + |B|}{|N(T_n)|} + \frac{2|U|}{|N(T_n)|d}
 = \frac{2|U|}{|N(T_n)|d}.
 \]
-It follows from Theorem~\ref{max_good_neighbours} that $|U| \leq 4d$.
+It follows from Theorem~\ref{max_good_neighbors} that $|U| \leq 4d$.
 Thus, $\kappa(T_n,R_n) \leq \dfrac{8}{|N(T_n)|}$.
 It remains to note that $\lim\limits_{n\to\infty}\dfrac{8}{|N(T_n)|} = 0$.
 \endproof
@@ -858,7 +862,7 @@ We now estimate the curvature of the Metropolis-Hastings random walk, which prop
 We denote the corresponding curvature by $\kappa(\MH;T,R)$.
 
 \begin{lemma}
-The following inequalities are satisfied in both $\dts$ and $\dtt$ spaces.
+The following inequalities are satisfied in both $\dtt_2$ and $\dtt$ spaces.
 \[
 \kappa(T,R) - \dfrac{6}{5d(T,R)} \leq \kappa(\MH;T,R) \leq \kappa(T,R) +
 \dfrac{6}{5d(T,R)}\mbox{, and}
