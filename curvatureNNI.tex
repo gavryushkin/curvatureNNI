@@ -443,8 +443,15 @@ Note that all $A_i$'s and $B_i$'s have to be disjoint.
 We assume that $|A_1| = |A_2| = |B_1| = |B_2| = \frac{n-1}{4}$ and denote this number by $m$.
 We will see later in the proof that this assumption does not restrict the generality of our argument.
 
-We construct the path from $T$ to $R$ proceeding in the following steps.
+We construct the path from $T$ to $R$ proceeding in the following steps, which are illustrated on Figure~\ref{diameterUpperBound.pdf}.
 Let $f(n)$ be the desired upper bound.
+
+\begin{figure}
+\centering
+\includegraphics[width = \textwidth]{diameterUpperBound.pdf}
+\caption{An algorithm to compute a path between discrete time-trees.}
+\label{diameterUpperBound.pdf}
+\end{figure}
 
 \begin{enumerate}[(1)]
 \item Move all the nodes adjacent to taxa in $A_2$ on top of all the other nodes in $T$, apart from the root.
@@ -479,7 +486,7 @@ This takes $m^2$ moves.
 This takes $2m^2$.
 
 \item Move $B_1$ to its place in $R$.
-	This takes $3m^2$\todo[inline]{I don't quite follow. Are you assuming that the $A_i$'s and $B_i$'s are distinct subtrees in $R$? Don't you need to distribute their elements once you have them on the correct side of the root?}.
+This takes $3m^2$
 \end{enumerate}
 
 In total we have a recursive equation $f(n) = 14m^2 + m + 2 f(n/4)$.\\
@@ -494,7 +501,8 @@ Furthermore, the smaller the size of $A_2 \cup B_1$ the shorter the path.
 Finally, the total length of the path is maximized when $|A_2| = |B_1|$ and $|A_1| = |B_2|$.
 \todo[inline]{AG: A detailed proof includes a check of all 10 steps.
 Do we need that in the text?\\
-CW: I don't think a detailed check of all the steps is necessary and it would certainly have to be supplemental material. However, I do think you need more here. A figure would make this easier to follow.}
+CW: I don't think a detailed check of all the steps is necessary and it would certainly have to be supplemental material. However, I do think you need more here. A figure would make this easier to follow.\\
+AG: Do you think the figure is enough?}
 \endproof
 
 \begin{corollary}\label{diameterUpperBoundCoro}
