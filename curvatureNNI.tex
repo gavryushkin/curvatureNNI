@@ -1,7 +1,5 @@
 \documentclass{amsart}
 
-\synctex=1
-
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage{todonotes}
 \usepackage[notref,notcite]{showkeys}
@@ -50,7 +48,7 @@
 \begin{document}
 
 
-\title{Random walks over discrete time-trees}
+\title{Nearest neighbors of discrete time-trees}
 
 
 \author{Alex Gavryushkin}
@@ -67,10 +65,10 @@
 
 
 \begin{abstract}
-We introduce and study a hierarchy of discrete approximations of the space of time-trees, with $\nni$-space being the roughest approximation.
-We design a heuristic for generating these spaces and study, analytically and computationally, graph-theoretic and computational properties of the spaces.
+We introduce and study a hierarchy of discrete approximations of the space of time-trees, with $\nni$ graph being the roughest approximation.
+We design a heuristic for generating these approximations and study, analytically and computationally, graph-theoretic and computational properties of the space.
 \iftoggle{curvatureON}{
-We also investigate the Ricci-Ollivier curvature of basic random walks on the spaces.
+We also investigate the Ricci-Ollivier curvature of basic random walks on the space.
 }{}
 \end{abstract}
 
@@ -117,7 +115,11 @@ Although inferential algorithms have been doing MCMC on time-trees for over a de
 Having such a theory would provide a foundation for understanding the behavior of MCMC algorithms on time-trees, as has been done previously for graphs associated with unrooted phylogenetic trees.
 Up to now, the only discretization of time-tree space that has been studied is that of ranked trees \autocite{Ford2009-qi,Lambert2013-mr}, and that hasn't been from a graph-theoretic perspective.
 
-In this paper we explore various discretized time-tree graphs, derive some of their properties, initiate the mathematical study of random walks on these spaces, and compare these results to those in the classical phylogenetic setting.
+In this paper we initiate the mathematical study of discretized time-tree graphs, obtain basic geometric and graph-theoretic results,
+\iftoggle{curvatureON}{
+study random walks on these graphs,
+}{}
+and compare these results to those in the classical phylogenetic setting.
 In particular, we focus on ranked trees, discretized time-trees (as defined above), and the ultrametric versions of those types of trees.
 \iftoggle{curvatureON}{
 We study Ricci-Ollivier curvature \autocite{Ollivier2009-cj} of Markov chains on these graphs, a formalism which quantifies to what extent random walking brings unit balls together.
@@ -163,11 +165,10 @@ We identify two discrete time-trees if they are isomorphic as trees and the isom
 
 We are now ready to introduce a hierarchy of discrete time-trees.
 
-At the bottom level of our hierarchy is the well-known $\nni$ space\footnote{We use the words ``space'' and ``graph'' interchangeably.}.
-\todo{EM: My preference would be to only use "space" for collections of trees with a continuous component.}
+At the bottom level of our hierarchy is the well-known $\nni$ graph.
 $\nni$ is a graph with the vertices being all trees on $n$ leaves.
 Two trees $T$ and $R$ are adjacent in $\nni$ if there exists an edge $e$ in $T$ and an edge $f$ in $R$ such that both edges are not adjacent to a leaf and the graph obtained from $T$ by suppressing $e$ is isomorphic to the graph obtained from $R$ by suppressing $f$.
-We denote this space by $\dtt_0$.
+We denote this graph by $\dtt_0$.
 
 Level $m > 0$ of the hierarchy is the following graph $\dtt_m$.
 The set of vertices of the graph is the set of all discrete time-trees on $n$ leaves such that every intercoalescent interval has its length not greater than $m$.
@@ -176,7 +177,7 @@ A length move changes the length of $I$ by 1.
 Swapping the rank of two nodes $x$ and $y$ swaps their times.
 $R$ can be obtained from $T$ by an $\nni$ move if there exists intercoalescent intervals $I$ and $J$ of length $1$ in $T$ and $R$, respectively, such that the graphs obtained by suppressing $I$ and $J$ are isomorphic and the isomorphism preserves the lengths of the intercoalescent intervals.
 
-A graph can also be seen as a metric space where the distance is given by the length of a shortest path, so we will refer to $\dtt_m$ as both.
+A graph can also be seen as a metric space where the distance is given by the length of a shortest path, so we will refer to $\dtt_m$ and other graphs introduced below as both.
 For simplicity, we use the general identifier $\dtt$ to refer to $\dtt_m$ with an arbitrary $m$.
 
 \begin{figure}[ht]
@@ -208,18 +209,15 @@ Indeed, if we consider
 $\tau$-space\footnote{Conveniently, the discretized versions of $\tau$- and $\mathrm t$-space from \autocite{Gavryushkin2014-bw} coincide.}
 defined by \textcite{Gavryushkin2014-bw} and allow the real-valued parameters (length intercoalescent intervals) to take only $m$ possible values from $1,\ldots,m$ then we get $\dtt_m$.
 In this case, $\dtt_0$ is the graph with the vertices being the cubes of $\tau$-space and the adjacency relation being the relation of ``have a shared facet of co-dimension $1$''.
-Furthermore, $\dtt$ can be seen as a subset of the integer lattice on each orthant in the BHV space \autocite{}.
-The edge relation in $\dtt$ is then induced by the BHV distance being less than some fixed number.
 
-The $\dtt_m$ space on ultrametric trees, that is the set of trees such that each leaf has the same time, is denoted by $\dttu_m$.
-The $\dtt_1$ space is denoted by $\rnni$ and called \emph{ranked NNI} space; on ultrametric trees we will denote it $\rnniu$.
-All of these can be considered as either a graph or a metric space, and we will refer to them as both.
+The $\dtt_m$ graph on ultrametric trees, that is the set of trees such that each leaf has the same time, is denoted by $\dttu_m$.
+The $\dtt_1$ graph is denoted by $\rnni$ and called \emph{ranked NNI} graph; on ultrametric trees we will denote it $\rnniu$.
 
 By $\ell_T(I)$ we denote the length of intercoalescent interval $I$ in tree $T$.
 \todo{Check if we use this notation and put it in correct place.}
 
 \iftoggle{curvatureON}{
-Furthermore, as $\nni$ space of unrooted tree topologies with $n-1$ leaves is isomorphic (as a graph) to the $\nni$ space of rooted tree topologies with $n$ leaves, all our results on curvature immediately imply their counterparts in unrooted NNI space.
+Furthermore, as $\nni$ graph on unrooted tree topologies with $n-1$ leaves is isomorphic (as a graph) to the $\nni$ graph on rooted tree topologies with $n$ leaves, all our results on curvature immediately imply their counterparts in unrooted $\nni$ graph.
 We omit from the text the exact formulations for unrooted trees, as they can be obtained in the obvious way.
 
 
@@ -269,10 +267,10 @@ Hence, we define the \emph{coarse Ricci-Ollivier curvature of a metric space} wi
 }{}
 
 
-\section{Geometry and complexity of space of discrete time-trees}
+\section{Geometry and complexity of discrete time-trees}
 
 We begin by considering the shortest path distance on the graphs.
-It is well-known that computing distances is NP-hard in $\nni$ space \autocite{Dasgupta2000-xa}.
+It is well-known that computing distances is NP-hard in $\nni$ \autocite{Dasgupta2000-xa}.
 Hence the following question is natural.
 
 \begin{problem}
@@ -298,7 +296,7 @@ In $\rnniu$ this path is not shortest, and one shortest path moves the parents o
 This example can be generalized to show that the set of trees of the form $(\ldots(1, i_2), \ldots, i_{n-1}), n)$, where $\{i_2, \ldots, i_{n-1}\} = \{2, \ldots, n-1\}$, is convex in $\dtt$ and is not convex in $\nni$.
 Indeed, the example shows that if two leaves have to be moved up, they can be moved independently along a shortest path.
 The generalization of this statement to an arbitrary number of leaves implies the convexity.
-This basic difference in the structure of the two spaces suggests that the complexity of computing the distance is likely to be different in the two spaces.
+This basic difference in the structure of the two graphs suggests that the complexity of computing the distance is likely to be different.
 
 We proceed by establishing basic geometric properties of discrete time-trees.
 
@@ -333,7 +331,7 @@ All bounds are tight.
 \end{lemma}
 
 \proof
-The lower bound in $\dtt$ space is attained by any tree with all intercoalescent intervals being of length $m$.
+The lower bound in $\dtt$ is attained by any tree with all intercoalescent intervals being of length $m$.
 In this case, $\deg(T)$ is simply the number of intercoalescent intervals, since every intercoalescent interval adds $1$ to the total degree of the tree.
 Other trees have the same or more possible intercoalescent interval changes, showing that this is a lower bound.
 The upper bound is attained by a caterpillar tree with all intervals short and no coalescent event being younger than a taxon.
@@ -346,14 +344,14 @@ For ultrametric trees, the number of intercoalescent intervals is $n-1$, hence t
 The number of intervals on which an NNI move is possible is $n-2$ for ultrametric trees, hence they contribute $2(n-2)$ to the degree.
 In total, this gives the upper bound of $3n-5$ for ultrametric trees.
 
-Since every NNI move results in two neighbors, the equality $\deg(T) = 2(n-2)$ follows for $\nni$ space.
+Since every $\nni$ move results in two neighbors, the equality $\deg(T) = 2(n-2)$ follows for $\nni$ graph.
 Indeed, it is not hard to see that the set of NNI moves that only consider moving a subtree to its aunt captures the full set of NNI neighbors with no duplicates.
 The neighborhood size then follows because the root and its two children have no aunt.
 
-The lower bound in $\rnni$ space is attained by the caterpillar-tree where taxa get ranks $0, 1, 3, 5, \ldots, 2n-3$ and internal nodes get ranks $2, 4, 6, \ldots, 2n-2$.
+The lower bound in $\rnni$ is attained by the caterpillar-tree where taxa get ranks $0, 1, 3, 5, \ldots, 2n-3$ and internal nodes get ranks $2, 4, 6, \ldots, 2n-2$.
 In other words, the coalescent events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence, and so on.
 In this case, intervals bounded by a taxon from below add nothing to the degree of the tree and intervals bounded from below by an internal node add one each, hence $n-1$ in total.
-The upper bound for both $\rnni$ and $\rnniu$ is obtained in the same way as for $\dtt$ space.
+The upper bound for both $\rnni$ and $\rnniu$ is obtained in the same way as for $\dtt$.
 
 For the lower bound in $\rnniu$, we note that the oldest intercoalescent interval (the one adjacent to the root) necessarily contributes $2$ to the degree.
 Hence the lower bound can be reached by a tree such that no other interval contributes more than 1.
@@ -375,7 +373,7 @@ The number of trees within distance $r$ from any given tree is at most
 \end{theorem}
 
 \proof
-We prove the theorem in $\rnniu$ and it will follow similarly in the other three spaces.
+We prove the theorem in $\rnniu$ and it will follow similarly in the other three graphs.
 The proof employs the technique from \autocite{Sleator1992-bp} for counting paths in a graph: we first apply Theorem~2.3 of \textcite{Sleator1992-bp} and then improve the bound using specific properties of the $\rnniu$ graph.
 
 We first need to introduce the \emph{graph grammar} for $\rnniu$.
@@ -426,9 +424,9 @@ The number of such strings, $3^{n-1+2r}$, gives the desired improved bound.
 \endproof
 
 
-\subsection{Diameter of the space}
+\subsection{Diameter of the graph}
 
-Theorem~\ref{neighSizeTh} provides a method for estimating the diameter of the space from below.
+Theorem~\ref{neighSizeTh} provides a method for estimating the diameter of the graph from below.
 Now we estimate the diameter from above.
 
 \begin{lemma}\label{diameterUpperBound}
@@ -509,9 +507,9 @@ $\Delta(\rnniu) < n^2 - n$ for all $n$.
 
 \subsection{Split theorem}
 
-\textcite{li1996some} used the information about the diameter of the space and the sizes of neighborhoods to provide an example of trees such that every shortest $\nni$ path between the trees fails to maintain a split of taxa shared by the origin and destination trees.~\todo{You should mention the history of the problem either here or in the introduction (assuming we can prove the theorem).}
+\textcite{li1996some} used the information about the diameter of the graph and the sizes of neighborhoods to provide an example of trees such that every shortest $\nni$ path between the trees fails to maintain a split of taxa shared by the origin and destination trees.~\todo{You should mention the history of the problem either here or in the introduction (assuming we can prove the theorem).}
 Specifically, they showed that sorting two caterpillar trees simultaneously is more efficient than sorting them independently, provided the size of the trees is large enough.
-In the following lemma, we show that the ranked versions of $\nni$ space maintain splits along shortest paths between caterpillar trees.
+In the following lemma, we show that the ranked versions of $\nni$ graph maintain splits along shortest paths between caterpillar trees.
 
 \begin{theorem}\label{splitTheo}
  Every split present in both trees $T$ and $R$ presents in all trees along every shortest path between $T$ and $R$ in $\dtt$, $\dttu$, $\rnni$, and $\rnniu$, but not in $\nni$.
@@ -526,7 +524,7 @@ The arguments goes as follows.
 Assume the contrary: there exists a geodesic that does not maintain the split.
 This path hence should first mix trees $T_A$ and $T_B$ together into a tree $T_A \oplus T_B$.
 Then convert $T_A \oplus T_B$ into $R_A \oplus R_B$ and then separate the latter tree into $R_A$ and $R_B$.
-The main ingradient of the proof is that mixing $T_A$ and $T_B$ together and then separating them into $R_A$ and $R_B$ takes more steps than just convert $T_A$ into $R_A$.
+The main ingredient of the proof is that mixing $T_A$ and $T_B$ together and then separating them into $R_A$ and $R_B$ takes more steps than just convert $T_A$ into $R_A$.
 Assuming $T_A$ and $R_A$ are of size $\frac n2$, it is enough to show that mixing + separating takes strictly more steps than the diameter of $\rnniu$ on $\frac n2$ taxa trees.
 
 The scenario works fine for many partial cases, e.g.\ double-caterpillar trees.
@@ -536,7 +534,7 @@ The general case remain illusive.
 
 \subsection{Computing the distance}
 
-We first bound the number of neighbors of a tree $x$ in $\dtt_2$-space that are closer than $x$ to a given tree $y$.
+We first bound the number of neighbors of a tree $x$ in $\dtt_2$ graph that are closer than $x$ to a given tree $y$.
 We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
 \iftoggle{curvatureON}{
 These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
@@ -558,7 +556,7 @@ Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
 \end{theorem}
 
 \begin{proof}
-We first prove the statement for $\dtt_2$ space.
+We first prove the statement for $\dtt_2$.
 
 Let $U$ be the set of neighbors $u$ of $x$ such that $d(u,y) \le d(x,y)$, as stated in the theorem.
 We partition $U$ into three sets of trees---$I$, $R$, and $L$---obtained from $x$ by a single NNI move, rank change, or length change, respectively.
@@ -584,7 +582,7 @@ Thus, the total size of $R$ is bounded by $d(x,y)$.
 The bound of $d(x,y)$ on the number of length changes that can be applied to move $x$ closer to $y$ follows similarly.
 Therefore, there are at most $|I| + |R| + |L| \le 2d(x,y) + d(x,y) + d(x,y) = 4d(x,y)$ trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$.
 
-The statement for the other three spaces follows similarly: for $\nni$ we need to count only for trees from $I$, for $\rnni$ we need to count only for trees from $I$ and $R$, for $\dtt$ we will have to add $2d(x,y)$ instead of $d(x,y)$ for $L$.
+The statement for the other three graphs follows similarly: for $\nni$ we need to count only for trees from $I$, for $\rnni$ we need to count only for trees from $I$ and $R$, for $\dtt$ we will have to add $2d(x,y)$ instead of $d(x,y)$ for $L$.
 \end{proof}
 
 A non-ranked tree has a symmetry associated with every internal node.
@@ -607,7 +605,7 @@ This implies that $i$ and $j$ have different parents.
 Hence $T \ne T_\sigma$ because the ranks of the parent of $i$ are different in $T$ and $T_\sigma$.
 \endproof
 
-These observations suggest that $\nni$ space is geometrically and algorithmically different from the other four spaces.
+These observations suggest that $\nni$ graph is geometrically and algorithmically different from the other four graphs.
 
 
 \iftoggle{curvatureON}{
@@ -616,15 +614,15 @@ These observations suggest that $\nni$ space is geometrically and algorithmicall
 We need the following corollaries for our analysis of curvature.
 
 \begin{corollary}\label{degreeBounds}
-The following are satisfied in $\dtt$ space for every pair of trees $T$ and $R$.
+The following are satisfied in $\dtt$ for every pair of trees $T$ and $R$.
 \begin{align*}
-& \deg(T)-\deg(R) \leq 3n-4		&& \mbox{in $\dtt$ space,}\\
-& \deg(T)-\deg(R) \leq 2n-4		&& \mbox{in $\dttu$ space,}\\
-& \deg(T)-\deg(R) \leq 2n-3		&& \mbox{in $\rnni$ space,}\\
-& \deg(T)-\deg(R) \leq n-3			&& \mbox{in $\rnniu$ space,}\\
-& \dfrac25 < \dfrac{\deg(T)}{\deg(R)} < \dfrac52		&& \mbox{in $\dtt$ space,}\\
-& \dfrac13 < \dfrac{\deg(T)}{\deg(R)} < 3			&& \mbox{in $\dttu$ and $\rnni$ spaces,}\\
-& \dfrac12 < \dfrac{\deg(T)}{\deg(R)} < 2			&& \mbox{in $\rnniu$ space,}\\
+& \deg(T)-\deg(R) \leq 3n-4					&& \mbox{in $\dtt$,}\\
+& \deg(T)-\deg(R) \leq 2n-4					&& \mbox{in $\dttu$,}\\
+& \deg(T)-\deg(R) \leq 2n-3					&& \mbox{in $\rnni$,}\\
+& \deg(T)-\deg(R) \leq n-3					&& \mbox{in $\rnniu$,}\\
+& \dfrac25 < \dfrac{\deg(T)}{\deg(R)} < \dfrac52		&& \mbox{in $\dtt$,}\\
+& \dfrac13 < \dfrac{\deg(T)}{\deg(R)} < 3			&& \mbox{in $\dttu$ and $\rnni$,}\\
+& \dfrac12 < \dfrac{\deg(T)}{\deg(R)} < 2			&& \mbox{in $\rnniu$,}\\
 \end{align*}
 and all inequalities are tight.
 \end{corollary}
@@ -639,13 +637,13 @@ For the fifth inequality we note that
 The upper bound follows similarly, as well as the rest of inequalities.
 \endproof
 
-For $\nni$ space, Lemma~\ref{neighBound} implies that $deg(T)-deg(R) = 0$ and $\frac{\deg(T)}{deg(R)} = 1$.
+For $\nni$ graph, Lemma~\ref{neighBound} implies that $deg(T)-deg(R) = 0$ and $\frac{\deg(T)}{deg(R)} = 1$.
 
 Let $N(T)$ be the set of trees at distance one from $T$, that is, the set of trees adjacent to $T$ in the corresponding graph.
 The following lemma describes how many trees the tree neighborhoods can have in common.
 
 \begin{lemma}\label{intersecNeighb}
-The following is true for all the spaces $\nni$, $\rnni$, $\rnniu$, $\dtt$, and $\dttu$.
+The following is true for all the graphs $\nni$, $\rnni$, $\rnniu$, $\dtt$, and $\dttu$.
 If $d(T,R) = 1$ then $|N(T)\cap N(R)|\in\{0,1\}$.
 \end{lemma}
 
@@ -692,9 +690,9 @@ As we will see in the next few lemmas, these bounds can be improved for certain 
 Let $T$ and $R$ be adjacent trees.
 Then the curvature of the following spaces with uniform random walk satisfy
 \begin{align*}
-& \kappa(T,R) \leq \dfrac{1}{2(n-1)}	&& \mbox{for $\dtt$ space,}\\
-& \kappa(T,R) \leq \dfrac{1}{2(n-2)}	&& \mbox{for $\nni$ space, and}\\
-& \kappa(T,R) \leq \dfrac{1}{n-1}	&& \mbox{for $\rnni$, $\rnniu$, and $\dttu$ spaces.}
+& \kappa(T,R) \leq \dfrac{1}{2(n-1)}	&& \mbox{for $\dtt$,}\\
+& \kappa(T,R) \leq \dfrac{1}{2(n-2)}	&& \mbox{for $\nni$, and}\\
+& \kappa(T,R) \leq \dfrac{1}{n-1}	&& \mbox{for $\rnni$, $\rnniu$, and $\dttu$.}
 \end{align*}
 The bounds are tight.
 \end{lemma}
@@ -704,7 +702,7 @@ To maximize the curvature $\kappa(T,R)$, we have to minimize $W(m_T,m_R) = \inf\
 The latter is minimized when the probability mass $\mu(x,y)$ to be moved at shorter distance $d(x,y)$ is maximized.
 Since $d(T,R) = 1$, it follows from Lemma~\ref{intersecNeighb} that the smallest possible value of $d(x,y)$ is $0$ (the case when $|N(T) \cap N(R)| = 1$).
 Hence, to maximize the curvature we are to maximize the probability mass allocated to the tree $E$ in the intersection $N(T) \cap N(R)$.
-It follows from Lemma~\ref{neighBound} that the maximal mass $p_E$ we can allocate under a uniform random walk to the tree $E$ is $\frac{1}{2(n-1)}$ in $\dtt$ space, $\frac{1}{2(n-2)}$ in $\nni$ space, and $\frac{1}{n-1}$ in $\rnni$, $\rnniu$, and $\dttu$ spaces.
+It follows from Lemma~\ref{neighBound} that the maximal mass $p_E$ we can allocate under a uniform random walk to the tree $E$ is $\frac{1}{2(n-1)}$ in $\dtt$, $\frac{1}{2(n-2)}$ in $\nni$, and $\frac{1}{n-1}$ in $\rnni$, $\rnniu$, and $\dttu$.
 It is not hard to see that trees $T$ and $R$ can be chosen so that $d(x,y) = 1$ for all $x,y$ which are different from $E$ and for which $\mu(x,y) > 0$.
 Hence, $\kappa(T, R) = 1 - \left(\sum\limits_{x,y\in V\setminus\{E\}}\mu(x,y)\cdot 1 + p_E \cdot 0\right) = 1 - (1-p_E) = p_E$.
 The lemma follows.
@@ -715,9 +713,9 @@ This lemma and corollary provide tighter upper bounds for the curvature than Lem
 It is easy to generalize the lemma to the uniform $p$-lazy random walk.
 Indeed, we observe that the curvature between adjacent trees $T$ and $R$ under a uniform $p$-lazy random walk satisfies
 \begin{align*}
-& \kappa(T,R) \leq \frac{p}{2(n-1)}	&& \mbox{in $\dtt$ space,}\\
-& \kappa(T,R) \leq \frac{p}{2(n-2)}	&& \mbox{in $\nni$ space, and}\\
-& \kappa(T,R) \leq \frac{p}{n-1}		&& \mbox{in $\rnni$, $\rnniu$, and $\dttu$ spaces.}
+& \kappa(T,R) \leq \frac{p}{2(n-1)}	&& \mbox{in $\dtt$,}\\
+& \kappa(T,R) \leq \frac{p}{2(n-2)}	&& \mbox{in $\nni$, and}\\
+& \kappa(T,R) \leq \frac{p}{n-1}	&& \mbox{in $\rnni$, $\rnniu$, and $\dttu$.}
 \end{align*}
 
 We recall that the \emph{asymptotic Ricci-Ollivier curvature}~\autocite{Loisel2014-gu} $\ric$ of a metric space with uniform $p$-lazy random walk is defined by
@@ -741,9 +739,9 @@ We continue with lower bounds on curvature of spaces with uniform lazy random wa
 Let $T$ and $R$ be adjacent trees.
 Then both the asymptotic curvature of the space with $p$-lazy uniform random walk and the curvature of the space with uniform random walk are at least
 \begin{enumerate}[(i)]
-\item $-\dfrac{4}{n-1}$ in $\dtt$ space,
-\item $-\dfrac{4}{n-2}$ in $\nni$ space,
-\item $-\dfrac{8}{n-1}$ in $\rnni$ space.
+\item $-\dfrac{4}{n-1}$ in $\dtt$,
+\item $-\dfrac{4}{n-2}$ in $\nni$,
+\item $-\dfrac{8}{n-1}$ in $\rnni$.
 \end{enumerate}
 
 The bounds are tight.
@@ -774,12 +772,12 @@ W(m_T,m_R)\leq 8 \cdot 2 \cdot \frac{p}{|N(T)|} +
 $1 + \dfrac{8p}{|N(T)|}$.
 Hence, $\ric(T,R) = \lim\limits_{p\to0}\left(1 - W(m_T,m_R)\right) \geq - \dfrac{8}{|N(T)|}$.
 
-It remains to note that Lemma~\ref{neighBound} gives us an estimate $|N(T)| \geq 2(n-1)$ in $\dtt$, $|N(T)| \geq 2(n-2)$ in $\nni$, and $|N(T)| \geq n-1$ in $\rnni$ space.
+It remains to note that Lemma~\ref{neighBound} gives us an estimate $|N(T)| \geq 2(n-1)$ in $\dtt$, $|N(T)| \geq 2(n-2)$ in $\nni$, and $|N(T)| \geq n-1$ in $\rnni$.
 The lemma follows.
 \endproof
 
 \begin{corollary}\label{flatInLimDTS}
-Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of trees such that $d(T_n,R_n) = 1$ in $\nni$, $\rnni$, or $\dtt$ space.
+Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of trees such that $d(T_n,R_n) = 1$ in $\nni$, $\rnni$, or $\dtt$.
 Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = \lim\limits_{n \to \infty}\ric(T_n,R_n) = 0$.
 \end{corollary}
 
@@ -787,8 +785,8 @@ Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = \lim\limits_{n \to \infty}\ric
 Follows from Lemma~\ref{uniformUpper} and Lemma~\ref{uniformLower}.
 \endproof
 
-As we have just proved, the corollary above holds true in $\nni$, $\rnni$, and $\dtt$ spaces.
-This corollary is also true in the SPR space of rooted trees \autocite{Whidden2015-es}.
+As we have just proved, the corollary above holds true in $\nni$, $\rnni$, and $\dtt$.
+This corollary is also true in the SPR graph of rooted trees \autocite{Whidden2015-es}.
 Actually, this property can be derived from the following general statement for all spaces mentioned, as well as for many others.
 
 \begin{proposition}\label{flatInLimGen}
@@ -865,7 +863,7 @@ We now estimate the curvature of the Metropolis-Hastings random walk, which prop
 We denote the corresponding curvature by $\kappa(\MH;T,R)$.
 
 \begin{lemma}
-The following inequalities are satisfied in both $\dtt_2$ and $\dtt$ spaces.
+The following inequalities are satisfied in both $\dtt_2$ and $\dtt$.
 \[
 \kappa(T,R) - \dfrac{6}{5d(T,R)} \leq \kappa(\MH;T,R) \leq \kappa(T,R) +
 \dfrac{6}{5d(T,R)}\mbox{, and}
@@ -881,7 +879,7 @@ The rest of the proof follows \autocite[][Proof of Lemma~V.8]{Whidden2015-es} li
 \endproof
 
 \begin{corollary}
-The following inequalities are satisfied in $\rnni$ \todo{What about NNI?} space.
+The following inequalities are satisfied in $\rnni$ \todo{What about NNI?}.
 \[
 \kappa(T,R) - \dfrac{4}{3d(T,R)} \leq \kappa(\MH;T,R) \leq \kappa(T,R) +
 \dfrac{4}{3d(T,R)}\mbox{, and}
