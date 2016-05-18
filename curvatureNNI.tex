@@ -213,9 +213,6 @@ In this case, $\dtt_0$ is the graph with the vertices being the cubes of $\tau$-
 The $\dtt_m$ graph on ultrametric trees, that is the set of trees such that each leaf has the same time, is denoted by $\dttu_m$.
 The $\dtt_1$ graph is denoted by $\rnni$ and called \emph{ranked NNI} graph; on ultrametric trees we will denote it $\rnniu$.
 
-By $\ell_T(I)$ we denote the length of intercoalescent interval $I$ in tree $T$.
-\todo{Check if we use this notation and put it in correct place.}
-
 \iftoggle{curvatureON}{
 Furthermore, as $\nni$ graph on unrooted tree topologies with $n-1$ leaves is isomorphic (as a graph) to the $\nni$ graph on rooted tree topologies with $n$ leaves, all our results on curvature immediately imply their counterparts in unrooted $\nni$ graph.
 We omit from the text the exact formulations for unrooted trees, as they can be obtained in the obvious way.
@@ -429,17 +426,17 @@ The number of such strings, $3^{n-1+2r}$, gives the desired improved bound.
 Theorem~\ref{neighSizeTh} provides a method for estimating the diameter of the graph from below.
 Now we estimate the diameter from above.
 
-\begin{lemma}\label{diameterUpperBound}
+\begin{theorem}\label{diameterUpperBound}
 Let $\Delta(\G)$ be the diameter of graph $\G$.
 Then for $n \ge 4$,
 \[
 \Delta(\rnniu) \le n^2 - 3n - \frac 58.
 \]
-\end{lemma}
+\end{theorem}
 
 \proof
 Let $T$ and $R$ be trees in $\rnniu$.
-We show that there exists a path between them of length $\frac{13}{14}n^2 - \frac{11}{4}n - \frac{9}{16}$ or shorter.
+We show that there exists a path between them of length $n^2 - 3n - \frac 58$ or shorter.
 We denote the taxa on one side from the root of $T$ by $A$ and the rest of taxa by $B$.
 Let $A = A_1 \cup A_2$ and $B = B_1 \cup B_2$ so that the root of $R$ splits the taxa into $A_1 \cup B_1$ and $A_2 \cup B_2$.
 Note that all $A_i$'s and $B_i$'s have to be disjoint.
