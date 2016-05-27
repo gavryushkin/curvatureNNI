@@ -113,7 +113,7 @@ We call such a graph a \emph{discretized time-tree graph}.
 
 Although inferential algorithms have been doing MCMC on time-trees for over a decade, and graphs corresponding to discretizations of unrooted tree space have been studied for even longer, we are not aware of any work defining graphs from discretization of time-tree space or doing analysis of random walks thereupon.
 Having such a theory would provide a foundation for understanding the behavior of MCMC algorithms on time-trees, as has been done previously for graphs associated with unrooted phylogenetic trees.
-Up to now, the only discretization of time-tree space that has been studied is that of ranked trees \autocite{Ford2009-qi,Lambert2013-mr}, and that hasn't been from a graph-theoretic perspective.
+Up to now, the only discretization of time-tree space that has been studied is that of ranked trees \autocite{Ford2009-qi,Lambert2013-mr}, and not from a graph-theoretic perspective.
 
 In this paper we initiate the mathematical study of discretized time-tree graphs, obtain basic geometric and graph-theoretic results,
 \iftoggle{curvatureON}{
@@ -145,7 +145,7 @@ If there's something interesting to say about distances on rNNI, then add that t
 Throughout the paper by a (phylogenetic) \emph{tree} we mean a rooted binary tree with designated leaves, that is, an undirected acyclic graph with the following properties:
 (1) all nodes have degree $1$, $2$, or $3$; (2) there exists exactly one node of degree $2$, this node is called the \emph{root} of the tree; (3) all nodes of degree $1$ are marked by different constants, these nodes are called \emph{leaves}.
 The \emph{parent} of a node $x$ in a tree is the unique node $y$ that is both adjacent to $x$ and closer to the root of the tree than $x$.
-Every node of a tree has a parent except for the root.
+Every node of a tree has a parent except for the root, and is called the \emph{child} of that parent.
 
 We fix the number of leaves of the trees and denote this number by $n$ throughout the paper.
 We also assume that each tree with $n$ leaves uses the same fixed set of $n$ constants to mark the leaves.
@@ -211,7 +211,7 @@ defined by \textcite{Gavryushkin2014-bw} and allow the real-valued parameters (l
 In this case, $\dtt_0$ is the graph with the vertices being the cubes of $\tau$-space and the adjacency relation being the relation of ``have a shared facet of co-dimension $1$''.
 
 The $\dtt_m$ graph on ultrametric trees, that is the set of trees such that each leaf has the same time, is denoted by $\dttu_m$.
-The $\dtt_1$ graph is denoted by $\rnni$ and called \emph{ranked NNI} graph; on ultrametric trees we will denote it $\rnniu$.
+The $\dtt_1$ graph is denoted by $\rnni$ and called the \emph{ranked NNI} graph; on ultrametric trees we will denote it $\rnniu$.
 
 \iftoggle{curvatureON}{
 Furthermore, as $\nni$ graph on unrooted tree topologies with $n-1$ leaves is isomorphic (as a graph) to the $\nni$ graph on rooted tree topologies with $n$ leaves, all our results on curvature immediately imply their counterparts in unrooted $\nni$ graph.
@@ -278,7 +278,7 @@ Although this problem remains open, we make progress towards the solution by est
 First, we demonstrate in the following example that even for caterpillar trees the complexity cannot be derived from the complexity of $\nni$ distance.
 
 \begin{example}
-Let $T$ be the ultrametric tree $((((((1, 2), 3), 4), 5), 6), 7)$ and $R$ be the ultrametric tree $((((((1, 4), 5), 6), 2), 3), 7)$.
+	Let $T$ be the ultrametric tree denoted $((((((1, 2), 3), 4), 5), 6), 7)$ in Newick notation~\autocite{felsenstein1990newick}~\todo{This citation is formatted oddly, why is the first name included here but not in other citations?} and $R$ be the ultrametric tree $((((((1, 4), 5), 6), 2), 3), 7)$.
 Then a shortest $\nni$ path is given by first making a cherry $(2,3)$, then moving the cherry up to the split $1456 \mid 7$, and then resolving the cherry back.
 In $\rnniu$ this path is not shortest, and one shortest path moves the parents of $2$ and $3$ up independently.
 
@@ -364,7 +364,7 @@ The number of trees within distance $r$ from any given tree is at most
 \begin{itemize}
 \item[] $3^{n+2r-1}$ in $\rnniu$,
 \item[] $3^{2n+2r-2}$ in $\rnni$,
-\item[] TBA in $\dtt$,
+\item[] TBA in $\dtt$~\todo{Is this still unknown?},
 \item[] TBA in $\dttu$.
 \end{itemize}
 \end{theorem}
@@ -437,7 +437,7 @@ Then for $n \ge 4$,
 \proof
 Let $T$ and $R$ be trees in $\rnniu$.
 We show that there exists a path between them of length $n^2 - 3n - \frac 58$ or shorter.
-We denote the taxa on one side from the root of $T$ by $A$ and the rest of taxa by $B$.
+We denote the taxa on one side from the root of $T$ by $A$ and the rest of the taxa by $B$.
 Let $A = A_1 \cup A_2$ and $B = B_1 \cup B_2$ so that the root of $R$ splits the taxa into $A_1 \cup B_1$ and $A_2 \cup B_2$.
 Note that all $A_i$'s and $B_i$'s have to be disjoint.
 We assume that $|A_1| = |A_2| = |B_1| = |B_2| = \frac{n-1}{4}$ and denote this number by $m$.
@@ -449,7 +449,7 @@ Let $f(n)$ be the desired upper bound.
 \begin{figure}
 \centering
 \includegraphics[width = \textwidth]{diameterUpperBound.pdf}
-\caption{An algorithm to compute a path between discrete time-trees.
+\caption{An algorithm to compute a (not necessarily shortest) path between discrete time-trees.
 Although the trees at steps $(6)$ and $(7)$ look identical, the topologies inside the triangles are different: those at step $(6)$ correspond to the restriction of $T$, at step $(7)$---of $R$.}
 \label{diameterUpperBound.pdf}
 \end{figure}
@@ -473,7 +473,7 @@ This can be done in $m^2$ moves.
 \item Move the caterpillar tree on $B_1$ to the other side of the root.
 This can be done in $\frac12 m^2 + \frac12 m$ moves.
 
-\item Move $B_2$ in between of $A_2$ and $A_1$.
+\item Move $B_2$ in between $A_2$ and $A_1$.
 This can be done in $m^2$ moves.
 
 \item Convert the subtree restricted to $A_1$ to that in $R$.
@@ -481,7 +481,7 @@ Then convert the subtree restricted to $B_2$ to that in $R$.
 This takes $2f(n/4)$ moves.
 
 \item Move $B_2$ to its place in $R$.
-This takes $m^2$ moves.
+	This takes $m^2$ moves~\todo{CW: I'm still confused by what it means to ``move'' $B_2$. I'll comment on slack}.
 
 \item Move $A_2$ to its place in $R$.
 This takes $2m^2$.
@@ -526,7 +526,7 @@ In the following lemma, we show that the ranked versions of $\nni$ graph maintai
 The work-in-progress proof is on branch
 \url{https://github.com/gavruskin/curvatureNNI/tree/splitTheoProof} branch.
 
-Let $A|B$ be the split under considertaion and $T_A$, $T_B$, $R_A$, $R_B$---corresponding restriction of trees $T$ and $R$.
+Let $A|B$ be the split under consideration and $T_A$, $T_B$, $R_A$, $R_B$---corresponding restriction of trees $T$ and $R$.
 The arguments goes as follows.
 Assume the contrary: there exists a geodesic that does not maintain the split.
 This path hence should first mix trees $T_A$ and $T_B$ together into a tree $T_A \oplus T_B$.
@@ -547,7 +547,7 @@ We show that the maximum fraction of neighbors that tend closer to $y$ grows lin
 These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
 }{
 When the graph is seen as a metric space, this property is important for the study of the curvature of the space as well as convergence properties of random walks over the space.
-However, these are the subject of a future work.
+This will be useful in future studies analagous to~\autocite{Whidden2015-es}.
 }
 
 \begin{theorem}
@@ -906,7 +906,7 @@ Use Corollary~\ref{degreeBounds}.
 
 We use the following algorithm designed by \textcite{Whidden2015-es} to compute the $\rnni$ graph on $n$ leaves.
 The input to our algorithm is a set $S$ of ranked phylogenetic tree topologies in the format described by \textcite{Gavryushkin2014-bw} \autocite[see also][]{Semple2003-nj}.
-A tree is hence given by a sequence of sets of taxa, and thus obtained representation is unique.
+A tree is hence given by a sequence of sets of taxa, and this obtained representation is unique.
 For example, the representation of the tree on Figure~?? \todo{} is $(\{A\}, \{C\}, \{D\}, \{B\}, \{E\}, \{A,B\}, \{D,E\}, \{C, D, E\}, \{F\}, \{A,B,F\}, \{A,B,C,D,E,F\})$, or
 $(\{A,B\}, \{D,E\}, \{C, D, E\}, \{A,B,F\}, \{A,B,C,D,E,F\})$ if we make the tree ultrametric by placing all taxa below the most recent divergence event.
 Using this representation of trees we construct a map $\nu : S \to \omega$, where $\omega$ is the set of non-negative integers.
@@ -973,7 +973,7 @@ The list of conjectures that would be nice to settle or refute in this paper:
 We finish this section with the following proposition that suggests that the graphs under consideration have ``bottlenecks''.
 To make this statement precise we need to introduce the following notion.
 Let $G = (V, E)$ be an undirected graph and $S$ a subset of the set of vertices $V$.
-The boundary $\partial S$ of $S$ is the set of edges ``pointing our from $S$'': $\partial S = \{(v,w) \in E \mid v \in S ~\&~ w \notin S\}$.
+The boundary $\partial S$ of $S$ is the set of edges ``pointing out from $S$'': $\partial S = \{(v,w) \in E \mid v \in S ~\&~ w \notin S\}$.
 Then the \emph{isoperimetric number} $h(G)$ of $G$ is defined by
 \[
 h(G) = \inf\limits_{0 < |S| \leq \frac12|V|} \frac{|\partial S|}{|S|}.
@@ -990,7 +990,7 @@ Let $S$ be the set of trees $T$ such that $T$ has the split $A \mid B$.
 Then $\lim_n \frac{|\partial S|}{|S|} = 0$ for all graphs under consideration.
 \endproof
 
-This proposition implies for phylogenetic graphs that the isoperimetric number is asymptotically the smallest possible, which can be interpreted as that the graphs have as the tightest possible bottlenecks.
+This proposition implies for phylogenetic graphs that the isoperimetric number is asymptotically the smallest possible, which can be interpreted as that the graphs have the tightest possible bottlenecks.
 
 
 \section{Discussion}
