@@ -278,7 +278,7 @@ Although this problem remains open, we make progress towards the solution by est
 First, we demonstrate in the following example that even for caterpillar trees the complexity cannot be derived from the complexity of $\nni$ distance.
 
 \begin{example}
-	Let $T$ be the ultrametric tree denoted $((((((1, 2), 3), 4), 5), 6), 7)$ in Newick notation~\autocite{felsenstein1990newick}~\todo{This citation is formatted oddly, why is the first name included here but not in other citations?} and $R$ be the ultrametric tree $((((((1, 4), 5), 6), 2), 3), 7)$.
+Let $T$ be the ultrametric tree denoted $((((((1, 2), 3), 4), 5), 6), 7)$ in Newick notation \autocite{felsenstein1990newick} and $R$ be the ultrametric tree $((((((1, 4), 5), 6), 2), 3), 7)$.
 Then a shortest $\nni$ path is given by first making a cherry $(2,3)$, then moving the cherry up to the split $1456 \mid 7$, and then resolving the cherry back.
 In $\rnniu$ this path is not shortest, and one shortest path moves the parents of $2$ and $3$ up independently.
 
@@ -501,10 +501,6 @@ It remains to note that the assumption $|A_1| = |A_2| = |B_1| = |B_2| = \frac{n-
 Indeed, the sets can be chosen so that at most half of the nodes have to cross the root, that is, $|A_2 \cup B_1| \le \frac{n-1}{2}$.
 Furthermore, the smaller the size of $A_2 \cup B_1$ the shorter the path.
 Finally, the total length of the path is maximized when $|A_2| = |B_1|$ and $|A_1| = |B_2|$.
-\todo[inline]{AG: A detailed proof includes a check of all 10 steps.
-Do we need that in the text?\\
-CW: I don't think a detailed check of all the steps is necessary and it would certainly have to be supplemental material. However, I do think you need more here. A figure would make this easier to follow.\\
-AG: Do you think the figure is enough?}
 \endproof
 
 \begin{corollary}\label{diameterUpperBoundCoro}
