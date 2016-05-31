@@ -88,8 +88,9 @@ These methods have had an especially significant impact in the study of quickly 
 For example, such methods can be used to infer time to a most recent common ancestor of human HIV group M viruses \autocite{Worobey2008-rt,Baele2013-op}.
 Thus the \emph{time-tree}---a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates---has become an important object of interest.
 This is in contrast to classical phylogenetic trees in which branch lengths quantify the amount of molecular substitution along a branch.
-Posterior distributions on both time-trees and classical trees are estimated using Markov chain Monte Carlo \autocite{Mau1997-sq,Yang1997-gv,Drummond2002}.
+Posterior distributions on both time-trees and classical trees are estimated using Markov chain Monte Carlo \autocite{Mau1997-sq,Yang1997-gv,Drummond2002}, but with different transition kernels.
 Although Markov chain Monte Carlo (MCMC) is guaranteed to sample from the true posterior given an infinite run time, it is important to understand mixing properties of the chain, which determine sampling properties for a finite time run.
+This paper builds a foundation for understanding mixing properties of MCMC on time trees.
 
 \begin{figure}[ht]
 \centering
@@ -119,7 +120,7 @@ We call such a graph a \emph{discretized time-tree graph}.
 
 Although inferential algorithms have been doing MCMC on time-trees for over a decade, and graphs corresponding to discretizations of unrooted tree space have been studied for even longer, we are not aware of any work defining graphs from discretization of time-tree space or doing analysis of random walks thereupon.
 Having such a theory would provide a foundation for understanding the behavior of MCMC algorithms on time-trees, as has been done previously for graphs associated with unrooted phylogenetic trees.
-Up to now, the only discretization of time-tree space that has been studied is that of ranked trees \autocite{Ford2009-qi,Lambert2013-mr}, and not from a graph-theoretic perspective.
+Up to now, the only discretization of time-tree space that has been studied is that of ranked trees \autocite{Ford2009-qi,Lambert2013-mr}, and that was not from a graph-theoretic perspective.
 
 In this paper we initiate the mathematical study of discretized time-tree graphs, obtain basic geometric and graph-theoretic results,
 \iftoggle{curvatureON}{
@@ -139,7 +140,7 @@ This formalism has recently been applied to Markov chains on graphs of classical
 }{}
 
 Throughout the paper by a (phylogenetic) \emph{tree} we mean a rooted binary tree with designated leaves, that is, an undirected acyclic graph with the following properties:
-(1) all nodes have degree $1$, $2$, or $3$; (2) there exists exactly one node of degree $2$, this node is called the \emph{root} of the tree; (3) all nodes of degree $1$ are marked by different constants, these nodes are called \emph{leaves} or \emph{taxa}.
+(1) all nodes have degree $1$, $2$, or $3$; (2) there exists exactly one node of degree $2$, this node is called the \emph{root} of the tree; (3) all nodes of degree $1$ are labeled by distinct identifiers, these nodes are called \emph{leaves} or \emph{taxa}.
 The \emph{parent} of a node $x$ in a tree is the unique node $y$ that is both adjacent to $x$ and closer to the root of the tree than $x$.
 Every node of a tree has a parent except for the root, and is called the \emph{child} of that parent.
 
@@ -158,15 +159,18 @@ The \emph{rank} of a node is the number of nodes in the tree with strictly small
 We say that a pair of nodes $x,y$ of a discrete time-tree is an \emph{intercoalescent interval} if there exists no node $z$ such that the time of $z$ is between the time of $x$ and $y$.
 The difference between the times of $x$ and $y$ is called the \emph{length} of the interval $x,y$.
 We identify two discrete time-trees if they are isomorphic as trees and the isomorphism preserves ranks of the nodes as well as intercoalescent interval lengths.
+%EM I think it would be worth clarifying that the "intercoalescent interval" is a slight misnomer for the non-ultrametric case, because there are intercoalescent intervals between the appearance of taxa, although no coalescence has happened there. Would "event interval" be more appropriate, or is it too late to change?
+%EM Also, I suggest pointing out that taxa can be younger than coalescence nodes, because none of the examples show this explicitly.
 
 We are now ready to introduce a hierarchy of discrete time-trees.
 
 At the bottom level of our hierarchy is the well-known $\nni$ graph.
 $\nni$ is a graph with the vertices being all trees on $n$ leaves.
+%EM Rather than "suppressing", I suggest "removing" as I think it's more clear. Or did you mean "shrinking" the edge to zero length, making the corresponding identifications?
 Two trees $T$ and $R$ are adjacent in $\nni$ if there exists an edge $e$ in $T$ and an edge $f$ in $R$ such that both edges are not adjacent to a leaf and the graph obtained from $T$ by suppressing $e$ is isomorphic to the graph obtained from $R$ by suppressing $f$.
 We denote this graph by $\dtt_0$.
 
-Level $m > 0$ of the hierarchy is the following graph $\dtt_m$.
+The following graph $\dtt_m$ forms the level $m > 0$ of the hierarchy.
 The set of vertices of the graph is the set of all discrete time-trees on $n$ leaves such that every intercoalescent interval has its length not greater than $m$.
 Two trees $T$ and $R$ are adjacent in $\dtt_m$ if $R$ can be obtained from $T$ by one of three operations: a \emph{length move performed on interval} $I$, \emph{swapping the rank of two nodes $x$ and $y$} or an \emph{$\nni$ move performed on interval $I$} (Figure~\ref{DtT.pdf}).
 A length move changes the length of $I$ by 1.
@@ -174,7 +178,8 @@ Swapping the rank of two nodes $x$ and $y$ swaps their times.
 $R$ can be obtained from $T$ by an $\nni$ move if there exists intercoalescent intervals $I$ and $J$ of length $1$ in $T$ and $R$, respectively, such that the graphs obtained by suppressing $I$ and $J$ are isomorphic and the isomorphism preserves the lengths of the intercoalescent intervals.
 
 A graph can also be seen as a metric space where the distance is given by the length of a shortest path, so we will refer to $\dtt_m$ and other graphs introduced below as both.
-For simplicity, we use the general identifier $\dtt$ to refer to $\dtt_m$ with an arbitrary $m$.
+%EM It's not so obvious from this following sentence if dtt is the union of the dtt_m 's or if it's a generic name for any one of them.
+For simplicity, we use the general identifier $\dtt$ to refer to $\dtt_m$ with an arbitrary $m \geq 0$.
 
 \begin{figure}[ht]
 \centering
@@ -208,6 +213,8 @@ In this case, $\dtt_0$ is the graph with the vertices being the cubes of $\tau$-
 
 The $\dtt_m$ graph on ultrametric trees, that is the set of trees such that each leaf has the same time, is denoted by $\dttu_m$.
 The $\dtt_1$ graph is denoted by $\rnni$ and called the \emph{ranked $\nni$} graph; on ultrametric trees we will denote it $\rnniu$.
+%EM Suggest changing to RNNI, and specifically calling out that this is not rooted NNI.
+We emphasize that although this is the $\rnni$ \emph{graph}, NNI \emph{moves} can be applied to trees in any of the spaces considered (under appropriate conditions).
 
 \iftoggle{curvatureON}{
 Furthermore, as $\nni$ graph on unrooted tree topologies with $n-1$ leaves is isomorphic (as a graph) to the $\nni$ graph on rooted tree topologies with $n$ leaves, all our results on curvature immediately imply their counterparts in unrooted $\nni$ graph.
@@ -296,6 +303,7 @@ We proceed by establishing basic geometric properties of discrete time-trees.
 
 \subsection{Sizes of neighborhoods}
 
+%EM seems a little funny to put Semple2003-nj as a reference in the proof like this, as they just collected results. I suggest just saying that proofs can be found in that book after the statement of the lemma.
 \begin{lemma}[\textcite{Semple2003-nj}]\label{spaceSizes}
 Let $|V|$ be the number of vertices in the graph, then $|V|$ is equal to
 \begin{align*}
@@ -307,8 +315,10 @@ Let $|V|$ be the number of vertices in the graph, then $|V|$ is equal to
 \end{align*}
 \end{lemma}
 
-We continue with the following bounds on the sizes of one-neighborhoods of various discretization of the space of time-trees.
+We continue with the following bounds on the sizes of one-neighborhoods of various discretizations of the space of time-trees.
+\iftoggle{curvatureON}{
 We will use these bounds to estimate the curvature of various random walks later in the paper.
+}{}
 
 \begin{lemma}\label{neighBound}
 Let $T$ be a tree on $n$ leaves.
@@ -324,6 +334,7 @@ All bounds are tight.
 \end{lemma}
 
 \proof
+%EM Doesn't this need to be "of length $m > 1$"?
 The lower bound in $\dtt$ is attained by any tree with all intercoalescent intervals being of length $m$.
 In this case, $\deg(T)$ is simply the number of intercoalescent intervals, since every intercoalescent interval adds $1$ to the total degree of the tree.
 Other trees have the same or more possible intercoalescent interval changes, showing that this is a lower bound.
@@ -351,6 +362,7 @@ Hence the lower bound can be reached by a tree such that no other interval contr
 The degree of such a tree is $n-1$ in $\rnniu$.
 \endproof
 
+Lemma~\ref{neighBound} gives tight bounds for the number of trees in a 1-neighborhood, while the following theorem gives an upper bound for the number of trees in an $r$-neighborhood.
 The following theorem bounds the sizes of neighborhoods.
 \todo{Does this improve the best known bound for NNI?
 If so, add this to the inro.}
@@ -367,22 +379,25 @@ The number of trees within distance $r$ from any given tree is at most
 
 \proof
 We prove the theorem in $\rnniu$ and it will follow similarly in the other three graphs.
-The proof employs the technique from \autocite{Sleator1992-bp} for counting paths in a graph: we first apply Theorem~2.3 of \textcite{Sleator1992-bp} and then improve the bound using specific properties of the $\rnniu$ graph.
+The proof employs the technique by \textcite{Sleator1992-bp} for counting paths in a graph: we first apply Theorem~2.3 of \textcite{Sleator1992-bp} and then improve the bound using specific properties of the $\rnniu$ graph.
 
 We first need to introduce the \emph{graph grammar} for $\rnniu$.
 Recall that a graph grammar consists of a finite set of productions $\{L_i \to_i R_i\}$, where $L_i$ and $R_i$ are connected undirected edge-end labeled graphs and $\to_i$ is a one-to-one map between half-edges of $L_i$ and those of $R_i$.
 The productions are then applied to the starting tree $T$ to derive all possible trees at $\rnniu$ distance up to $r$ from $T$.
+%EM IIUC, "running tree" is your terminology. Please define.
 A production is said to be \emph{ready} at a stage $s$ of the derivation if the running tree at stage $s$ has a subgraph isomorphic to the left side $L_i$ of the production.
 A ready production can be applied to the running tree by destroying all nodes corresponding to the left side of the production under the isomorphism and replacing them with the right side $R_i$ of the production.
 The map $\to_i$ of the production then says how to reconnect the right side of the production to the half-edges of the running tree that were created after the destruction.
 Thus obtained tree is the new running tree for the next stage $s+1$ of the derivation.
+%EM Given that the enumeration is actually pretty simple given a grammar, I suggest a sentence something like "The number of possible productions to the power of the encoding length for a given neighborhood radius gives a simple upper bound on the number of trees in a neighborhood."
 See \autocite{Sleator1992-bp} for precise definitions and details.
 
 The graph grammar for $\rnniu$ is the grammar $\Gamma$ shown on Figure~\ref{grammar_rNNIu.pdf}.
 Note that the definition of a graph grammar requires the left sides $L_i$ to be connected and we have a disconnected left side in the third production.
-This does not cause a problem because the nodes on the left side of the production must be of consecutive ranks.
-(One could think of those nodes as being adjacent via a second type adjacency relation on top of the first type adjacency relation given by the branches of the tree.)
+We can adapt our graph grammar to fit this requirement by noting that the nodes on the left side of the production must be of consecutive ranks, so we consider those nodes as being adjacent via a second type of adjacency relation by declaring nodes with consecutive ranks to be adjacent.
+This second type of relation is in addition to the first type of adjacency relation given by the branches of the tree.
 
+%EM Sorry, but it's confusing here how 1,2,3 are used here twice for two distinct purposes. alpha, beta, gamma?
 \begin{figure}
 \centering
 \includegraphics[width=0.7\textwidth]{grammar_rNNIu.pdf}
@@ -398,7 +413,8 @@ The first two productions correspond to an $\nni$ move, while the last productio
 The number of vertices in left sides of $\Gamma$ is $6$, the maximum number of vertices in any right side of a production of $\Gamma$ is $2$.
 Since the number of internal nodes of a tree on $n$ leaves in $\rnniu$ is $n-1$, directly applying Theorem~2.3 from \autocite{Sleator1992-bp} we get the bound of $7^{n+2r-1}$.
 
-This bound can be improved following the techniques developed in \autocite{Sleator1992-bp} after Theorem~2.3.
+%EM This is their Section 3.2, right? Perhaps also 3.4? Would be nice to be specific if possible.
+This bound can be improved following the techniques described in \autocite{Sleator1992-bp} after their Theorem~2.3 by bounding the number of possible productions available at a given time by a number smaller than their total.
 Every node of a tree in any application of a production of grammar $\Gamma$ can play either of two roles: top node or bottom node.
 Hence to indicate that a pair of nodes is ready for being destroyed and replaced using a production, we must specify which node is the top and which is the bottom.
 We use two vertex labels to identify these two roles.
@@ -415,6 +431,7 @@ This implies that the derivation can be encoded by a ternary sequence of length 
 Indeed, the first $n-1$ entries of the sequence are needed to encode all possible labelings of the initial tree, plus two entries are needed for each of the $r$ applications of productions because every production creates two new nodes, each of which has to be labeled.
 The number of such strings, $3^{n-1+2r}$, gives the desired improved bound.
 
+%EM Note to self: read after Alex revises after Chris' comments.
 For $\rnni$, we extend graph grammar $\Gamma$ by two productions, namely, one for the move when two taxa swap their ranks and one for the move when a taxon and an internal node swap their ranks.
 Since in both of these productions the only possible type of move is the rank move, two node labels is enough for these productions.
 Since the number of nodes (internal and leaves) in an $\rnni$ tree is $2n - 1$ and the maximum number of nodes on right sides of the productions is still $2$, the desired bound is $3^{2n-1 + 2r}$.
@@ -431,7 +448,7 @@ All these moves require three node labels, hence the desired bound is $4^{2n-1 +
 
 \subsection{Diameter of the graph}
 
-Theorem~\ref{neighSizeTh} provides a method for estimating the diameter of the graph from below.
+Theorem~\ref{neighSizeTh} provides a method for estimating the diameter of the graph from below. %EM which results in a bound of ...
 Now we estimate the diameter from above.
 
 \begin{theorem}\label{diameterUpperBound}
@@ -448,6 +465,7 @@ We show that there exists a path between them of length $n^2 - 3n - \frac 58$ or
 We denote the taxa on one side from the root of $T$ by $A$ and the rest of the taxa by $B$.
 Let $A = A_1 \cup A_2$ and $B = B_1 \cup B_2$ so that the root of $R$ splits the taxa into $A_1 \cup B_1$ and $A_2 \cup B_2$.
 Note that all $A_i$'s and $B_i$'s have to be disjoint.
+%EM I suggest a different letter than m, because of the prominent use of m above to mean something else.
 We assume that $|A_1| = |A_2| = |B_1| = |B_2| = \frac{n-1}{4}$ and denote this number by $m$.
 We will see later in the proof that this assumption does not restrict the generality of our argument.
 
@@ -574,6 +592,7 @@ We partition $U$ into three sets of trees---$I$, $R$, and $L$---obtained from $x
 We then prove the theorem by bounding the size of each partition by $2d(x,y)$, $d(x,y)$, and $d(x,y)$, respectively.
 
 We first consider some basic properties of minimal length paths between $x$ and $y$.
+%EM Sorry, but isn't this next sentence the result of Theorem 8, which is not yet completely proven?
 Observe that at most $d(x,y)$ bipartitions differ between $x$ and $y$, as each $\nni$ operation replaces one bipartition with another (and rank and length changes do not modify bipartitions).
 Now, observe that no minimal length path from $x$ to $y$ will replace a bipartition that is common to $x$ and $y$, as any path including such a replacement can be made shorter by removing the replacement move (and subsequent moves that reintroduce the bipartition).
 
@@ -597,9 +616,8 @@ The statement for the other three graphs follows similarly: for $\nni$ we need t
 \end{proof}
 
 A non-ranked tree has a symmetry associated with every internal node.
-Those symmetries can be employed to substantially reduce the search space of pairs of trees.
-This approach uses tanglegrams \autocite{Matsen2015-fn} and is applied to reduce the number of pairs of tree for computing the curvature \autocite{Whidden2015-es}.
-As the following proposition shows, ranked trees are free from all but one of those symmetries, hence the tanglegram approach is not applicable in this case.
+Those symmetries can be employed to consider only a single representative from equivalent pairs of trees, such as by using tanglegrams \autocite{Matsen2015-fn} to reduce the number of pairs of trees for computing the curvature for all pairs of trees \autocite{Whidden2015-es}.
+However, as the following proposition shows, ranked trees are free from all but one of those symmetries, hence the tanglegram approach is not applicable in this case.
 
 \begin{proposition}
 Let $T$ be a tree from $\dtt$, $\dttu$, $\rnni$, or $\rnniu$ and $\sigma$ a permutation of taxa of $T$.
@@ -963,6 +981,7 @@ Note that this mechanism does not bound edge lengths from above and favors topol
 
 
 \vskip10pt
+%EM I would think that it would give a boost to the paper for SODA to show that there are many unsolved problems in the area that other researchers may be interested in working on. So is it worth including these, or are they not mature enough or do you want to keep them secret? In any case, a "future directions" section, with a mention in the abstract/introduction, would be good IMHO.
 \todo[inline]{Conjectures won't go to the journal.}
 \subsection{Conjectures}
 \begin{conjecture}
