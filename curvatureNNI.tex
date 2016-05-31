@@ -10,6 +10,12 @@
 \usepackage{etoolbox}
 \usepackage[style=authoryear-icomp,ibidtracker=false]{biblatex}
 
+\setlength{\textwidth}{\paperwidth}
+\setlength{\textheight}{\paperheight}
+\addtolength{\textwidth}{-2in}
+\addtolength{\textheight}{-2in}
+\calclayout
+
 \addbibresource{curvatureNNI.bib}
 
 \newtheorem{lemma}{Lemma}
