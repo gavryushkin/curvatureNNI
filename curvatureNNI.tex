@@ -139,7 +139,7 @@ This formalism has recently been applied to Markov chains on graphs of classical
 }{}
 
 Throughout the paper by a (phylogenetic) \emph{tree} we mean a rooted binary tree with designated leaves, that is, an undirected acyclic graph with the following properties:
-(1) all nodes have degree $1$, $2$, or $3$; (2) there exists exactly one node of degree $2$, this node is called the \emph{root} of the tree; (3) all nodes of degree $1$ are labeled by distinct identifiers, these nodes are called \emph{leaves} or \emph{taxa}.
+(1) all nodes have degree $1$, $2$, or $3$; (2) there exists exactly one node of degree $2$, this node is called the \emph{root} of the tree; (3) all nodes of degree $1$ are labeled by distinct identifiers, these nodes are called \emph{leaves} or \emph{taxa} (singular \emph{taxon}).
 The \emph{parent} of a node $x$ in a tree is the unique node $y$ that is both adjacent to $x$ and closer to the root of the tree than $x$.
 Every node of a tree has a parent except for the root, and is called the \emph{child} of that parent.
 
@@ -154,12 +154,13 @@ We assume that time progresses forward, towards larger times, from the root to t
 
 A \emph{discrete time-tree} is a tree such that all its nodes are assigned distinct times from the set of non-negative integers such that every node has a smaller time than its parent (Figure~\ref{timeTree.eps}).
 Note that this implies that for every pair of nodes $x,y$ if the shortest path from the root to $x$ passes $y$ then the time of $y$ is greater than the time of $x$.
+Each node is associated with a type of event: internal nodes represent divergence events, while leaf nodes represent the sampling of new taxa.
 The \emph{rank} of a node is the number of nodes in the tree with strictly smaller time.
 We say that a pair of nodes $x,y$ of a discrete time-tree is an \emph{event interval} if there exists no node $z$ such that the time of $z$ is between the time of $x$ and $y$.
 The difference between the times of $x$ and $y$ is called the \emph{length} of the interval $x,y$.
 We identify two discrete time-trees if they are isomorphic as trees and the isomorphism preserves ranks of the nodes as well as event interval lengths.\footnote{
 Hence, an event interval is an interval between two divergence events, a taxon and a divergence event, or two taxa.
-Note that taxa can be younger than divergence nodes, e.g.\ when the species is extinct.}
+Note that taxon events can be younger than divergence nodes, i.e. when the sampling time precedes divergence events on the tree.}
 
 We are now ready to introduce a hierarchy of discrete time-trees.
 
@@ -405,9 +406,9 @@ Every node of a tree in any application of a production of grammar $\Gamma$ can 
 Hence to indicate that a pair of nodes is ready for being destroyed and replaced using a production, we must specify which node is the top and which is the bottom.
 We use two vertex labels to identify these two roles.
 Furthermore, to distinguish which of the two possible $\nni$ moves is applied, we employ another (third) vertex label.
-We claim that tree labels $1,2,3$ for the vertices is enough.
+We claim that tree labels $\alpha,\beta,\gamma$ for the vertices is enough.
 We must redefine the notion of readiness to verify this claim.
-We say that a pair of consecutive nodes is \emph{ready} if the label of the bottom node is $1$ and the label of the top node is either $2$ or $3$.
+We say that a pair of consecutive nodes is \emph{ready} if the label of the bottom node is $\alpha$ and the label of the top node is either $\beta$ or $\gamma$.
 If two consecutive nodes are ready and not connected by an edge in the tree, then only the rank move is possible.
 If they are, the type of the move is determined by the label of the top node.
 Hence, this notion of readiness uniquely identifies which of the three productions is applied.
@@ -473,6 +474,7 @@ Although the trees at steps $(6)$ and $(7)$ look identical, the topologies insid
 \begin{enumerate}[(1)]
 \item Move all the nodes adjacent to taxa in $A_2$ on top of all the other nodes in $T$, apart from the root.
 The tree restricted to $A_2$ is then a caterpillar tree.
+%EM Another pedantic point: what you mean is that this can be done in at most xxx moves. It's not obvious that it can be done in exactly this number, is it? If so, I think it's worth adding a collection of "at most"s to satisfy reviewers like me.
 This can be done in $3p^2$ moves.
 
 \item Move the caterpillar tree on $A_2$ to the other side of the root.
@@ -492,9 +494,13 @@ This can be done in $\frac12 p^2 + \frac12 p$ moves.
 This can be done in $p^2$ moves.
 
 \item Convert the tree on $A_1 \cup B_2$ to that in $R$.
+%EM The exact rankings won't be quite right, will they? Mr. Pedantic suggests:
+%EM Convert the trees on $A_1$ and $B_2$ to the corresponding subtrees in $R$ in terms of topology and relative ranking of nodes within the subtrees.
 This takes $2f(n/4)$ moves.
 
 \item Translate the tree on $B_2$ down so that the tree on $A_1 \cup B_2$ coincides with that in $R$.
+%EM If you agree with Mr. Pedantic above, then perhaps you might use:
+%EM Translate the tree on $B_2$ down so that the tree on $A_1 \cup B_2$ matches the corresponding subtree in $R$ in terms of topology and relative ranking of nodes.
 This takes $p^2$ moves.
 
 \item Merge the tree on $A_2$ with the tree on $B_2$ so that the tree on $A_1 \cup A_2 \cup B_2$ coincides with that in $R$.
@@ -514,6 +520,7 @@ f(n) = n^2 - 3n - \frac 58.
 Finally, note that the assumption $|A_1| = |A_2| = |B_1| = |B_2| = \frac{n-1}{4}$ does not increase the distance between $T$ and $R$.
 Indeed, the sets can be chosen so that at most half of the nodes have to cross the root, that is, $|A_2 \cup B_1| \le \frac{n-1}{2}$.
 Furthermore, the smaller the size of $A_2 \cup B_1$ the shorter the path.
+%EM Second use of Finally in this paragraph.
 Finally, the total length of the path is maximized when $|A_2| = |B_1|$ and $|A_1| = |B_2|$.
 \endproof
 
@@ -603,7 +610,7 @@ The statement for the other three graphs follows similarly: for $\nni$ we need t
 \end{proof}
 
 A non-ranked tree has a symmetry associated with every internal node.
-Those symmetries can be employed to consider only a single representative from equivalent pairs of trees, such as by using tanglegrams \autocite{Matsen2015-fn} to reduce the number of pairs of trees for computing the curvature for all pairs of trees \autocite{Whidden2015-es}.
+Those symmetries can be employed to consider only a single representative from equivalent pairs of trees, such as by using tanglegrams \autocite{Matsen2015-fn, Whidden2015-es}.
 However, as the following proposition shows, ranked trees are free from all but one of those symmetries, hence the tanglegram approach is not applicable in this case.
 
 \begin{proposition}
