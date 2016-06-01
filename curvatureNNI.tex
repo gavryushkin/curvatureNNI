@@ -160,7 +160,7 @@ We say that a pair of nodes $x,y$ of a discrete time-tree is an \emph{event inte
 The difference between the times of $x$ and $y$ is called the \emph{length} of the interval $x,y$.
 We identify two discrete time-trees if they are isomorphic as trees and the isomorphism preserves ranks of the nodes as well as event interval lengths.\footnote{
 Hence, an event interval is an interval between two divergence events, a taxon and a divergence event, or two taxa.
-Note that taxon events can be younger than divergence nodes, i.e. when the sampling time precedes divergence events on the tree.}
+Note that taxon events can be younger than divergence nodes, i.e.\ when the sampling time precedes divergence events on the tree.}
 
 We are now ready to introduce a hierarchy of discrete time-trees.
 
@@ -404,32 +404,32 @@ Since the number of internal nodes of a tree on $n$ leaves in $\rnniu$ is $n-1$,
 This bound can be improved following the techniques described in Sections 3.2--3.4 of \autocite[][see also Section 5]{Sleator1992-bp} by bounding the number of possible productions available at a given time by a number smaller than their total.
 Every node of a tree in any application of a production of grammar $\Gamma$ can play either of two roles: top node or bottom node.
 Hence to indicate that a pair of nodes is ready for being destroyed and replaced using a production, we must specify which node is the top and which is the bottom.
-We use two vertex labels to identify these two roles.
-Furthermore, to distinguish which of the two possible $\nni$ moves is applied, we employ another (third) vertex label.
-We claim that tree labels $\alpha,\beta,\gamma$ for the vertices is enough.
+We use two node-labels (\textcite{Sleator1992-bp} call these "labels of vertices") to identify these two roles.
+Furthermore, to distinguish which of the two possible $\nni$ moves is applied, we employ another (third) node-label.
+We claim that three node-labels $a, b, c$ is enough.
 We must redefine the notion of readiness to verify this claim.
-We say that a pair of consecutive nodes is \emph{ready} if the label of the bottom node is $\alpha$ and the label of the top node is either $\beta$ or $\gamma$.
+We say that a pair of consecutive nodes is \emph{ready} if the node-label of the bottom node is $a$ and the node-label of the top node is either $b$ or $c$.
 If two consecutive nodes are ready and not connected by an edge in the tree, then only the rank move is possible.
-If they are, the type of the move is determined by the label of the top node.
+If they are, the type of the move is determined by the node-label of the top node.
 Hence, this notion of readiness uniquely identifies which of the three productions is applied.
-Furthermore, if we want to indicate that a pair of consecutive nodes is never destroyed, we give them identical labels.
-Thus, all possible configurations encoded by the six nodes on the left sides of the productions of $\Gamma$ can be encoded using three labels.
+Furthermore, if we want to indicate that a pair of consecutive nodes is never destroyed, we give them identical node-labels.
+Thus, all possible configurations encoded by the six nodes on the left sides of the productions of $\Gamma$ can be encoded using three node-labels.
 This implies that the derivation can be encoded by a ternary sequence of length $n-1+2r$.
-Indeed, the first $n-1$ entries of the sequence are needed to encode all possible labelings of the initial tree, plus two entries are needed for each of the $r$ applications of productions because every production creates two new nodes, each of which has to be labeled.
+Indeed, the first $n-1$ entries of the sequence are needed to encode all possible node-labelings of the initial tree, plus two entries are needed for each of the $r$ applications of productions because every production creates two new nodes, each of which has to be node-labeled.
 The number of such strings, $3^{n-1+2r}$, gives the desired improved bound.
 
 %EM Note to self: read after Alex revises after Chris' comments.
 For $\rnni$, we extend graph grammar $\Gamma$ by two productions, namely, one for the move when two taxa swap their ranks and one for the move when a taxon and an internal node swap their ranks.
-Since in both of these productions the only possible type of move is the rank move, two node labels is enough for these productions.
+Since in both of these productions the only possible type of move is the rank move, two node-labels is enough for these productions.
 Since the number of nodes (internal and leaves) in an $\rnni$ tree is $2n - 1$ and the maximum number of nodes on right sides of the productions is still $2$, the desired bound is $3^{2n-1 + 2r}$.
 
 For $\dttu$, we have to extend grammar $\Gamma$ by two productions, namely, one for increasing the length of the brunch between two nodes in the production and one for decreasing.
-This increases the number of necessary node labels by one.
-Indeed, if a production has a long brunch on the left side, three labels are enough to indicate whether the branch length increases or decreases; if a production has a short branch on the left side three labels are needed for the top node to indicate the type of the move that has to be applied: length increase move or one of the two possible $\nni$ moves.
-Together, this requires $4$ node labels and the desired bound is $4^{n-1 + 2r}$.
+This increases the number of necessary node-labels by one.
+Indeed, if a production has a long brunch on the left side, three node-labels are enough to indicate whether the branch length increases or decreases; if a production has a short branch on the left side three node-labels are needed for the top node to indicate the type of the move that has to be applied: length increase move or one of the two possible $\nni$ moves.
+Together, this requires $4$ node-labels and the desired bound is $4^{n-1 + 2r}$.
 
 For $\dtt$, we extend the grammar constructed for $\dttu$ by four productions, namely, one for the move when two taxa either swap their ranks or increase the interval length between them, one for the move when two taxa either increase or decrease the interval length between them, one for the move when a taxon and an internal node either swap their ranks or increase the interval length between them, and one for the move when a taxon and an internal node either increase or decrease the interval length between them.
-All these moves require three node labels, hence the desired bound is $4^{2n-1 + 2r}$.
+All these moves require three node-labels, hence the desired bound is $4^{2n-1 + 2r}$.
 \endproof
 
 \begin{corollary}
@@ -493,14 +493,10 @@ This can be done in $\frac12 p^2 + \frac12 p$ moves.
 \item Translate the tree restricted to $B_2$ up to place it between the trees on $A_1$ and $A_2$.
 This can be done in $p^2$ moves.
 
-\item Convert the tree on $A_1 \cup B_2$ to that in $R$.
-%EM The exact rankings won't be quite right, will they? Mr. Pedantic suggests:
-%EM Convert the trees on $A_1$ and $B_2$ to the corresponding subtrees in $R$ in terms of topology and relative ranking of nodes within the subtrees.
+\item Convert the tree on $A_1 \cup B_2$ to the corresponding subtree in $R$ in terms of topology and relative ranking of nodes within the subtree.
 This takes $2f(n/4)$ moves.
 
-\item Translate the tree on $B_2$ down so that the tree on $A_1 \cup B_2$ coincides with that in $R$.
-%EM If you agree with Mr. Pedantic above, then perhaps you might use:
-%EM Translate the tree on $B_2$ down so that the tree on $A_1 \cup B_2$ matches the corresponding subtree in $R$ in terms of topology and relative ranking of nodes.
+\item Translate the tree on $B_2$ down so that the tree on $A_1 \cup B_2$ matches the corresponding subtree in $R$ in terms of topology and relative ranking of nodes.
 This takes $p^2$ moves.
 
 \item Merge the tree on $A_2$ with the tree on $B_2$ so that the tree on $A_1 \cup A_2 \cup B_2$ coincides with that in $R$.
