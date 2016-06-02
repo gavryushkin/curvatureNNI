@@ -177,7 +177,6 @@ Swapping the rank of two nodes $x$ and $y$ swaps their times.
 $R$ can be obtained from $T$ by an $\nni$ move if there exist event intervals $I$ and $J$ of length $1$ in $T$ and $R$, respectively, such that the graphs obtained by shrinking $I$ and $J$ to vertices are isomorphic and the isomorphism preserves the lengths of the event intervals.
 
 A graph can also be seen as a metric space where the distance is given by the length of a shortest path, so we will refer to $\dtt_m$ and other graphs introduced below as both.
-For simplicity, we use the generic identifier $\dtt$ to refer to a $\dtt_m$ with an arbitrary $m \geq 1$.
 
 \begin{figure}[ht]
 \centering
@@ -213,6 +212,7 @@ The $\dtt_m$ graph on ultrametric trees, that is the set of trees such that each
 The $\dtt_1$ graph is denoted by $\rnni$ and called the \emph{ranked $\nni$} graph; on ultrametric trees we will denote it $\rnniu$.\footnote{
 Note that the R in $\rnni$ stands for \emph{ranked} and not for rooted.}
 We emphasize that although this is the $\rnni$ \emph{graph}, NNI \emph{moves} can be applied to trees in any of the spaces considered (under appropriate conditions).
+For simplicity, we use the generic identifier $\dtt$ to refer to a $\dtt_m$ with an arbitrary $m > 1$.
 
 \iftoggle{curvatureON}{
 Furthermore, as $\nni$ graph on unrooted tree topologies with $n-1$ leaves is isomorphic (as a graph) to the $\nni$ graph on rooted tree topologies with $n$ leaves, all our results on curvature immediately imply their counterparts in unrooted $\nni$ graph.
@@ -301,7 +301,9 @@ We proceed by establishing basic geometric properties of discrete time-trees.
 
 \subsection{Sizes of neighborhoods}
 
-It is not hard to see that the number of trees is $(n-1)! \cdot n! \cdot n!$ in $\dtt$, $(n-1)! \cdot n!$ in $\dttu$, $\frac{(n-1)!n!n!}{2^{n-1}}$ in $\rnni$, $\frac{(n-1)!n!}{2^{n-1}}$ in $\rnniu$, and $(2n - 3)!!$ in $\nni$.
+It is not hard to see that the number of trees is
+\todo{This should depend on $m$.}
+$(n-1)! \cdot n! \cdot n!$ in $\dtt$, $(n-1)! \cdot n!$ in $\dttu$, $\frac{(n-1)!n!n!}{2^{n-1}}$ in $\rnni$, $\frac{(n-1)!n!}{2^{n-1}}$ in $\rnniu$, and $(2n - 3)!!$ in $\nni$.
 
 We continue with the following bounds on the sizes of $1$-neighborhoods of various discretizations of the space of time-trees.
 \iftoggle{curvatureON}{
@@ -457,11 +459,12 @@ We show that there exists a path between them of length $n^2 - 3n - \frac 58$ or
 We denote the taxa on one side from the root of $T$ by $A$ and the rest of the taxa by $B$.
 Let $A = A_1 \cup A_2$ and $B = B_1 \cup B_2$ so that the root of $R$ splits the taxa into $A_1 \cup B_1$ and $A_2 \cup B_2$.
 Note that all $A_i$'s and $B_i$'s have to be disjoint.
-We assume that $|A_1| = |A_2| = |B_1| = |B_2| = \frac{n-1}{4}$ and denote this number by $p$.
+We assume that $|A_1| = |A_2| = |B_1| = |B_2| = \frac{n-1}{4}$ and denote this number by $s$.
 We will see later in the proof that this assumption does not restrict the generality of our argument.
 
 We construct the path from $T$ to $R$ proceeding in the following steps, which are illustrated on Figure~\ref{diameterUpperBound.pdf}.
 Let $f(n)$ be the desired upper bound.
+For move counts in the remainder of this proof, we will allow the ``null move'' in which no modification is made.
 
 \begin{figure}
 \centering
@@ -474,39 +477,38 @@ Although the trees at steps $(6)$ and $(7)$ look identical, the topologies insid
 \begin{enumerate}[(1)]
 \item Move all the nodes adjacent to taxa in $A_2$ on top of all the other nodes in $T$, apart from the root.
 The tree restricted to $A_2$ is then a caterpillar tree.
-%EM Another pedantic point: what you mean is that this can be done in at most xxx moves. It's not obvious that it can be done in exactly this number, is it? If so, I think it's worth adding a collection of "at most"s to satisfy reviewers like me.
-This can be done in $3p^2$ moves.
+This takes $3s^2$ moves.
 
 \item Move the caterpillar tree on $A_2$ to the other side of the root.
-This can be done in $\frac12 p^2 + \frac12 p$ moves.
+This takes $\frac12 s^2 + \frac12 s$ moves.
 
 \item Move all the nodes adjacent to taxa in $B_1$ on top of all nodes apart from those adjacent to taxa in $A_2$ and the root.
 The tree restricted to $B_1$ is then a caterpillar tree.
-This can be done in $2p^2$ moves.
+This takes $2s^2$ moves.
 
 \item Swap the caterpillars on $A_2$ and $B_1$.
-This can be done in $p^2$ moves.
+This takes $s^2$ moves.
 
 \item Move the caterpillar tree on $B_1$ to the other side of the root.
-This can be done in $\frac12 p^2 + \frac12 p$ moves.
+This takes $\frac12 s^2 + \frac12 s$ moves.
 
 \item Translate the tree restricted to $B_2$ up to place it between the trees on $A_1$ and $A_2$.
-This can be done in $p^2$ moves.
+This takes $s^2$ moves.
 
 \item Convert the tree on $A_1 \cup B_2$ to the corresponding subtree in $R$ in terms of topology and relative ranking of nodes within the subtree.
 This takes $2f(n/4)$ moves.
 
 \item Translate the tree on $B_2$ down so that the tree on $A_1 \cup B_2$ matches the corresponding subtree in $R$ in terms of topology and relative ranking of nodes.
-This takes $p^2$ moves.
+This takes $s^2$ moves.
 
 \item Merge the tree on $A_2$ with the tree on $B_2$ so that the tree on $A_1 \cup A_2 \cup B_2$ coincides with that in $R$.
-This takes $2p^2$ moves.
+This takes $2s^2$ moves.
 
 \item Merge the tree on $B_1$ with the tree on $A_1$ so that the tree coincides with $R$.
-This takes $3p^2$ moves.
+This takes $3s^2$ moves.
 \end{enumerate}
 
-In total, we have a recursive equation $f(n) = 14p^2 + p + 2 f(n/4)$.\\
+In total, we have a recursive equation $f(n) = 14s^2 + s + 2 f(n/4)$.\\
 Assuming that the solution is a polynomial, we see that the polynomial must be of degree $2$.
 It remains to apply the recursive equation to find the coefficients of the polynomial:
 \[
