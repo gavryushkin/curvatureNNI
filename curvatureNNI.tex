@@ -54,6 +54,8 @@
 \begin{document}
 
 
+%EM I would prefer the following title:
+%EM The combinatorics of discrete time-trees: theory and open problems
 \title{Combinatorics of discrete time-trees: algorithmic insights and open problems}
 
 \author{Alex Gavryushkin}
@@ -70,6 +72,7 @@
 
 
 \begin{abstract}
+A \emph{time-tree} is a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates.
 We introduce and study a hierarchy of discrete approximations of the space of time-trees, with $\nni$ graph being the roughest approximation.
 We design a heuristic for generating these approximations and study, analytically and computationally, graph-theoretic and computational properties of the space.
 \iftoggle{curvatureON}{
@@ -85,8 +88,8 @@ We also investigate the Ricci-Ollivier curvature of basic random walks on the sp
 The last ten years have seen an explosion of methods using sequence data to infer demographic model parameters by sampling phylogenetic trees \autocite{Kuhner1995-mj,Kuhner1998-tq,Kuhner2000-af,Beerli2001-sc,Kuhner2006-vx,Drummond2002,Drummond2005-ks,Drummond2006-oa,Minin2008-wz}.
 These methods have had an especially significant impact in the study of quickly evolving organisms such as viruses, such as inferring historical epidemic spreading rates.
 For example, such methods can be used to infer time to a most recent common ancestor of human HIV group M viruses \autocite{Worobey2008-rt,Baele2013-op}.
-Thus the \emph{time-tree}---a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates---has become an important object of interest.
-This is in contrast to classical phylogenetic trees in which branch lengths quantify the amount of molecular substitution along a branch.
+Thus the \emph{time-tree}---a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates---has become an important object of investigation.
+This is in contrast to classical phylogenetic trees, in which branch lengths quantify the amount of molecular substitution along a branch.
 Posterior distributions on both time-trees and classical trees are estimated using Markov chain Monte Carlo \autocite{Mau1997-sq,Yang1997-gv,Drummond2002}, but with different transition kernels.
 Although Markov chain Monte Carlo (MCMC) is guaranteed to sample from the true posterior given an infinite run time, it is important to understand mixing properties of the chain, which determine sampling properties for a finite time run.
 This paper builds a foundation for a mathematical understanding of time trees, such as understanding mixing properties of MCMC thereupon.
@@ -101,9 +104,10 @@ If time is restricted to integers, the tree becomes a discrete time-tree.}
 \end{figure}
 
 The mixing properties of phylogenetic MCMC have, in the classical unrooted case, been a major area of research from both the theoretical perspective of mixing time bounds \autocite{Mossel2005-ly,Mossel2006-fo,Stefankovic2011-hu,spade2014note} and the practical perspective of performance on real data \autocite{beiko2006searching,Ronquist2006-fv,lakner2008efficiency,Whidden2015-yi}.
-This research has focused on mixing over the set of discrete phylogenetic tree graph structures, which is the primary obstruction to MCMC convergence.
-Classical phylogenetic trees discretize naturally as simply the graph structure underlying that phylogenetic tree.
-MCMC moves between classical phylogenetic trees are typically defined in terms of this discretization.
+This research has focused on mixing over the set of discrete phylogenetic tree graph structures, and mixing over these discrete structures is the primary obstruction to MCMC convergence.
+
+Time-trees use different MCMC transition kernels than do classical phylogenetic trees.
+The discrete component of MCMC moves between classical phylogenetic trees are typically determined by their discretization.
 Common moves include \emph{subtree prune and regraft} (SPR) moves, which cut a subtree off and reattach it at another location, and the subset of SPR moves called \emph{nearest-neighbor interchange} ($\nni$) moves.
 On the other hand, moves between time-trees are also defined in terms of their timing information.
 For example, \textcite{Hohna2008-vl} show that SPR-like moves that reattach subtrees at the same divergence time are more effective than ones that do not.
@@ -148,12 +152,13 @@ We also assume that each tree with $n$ leaves uses the same fixed set of $n$ con
 Hence, we say that two trees are isomorphic if they are isomorphic as graphs and the isomorphism maps leaves marked by the same constant to each other.
 We identify isomorphic trees.
 
+%EM given that this is an important object in the paper, perhaps a slightly tighter definition is merited? For example, it's not until the end of this paragraph when we learn that the total order enforced by the divergence times must be compatible with the partial order given by the tree structure.
 By a \emph{time-tree} (see Figure~\ref{timeTree.eps}) we mean a tree with an absolute time associated with every node of the tree: for internal nodes these are (typically estimated) divergence times and for leaves---(typically known) sampling times.
 By ``absolute'' we clarify that these are not relative times, but rather actual times that can be put on a calendar.
 We assume that time progresses forward, towards larger times, from the root to the leaves.
 
 A \emph{discrete time-tree} is a tree such that all its nodes are assigned distinct times from the set of non-negative integers such that every node has a smaller time than its parent (Figure~\ref{timeTree.eps}).
-Note that this implies that for every pair of nodes $x,y$ if the shortest path from the root to $x$ passes $y$ then the time of $y$ is greater than the time of $x$.
+Note that this implies that for every pair of nodes $x,y$ if the shortest path from the root to $x$ passes through $y$ then the time of $y$ is greater than the time of $x$.
 Each node is associated with a type of event: internal nodes represent divergence events, while leaf nodes represent the sampling of new taxa.
 The \emph{rank} of a node is the number of nodes in the tree with strictly smaller time.
 We say that a pair of nodes $x,y$ of a discrete time-tree is an \emph{event interval} if there exists no node $z$ such that the time of $z$ is between the time of $x$ and $y$.
@@ -186,12 +191,14 @@ Assuming that the length of every event interval is either $1$ or $2$, the outer
 \label{DtT.pdf}
 \end{figure}
 
+%EM Re "In other words" this has lost its continuity by the insertion of the metric space thing, which in any case I don't think deserves its own paragraph.
 In other words, by going from one tree to an adjacent tree in the $\dtt_m$ graph we can either change the length of one event interval by one unit, swap the rank of two nodes, or send the length of an event interval of minimal length down to zero and then resolve the multifurcation to either of the two possible trees.
 In the latter case, the new interval is of minimal length.
 See Figure~\ref{dts_neighbors.pdf} for an example of the full variety of possible moves.
 
 \begin{figure}[ht]
 \centering
+%EM are the "a" and "b" labels of this figure used in the text?
 \includegraphics[width=\textwidth]{dts_neighbors.pdf}
 \caption{Trees $T$ and $R$ are at $\dtt_2$ distance $3$.
 To move from $T$ to $R$ in $\dtt_2$, one must decrease the length of interval $I$, swap the ranks of nodes $A$ and $C$ bounding interval $J$, and perform an $\nni$ move on interval $K$, resolving nodes $C$ and $D$.}
@@ -314,7 +321,7 @@ Let $|V|$ be the number of vertices in the graph, then $|V|$ is equal to
 
 \proof
 The proof for $\nni$ can be found in \autocite{Semple2003-nj}.
-The rest follow from $\nni$.
+The rest follow from the $\nni$ case.
 \endproof
 
 We continue with the following bounds on the sizes of $1$-neighborhoods of various discretizations of the space of time-trees.
@@ -588,7 +595,7 @@ The general case remain illusive.
 
 \subsection{Computing the distance}
 
-We first bound the number of neighbors of a tree $x$ in $\dtt_2$ graph that are closer than $x$ to a given tree $y$.
+We first bound the number of neighbors of a tree $x$ in the $\dtt_2$ graph that are closer than $x$ to a given tree $y$.
 We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
 \iftoggle{curvatureON}{
 These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
@@ -950,7 +957,7 @@ Use Corollary~\ref{degreeBounds}.
 
 \subsection{Efficient algorithm for generating $\rnni$ graphs}
 
-We use the following algorithm designed by \textcite{Whidden2015-es} to compute the $\rnni$ graph on $n$ leaves.
+We use the following algorithm to compute the $\rnni$ graph on $n$ leaves, which is a natural extension of an algorithm from \textcite{Whidden2015-es}.
 The input to our algorithm is a set $S$ of ranked phylogenetic tree topologies in the format described by \textcite{Gavryushkin2014-bw} \autocite[see also][]{Semple2003-nj}.
 A tree is hence given by a sequence of sets of taxa, and this obtained representation is unique.
 For example, the representation of the tree on Figure~?? \todo{} is $(\{A\}, \{C\}, \{D\}, \{B\}, \{E\}, \{A,B\}, \{D,E\}, \{C, D, E\}, \{F\}, \{A,B,F\}, \{A,B,C,D,E,F\})$, or
@@ -958,7 +965,8 @@ $(\{A,B\}, \{D,E\}, \{C, D, E\}, \{A,B,F\}, \{A,B,C,D,E,F\})$ if we make the tre
 Using this representation of trees we construct a map $\nu : S \to \omega$, where $\omega$ is the set of non-negative integers.
 This maps allows us to determine whether or not a tree is already a vertex of the graph.
 
-The high-level steps of the algorithm follow \textcite{Whidden2015-es} literally, as well as the proof of correctness of the algorithm.
+The high-level steps of the algorithm are as follows.
+See \cite{Whidden2015-es} for a proof of correctness.
 
 \textsc{Construct-$\rnni$-Graph($S$)}
 \begin{enumerate}[1.]
@@ -1041,6 +1049,7 @@ Then $\lim_n \frac{|\partial S|}{|S|} = 0$ for all graphs under consideration.
 \endproof
 
 This proposition implies for phylogenetic graphs that the isoperimetric number is asymptotically the smallest possible, which can be interpreted as that the graphs have the tightest possible bottlenecks.
+%EM Hm... regarding this last statement, couldn't some graphs go to zero more quickly than others?
 
 
 \section{Discussion}
