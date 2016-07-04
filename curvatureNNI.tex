@@ -9,6 +9,7 @@
 \usepackage{graphicx}
 \usepackage{etoolbox}
 \usepackage[style=alphabetic,ibidtracker=false,uniquename=false]{biblatex}
+\usepackage[nomarkers,nolists]{endfloat}
 
 \setlength{\textwidth}{\paperwidth}
 \setlength{\textheight}{\paperheight}
@@ -60,7 +61,7 @@
 
 \author{Alex Gavryushkin}
 \address{Centre for Computational Evolution, The University of Auckland, New Zealand}
-\email{a.gavruskin@auckland.ac.nz}
+\email{alex@gavruskin.com}
 
 \author{Chris Whidden}
 \address{Program in Computational Biology, Fred Hutchinson Cancer Research Center, Seattle, WA 98109}
@@ -73,15 +74,25 @@
 
 \begin{abstract}
 A \emph{time-tree} is a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates.
-We introduce and study a hierarchy of discrete approximations of the space of time-trees, with $\nni$ graph being the roughest approximation.
-We design a heuristic for generating these approximations and study, analytically and computationally, graph-theoretic and computational properties of the space.
+We introduce and study a hierarchy of discrete approximations of the space of time-trees from the graph-theoretic and algorithmic point of view.
+One of the basic and widely used phylogenetic graphs, the $\nni$ graph, is the roughest approximation and bottom level of our hierarchy.
+We study the basic graph-theoretic questions such as the size of neighborhoods, the diameter upper and lower bound, the problem of finding shortest paths, and similar, for the introduced graphs.
+We settle many of these questions by applying the concept of graph grammars introduced by Sleator, Tarjan, and Thurston.
+Furthermore, we design an efficient heuristic for generating these graphs.
 \iftoggle{curvatureON}{
 We also investigate the Ricci-Ollivier curvature of basic random walks on the space.
 }{}
+
+Our results open up a number of possible directions for theoretical investigation of graph-theoretic and algorithmic properties of the time-tree graphs.
+We discuss the directions that are most valuable for phylogenetic applications and give a list of open problems that we think are of prominent importance for those applications.
 \end{abstract}
 
 
 \maketitle
+
+\thispagestyle{empty}
+\addtocounter{page}{-1}
+\newpage
 
 
 \section{Introduction}
@@ -1052,9 +1063,18 @@ This proposition implies for phylogenetic graphs that the isoperimetric number i
 %EM Hm... regarding this last statement, couldn't some graphs go to zero more quickly than others?
 
 
+\section{Open problems and conjectures}
+
+
 \section{Discussion}
 Most of the results in this paper can be generalized to the class of sampled ancestor trees \autocite{Gavryushkina2014-xd}.
 However, currently very few methods of sampling the space of sampled ancestor trees are known \autocite{Gavryushkina2015-vq} and the geometry of the space is poorly understood \autocite{Gavryushkin2014-bw}.
+
+\newpage
+
+\section{Appendix}
+
+\newpage
 
 
 \printbibliography
