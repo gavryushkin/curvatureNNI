@@ -55,9 +55,7 @@
 \begin{document}
 
 
-%EM I would prefer the following title:
-%EM The combinatorics of discrete time-trees: theory and open problems
-\title{Combinatorics of discrete time-trees: algorithmic insights and open problems}
+\title{The combinatorics of discrete time-trees: theory and open problems}
 
 \author{Alex Gavryushkin}
 \address{Centre for Computational Evolution, The University of Auckland, New Zealand}
@@ -76,6 +74,7 @@
 A \emph{time-tree} is a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates.
 We introduce and study a hierarchy of discrete approximations of the space of time-trees from the graph-theoretic and algorithmic point of view.
 One of the basic and widely used phylogenetic graphs, the $\nni$ graph, is the roughest approximation and bottom level of our hierarchy.
+More refined approximations discretize the relative timing of evolutionary divergence and sampling dates.
 We study the basic graph-theoretic questions such as the size of neighborhoods, the diameter upper and lower bound, the problem of finding shortest paths, and similar, for the introduced graphs.
 We settle many of these questions by applying the concept of graph grammars introduced by Sleator, Tarjan, and Thurston.
 Furthermore, we design an efficient heuristic for generating these graphs.
@@ -163,12 +162,11 @@ We also assume that each tree with $n$ leaves uses the same fixed set of $n$ con
 Hence, we say that two trees are isomorphic if they are isomorphic as graphs and the isomorphism maps leaves marked by the same constant to each other.
 We identify isomorphic trees.
 
-%EM given that this is an important object in the paper, perhaps a slightly tighter definition is merited? For example, it's not until the end of this paragraph when we learn that the total order enforced by the divergence times must be compatible with the partial order given by the tree structure.
-By a \emph{time-tree} (see Figure~\ref{timeTree.eps}) we mean a tree with an absolute time associated with every node of the tree: for internal nodes these are (typically estimated) divergence times and for leaves---(typically known) sampling times.
+By a \emph{time-tree} (see Figure~\ref{timeTree.eps}) we mean a phylogenetic tree with an absolute time associated with every node of the tree so that the time strictly increases along every path from a leaf to the root: for internal nodes the time is interpreted as (typically estimated) divergence time and for leaves---(typically known) sampling time.
 By ``absolute'' we clarify that these are not relative times, but rather actual times that can be put on a calendar.
-We assume that time progresses forward, towards larger times, from the root to the leaves.
+We assume that time progresses backward, from the leaves to the root.
 
-A \emph{discrete time-tree} is a tree such that all its nodes are assigned distinct times from the set of non-negative integers such that every node has a smaller time than its parent (Figure~\ref{timeTree.eps}).
+A \emph{discrete time-tree} is a tree such that all its nodes are assigned distinct times from the set of non-negative integers and every node has a smaller time than its parent (Figure~\ref{timeTree.eps}).
 Note that this implies that for every pair of nodes $x,y$ if the shortest path from the root to $x$ passes through $y$ then the time of $y$ is greater than the time of $x$.
 Each node is associated with a type of event: internal nodes represent divergence events, while leaf nodes represent the sampling of new taxa.
 The \emph{rank} of a node is the number of nodes in the tree with strictly smaller time.
@@ -185,15 +183,6 @@ $\nni$ is a graph with the vertices being all trees on $n$ leaves.
 Two trees $T$ and $R$ are adjacent in $\nni$ if there exists an edge $e$ in $T$ and an edge $f$ in $R$ such that both edges are not adjacent to a leaf and the graph obtained from $T$ by shrinking $e$ to a vertex is isomorphic to the graph obtained from $R$ by shrinking $f$.
 We denote this graph by $\dtt_0$.
 
-The following graph $\dtt_m$ forms the level $m > 0$ of the hierarchy.
-The set of vertices of the graph is the set of all discrete time-trees on $n$ leaves such that every event interval has its length not greater than $m$.
-Two trees $T$ and $R$ are adjacent in $\dtt_m$ if $R$ can be obtained from $T$ by one of three operations: a \emph{length move performed on interval} $I$, \emph{swapping the rank of two nodes $x$ and $y$} or an \emph{$\nni$ move performed on interval $I$} (Figure~\ref{DtT.pdf}).
-A length move changes the length of $I$ by 1.
-Swapping the rank of two nodes $x$ and $y$ swaps their times.
-$R$ can be obtained from $T$ by an $\nni$ move if there exist event intervals $I$ and $J$ of length $1$ in $T$ and $R$, respectively, such that the graphs obtained by shrinking $I$ and $J$ to vertices are isomorphic and the isomorphism preserves the lengths of the event intervals.
-
-A graph can also be seen as a metric space where the distance is given by the length of a shortest path, so we will refer to $\dtt_m$ and other graphs introduced below as both.
-
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.8\textwidth]{DtT.pdf}
@@ -202,14 +191,18 @@ Assuming that the length of every event interval is either $1$ or $2$, the outer
 \label{DtT.pdf}
 \end{figure}
 
-%EM Re "In other words" this has lost its continuity by the insertion of the metric space thing, which in any case I don't think deserves its own paragraph.
+The following graph $\dtt_m$ forms the level $m > 0$ of the hierarchy.
+The set of vertices of the graph is the set of all discrete time-trees on $n$ leaves such that every event interval has its length not greater than $m$.
+Two trees $T$ and $R$ are adjacent in $\dtt_m$ if $R$ can be obtained from $T$ by one of three operations: a \emph{length move performed on interval} $I$, \emph{swapping the rank of two nodes $x$ and $y$} or an \emph{$\nni$ move performed on interval $I$} (Figure~\ref{DtT.pdf}).
+A length move changes the length of $I$ by 1.
+Swapping the rank of two nodes $x$ and $y$ swaps their times.
+$R$ can be obtained from $T$ by an $\nni$ move if there exist event intervals $I$ and $J$ of length $1$ in $T$ and $R$, respectively, such that the graphs obtained by shrinking $I$ and $J$ to vertices are isomorphic and the isomorphism preserves the lengths of the event intervals.
 In other words, by going from one tree to an adjacent tree in the $\dtt_m$ graph we can either change the length of one event interval by one unit, swap the rank of two nodes, or send the length of an event interval of minimal length down to zero and then resolve the multifurcation to either of the two possible trees.
 In the latter case, the new interval is of minimal length.
 See Figure~\ref{dts_neighbors.pdf} for an example of the full variety of possible moves.
 
 \begin{figure}[ht]
 \centering
-%EM are the "a" and "b" labels of this figure used in the text?
 \includegraphics[width=\textwidth]{dts_neighbors.pdf}
 \caption{Trees $T$ and $R$ are at $\dtt_2$ distance $3$.
 To move from $T$ to $R$ in $\dtt_2$, one must decrease the length of interval $I$, swap the ranks of nodes $A$ and $C$ bounding interval $J$, and perform an $\nni$ move on interval $K$, resolving nodes $C$ and $D$.}
@@ -218,7 +211,6 @@ To move from $T$ to $R$ in $\dtt_2$, one must decrease the length of interval $I
 
 Note that $\dtt_0$ can be obtained from $\dtt_1$ by ``forgetting'' ranks and $\dtt_1$---from $\dtt_m$ by forgetting lengths.
 In general, the graph structure for $m > 1$ can be understood by considering all diagrams as in Figure~\ref{DtT.pdf} and introducing an extra layer of nodes in the tail on the left of the diagram.
-\todo{Can this be stated (and proved?) formally?}
 
 This hierarchy can be seen as a set of discrete refinements of the full space of phylogenetic time-trees, where event intervals can take an arbitrary real value.
 Indeed, if we consider
@@ -231,6 +223,8 @@ The $\dtt_1$ graph is denoted by $\rnni$ and called the \emph{ranked $\nni$} gra
 Note that the R in $\rnni$ stands for \emph{ranked} and not for rooted.}
 We emphasize that although this is the $\rnni$ \emph{graph}, NNI \emph{moves} can be applied to trees in any of the spaces considered (under appropriate conditions).
 For simplicity, we use the generic identifier $\dtt$ to refer to a $\dtt_m$ with an arbitrary $m > 1$.
+
+A graph can also be seen as a metric space where the distance is given by the length of a shortest path, so we will refer to $\dtt_m$ and other graphs introduced below as both.
 
 \iftoggle{curvatureON}{
 Furthermore, as $\nni$ graph on unrooted tree topologies with $n-1$ leaves is isomorphic (as a graph) to the $\nni$ graph on rooted tree topologies with $n$ leaves, all our results on curvature immediately imply their counterparts in unrooted $\nni$ graph.
@@ -450,7 +444,6 @@ This implies that the derivation can be encoded by a ternary sequence of length 
 Indeed, the first $n-1$ entries of the sequence are needed to encode all possible node-labelings of the initial tree, plus two entries are needed for each of the $r$ applications of productions because every production creates two new nodes, each of which has to be node-labeled.
 The number of such strings, $3^{n-1+2r}$, gives the desired improved bound.
 
-%EM Note to self: read after Alex revises after Chris' comments.
 For $\rnni$, we extend graph grammar $\Gamma$ by two productions, namely, one for the move when two taxa swap their ranks and one for the move when a taxon and an internal node swap their ranks.
 Since in both of these productions the only possible type of move is the rank move, two node-labels is enough for these productions.
 Since the number of nodes (internal and leaves) in an $\rnni$ tree is $2n - 1$ and the maximum number of nodes on right sides of the productions is still $2$, the desired bound is $3^{2n-1 + 2r}$.
@@ -1022,7 +1015,6 @@ If the coordinate becomes $0$, resolve the multifurcation uniformly at random an
 Note that this mechanism does not bound edge lengths from above and favors topological moves when $p<1/2$.
 }{}
 
-
 \vskip10pt
 
 \todo[inline]{Show that there are many unsolved problems in the area that other researchers may be interested in working on.
@@ -1061,6 +1053,7 @@ Then $\lim_n \frac{|\partial S|}{|S|} = 0$ for all graphs under consideration.
 
 This proposition implies for phylogenetic graphs that the isoperimetric number is asymptotically the smallest possible, which can be interpreted as that the graphs have the tightest possible bottlenecks.
 %EM Hm... regarding this last statement, couldn't some graphs go to zero more quickly than others?
+%AG: This is a conjecture and I am not going to include any assessment of conjectures, so this statement will go.
 
 
 \section{Open problems and conjectures}
