@@ -102,10 +102,9 @@ The last ten years have seen an explosion of methods using sequence data to infe
 These methods have had an especially significant impact in the study of quickly evolving organisms such as viruses, such as inferring historical epidemic spreading rates.
 For example, such methods can be used to infer time to a most recent common ancestor of human HIV group M viruses \autocite{Worobey2008-rt,Baele2013-op}.
 Thus the \emph{time-tree}---a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates---has become an important object of investigation.
-This is in contrast to classical phylogenetic trees, in which branch lengths quantify the amount of molecular substitution along a branch.
-Posterior distributions on both time-trees and classical trees are estimated using Markov chain Monte Carlo \autocite{Mau1997-sq,Yang1997-gv,Drummond2002}, but with different transition kernels.
-Although Markov chain Monte Carlo (MCMC) is guaranteed to sample from the true posterior given an infinite run time, it is important to understand mixing properties of the chain, which determine sampling properties for a finite time run.
-This paper builds a foundation for a mathematical understanding of time trees, such as understanding mixing properties of MCMC thereupon.
+This interpretation of continuous parameters for time-trees stands in contrast to that for classical phylogenetic trees, in which branch lengths quantify the amount of molecular substitution along a branch.
+Posterior distributions on both time-trees and classical trees are estimated using Markov chain Monte Carlo (MCMC) \autocite{Mau1997-sq,Yang1997-gv,Drummond2002}, but with different transition kernels.
+This paper builds a foundation for a mathematical understanding of time trees, such as understanding convergence properties of MCMC thereupon.
 
 \begin{figure}[ht]
 \centering
@@ -116,27 +115,28 @@ If time is restricted to integers, the tree becomes a discrete time-tree.}
 \label{timeTree.eps}
 \end{figure}
 
+Although Markov chain Monte Carlo (MCMC) is guaranteed to sample from the true posterior given an infinite run time, it is important to understand mixing properties of the chain, which determine sampling properties for a finite time run.
 The mixing properties of phylogenetic MCMC have, in the classical unrooted case, been a major area of research from both the theoretical perspective of mixing time bounds \autocite{Mossel2005-ly,Mossel2006-fo,Stefankovic2011-hu,spade2014note} and the practical perspective of performance on real data \autocite{beiko2006searching,Ronquist2006-fv,lakner2008efficiency,Whidden2015-yi}.
-This research has focused on mixing over the set of discrete phylogenetic tree graph structures, and mixing over these discrete structures is the primary obstruction to MCMC convergence.
+This research has focused on mixing over the set of discrete phylogenetic tree graph structures, because mixing over these discrete structures is the primary obstruction to MCMC convergence.
 
 Time-trees use different MCMC transition kernels than do classical phylogenetic trees.
 The discrete component of MCMC moves between classical phylogenetic trees are typically determined by their discretization.
-Common moves include \emph{subtree prune and regraft} (SPR) moves, which cut a subtree off and reattach it at another location, and the subset of SPR moves called \emph{nearest-neighbor interchange} ($\nni$) moves.
-On the other hand, moves between time-trees are also defined in terms of their timing information.
+For example, common moves include \emph{subtree prune and regraft} (SPR) moves, which cut a subtree off and reattach it at another location, and the subset of SPR moves called \emph{nearest-neighbor interchange} ($\nni$) moves.
+Classically, these are applied without reference to branch lengths.
+On the other hand, the discrete component of moves between time-trees are defined also in terms of their timing information.
 For example, \textcite{Hohna2008-vl} show that SPR-like moves that reattach subtrees at the same divergence time are more effective than ones that do not.
 This sort of move cannot be expressed using the type of discretization used thus far in which all continuous information is lost, and so the previous work on MCMC mixing cannot be applied.
 
 However, one can discretize time-trees in a way that does preserve some of the information.
 For example, by retaining the order of internal nodes backward in time one obtains a so-called \emph{ranked tree} \autocite{Semple2003-nj}.
+To make a less rough approximation of a time-tree, one can allow the time periods between nodes of the tree to take only finitely many possible values.
+This results in an object we call a \emph{discrete time-tree}.
+The graph built on such trees provides a discretization of the space of time-trees, which we call a \emph{discretized time-tree graph}.
 A sequence of time-trees sampled using MCMC projects to a collection of movements on a graph in which each vertex is a discretized time-tree and each edge is a discretized version of an MCMC move on time-trees.
-
-Another possible way to make a less rough approximation of a time-tree is to allow the time periods between nodes of the tree to take only finitely many possible values.
-The graph built on such trees provides a further refined discretization of the space of time-trees.
-We call such a graph a \emph{discretized time-tree graph}.
 
 Although inferential algorithms have applied MCMC on time-trees for over a decade, and graphs corresponding to discretizations of unrooted tree space have been studied for even longer, we are not aware of any work defining graphs from discretization of time-tree spaces or analyzing random walks thereupon.
 Such a theory would provide a foundation for understanding the behavior of MCMC algorithms on time-trees, as has been done previously for graphs associated with unrooted phylogenetic trees.
-Up to now, the only discretization of time-tree space that has been studied is that of ranked trees \autocite{Ford2009-qi,Lambert2013-mr}, and that was not from a graph-theoretic perspective.
+Up to now, the only discretization of time-tree space that has been studied is that of ranked trees \autocite{Page1991-rd,Ford2009-qi,Lambert2013-mr}, and that was not from a graph-theoretic perspective.
 
 In this paper we initiate the mathematical study of discretized time-tree graphs, obtain basic geometric and graph-theoretic results,
 \iftoggle{curvatureON}{
