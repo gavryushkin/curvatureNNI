@@ -69,6 +69,8 @@
 %\address{Program in Computational Biology, Fred Hutchinson Cancer Research Center, Seattle, WA 98109}
 \email{matsen@fredhutch.org}
 
+\thanks{AG was supported by the Marsden Fund of New Zealand through the Centre for Computational Evolution.}
+
 
 \begin{abstract}
 A \emph{time-tree} is a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates.
@@ -76,7 +78,7 @@ We introduce and study a hierarchy of discrete approximations of the space of ti
 One of the basic and widely used phylogenetic graphs, the $\nni$ graph, is the roughest approximation and bottom level of our hierarchy.
 More refined approximations discretize the relative timing of evolutionary divergence and sampling dates.
 We study the basic graph-theoretic questions such as the size of neighborhoods, the diameter upper and lower bound, the problem of finding shortest paths, and similar, for the introduced graphs.
-We settle many of these questions by applying the concept of graph grammars introduced by Sleator, Tarjan, and Thurston.
+We settle many of these questions by applying the concept of graph grammars introduced by Sleator, Tarjan, and Thurston to our graphs.
 Furthermore, we design an efficient heuristic for generating these graphs.
 \iftoggle{curvatureON}{
 We also investigate the Ricci-Ollivier curvature of basic random walks on the space.
@@ -283,7 +285,7 @@ We begin by considering the shortest path distance on the graphs.
 It is well-known that computing distances is NP-hard in $\nni$ \autocite{Dasgupta2000-xa}.
 Hence the following question is natural.
 
-\begin{problem}
+\begin{problem}\label{complexityProblem}
 What is the complexity of computing the distance between two discrete time-trees?
 \end{problem}
 
@@ -564,92 +566,6 @@ However, this adaptation goes beyond the scope of this paper.
 We also note that the proof of the theorem provides an efficient algorithm for computing (not necessarily shortest) paths between discrete time-trees.
 This algorithm can be used for efficient exploration of the space, e.g.\ via MCMC.
 
-\begin{corollary}\label{diameterUpperBoundCoro}
-$\Delta(\rnniu) < n^2 - n$ for all $n$.
-\end{corollary}
-%TODO: Drop this if we drop split theorem.
-
-
-\subsection{Split theorem}
-
-\textcite{li1996some} used the information about the diameter of the graph and the sizes of neighborhoods to provide an example of trees such that every shortest $\nni$ path between the trees fails to maintain a split of taxa shared by the origin and destination trees.~\todo{You should mention the history of the problem either here or in the introduction (assuming we can prove the theorem).}
-Specifically, they showed that sorting two caterpillar trees simultaneously is more efficient than sorting them independently, provided the size of the trees is large enough.
-In the following lemma, we show that the ranked versions of $\nni$ graph maintain splits along shortest paths between caterpillar trees.
-
-\begin{theorem}\label{splitTheo}
- Every split present in both trees $T$ and $R$ presents in all trees along every shortest path between $T$ and $R$ in $\dtt$, $\dttu$, $\rnni$, and $\rnniu$, but not in $\nni$.
- \end{theorem}
-
-\proof
-The work-in-progress proof is on branch
-\url{https://github.com/gavruskin/curvatureNNI/tree/splitTheoProof} branch.
-
-Let $A|B$ be the split under consideration and $T_A$, $T_B$, $R_A$, $R_B$---corresponding restriction of trees $T$ and $R$.
-The arguments goes as follows.
-Assume the contrary: there exists a geodesic that does not maintain the split.
-This path hence should first mix trees $T_A$ and $T_B$ together into a tree $T_A \oplus T_B$.
-Then convert $T_A \oplus T_B$ into $R_A \oplus R_B$ and then separate the latter tree into $R_A$ and $R_B$.
-The main ingredient of the proof is that mixing $T_A$ and $T_B$ together and then separating them into $R_A$ and $R_B$ takes more steps than just convert $T_A$ into $R_A$.
-Assuming $T_A$ and $R_A$ are of size $\frac n2$, it is enough to show that mixing + separating takes strictly more steps than the diameter of $\rnniu$ on $\frac n2$ taxa trees.
-
-The scenario works fine for many partial cases, e.g.\ double-caterpillar trees.
-The general case remain illusive.
-\endproof
-
-
-\subsection{Computing the distance}
-
-We first bound the number of neighbors of a tree $x$ in the $\dtt_2$ graph that are closer than $x$ to a given tree $y$.
-We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
-\iftoggle{curvatureON}{
-These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
-}{
-When the graph is seen as a metric space, this property is important for the study of the curvature of the space as well as convergence properties of random walks over the space.
-This will be useful in future studies analogous to \autocite{Whidden2015-es}.
-}
-
-\begin{theorem}
-\label{max_good_neighbors}
-Let $x$ and $y$ be two trees.
-Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
-\begin{enumerate}[(i)]
-\item $2d(x,y)$ in $\nni$,
-\item $3d(x,y)$ in $\rnni$,
-\item $4d(x,y)$ in $\dtt_2$,
-\item $5d(x,y)$ in $\dtt_m$ for $m > 2$.
-\end{enumerate}
-\end{theorem}
-
-\begin{proof}
-We first prove the statement for $\dtt_2$.
-
-Let $U$ be the set of neighbors $u$ of $x$ such that $d(u,y) \le d(x,y)$, as stated in the theorem.
-We partition $U$ into three sets of trees---$I$, $R$, and $L$---obtained from $x$ by a single $\nni$ move, rank change, or length change, respectively.
-We then prove the theorem by bounding the size of each partition by $2d(x,y)$, $d(x,y)$, and $d(x,y)$, respectively.
-
-We first consider some basic properties of minimal length paths between $x$ and $y$.
-Observe that at most $d(x,y)$ bipartitions differ between $x$ and $y$, as each $\nni$ operation replaces one bipartition with another (and rank and length changes do not modify bipartitions).
-Now, observe that no minimal length path from $x$ to $y$ will replace a bipartition that is common to $x$ and $y$, as any path including such a replacement can be made shorter by removing the replacement move (and subsequent moves that reintroduce the bipartition).
-
-We are now ready to bound the sizes of each partition $I$, $R$, and $L$.
-First, consider the subset $I$ of closer neighbors obtained via $\nni$ moves.
-By our observations above, $|I|$ is bounded by the number of $\nni$ operations that modify one of the at most $d(x,y)$ bipartitions of $x$ that are not a bipartition of $y$.
-There are two neighbors of $x$ that lack any given bipartition (obtained by moving either the left or right subtree located below the bipartition).
-Therefore, $|I| \le 2d(x,y)$.
-
-Second, consider the subset $R$ of closer neighbors obtained via rank change moves.
-These operate either on one of $x$'s unique bipartitions or a bipartition common to $x$ and $y$ that differs in rank.
-As observed above, the number of unique bipartitions is bounded by the maximum number of $\nni$ moves on any minimal $x$ to $y$ path.
-Any such path must fix the ranks of each common edge.
-In other words, if $r_1$ is the number of trees in $U$ which are obtained from $x$ by a rank move corresponding to a common edge and $r_2$ is the number of trees in $U$ which are obtained from $x$ by a rank move corresponding to a unique edge of $x$, then $r_1 + r_2 \leq d(x,y)$, because the $r_1$ moves have to be done along every shortest path from $x$ to $y$.
-Thus, the total size of $R$ is bounded by $d(x,y)$.
-
-The bound of $d(x,y)$ on the number of length changes that can be applied to move $x$ closer to $y$ follows similarly.
-Therefore, there are at most $|I| + |R| + |L| \le 2d(x,y) + d(x,y) + d(x,y) = 4d(x,y)$ trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$.
-
-The statement for the other three graphs follows similarly: for $\nni$ we need to count only for trees from $I$, for $\rnni$ we need to count only for trees from $I$ and $R$, for $\dtt$ we will have to add $2d(x,y)$ instead of $d(x,y)$ for $L$.
-\end{proof}
-
 A non-ranked tree has a symmetry associated with every internal node.
 Those symmetries can be employed to consider only a single representative from equivalent pairs of trees, such as by using tanglegrams \autocite{Matsen2015-fn, Whidden2015-es}.
 However, as the following proposition shows, ranked trees are free from all but one of those symmetries, hence the tanglegram approach is not applicable in this case.
@@ -669,8 +585,7 @@ This implies that $i$ and $j$ have different parents.
 Hence $T \ne T_\sigma$ because the ranks of the parent of $i$ are different in $T$ and $T_\sigma$.
 \endproof
 
-These observations suggest that $\nni$ graph is geometrically and algorithmically different from the other four graphs.
-
+These observations suggest that the $\nni$ graph is geometrically and algorithmically different from the other four graphs.
 
 \iftoggle{curvatureON}{
 \section{Ricci-Ollivier curvature of discrete time-trees}
@@ -793,7 +708,6 @@ In this case the asymptotic curvature between adjacent trees in $\dtt$ with unif
 \]
 
 Following \textcite{Loisel2014-gu}, we will refer to non-asymptotic curvature as \emph{coarse curvature} to distinguish between the two alternative notions of curvature.
-
 
 Thus, the upper bounds of asymptotic curvatures of $\nni$, $\rnni$, $\rnniu$, $\dtt$, and $\dttu$ spaces coincides with the coarse curvatures of the spaces.
 
@@ -961,10 +875,10 @@ Use Corollary~\ref{degreeBounds}.
 
 \subsection{Efficient algorithm for generating $\rnni$ graphs}
 
-We use the following algorithm to compute the $\rnni$ graph on $n$ leaves, which is a natural extension of an algorithm from \textcite{Whidden2015-es}.
-The input to our algorithm is a set $S$ of ranked phylogenetic tree topologies in the format described by \textcite{Gavryushkin2014-bw} \autocite[see also][]{Semple2003-nj}.
+The following algorithm to compute the $\rnni$ graph on $n$ leaves, which is a natural extension of an algorithm from \textcite{Whidden2015-es}.
+The input to our algorithm is a set $S$ of $\rnni$ trees in the format described by \textcite{Gavryushkin2014-bw} and implemented in \autocite{tauGeodesic} (see also \autocite{Semple2003-nj}).
 A tree is hence given by a sequence of sets of taxa, and this obtained representation is unique.
-For example, the representation of the tree on Figure~?? \todo{} is $(\{A\}, \{C\}, \{D\}, \{B\}, \{E\}, \{A,B\}, \{D,E\}, \{C, D, E\}, \{F\}, \{A,B,F\}, \{A,B,C,D,E,F\})$, or
+For example, the representation of the tree on Figure~\ref{timeTree.eps} is $(\{A\}, \{C\}, \{D\}, \{B\}, \{E\}, \{A,B\}, \{D,E\}, \{C, D, E\}, \{F\}, \{A,B,F\}, \{A,B,C,D,E,F\})$, or
 $(\{A,B\}, \{D,E\}, \{C, D, E\}, \{A,B,F\}, \{A,B,C,D,E,F\})$ if we make the tree ultrametric by placing all taxa below the most recent divergence event.
 Using this representation of trees we construct a map $\nu : S \to \omega$, where $\omega$ is the set of non-negative integers.
 This maps allows us to determine whether or not a tree is already a vertex of the graph.
@@ -989,13 +903,6 @@ See \cite{Whidden2015-es} for a proof of correctness.
 		\end{enumerate}
 \end{enumerate}
 
-We implemented this procedure for ultrametric trees in the Python program \texttt{tau\_graph}
-\todo{Check the name.}
-of the software package \texttt{tTauCurvature} \autocite{tTauCurvature},
-\todo{Get DOI for Github.}
-which outputs an edge list format graph suitable for input to other software.
-
-
 \iftoggle{curvatureON}{
 \section{Some other spaces}
 
@@ -1015,13 +922,99 @@ If the coordinate becomes $0$, resolve the multifurcation uniformly at random an
 Note that this mechanism does not bound edge lengths from above and favors topological moves when $p<1/2$.
 }{}
 
-\vskip10pt
 
-\todo[inline]{Show that there are many unsolved problems in the area that other researchers may be interested in working on.
-Add a "future directions" section, with a mention in the abstract/introduction.}
+\section{Open problems and conjectures}
 
-\todo[inline]{Conjectures won't go to the journal.}
-\subsection{Conjectures}
+Problem~\ref{complexityProblem} mentioned in the beginning of previous section asks about the complexity of computing the distance in discrete time-tree graphs.
+This problem is the primary obstacle for actual biological applications of the introduced graphs.
+The history of research into computational complexity of phylogenetic graphs, and particularly the $\nni$ graph, is very reach, with a number of erroneous results being published.
+See \autocite{Dasgupta2000-xa} for a detailed discussion of those publications, some of which claimed that $\rnni$ distance is NP-hard while others claiming that $\rnni$ distance is decidable in polynomial time.
+The latter claims were mainly based on the so-called Split Theorem that claims that if a partition of leaves given by an edge is shared between trees then there exists a shortest $\nni$ path between the trees such that every tree on the path maintains the partition.
+These claims have been refuted by \textcite{li1996some}.
+
+Hence, a natural question that would contribute to understanding Problem~\ref{complexityProblem} is whether or not the Split Theorem holds in $\rnniu$.
+
+
+\subsection{Split theorem}
+
+\textcite{li1996some} used the information about the diameter of the graph and the sizes of neighborhoods to provide an example of trees such that every shortest $\nni$ path between the trees fails to maintain a split of taxa shared by the origin and destination trees.~\todo{You should mention the history of the problem either here or in the introduction (assuming we can prove the theorem).}
+Specifically, they showed that sorting two caterpillar trees simultaneously is more efficient than sorting them independently, provided the size of the trees is large enough.
+In the following lemma, we show that the ranked versions of $\nni$ graph maintain splits along shortest paths between caterpillar trees.
+
+\begin{theorem}\label{splitTheo}
+ Every split present in both trees $T$ and $R$ presents in all trees along every shortest path between $T$ and $R$ in $\dtt$, $\dttu$, $\rnni$, and $\rnniu$, but not in $\nni$.
+ \end{theorem}
+
+\proof
+The work-in-progress proof is on branch
+\url{https://github.com/gavruskin/curvatureNNI/tree/splitTheoProof} branch.
+
+Let $A|B$ be the split under consideration and $T_A$, $T_B$, $R_A$, $R_B$---corresponding restriction of trees $T$ and $R$.
+The arguments goes as follows.
+Assume the contrary: there exists a geodesic that does not maintain the split.
+This path hence should first mix trees $T_A$ and $T_B$ together into a tree $T_A \oplus T_B$.
+Then convert $T_A \oplus T_B$ into $R_A \oplus R_B$ and then separate the latter tree into $R_A$ and $R_B$.
+The main ingredient of the proof is that mixing $T_A$ and $T_B$ together and then separating them into $R_A$ and $R_B$ takes more steps than just convert $T_A$ into $R_A$.
+Assuming $T_A$ and $R_A$ are of size $\frac n2$, it is enough to show that mixing + separating takes strictly more steps than the diameter of $\rnniu$ on $\frac n2$ taxa trees.
+
+The scenario works fine for many partial cases, e.g.\ double-caterpillar trees.
+The general case remain illusive.
+\endproof
+
+
+\subsection{Computing the distance}
+
+We first bound the number of neighbors of a tree $x$ in the $\dtt_2$ graph that are closer than $x$ to a given tree $y$.
+We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
+\iftoggle{curvatureON}{
+These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
+}{
+When the graph is seen as a metric space, this property is important for the study of the curvature of the space as well as convergence properties of random walks over the space.
+This will be useful in future studies analogous to \autocite{Whidden2015-es}.
+}
+
+\begin{theorem}
+\label{max_good_neighbors}
+Let $x$ and $y$ be two trees.
+Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
+\begin{enumerate}[(i)]
+\item $2d(x,y)$ in $\nni$,
+\item $3d(x,y)$ in $\rnni$,
+\item $4d(x,y)$ in $\dtt_2$,
+\item $5d(x,y)$ in $\dtt_m$ for $m > 2$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+We first prove the statement for $\dtt_2$.
+
+Let $U$ be the set of neighbors $u$ of $x$ such that $d(u,y) \le d(x,y)$, as stated in the theorem.
+We partition $U$ into three sets of trees---$I$, $R$, and $L$---obtained from $x$ by a single $\nni$ move, rank change, or length change, respectively.
+We then prove the theorem by bounding the size of each partition by $2d(x,y)$, $d(x,y)$, and $d(x,y)$, respectively.
+
+We first consider some basic properties of minimal length paths between $x$ and $y$.
+Observe that at most $d(x,y)$ bipartitions differ between $x$ and $y$, as each $\nni$ operation replaces one bipartition with another (and rank and length changes do not modify bipartitions).
+Now, observe that no minimal length path from $x$ to $y$ will replace a bipartition that is common to $x$ and $y$, as any path including such a replacement can be made shorter by removing the replacement move (and subsequent moves that reintroduce the bipartition).
+
+We are now ready to bound the sizes of each partition $I$, $R$, and $L$.
+First, consider the subset $I$ of closer neighbors obtained via $\nni$ moves.
+By our observations above, $|I|$ is bounded by the number of $\nni$ operations that modify one of the at most $d(x,y)$ bipartitions of $x$ that are not a bipartition of $y$.
+There are two neighbors of $x$ that lack any given bipartition (obtained by moving either the left or right subtree located below the bipartition).
+Therefore, $|I| \le 2d(x,y)$.
+
+Second, consider the subset $R$ of closer neighbors obtained via rank change moves.
+These operate either on one of $x$'s unique bipartitions or a bipartition common to $x$ and $y$ that differs in rank.
+As observed above, the number of unique bipartitions is bounded by the maximum number of $\nni$ moves on any minimal $x$ to $y$ path.
+Any such path must fix the ranks of each common edge.
+In other words, if $r_1$ is the number of trees in $U$ which are obtained from $x$ by a rank move corresponding to a common edge and $r_2$ is the number of trees in $U$ which are obtained from $x$ by a rank move corresponding to a unique edge of $x$, then $r_1 + r_2 \leq d(x,y)$, because the $r_1$ moves have to be done along every shortest path from $x$ to $y$.
+Thus, the total size of $R$ is bounded by $d(x,y)$.
+
+The bound of $d(x,y)$ on the number of length changes that can be applied to move $x$ closer to $y$ follows similarly.
+Therefore, there are at most $|I| + |R| + |L| \le 2d(x,y) + d(x,y) + d(x,y) = 4d(x,y)$ trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$.
+
+The statement for the other three graphs follows similarly: for $\nni$ we need to count only for trees from $I$, for $\rnni$ we need to count only for trees from $I$ and $R$, for $\dtt$ we will have to add $2d(x,y)$ instead of $d(x,y)$ for $L$.
+\end{proof}
+
 \begin{conjecture}
 \begin{enumerate}[(1)]
 The list of conjectures that would be nice to settle or refute in this paper:
@@ -1052,11 +1045,6 @@ Then $\lim_n \frac{|\partial S|}{|S|} = 0$ for all graphs under consideration.
 \endproof
 
 This proposition implies for phylogenetic graphs that the isoperimetric number is asymptotically the smallest possible, which can be interpreted as that the graphs have the tightest possible bottlenecks.
-%EM Hm... regarding this last statement, couldn't some graphs go to zero more quickly than others?
-%AG: This is a conjecture and I am not going to include any assessment of conjectures, so this statement will go.
-
-
-\section{Open problems and conjectures}
 
 
 \section{Discussion}
@@ -1064,6 +1052,7 @@ Most of the results in this paper can be generalized to the class of sampled anc
 However, currently very few methods of sampling the space of sampled ancestor trees are known \autocite{Gavryushkina2015-vq} and the geometry of the space is poorly understood \autocite{Gavryushkin2014-bw}.
 
 \newpage
+
 
 \section{Appendix}
 
