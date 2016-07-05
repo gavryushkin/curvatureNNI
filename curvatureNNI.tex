@@ -55,11 +55,13 @@
 \begin{document}
 
 
-\title{The combinatorics of discrete time-trees: theory and open problems}
+\title[The combinatorics of discrete time-trees]{The combinatorics of discrete time-trees:\\
+theory and open problems}
 
 \author{Alex Gavryushkin}
-\address{Centre for Computational Evolution, The University of Auckland, New Zealand}
+\address{Department of Biosystems Science and Engineering, ETH Z\"urich, 4058 Basel}
 \email{alex@gavruskin.com}
+
 
 \author{Chris Whidden}
 \address{Program in Computational Biology, Fred Hutchinson Cancer Research Center, Seattle, WA 98109}
@@ -68,6 +70,8 @@
 \author{Frederick A Matsen IV}
 %\address{Program in Computational Biology, Fred Hutchinson Cancer Research Center, Seattle, WA 98109}
 \email{matsen@fredhutch.org}
+
+\date{\today}
 
 \thanks{AG was supported by the Marsden Fund of New Zealand through the Centre for Computational Evolution.}
 
@@ -80,7 +84,7 @@ One of the basic and widely used phylogenetic graphs, the $\nni$ graph, is the r
 More refined approximations discretize the relative timing of evolutionary divergence and sampling dates.
 We study basic graph-theoretic questions for these graphs including the size of neighborhoods, diameter upper and lower bounds, and the problem of finding shortest paths.
 We settle many of these questions by applying the concept of graph grammars introduced by Sleator, Tarjan, and Thurston to our graphs.
-Furthermore, we design an efficient heuristic for constructing these graphs.
+Furthermore, we design an efficient algorithm for constructing these graphs.
 \iftoggle{curvatureON}{
 We also investigate the Ricci-Ollivier curvature of basic random walks on the space.
 }{}
@@ -131,19 +135,19 @@ However, one can discretize time-trees in a way that does preserve some of the i
 For example, by retaining the order of internal nodes backward in time one obtains a so-called \emph{ranked tree} \autocite{Semple2003-nj}.
 To make a less rough approximation of a time-tree, one can allow the time periods between nodes of the tree to take only finitely many possible values.
 This results in an object we call a \emph{discrete time-tree}.
-The graph built on such trees provides a discretization of the space of time-trees, which we call a \emph{discretized time-tree graph}.
-A sequence of time-trees sampled using MCMC projects to a collection of movements on a graph in which each vertex is a discretized time-tree and each edge is a discretized version of an MCMC move on time-trees.
+The graph built on such trees provides a discretization of the space of time-trees, which we call a \emph{discrete time-tree graph}.
+A sequence of time-trees sampled using MCMC projects to a collection of movements on a graph in which each vertex is a discrete time-tree and each edge is a discrete version of an MCMC move on time-trees.
 
 Although inferential algorithms have applied MCMC on time-trees for over a decade, and graphs corresponding to discretizations of unrooted tree space have been studied for even longer, we are not aware of any work defining graphs from discretization of time-tree spaces or analyzing random walks thereupon.
 Such a theory would provide a foundation for understanding the behavior of MCMC algorithms on time-trees, as has been done previously for graphs associated with unrooted phylogenetic trees.
 Up to now, the only discretization of time-tree space that has been studied is that of ranked trees \autocite{Page1991-rd,Ford2009-qi,Lambert2013-mr}, and that was not from a graph-theoretic perspective.
 
-In this paper we initiate the mathematical study of discretized time-tree graphs, obtain basic geometric and graph-theoretic results,
+In this paper we initiate the mathematical study of discrete time-tree graphs, obtain basic geometric and graph-theoretic results,
 \iftoggle{curvatureON}{
 study random walks on these graphs,
 }{}
 and compare these results to those in the classical phylogenetic setting.
-In particular, we focus on ranked trees, discretized time-trees (as defined above), and the ultrametric versions of those types of trees.
+In particular, we focus on ranked trees, discrete time-trees (as defined above), and the ultrametric versions of those types of trees.
 \iftoggle{curvatureON}{
 We study Ricci-Ollivier curvature \autocite{Ollivier2009-cj} of Markov chains on these graphs, a formalism which quantifies to what extent random walking brings unit balls together.
 This formalism has recently been applied to Markov chains on graphs of classical phylogenetic trees \autocite{Whidden2015-es}.
@@ -217,7 +221,7 @@ In general, the graph structure for $m > 1$ can be understood by considering all
 
 This hierarchy can be seen as a set of discrete refinements of the full space of phylogenetic time-trees, where event intervals can take an arbitrary real value.
 Indeed, if we consider
-$\tau$-space\footnote{Conveniently, the discretized versions of $\tau$- and $\mathrm t$-space from \autocite{Gavryushkin2014-bw} coincide.}
+$\tau$-space\footnote{Conveniently, the discrete versions of $\tau$- and $\mathrm t$-space from \autocite{Gavryushkin2014-bw} coincide.}
 defined by \textcite{Gavryushkin2014-bw} and allow the real-valued parameters (length of event intervals) to take only $m$ possible values from $1,\ldots,m$ then we get $\dtt_m$.
 In this case, $\dtt_0$ is the graph with the vertices being the cubes of $\tau$-space and the adjacency relation being the relation of ``have a shared facet of co-dimension $1$''.
 
@@ -486,7 +490,7 @@ Now we estimate the diameter from above.
 Recall that $\Delta(\G)$ is the diameter of graph $\G$.
 
 \begin{theorem}\label{diameterUpperBound}
-Then for $n \ge 4$,
+For $n \ge 4$,
 \[
 \Delta(\rnniu) \le n^2 - 3n - \frac 58.
 \]
@@ -928,39 +932,25 @@ Note that this mechanism does not bound edge lengths from above and favors topol
 
 Problem~\ref{complexityProblem} mentioned in the beginning of previous section asks about the complexity of computing the distance in discrete time-tree graphs.
 This problem is the primary obstacle for actual biological applications of the introduced graphs.
-The history of research into computational complexity of phylogenetic graphs, and particularly the $\nni$ graph, is very reach, with a number of erroneous results being published.
-See \autocite{Dasgupta2000-xa} for a detailed discussion of those publications, some of which claimed that $\rnni$ distance is NP-hard while others claiming that $\rnni$ distance is decidable in polynomial time.
-The latter claims were mainly based on the so-called Split Theorem that claims that if a partition of leaves given by an edge is shared between trees then there exists a shortest $\nni$ path between the trees such that every tree on the path maintains the partition.
-These claims have been refuted by \textcite{li1996some}.
+The history of research into computational complexity of phylogenetic graphs, and particularly the $\nni$ graph, is very rich and exciting, with a number of erroneous results being published over the 25 years it took to settle the complexity.
+See \autocite{Dasgupta2000-xa} for a detailed discussion of those publications, some of which claimed that $\nni$ distance is NP-hard while others claiming that $\nni$ distance is decidable in polynomial time.
+The latter claims were mainly based on the so-called Split Theorem that states the following.
+If a partition of leaves given by an edge is shared between two trees then there exists a shortest $\nni$ path between the trees such that every tree on the path maintains the partition.
+These claims have been refuted by \textcite{li1996some}, who proved that the Split Theorem does not hold in the $\nni$ graph.
 
-Hence, a natural question that would contribute to understanding Problem~\ref{complexityProblem} is whether or not the Split Theorem holds in $\rnniu$.
+Hence, a natural question that would contribute to understanding of Problem~\ref{complexityProblem} is whether or not the Split Theorem holds in the $\rnniu$ graph and other time-tree graphs.
 
 
-\subsection{Split theorem}
+\subsection{Split Theorem}
 
-\textcite{li1996some} used the information about the diameter of the graph and the sizes of neighborhoods to provide an example of trees such that every shortest $\nni$ path between the trees fails to maintain a split of taxa shared by the origin and destination trees.~\todo{You should mention the history of the problem either here or in the introduction (assuming we can prove the theorem).}
+\textcite{li1996some} used the information about the diameter of the graph and the sizes of neighborhoods to provide an example of trees such that every shortest $\nni$ path between the trees fails to maintain a partition of taxa shared by the origin and destination trees.
 Specifically, they showed that sorting two caterpillar trees simultaneously is more efficient than sorting them independently, provided the size of the trees is large enough.
-In the following lemma, we show that the ranked versions of $\nni$ graph maintain splits along shortest paths between caterpillar trees.
+In the following, we conjecture that the ranked versions of $\nni$ graph maintain splits along shortest paths between caterpillar trees.
+Our conjecture is based on the fact that $\rnniu$ does not satisfy the diameter bounds necessary for the argument in \autocite{li1996some} to go through---see Theorems~\ref{neighSizeTh} and~\ref{diameterUpperBound}.
 
-\begin{theorem}\label{splitTheo}
- Every split present in both trees $T$ and $R$ presents in all trees along every shortest path between $T$ and $R$ in $\dtt$, $\dttu$, $\rnni$, and $\rnniu$, but not in $\nni$.
- \end{theorem}
-
-\proof
-The work-in-progress proof is on branch
-\url{https://github.com/gavruskin/curvatureNNI/tree/splitTheoProof} branch.
-
-Let $A|B$ be the split under consideration and $T_A$, $T_B$, $R_A$, $R_B$---corresponding restriction of trees $T$ and $R$.
-The arguments goes as follows.
-Assume the contrary: there exists a geodesic that does not maintain the split.
-This path hence should first mix trees $T_A$ and $T_B$ together into a tree $T_A \oplus T_B$.
-Then convert $T_A \oplus T_B$ into $R_A \oplus R_B$ and then separate the latter tree into $R_A$ and $R_B$.
-The main ingredient of the proof is that mixing $T_A$ and $T_B$ together and then separating them into $R_A$ and $R_B$ takes more steps than just convert $T_A$ into $R_A$.
-Assuming $T_A$ and $R_A$ are of size $\frac n2$, it is enough to show that mixing + separating takes strictly more steps than the diameter of $\rnniu$ on $\frac n2$ taxa trees.
-
-The scenario works fine for many partial cases, e.g.\ double-caterpillar trees.
-The general case remain illusive.
-\endproof
+\begin{conjecture}\label{splitConj}
+Every split present in both trees $T$ and $R$ presents in all trees along a shortest path between $T$ and $R$ in $\dtt$, $\dttu$, $\rnni$, and $\rnniu$, but not in $\nni$.
+ \end{conjecture}
 
 
 \subsection{Computing the distance}
@@ -1019,7 +1009,6 @@ The statement for the other three graphs follows similarly: for $\nni$ we need t
 \begin{conjecture}
 \begin{enumerate}[(1)]
 The list of conjectures that would be nice to settle or refute in this paper:
-\item Theorem~\ref{splitTheo}.
 \item $d_\rnniu$ is polynomial.
 \item Proposition~\ref{isoperiPropo}.
 \end{enumerate}
