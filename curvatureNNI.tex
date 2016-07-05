@@ -2,7 +2,7 @@
 
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage{todonotes}
-\usepackage[notref,notcite]{showkeys}
+%\usepackage[notref,notcite]{showkeys}
 \usepackage{enumerate}
 \usepackage{url}
 \usepackage[hidelinks]{hyperref}
@@ -436,8 +436,8 @@ Since the number of internal nodes of a tree on $n$ leaves in $\rnniu$ is $n-1$,
 
 This bound can be improved following the techniques described in Sections 3.2--3.4 of \autocite[][see also Section 5]{Sleator1992-bp} by bounding the number of possible productions available at a given time by a number smaller than their total.
 Every node of a tree in any application of a production of grammar $\Gamma$ can play either of two roles: top node or bottom node.
-Hence to indicate that a pair of nodes is ready for being destroyed and replaced using a production, we must specify which node is the top and which is the bottom.
-We use two node-labels (\textcite{Sleator1992-bp} call these "labels of vertices") to identify these two roles.
+Hence to indicate that a pair of nodes is ready for being destroyed and replaced using a production, we must specify which node is a top node and which is a bottom node.
+We use two node-labels (\textcite{Sleator1992-bp} call these ``labels of vertices'') to identify these two roles.
 Furthermore, to distinguish which of the two possible $\nni$ moves is applied, we employ another (third) node-label.
 We claim that three node-labels $a, b, c$ is enough.
 We must redefine the notion of readiness to verify this claim.
@@ -445,7 +445,11 @@ We say that a pair of consecutive nodes is \emph{ready} if the node-label of the
 If two consecutive nodes are ready and not connected by an edge in the tree, then only the rank move is possible.
 If they are, the type of the move is determined by the node-label of the top node.
 Hence, this notion of readiness uniquely identifies which of the three productions is applied.
-Furthermore, if we want to indicate that a pair of consecutive nodes is never destroyed, we give them identical node-labels.
+Furthermore, if we want to indicate that a node $v$ should not be destroyed for the reminder of the derivation, we label the node with an $a$.
+This labeling will indeed preserve the node $v$ because of the following.
+The node cannot be destroyed as a top node because top nodes that are ready for destruction must be labeled with either $b$ or $c$.
+The node $v$ cannot be destroyed as a bottom node either because the node $w$ right on top of $v$ in the running tree at a later stage $s$ of the derivation can be either a bottom node or a node that has to be preserved, in both of these cases node $w$ must be marked with an $a$.
+
 Thus, all possible configurations encoded by the six nodes on the left sides of the productions of $\Gamma$ can be encoded using three node-labels.
 This implies that the derivation can be encoded by a ternary sequence of length $n-1+2r$.
 Indeed, the first $n-1$ entries of the sequence are needed to encode all possible node-labelings of the initial tree, plus two entries are needed for each of the $r$ applications of productions because every production creates two new nodes, each of which has to be node-labeled.
