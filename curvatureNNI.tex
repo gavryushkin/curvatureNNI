@@ -945,28 +945,32 @@ Hence, a natural question that would contribute to understanding of Problem~\ref
 
 \textcite{li1996some} used the information about the diameter of the graph and the sizes of neighborhoods to provide an example of trees such that every shortest $\nni$ path between the trees fails to maintain a partition of taxa shared by the origin and destination trees.
 Specifically, they showed that sorting two caterpillar trees simultaneously is more efficient than sorting them independently, provided the size of the trees is large enough.
-In the following, we conjecture that the ranked versions of $\nni$ graph maintain splits along shortest paths between caterpillar trees.
+In the following, we conjecture that the ranked versions of $\nni$ graph maintain splits along shortest paths.
 Our conjecture is based on the fact that $\rnniu$ does not satisfy the diameter bounds necessary for the argument in \autocite{li1996some} to go through---see Theorems~\ref{neighSizeTh} and~\ref{diameterUpperBound}.
 
 \begin{conjecture}\label{splitConj}
-Every split present in both trees $T$ and $R$ presents in all trees along a shortest path between $T$ and $R$ in $\dtt$, $\dttu$, $\rnni$, and $\rnniu$, but not in $\nni$.
- \end{conjecture}
+The following is true in all graphs $\dtt$, $\dttu$, $\rnni$, and $\rnniu$, but not in $\nni$.
+If a partition of leaves given by an edge presents in two trees $T$ and $R$ then the partition presents in every tree on every shortest path between $T$ and $R$.
+\end{conjecture}
 
 
 \subsection{Computing the distance}
 
-We first bound the number of neighbors of a tree $x$ in the $\dtt_2$ graph that are closer than $x$ to a given tree $y$.
+In this section, we bound the number of neighbors of a tree $x$ in the discrete time-tree graphs that are closer than $x$ to a given tree $y$, \textbf{under the assumption that Conjecture~\ref{splitConj} holds}.\footnote{
+We denote trees by lowercase letters to stress the fact that we are considering graphs as metric spaces in this section.}
 We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
 \iftoggle{curvatureON}{
 These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
 }{
 When the graph is seen as a metric space, this property is important for the study of the curvature of the space as well as convergence properties of random walks over the space.
 This will be useful in future studies analogous to \autocite{Whidden2015-es}.
+Furthermore, the result provides a further insight into possible approaches to Problem~\ref{complexityProblem}.
 }
 
 \begin{theorem}
 \label{max_good_neighbors}
-Let $x$ and $y$ be two trees.
+Assume that Conjecture~\ref{splitConj} holds.
+Let $x$ and $y$ be two trees and $N(x)$---a one-neighborhood of $x$.
 Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
 \begin{enumerate}[(i)]
 \item $2d(x,y)$ in $\nni$,
@@ -985,7 +989,7 @@ We then prove the theorem by bounding the size of each partition by $2d(x,y)$, $
 
 We first consider some basic properties of minimal length paths between $x$ and $y$.
 Observe that at most $d(x,y)$ bipartitions differ between $x$ and $y$, as each $\nni$ operation replaces one bipartition with another (and rank and length changes do not modify bipartitions).
-Now, observe that no minimal length path from $x$ to $y$ will replace a bipartition that is common to $x$ and $y$, as any path including such a replacement can be made shorter by removing the replacement move (and subsequent moves that reintroduce the bipartition).
+Now, Conjecture~\ref{splitConj} implies that no minimal length path from $x$ to $y$ will replace a bipartition that is common to $x$ and $y$.
 
 We are now ready to bound the sizes of each partition $I$, $R$, and $L$.
 First, consider the subset $I$ of closer neighbors obtained via $\nni$ moves.
@@ -1006,40 +1010,10 @@ Therefore, there are at most $|I| + |R| + |L| \le 2d(x,y) + d(x,y) + d(x,y) = 4d
 The statement for the other three graphs follows similarly: for $\nni$ we need to count only for trees from $I$, for $\rnni$ we need to count only for trees from $I$ and $R$, for $\dtt$ we will have to add $2d(x,y)$ instead of $d(x,y)$ for $L$.
 \end{proof}
 
-\begin{conjecture}
-\begin{enumerate}[(1)]
-The list of conjectures that would be nice to settle or refute in this paper:
-\item $d_\rnniu$ is polynomial.
-\item Proposition~\ref{isoperiPropo}.
-\end{enumerate}
-\end{conjecture}
-
-We finish this section with the following proposition that suggests that the graphs under consideration have ``bottlenecks''.
-To make this statement precise we need to introduce the following notion.
-Let $G = (V, E)$ be an undirected graph and $S$ a subset of the set of vertices $V$.
-The boundary $\partial S$ of $S$ is the set of edges ``pointing out from $S$'': $\partial S = \{(v,w) \in E \mid v \in S ~\&~ w \notin S\}$.
-Then the \emph{isoperimetric number} $h(G)$ of $G$ is defined by
-\[
-h(G) = \inf\limits_{0 < |S| \leq \frac12|V|} \frac{|\partial S|}{|S|}.
-\]
-
-\begin{proposition}\label{isoperiPropo}
-Let $G_n$ be $\dtt$, $\dttu$, $\rnni$, $\rnniu$, or $\nni$ graph on trees with $n$ taxa.
-Then $\lim_n h(G_n) = 0$.
-\end{proposition}
-
-\proof
-We assume that the taxa set is $\{1,\ldots,n\}$ and denote the set $\{1,\ldots,\lfloor \frac n2 \rfloor\} \leftrightharpoons A$ and $\{\lfloor \frac n2 \rfloor + 1,\ldots, n\} \leftrightharpoons B$.
-Let $S$ be the set of trees $T$ such that $T$ has the split $A \mid B$.
-Then $\lim_n \frac{|\partial S|}{|S|} = 0$ for all graphs under consideration.
-\endproof
-
-This proposition implies for phylogenetic graphs that the isoperimetric number is asymptotically the smallest possible, which can be interpreted as that the graphs have the tightest possible bottlenecks.
-
 
 \section{Discussion}
 Most of the results in this paper can be generalized to the class of sampled ancestor trees \autocite{Gavryushkina2014-xd}.
-However, currently very few methods of sampling the space of sampled ancestor trees are known \autocite{Gavryushkina2015-vq} and the geometry of the space is poorly understood \autocite{Gavryushkin2014-bw}.
+However, currently only a few methods of sampling the space of sampled ancestor trees are known \autocite{Gavryushkina2015-vq} and the geometry of the space is poorly understood \autocite{Gavryushkin2014-bw}, hence we do not include the generalization here.
 
 \newpage
 
