@@ -399,7 +399,7 @@ The number of trees within distance $r$ from any given tree is at most
 \end{theorem}
 
 \proof
-We prove the theorem in $\rnniu$ and it will follow similarly in the other three graphs.
+We describe the proof in detail for $\rnniu$, and include proof sketches the other three graphs.
 The proof employs the technique by \textcite{Sleator1992-bp} for counting paths in a graph: we first apply Theorem~2.3 of \textcite{Sleator1992-bp} and then improve the bound using specific properties of the $\rnniu$ graph.
 
 We first need to introduce the \emph{graph grammar} for $\rnniu$.
@@ -437,9 +437,8 @@ Since the number of internal nodes of a tree on $n$ leaves in $\rnniu$ is $n-1$,
 This bound can be improved following the techniques described in Sections 3.2--3.4 of \autocite[][see also Section 5]{Sleator1992-bp} by bounding the number of possible productions available at a given time by a number smaller than their total.
 Every node of a tree in any application of a production of grammar $\Gamma$ can play either of two roles: top node or bottom node.
 Hence to indicate that a pair of nodes is ready for being destroyed and replaced using a production, we must specify which node is a top node and which is a bottom node.
-We use two node-labels (\textcite{Sleator1992-bp} call these ``labels of vertices'') to identify these two roles.
-Furthermore, to distinguish which of the two possible $\nni$ moves is applied, we employ another (third) node-label.
-We claim that three node-labels $a, b, c$ is enough.
+We use a total of three node-labels (\textcite{Sleator1992-bp} call these ``labels of vertices'') to identify these two roles and to distinguish which of the two possible $\nni$ moves is applied.
+We claim that three node-labels $a, b, c$ is enough to specify which productions can be applied to a given tree.
 We must redefine the notion of readiness to verify this claim.
 We say that a pair of consecutive nodes is \emph{ready} if the node-label of the bottom node is $a$ and the node-label of the top node is either $b$ or $c$.
 If two consecutive nodes are ready and not connected by an edge in the tree, then only the rank move is possible.
@@ -448,20 +447,20 @@ Hence, this notion of readiness uniquely identifies which of the three productio
 Furthermore, if we want to indicate that a node $v$ should not be destroyed for the reminder of the derivation, we label the node with an $a$.
 This labeling will indeed preserve the node $v$ because of the following.
 The node cannot be destroyed as a top node because top nodes that are ready for destruction must be labeled with either $b$ or $c$.
-The node $v$ cannot be destroyed as a bottom node either because the node $w$ right on top of $v$ in the running tree at a later stage $s$ of the derivation can be either a bottom node or a node that has to be preserved, in both of these cases node $w$ must be marked with an $a$.
+The node $v$ cannot be destroyed as a bottom node either, because the node $w$ directly on top of $v$ in the running tree at a later stage $s$ of the derivation can be either a bottom node or a node that has to be preserved, and in both of these cases node $w$ must be marked with an $a$.
 
 Thus, all possible configurations encoded by the six nodes on the left sides of the productions of $\Gamma$ can be encoded using three node-labels.
 This implies that the derivation can be encoded by a ternary sequence of length $n-1+2r$.
 Indeed, the first $n-1$ entries of the sequence are needed to encode all possible node-labelings of the initial tree, plus two entries are needed for each of the $r$ applications of productions because every production creates two new nodes, each of which has to be node-labeled.
 The number of such strings, $3^{n-1+2r}$, gives the desired improved bound.
 
-For $\rnni$, we extend graph grammar $\Gamma$ by two productions, namely, one for the move when two taxa swap their ranks and one for the move when a taxon and an internal node swap their ranks.
+For $\rnni$, we extend the graph grammar $\Gamma$ by two productions, namely, one for the move when two taxa swap their ranks and one for the move when a taxon and an internal node swap their ranks.
 Since in both of these productions the only possible type of move is the rank move, two node-labels is enough for these productions.
 Since the number of nodes (internal and leaves) in an $\rnni$ tree is $2n - 1$ and the maximum number of nodes on right sides of the productions is still $2$, the desired bound is $3^{2n-1 + 2r}$.
 
-For $\dttu$, we have to extend grammar $\Gamma$ by two productions, namely, one for increasing the length of the brunch between two nodes in the production and one for decreasing.
+For $\dttu$, we have to extend the grammar $\Gamma$ by two productions, namely, one for increasing the length of the branch between two nodes in the production and one for decreasing.
 This increases the number of necessary node-labels by one.
-Indeed, if a production has a long brunch on the left side, three node-labels are enough to indicate whether the branch length increases or decreases; if a production has a short branch on the left side three node-labels are needed for the top node to indicate the type of the move that has to be applied: length increase move or one of the two possible $\nni$ moves.
+Indeed, if a production has a long branch on the left side, three node-labels are enough to indicate whether the branch length increases or decreases; if a production has a short branch on the left side three node-labels are needed for the top node to indicate the type of the move that has to be applied: length increase move or one of the two possible $\nni$ moves.
 Together, this requires $4$ node-labels and the desired bound is $4^{n-1 + 2r}$.
 
 For $\dtt$, we extend the grammar constructed for $\dttu$ by four productions, namely, one for the move when two taxa either swap their ranks or increase the interval length between them, one for the move when two taxa either increase or decrease the interval length between them, one for the move when a taxon and an internal node either swap their ranks or increase the interval length between them, and one for the move when a taxon and an internal node either increase or decrease the interval length between them.
@@ -936,7 +935,7 @@ Note that this mechanism does not bound edge lengths from above and favors topol
 
 Problem~\ref{complexityProblem} mentioned in the beginning of previous section asks about the complexity of computing the distance in discrete time-tree graphs.
 This problem is the primary obstacle for actual biological applications of the introduced graphs.
-The history of research into computational complexity of phylogenetic graphs, and particularly the $\nni$ graph, is very rich and exciting, with a number of erroneous results being published over the 25 years it took to settle the complexity.
+The history of research into computational complexity of phylogenetic graphs is very rich and exciting, in particular for the case of the $\nni$ graph, with a number of erroneous results being published over the 25 years it took to settle the complexity.
 See \autocite{Dasgupta2000-xa} for a detailed discussion of those publications, some of which claimed that $\nni$ distance is NP-hard while others claiming that $\nni$ distance is decidable in polynomial time.
 The latter claims were mainly based on the so-called Split Theorem that states the following.
 If a partition of leaves given by an edge is shared between two trees then there exists a shortest $\nni$ path between the trees such that every tree on the path maintains the partition.
