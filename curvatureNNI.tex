@@ -413,7 +413,7 @@ A production is said to be \emph{ready} at a stage $s$ of the derivation if the 
 By a \emph{running tree at stage $s$} we mean the tree obtained after $s$ applications of the production rules in the derivation.}
 A ready production can be applied to the running tree by destroying all nodes corresponding to the left side of the production under the isomorphism and replacing them with the right side $R_i$ of the production.
 The map $\to_i$ of the production then says how to reconnect the right side of the production to the half-edges of the running tree that were created after the destruction.
-Thus obtained tree is the new running tree for the next stage $s+1$ of the derivation.
+The obtained tree is the new running tree for the next stage $s+1$ of the derivation.
 
 Given the grammar, the number of possible productions to the power of the encoding length for a given neighborhood radius gives a simple upper bound on the number of trees in a neighborhood.
 See \autocite{Sleator1992-bp} for precise definitions and details.
@@ -887,13 +887,19 @@ Use Corollary~\ref{degreeBounds}.
 
 \subsection{Efficient algorithm for generating $\rnni$ graphs}
 
-The following algorithm to compute the $\rnni$ graph on $n$ leaves, which is a natural extension of an algorithm from \textcite{Whidden2015-es}.
+The following algorithm computes the $\rnni$ graph on $n$ leaves, which is a natural extension of an algorithm from \textcite{Whidden2015-es}.
 The input to our algorithm is a set $S$ of $\rnni$ trees in the format described by \textcite{Gavryushkin2014-bw} and implemented in \autocite{tauGeodesic} (see also \autocite{Semple2003-nj}).
-A tree is hence given by a sequence of sets of taxa, and this obtained representation is unique.
+The two key requirements of the algorithm are the ability to enumerate the neighbors of a given tree in the $\rnni$ graph, and the ability to determine whether a given tree is already a vertex of the graph.
+Both of these requirements follow from an efficient unique representation for ranked trees.
+
+A tree is given by a sequence of sets of taxa, and this obtained representation is unique.
 For example, the representation of the tree on Figure~\ref{timeTree.eps} is $(\{A\}, \{C\}, \{D\}, \{B\}, \{E\}, \{A,B\}, \{D,E\}, \{C, D, E\}, \{F\}, \{A,B,F\}, \{A,B,C,D,E,F\})$, or
 $(\{A,B\}, \{D,E\}, \{C, D, E\}, \{A,B,F\}, \{A,B,C,D,E,F\})$ if we make the tree ultrametric by placing all taxa below the most recent divergence event.
 Using this representation of trees we construct a map $\nu : S \to \omega$, where $\omega$ is the set of non-negative integers.
-This maps allows us to determine whether or not a tree is already a vertex of the graph.
+This map allows us to determine whether or not a tree is already a vertex of the graph.
+This takes linear time if the map is implemented as a Trie.
+We can also enumerate the neighbors of a tree in $O(n^2)$-time using Lemma~\ref{neighBound}.
+The algorithm therefore takes $O(|S|n^2)$-time.
 
 The high-level steps of the algorithm are as follows.
 See \cite{Whidden2015-es} for a proof of correctness.
