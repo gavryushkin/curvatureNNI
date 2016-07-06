@@ -943,20 +943,20 @@ Note that this mechanism does not bound edge lengths from above and favors topol
 
 \section{Open problems and conjectures}
 
-Problem~\ref{complexityProblem} mentioned in the beginning of previous section asks about the complexity of computing the distance in discrete time-tree graphs.
+In the previous section we posed Problem~\ref{complexityProblem}, which asks about the complexity of computing the distance in discrete time-tree graphs.
 This problem is the primary obstacle for actual biological applications of the introduced graphs.
 The history of research into computational complexity of phylogenetic graphs is very rich and exciting, in particular for the case of the $\nni$ graph, with a number of erroneous results being published over the 25 years it took to settle the complexity.
 See \autocite{Dasgupta2000-xa} for a detailed discussion of those publications, some of which claimed that $\nni$ distance is NP-hard while others claiming that $\nni$ distance is decidable in polynomial time.
-The latter claims were mainly based on the so-called Split Theorem that states the following.
+The latter claims were mainly based on the so-called Split Theorem which states the following:
 If a partition of leaves given by an edge is shared between two trees then there exists a shortest $\nni$ path between the trees such that every tree on the path maintains the partition.
-These claims have been refuted by \textcite{li1996some}, who proved that the Split Theorem does not hold in the $\nni$ graph.
+These claims were finally refuted by \textcite{li1996some}, who proved that the Split Theorem does not hold in the $\nni$ graph.
 
-Hence, a natural question that would contribute to understanding of Problem~\ref{complexityProblem} is whether or not the Split Theorem holds in the $\rnniu$ graph and other time-tree graphs.
+Hence, a natural question that would contribute to understanding Problem~\ref{complexityProblem} is whether or not the Split Theorem holds in the $\rnniu$ graph and other time-tree graphs.
 
 
 \subsection{Split Theorem}
 
-\textcite{li1996some} used the information about the diameter of the graph and the sizes of neighborhoods to provide an example of trees such that every shortest $\nni$ path between the trees fails to maintain a partition of taxa shared by the origin and destination trees.
+\textcite{li1996some} used properties of the diameter of the $\nni$ graph and the sizes of its neighborhoods to provide an example of trees such that every shortest $\nni$ path between the trees fails to maintain a partition of taxa shared by the origin and destination trees.
 Specifically, they showed that sorting two caterpillar trees simultaneously is more efficient than sorting them independently, provided the size of the trees is large enough.
 In the following, we conjecture that the ranked versions of $\nni$ graph maintain splits along shortest paths.
 Our conjecture is based on the fact that $\rnniu$ does not satisfy the diameter bounds necessary for the argument in \autocite{li1996some} to go through---see Theorems~\ref{neighSizeTh} and~\ref{diameterUpperBound}.
@@ -986,7 +986,8 @@ Assume that Conjecture~\ref{splitConj} holds.
 Let $x$ and $y$ be two trees and $N(x)$---a one-neighborhood of $x$.
 Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
 \begin{enumerate}[(i)]
-\item $2d(x,y)$ in $\nni$,
+% We know the split theorem doesn't hold for $\nni$ 
+%\item $2d(x,y)$ in $\nni$,
 \item $3d(x,y)$ in $\rnni$,
 \item $4d(x,y)$ in $\dtt_2$,
 \item $5d(x,y)$ in $\dtt_m$ for $m > 2$.
@@ -1020,7 +1021,7 @@ Thus, the total size of $R$ is bounded by $d(x,y)$.
 The bound of $d(x,y)$ on the number of length changes that can be applied to move $x$ closer to $y$ follows similarly.
 Therefore, there are at most $|I| + |R| + |L| \le 2d(x,y) + d(x,y) + d(x,y) = 4d(x,y)$ trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$.
 
-The statement for the other three graphs follows similarly: for $\nni$ we need to count only for trees from $I$, for $\rnni$ we need to count only for trees from $I$ and $R$, for $\dtt$ we will have to add $2d(x,y)$ instead of $d(x,y)$ for $L$.
+The statement for the other two graphs follows similarly: for $\rnni$ we need to count only for trees from $I$ and $R$, for $\dtt$ we will have to add $2d(x,y)$ instead of $d(x,y)$ for $L$.
 \end{proof}
 
 
