@@ -10,6 +10,7 @@
 \usepackage{etoolbox}
 \usepackage[style=alphabetic,ibidtracker=false,uniquename=false]{biblatex}
 \usepackage[nomarkers,nolists]{endfloat}
+\usepackage{outlines}
 
 \setlength{\textwidth}{\paperwidth}
 \setlength{\textheight}{\paperheight}
@@ -295,7 +296,7 @@ It is well-known that computing distances is NP-hard in $\nni$ \autocite{Dasgupt
 Hence the following question is natural.
 
 \begin{problem}
-\label{complexityProblem}
+\label{problemComplexity}
 What is the complexity of computing the distance between two discrete time-trees?
 \end{problem}
 
@@ -962,7 +963,7 @@ Note that this mechanism does not bound edge lengths from above and favors topol
 
 \section{Open problems and conjectures}
 
-In the previous section we posed Problem~\ref{complexityProblem}, which asks about the complexity of computing the distance in discrete time-tree graphs.
+In the previous section we posed Problem~\ref{problemComplexity}, which asks about the complexity of computing the distance in discrete time-tree graphs.
 This problem is the primary obstacle for actual biological applications of the introduced graphs.
 The history of research into computational complexity of phylogenetic graphs is very rich and exciting, in particular for the case of the $\nni$ graph, with a number of erroneous results being published over the 25 years it took to settle the complexity.
 See \autocite{Dasgupta2000-xa} for a detailed discussion of those publications, some of which claimed that $\nni$ distance is NP-hard while others claiming that $\nni$ distance is decidable in polynomial time.
@@ -970,7 +971,7 @@ The latter claims were mainly based on the so-called Split Theorem which states 
 If a partition of leaves given by an edge is shared between two trees then there exists a shortest $\nni$ path between the trees such that every tree on the path maintains the partition.
 These claims were finally refuted by \textcite{li1996some}, who proved that the Split Theorem does not hold in the $\nni$ graph.
 
-Hence, a natural question that would contribute to understanding Problem~\ref{complexityProblem} is whether or not the Split Theorem holds in the $\rnniu$ graph and other time-tree graphs.
+Hence, a natural question that would contribute to understanding Problem~\ref{problemComplexity} is whether or not the Split Theorem holds in the $\rnniu$ graph and other time-tree graphs.
 
 
 \subsection{Split Theorem}
@@ -999,7 +1000,7 @@ These subsets of neighbors are the force pushing towards positive curvature, so 
 }{
 When the graph is seen as a metric space, this property is important for the study of the curvature of the space as well as convergence properties of random walks over the space.
 This will be useful in future studies analogous to \autocite{Whidden2015-es}.
-Furthermore, the result provides a further insight into possible approaches to Problem~\ref{complexityProblem}.
+Furthermore, the result provides a further insight into possible approaches to Problem~\ref{problemComplexity}.
 }
 
 \begin{theorem}
@@ -1008,8 +1009,6 @@ Assume that Conjecture~\ref{conjSplit} holds.
 Let $x$ and $y$ be two trees and $N(x)$---a one-neighborhood of $x$.
 Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
 \begin{enumerate}[(i)]
-% We know the split theorem doesn't hold for $\nni$ 
-%\item $2d(x,y)$ in $\nni$,
 \item $3d(x,y)$ in $\rnni$,
 \item $4d(x,y)$ in $\dtt_2$,
 \item $5d(x,y)$ in $\dtt_m$ for $m > 2$.
@@ -1048,6 +1047,19 @@ The statement for the other two graphs follows similarly: for $\rnni$ we need to
 
 
 \section{Discussion}
+As we have demonstrated in previous sections, Problem~\ref{problemComplexity} is a major bottle neck for further progress in theoretical research as well as computational and biological applications.
+Once the Problem is resolved, the number of possible applications will be hard to overestimate.
+A small fraction of the most important of those applications in phylogenetics is the following:
+\begin{outline}
+\1 Trees search
+	\2 Bayesian
+	\2 Max likelihood
+\1 Convergence
+	\2 mixing
+	\2 terraces
+\end{outline}
+
+
 Most of the results in this paper can be generalized to the class of sampled ancestor trees \autocite{Gavryushkina2014-xd}.
 However, currently only a few methods of sampling the space of sampled ancestor trees are known \autocite{Gavryushkina2015-vq} and the geometry of the space is poorly understood \autocite{Gavryushkin2014-bw}, hence we do not include the generalization here.
 
