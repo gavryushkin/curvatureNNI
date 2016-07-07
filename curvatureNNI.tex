@@ -73,7 +73,7 @@ theory and open problems}
 
 \date{\today}
 
-\thanks{AG was supported by the Marsden Fund of New Zealand through the Centre for Computational Evolution.}
+\thanks{AG was supported by the Marsden Fund of New Zealand through the Centre for Computational Evolution, the University of Auckland, where this work has been carried out.}
 
 \thanks{CW and FM were funded by National Science Foundation award 1223057.}
 
@@ -294,7 +294,8 @@ We begin by considering the shortest path distance on the graphs.
 It is well-known that computing distances is NP-hard in $\nni$ \autocite{Dasgupta2000-xa}.
 Hence the following question is natural.
 
-\begin{problem}\label{complexityProblem}
+\begin{problem}
+\label{complexityProblem}
 What is the complexity of computing the distance between two discrete time-trees?
 \end{problem}
 
@@ -324,7 +325,8 @@ We proceed by establishing basic geometric properties of discrete time-trees.
 
 \subsection{Sizes of neighborhoods}
 
-\begin{lemma}[see \autocite{Semple2003-nj}]\label{spaceSizes}
+\begin{lemma}[see \autocite{Semple2003-nj}]
+\label{spaceSizes}
 Let $|V|$ be the number of vertices in the graph, then $|V|$ is equal to
 \begin{align*}
 & \frac{(n-1)!\,n!\,n!\,m^{n-1}}{2^{n-1}}	& \mbox{in $\dtt_m$,}
@@ -345,7 +347,8 @@ We continue with the following bounds on the sizes of $1$-neighborhoods of vario
 We will use these bounds to estimate the curvature of various random walks later in the paper.
 }{}
 
-\begin{lemma}\label{neighBound}
+\begin{lemma}
+\label{neighBound}
 Let $T$ be a tree on $n$ leaves.
 Then
 \begin{align*}
@@ -392,7 +395,8 @@ The following theorem bounds the sizes of neighborhoods.
 The best known bound for $\nni$ that we are aware of is $3^{n-2} 2^{4r}$ \autocite{li1996some}.
 Since the bound we get for $\rnniu$ is smaller, this improves the result for $\nni$.
 
-\begin{theorem}\label{neighSizeTh}
+\begin{theorem}
+\label{neighSizeTh}
 The number of trees within distance $r$ from any given tree is at most
 \begin{align*}
 & 3^{n+2r-1}	& \mbox{in $\rnniu$,}
@@ -496,7 +500,8 @@ In the previous section, we have estimated the diameter of the graphs from below
 Now we estimate the diameter from above.
 Recall that $\Delta(\G)$ is the diameter of graph $\G$.
 
-\begin{theorem}\label{diameterUpperBound}
+\begin{theorem}
+\label{diameterUpperBound}
 For $n \ge 4$,
 \[
 \Delta(\rnniu) \le n^2 - 3n - \frac 58.
@@ -604,7 +609,8 @@ These observations suggest that the $\nni$ graph is geometrically and algorithmi
 
 We need the following corollaries for our analysis of curvature.
 
-\begin{corollary}\label{degreeBounds}
+\begin{corollary}
+\label{degreeBounds}
 The following are satisfied in $\dtt$ for every pair of trees $T$ and $R$.
 \begin{align*}
 & \deg(T)-\deg(R) \leq 3n-4					&& \mbox{in $\dtt$,}\\
@@ -633,7 +639,8 @@ For $\nni$ graph, Lemma~\ref{neighBound} implies that $deg(T)-deg(R) = 0$ and $\
 Let $N(T)$ be the set of trees at distance one from $T$, that is, the set of trees adjacent to $T$ in the corresponding graph.
 The following lemma describes how many trees the tree neighborhoods can have in common.
 
-\begin{lemma}\label{intersecNeighb}
+\begin{lemma}
+\label{intersecNeighb}
 The following is true for all the graphs $\nni$, $\rnni$, $\rnniu$, $\dtt$, and $\dttu$.
 If $d(T,R) = 1$ then $|N(T)\cap N(R)|\in\{0,1\}$.
 \end{lemma}
@@ -648,7 +655,8 @@ If $T$ and $R$ are $\nni$-neighbors, there is precisely one tree which is a neig
 The following general lemma is true for all graphs, particularly, for those we consider in this paper.
 By \emph{distance-one random walk}, we mean a random walk $(m_x)_{x \in X}$ satisfying $m_x(y) = 0$ for all $x$ and $y$ such that $d(x,y) > 1$.
 
-\begin{lemma}\label{curvBoundGeneral}
+\begin{lemma}
+\label{curvBoundGeneral}
 Let $(M,d)$ be a finite metric space and $x,y$ a pair of points from $M$.
 If $(m_x)_{x \in M}$ is a distance-one random walk on $M$, then the curvature $\kappa$ of the random walk satisfies the following boundary conditions.
 \[
@@ -677,7 +685,8 @@ Thus,
 
 As we will see in the next few lemmas, these bounds can be improved for certain random walks on the graphs under consideration.
 
-\begin{lemma}\label{uniformUpper}
+\begin{lemma}
+\label{uniformUpper}
 Let $T$ and $R$ be adjacent trees.
 Then the curvature of the following spaces with uniform random walk satisfy
 \begin{align*}
@@ -725,7 +734,8 @@ Thus, the upper bounds of asymptotic curvatures of $\nni$, $\rnni$, $\rnniu$, $\
 
 We continue with lower bounds on curvature of spaces with uniform lazy random walks.
 
-\begin{lemma}\label{uniformLower}
+\begin{lemma}
+\label{uniformLower}
 Let $T$ and $R$ be adjacent trees.
 Then both the asymptotic curvature of the space with $p$-lazy uniform random walk and the curvature of the space with uniform random walk are at least
 \begin{enumerate}[(i)]
@@ -766,7 +776,8 @@ It remains to note that Lemma~\ref{neighBound} gives us an estimate $|N(T)| \geq
 The lemma follows.
 \endproof
 
-\begin{corollary}\label{flatInLimDTS}
+\begin{corollary}
+\label{flatInLimDTS}
 Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of trees such that $d(T_n,R_n) = 1$ in $\nni$, $\rnni$, or $\dtt$.
 Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = \lim\limits_{n \to \infty}\ric(T_n,R_n) = 0$.
 \end{corollary}
@@ -779,12 +790,19 @@ As we have just proved, the corollary above holds true in $\nni$, $\rnni$, and $
 This corollary is also true in the SPR graph of rooted trees \autocite{Whidden2015-es}.
 Actually, this property can be derived from the following general statement for all spaces mentioned, as well as for many others.
 
-\begin{proposition}\label{flatInLimGen}
+\begin{proposition}
+\label{flatInLimGen}
 Let $(M_n,d_n)_{n \in \omega}$ be a sequence of finite metric spaces and $(x_n, y_n)$ a sequence of adjacent vertices from $M_n$, that is $d_n(x_n,y_n) = 1$, such that
 \begin{enumerate}[(1)]
-\item\label{intersec} $\big|N(x_n) \cap N(y_n)\big| = o(|N(x_n)|)$
-\item\label{difference} $\big||N(x_n)| - |N(y_n)|\big| = o(|N(x_n)|)$
-\item\label{dist2} $\big|\{(x,y) \mid
+\item
+\label{intersec}
+$\big|N(x_n) \cap N(y_n)\big| = o(|N(x_n)|)$
+\item
+\label{difference}
+$\big||N(x_n)| - |N(y_n)|\big| = o(|N(x_n)|)$
+\item
+\label{dist2}
+$\big|\{(x,y) \mid
 	x \in N(x_n),~ y \in N(y_n),~ d(x, y) \geq 2\}\big| = o(|N(x_n)|)$
 \end{enumerate}
 
@@ -814,7 +832,8 @@ We now use Theorem~\ref{max_good_neighbors} to prove the following.
 
 \todo[inline]{$\downarrow$ This must be true for $p$-lazy walk as well.}
 
-\begin{theorem}\label{zero-in-the-limit}
+\begin{theorem}
+\label{zero-in-the-limit}
 Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of $\dtt_2$-trees on $n$ taxa.
 Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$ for the uniform random walk.
 \end{theorem}
@@ -961,15 +980,18 @@ Specifically, they showed that sorting two caterpillar trees simultaneously is m
 In the following, we conjecture that the ranked versions of $\nni$ graph maintain splits along shortest paths.
 Our conjecture is based on the fact that $\rnniu$ does not satisfy the diameter bounds necessary for the argument in \autocite{li1996some} to go through---see Theorems~\ref{neighSizeTh} and~\ref{diameterUpperBound}.
 
-\begin{conjecture}\label{splitConj}
+\begin{conjecture}
+\label{conjSplit}
 The following is true in all graphs $\dtt$, $\dttu$, $\rnni$, and $\rnniu$, but not in $\nni$.
 If a partition of leaves given by an edge presents in two trees $T$ and $R$ then the partition presents in every tree on every shortest path between $T$ and $R$.
 \end{conjecture}
 
+We sketch an outline of how this conjecture can be proved in section~\ref{secAppendix}.\ Appendix.
+
 
 \subsection{Computing the distance}
 
-In this section, we bound the number of neighbors of a tree $x$ in the discrete time-tree graphs that are closer than $x$ to a given tree $y$, \textbf{under the assumption that Conjecture~\ref{splitConj} holds}.\footnote{
+In this section, we bound the number of neighbors of a tree $x$ in the discrete time-tree graphs that are closer than $x$ to a given tree $y$, \textbf{under the assumption that Conjecture~\ref{conjSplit} holds}.\footnote{
 We denote trees by lowercase letters to stress the fact that we are considering graphs as metric spaces in this section.}
 We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
 \iftoggle{curvatureON}{
@@ -982,7 +1004,7 @@ Furthermore, the result provides a further insight into possible approaches to P
 
 \begin{theorem}
 \label{max_good_neighbors}
-Assume that Conjecture~\ref{splitConj} holds.
+Assume that Conjecture~\ref{conjSplit} holds.
 Let $x$ and $y$ be two trees and $N(x)$---a one-neighborhood of $x$.
 Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
 \begin{enumerate}[(i)]
@@ -1003,7 +1025,7 @@ We then prove the theorem by bounding the size of each partition by $2d(x,y)$, $
 
 We first consider some basic properties of minimal length paths between $x$ and $y$.
 Observe that at most $d(x,y)$ bipartitions differ between $x$ and $y$, as each $\nni$ operation replaces one bipartition with another (and rank and length changes do not modify bipartitions).
-Now, Conjecture~\ref{splitConj} implies that no minimal length path from $x$ to $y$ will replace a bipartition that is common to $x$ and $y$.
+Now, Conjecture~\ref{conjSplit} implies that no minimal length path from $x$ to $y$ will replace a bipartition that is common to $x$ and $y$.
 
 We are now ready to bound the sizes of each partition $I$, $R$, and $L$.
 First, consider the subset $I$ of closer neighbors obtained via $\nni$ moves.
@@ -1033,6 +1055,16 @@ However, currently only a few methods of sampling the space of sampled ancestor 
 
 
 \section{Appendix}
+\label{secAppendix}
+
+\proof[Possible approach to Conjecture~\ref{conjSplit}]
+
+Let $A|B$ be the partition of leaves under consideration and $T_A$, $T_B$, $R_A$, $R_B$---corresponding restriction of trees $T$ and $R$.
+Assume the contrary: there exists a shortest path $\gamma$ that does not maintain the partition.
+The path $\gamma$ hence should first ``mix'' trees $T_A$ and $T_B$ together into a tree that we denote by $T_A \oplus T_B$.
+Then convert $T_A \oplus T_B$ into $R_A \oplus R_B$ and then ``separate'' the latter tree into $R_A$ and $R_B$.
+The main ingredient of the proof is that mixing of $T_A$ and $T_B$ together and then separating them into $R_A$ and $R_B$ takes more $\rnniu$ steps than just converting $T_A$ into $R_A$.
+Assuming $T_A$ and $R_A$ are of size $\frac n2$, it is enough to show that mixing + separating takes strictly more steps than the diameter of $\rnniu$ on $\frac n2$ taxa trees.
 
 \newpage
 
