@@ -1023,31 +1023,31 @@ However, currently only a few methods of sampling the space of sampled ancestor 
 
 \section{Discussion}
 
-In this paper, we have introduced a hierarchy of discrete time-trees that approximates naturally the full space of phylogenetic time-trees.
-The first two levels of the hierarchy are the well-known classes of rooted phylogenetic trees and ranked phylogenetic trees level.
-However, the graph structure, the $\rnni$ graph, on the set of ranked trees is novel.
-In the same way as the $\nni$ graph is the discrete component of the full space of phylogenetic trees, the $\rnni$ graph is the discrete component of the full space of time-trees.
+In this paper, we have introduced a hierarchy of discrete time-trees that naturally approximates the full space of phylogenetic time-trees.
+The first two levels of the hierarchy are the well-known classes of rooted phylogenetic trees and ranked phylogenetic trees.
+We extend this previous work by considering a novel graph structure, the $\rnni$ graph, on the set of ranked trees.
+In the same way as the $\nni$ graph is the discrete component of the full space of phylogenetic trees, the $\rnni$ graph is the simplest discrete component of the full space of time-trees.
 Hence, the introduced hierarchy fits and refines naturally the classical picture of phylogenetic graphs.
 
 Surprisingly, the geometry of $\rnni$ and $\nni$ graphs is different in many aspects: the diameter, the sizes of neighborhoods, the convexity of caterpillar trees, etc.
 Furthermore, the computational complexity of the two graphs is likely do be different, at least at the level of certain subgraphs, such as the restriction to caterpillar trees.
 
-Problem~\ref{problemComplexity} is a major bottleneck for further progress in theoretical research as well as computational and biological applications.
-Once the Problem is resolved, the number of possible applications will be hard to overestimate.
-A small fraction of the most important of those applications in phylogenetics is the following:
+We introduce and make some initial progress on the computational complexity of calculating the distance between two time trees (Problem~\ref{problemComplexity}).
+This is an important step for further progress in theoretical research as well as computational and biological applications of time trees.
+In particular, a better understanding of this problem would have the following applications.
 
-\textbf{Efficient trees search algorithms.} Some of the most popular phylogenetic time-tree inference methods utilize the Markov Chain Monte Carlo (MCMC) algorithm to sample a probability distribution over the space of time-trees.
+\textbf{Efficient tree search algorithms.} Some of the most popular phylogenetic time-tree inference methods utilize the Markov Chain Monte Carlo (MCMC) algorithm to sample a probability distribution over the space of time-trees.
 The ability to make tree proposals that take into account both local and global geometry of the space is at the heart of those algorithms.
-Furthermore, as the sampling is performed within the space of time-trees, the more structure of the space is taken into account by the tree proposals, the more efficient the algorithm is.
-Our hierarchy of discrete time-trees allows to naturally balance and refine the discrete structure of the space the tree proposal has to account for.
+Furthermore, as the sampling is performed within the space of time-trees, the more structure of the space is taken into account by the tree proposals, the more efficient the algorithm will be.
+Our hierarchy of discrete time-trees allows to naturally balance and refine the discrete structure of the space used in such tree proposals.
 
 Thus far, the most widely used modifications of trees are the $\nni$, SPR, and their variants.
-The graph distance inherited from these modifications is known to be NP-hard to compute and although sometimes NP-hard problems can be solved efficiently for practically interesting data sets, this not the case for these phylogenetic graphs, where the size of tractable problems is an order of magnitude smaller than those that routinely arise in practice.
-Hence, a computationally tractable phylogenetic graph is a highly relevant and desirable object for the field.
+The graph distance inherited from these modifications is known to be NP-hard to compute, and although sometimes NP-hard problems can be solved efficiently for practically interesting data sets, this not the case for these phylogenetic graphs, where the size of tractable problems is an order of magnitude smaller than those that routinely arise in practice.
+Hence, a computationally tractable phylogenetic graph is a highly relevant and desirable object for the field, and we believe that the $\rnni$ graph should have this property.
 
-\textbf{Convergence of phylogenetic algorithms.} There exists no computationally tractable general method for testing the convergence of exact tree inference algorithms, such as the MCMC.
-Distance methods are widely used to test the convergence but the computational complexity of phylogenetic distances makes those methods applicable to only very moderate data sizes.
-Furthermore, the distance used for testing convergence must be ``in agreement'' with the distance inherited from the inference algorithm, which as we mentioned above is generally very inefficient to compute.
+\textbf{Convergence of phylogenetic algorithms.} A tractable phylogenetic distance would greatly assist methods to assess convergence of Bayesian tree inference algorithms based on MCMC and related methods.
+In other areas of statistics, distance methods are widely used to test for convergence, but the computational complexity of phylogenetic distances makes those methods applicable to only very moderate data sizes.
+Phylogenetic distances are especially suitable for such applications because they correspond to the distance inherited from the inference algorithm, being based on the same sorts of tree rearrangements.
 
 Another important property for phylogenetic applications is to compute the number of trees that are ``equally good'' under certain criterion.
 This intuition is formalized by \textcite{Sanderson2011-zp} in the notion of a terrace.
