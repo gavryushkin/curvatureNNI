@@ -26,10 +26,10 @@
 \newtheorem{corollary}[lemma]{Corollary}
 \newtheorem{theorem}[lemma]{Theorem}
 \newtheorem{problem}[lemma]{Problem}
+\newtheorem{conjecture}[lemma]{Conjecture}
 
 \theoremstyle{definition}
 \newtheorem{example}[lemma]{Example}
-\newtheorem{conjecture}[lemma]{Conjecture}
 
 \newcommand{\nni}{\mathrm{NNI}}
 \newcommand{\rnni}{\mathrm{RNNI}}
@@ -465,7 +465,7 @@ This implies that the derivation can be encoded by a ternary sequence of length 
 Indeed, the first $n-1$ entries of the sequence are needed to encode all possible node-labelings of the initial tree, plus two entries are needed for each of the $r$ applications of productions because every production creates two new nodes, each of which has to be node-labeled.
 The number of such strings, $3^{n-1+2r}$, gives the desired improved bound.
 
-The proof for the other three spaces follows simillary.
+The proof for the other three spaces follows similarly.
 See Section~\ref{secAppendix}.\ Appendix for details.
 \endproof
 
@@ -905,17 +905,21 @@ The input to our algorithm is a set $S$ of $\rnni$ trees in the format described
 The two key requirements of the algorithm are the ability to enumerate the neighbors of a given tree in the $\rnni$ graph, and the ability to determine whether a given tree is already a vertex of the graph.
 Both of these requirements follow from an efficient unique representation for ranked trees.
 
-A tree is given by a sequence of sets of taxa, and this obtained representation is unique.
+A node of a tree is given by the set of taxa that are all descendants of the node. 
+A tree is then given by a sequence of nodes ordered by their ranks.
+Clearly, this obtained representation is unique.
 For example, the representation of the tree on Figure~\ref{timeTree.eps} is $(\{A\}, \{C\}, \{D\}, \{B\}, \{E\}, \{A,B\}, \{D,E\}, \{C, D, E\}, \{F\}, \{A,B,F\}, \{A,B,C,D,E,F\})$, or
 $(\{A,B\}, \{D,E\}, \{C, D, E\}, \{A,B,F\}, \{A,B,C,D,E,F\})$ if we make the tree ultrametric by placing all taxa below the most recent divergence event.
 Using this representation of trees we construct a map $\nu : S \to \omega$, where $\omega$ is the set of non-negative integers.
 This map allows us to determine whether or not a tree is already a vertex of the graph.
 This takes linear time if the map is implemented as a Trie.
 We can also enumerate the neighbors of a tree in $O(n^2)$-time using Lemma~\ref{neighBound}.
-The algorithm therefore takes $O(|S|n^2)$-time.
+The algorithm therefore takes $O(|S|*n^2)$-time.
 
 The high-level steps of the algorithm are as follows.
 See \cite{Whidden2015-es} for a proof of correctness.
+
+\medskip
 
 \textsc{Construct-$\rnni$-Graph($S$)}
 \begin{enumerate}[1.]
@@ -964,7 +968,7 @@ The latter claims were mainly based on the so-called Split Theorem which states 
 If a partition of leaves given by an edge is shared between two trees then there exists a shortest $\nni$ path between the trees such that every tree on the path maintains the partition.
 These claims were finally refuted by \textcite{li1996some}, who proved that the Split Theorem does not hold in the $\nni$ graph.
 
-Hence, a natural question that would contribute to understanding Problem~\ref{problemComplexity} is whether or not the Split Theorem holds in the $\rnniu$ graph and other time-tree graphs.
+Hence, a natural question that would contribute to understanding Problem~\ref{problemComplexity} is whether or not the Split Theorem holds in the $\rnni$ graph and other time-tree graphs.
 
 
 \subsection{Split Theorem}
@@ -972,7 +976,9 @@ Hence, a natural question that would contribute to understanding Problem~\ref{pr
 \textcite{li1996some} used properties of the diameter of the $\nni$ graph and the sizes of its neighborhoods to provide an example of trees such that every shortest $\nni$ path between the trees fails to maintain a partition of taxa shared by the origin and destination trees.
 Specifically, they showed that sorting two caterpillar trees simultaneously is more efficient than sorting them independently, provided the size of the trees is large enough.
 In the following, we conjecture that the ranked versions of $\nni$ graph maintain splits along shortest paths.
-Our conjecture is based on the fact that $\rnniu$ does not satisfy the diameter bounds necessary for the argument in \autocite{li1996some} to go through---see Theorems~\ref{neighSizeTh} and~\ref{diameterUpperBound}.
+Our conjecture is based on the fact that $\rnni$ does not satisfy the diameter bounds necessary for the argument in \autocite{li1996some} to go through---see Theorems~\ref{neighSizeTh} and~\ref{diameterUpperBound}.
+Indeed, since sorting a caterpillar tree of size $k$ in $\rnni$ takes shorter than merging two such caterpillar trees and then separating them, the counter-example from \autocite{li1996some} does not apply in $\rnni$.
+Hence, if a counter-example to the Split Theorem exists in $\rnni$ then the trees that deliver the counter-example must be more complex than those obtained by ``gluing together'' two caterpillar trees.
 
 \begin{conjecture}
 \label{conjSplit}
@@ -980,7 +986,6 @@ The following is true in all graphs $\dtt$, $\dttu$, $\rnni$, and $\rnniu$, but 
 If a partition of leaves given by an edge presents in two trees $T$ and $R$ then the partition presents in every tree on every shortest path between $T$ and $R$.
 \end{conjecture}
 
-We sketch an outline of how this conjecture can be proved in section~\ref{secAppendix}.\ Appendix.
 
 
 \subsection{Computing the distance}
@@ -1007,6 +1012,8 @@ Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
 \item $5d(x,y)$ in $\dtt_m$ for $m > 2$.
 \end{enumerate}
 \end{theorem}
+
+The proof of this theorem can be found is Section~\ref{secAppendix}.\ Appendix.
 
 We conclude by noting that most of the results in this paper can be generalized to the class of sampled ancestor trees \autocite{Gavryushkina2014-xd}.
 However, currently only a few methods of sampling the space of sampled ancestor trees are known \autocite{Gavryushkina2015-vq} and the geometry of the space is poorly understood \autocite{Gavryushkin2014-bw}, hence we do not include the generalization here.
