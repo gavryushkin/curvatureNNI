@@ -1,6 +1,6 @@
 ## The combinatorics of discrete time-trees: theory and open problems
 
-Alex Gavryushkin, Chris Whidden, Frederick A Matsen IV
+Alex Gavryushkin, Chris Whidden, and Frederick A Matsen IV
 
 ## Abstract
 
