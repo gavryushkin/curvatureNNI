@@ -410,7 +410,7 @@ The number of trees within distance $r$ from any given tree is at most
 \end{theorem}
 
 \proof
-We describe the proof in detail for $\rnniu$, and include proof sketches the other three graphs.
+We describe the proof in detail for $\rnniu$, and include proof sketches the other three graphs in Section~\ref{secAppendix}.\ Appendix.
 The proof employs the technique by \textcite{Sleator1992-bp} for counting paths in a graph: we first apply Theorem~2.3 of \textcite{Sleator1992-bp} and then improve the bound using specific properties of the $\rnniu$ graph.
 
 We first need to introduce the \emph{graph grammar} for $\rnniu$.
@@ -465,17 +465,8 @@ This implies that the derivation can be encoded by a ternary sequence of length 
 Indeed, the first $n-1$ entries of the sequence are needed to encode all possible node-labelings of the initial tree, plus two entries are needed for each of the $r$ applications of productions because every production creates two new nodes, each of which has to be node-labeled.
 The number of such strings, $3^{n-1+2r}$, gives the desired improved bound.
 
-For $\rnni$, we extend the graph grammar $\Gamma$ by two productions, namely, one for the move when two taxa swap their ranks and one for the move when a taxon and an internal node swap their ranks.
-Since in both of these productions the only possible type of move is the rank move, two node-labels is enough for these productions.
-Since the number of nodes (internal and leaves) in an $\rnni$ tree is $2n - 1$ and the maximum number of nodes on right sides of the productions is still $2$, the desired bound is $3^{2n-1 + 2r}$.
-
-For $\dttu$, we have to extend the grammar $\Gamma$ by two productions, namely, one for increasing the length of the branch between two nodes in the production and one for decreasing.
-This increases the number of necessary node-labels by one.
-Indeed, if a production has a long branch on the left side, three node-labels are enough to indicate whether the branch length increases or decreases; if a production has a short branch on the left side three node-labels are needed for the top node to indicate the type of the move that has to be applied: length increase move or one of the two possible $\nni$ moves.
-Together, this requires $4$ node-labels and the desired bound is $4^{n-1 + 2r}$.
-
-For $\dtt$, we extend the grammar constructed for $\dttu$ by four productions, namely, one for the move when two taxa either swap their ranks or increase the interval length between them, one for the move when two taxa either increase or decrease the interval length between them, one for the move when a taxon and an internal node either swap their ranks or increase the interval length between them, and one for the move when a taxon and an internal node either increase or decrease the interval length between them.
-All these moves require three node-labels, hence the desired bound is $4^{2n-1 + 2r}$.
+The proof for the other three spaces follows simillary.
+See Section~\ref{secAppendix}.\ Appendix for details.
 \endproof
 
 Since this theorem bounds the sizes of $r$-neighborhoods by functions of the form $a^{f(n) + 2a}$, the following corollary bounds the diameters of the graphs under consideration from below.
@@ -1060,6 +1051,22 @@ To compute the terrace, an efficient tree metric is of crucial importance.
 \section{Appendix}
 \label{secAppendix}
 
+\proof[Proof of Theorem~\ref{neighSizeTh} for $\rnni$, $\dttu$, and $\dtt$]
+Following the terminology and notations from the $\rnniu$ case, we proceed as follows.
+
+For $\rnni$, we extend the graph grammar $\Gamma$ by two productions, namely, one for the move when two taxa swap their ranks and one for the move when a taxon and an internal node swap their ranks.
+Since in both of these productions the only possible type of move is the rank move, two node-labels is enough for these productions.
+Since the number of nodes (internal and leaves) in an $\rnni$ tree is $2n - 1$ and the maximum number of nodes on right sides of the productions is still $2$, the desired bound is $3^{2n-1 + 2r}$.
+
+For $\dttu$, we have to extend the grammar $\Gamma$ by two productions, namely, one for increasing the length of the branch between two nodes in the production and one for decreasing.
+This increases the number of necessary node-labels by one.
+Indeed, if a production has a long branch on the left side, three node-labels are enough to indicate whether the branch length increases or decreases; if a production has a short branch on the left side three node-labels are needed for the top node to indicate the type of the move that has to be applied: length increase move or one of the two possible $\nni$ moves.
+Together, this requires $4$ node-labels and the desired bound is $4^{n-1 + 2r}$.
+
+For $\dtt$, we extend the grammar constructed for $\dttu$ by four productions, namely, one for the move when two taxa either swap their ranks or increase the interval length between them, one for the move when two taxa either increase or decrease the interval length between them, one for the move when a taxon and an internal node either swap their ranks or increase the interval length between them, and one for the move when a taxon and an internal node either increase or decrease the interval length between them.
+All these moves require three node-labels, hence the desired bound is $4^{2n-1 + 2r}$.
+\endproof
+
 \proof[Proof of Theorem~\ref{max_good_neighbors}]
 We first prove the statement for $\dtt_2$.
 
@@ -1089,19 +1096,6 @@ Therefore, there are at most $|I| + |R| + |L| \le 2d(x,y) + d(x,y) + d(x,y) = 4d
 
 The statement for the other two graphs follows similarly: for $\rnni$ we need to count only for trees from $I$ and $R$, for $\dtt$ we will have to add $2d(x,y)$ instead of $d(x,y)$ for $L$.
 \endproof
-
-\bigskip
-
-\proof[Possible approach to Conjecture~\ref{conjSplit}]
-
-Let $A|B$ be the partition of leaves under consideration and $T_A$, $T_B$, $R_A$, $R_B$---corresponding restriction of trees $T$ and $R$.
-Assume the contrary: there exists a shortest path $\gamma$ that does not maintain the partition.
-The path $\gamma$ hence should first ``mix'' trees $T_A$ and $T_B$ together into a tree that we denote by $T_A \oplus T_B$.
-Then convert $T_A \oplus T_B$ into $R_A \oplus R_B$ and then ``separate'' the latter tree into $R_A$ and $R_B$.
-The main ingredient of the proof is that mixing of $T_A$ and $T_B$ together and then separating them into $R_A$ and $R_B$ takes more $\rnniu$ steps than just converting $T_A$ into $R_A$.
-Assuming $T_A$ and $R_A$ are of size $\frac n2$, it is enough to show that mixing + separating takes strictly more steps than the diameter of $\rnniu$ on $\frac n2$ taxa trees.
-
-\newpage
 
 
 \printbibliography
