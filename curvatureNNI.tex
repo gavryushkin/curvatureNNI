@@ -978,7 +978,8 @@ Specifically, they showed that sorting two caterpillar trees simultaneously is m
 In the following, we conjecture that the ranked versions of $\nni$ graph maintain splits along shortest paths.
 Our conjecture is based on the fact that $\rnni$ does not satisfy the diameter bounds necessary for the argument in \autocite{li1996some} to go through---see Theorems~\ref{neighSizeTh} and~\ref{diameterUpperBound}.
 Indeed, since sorting a caterpillar tree of size $k$ in $\rnni$ takes shorter than merging two such caterpillar trees and then separating them, the counter-example from \autocite{li1996some} does not apply in $\rnni$.
-Hence, if a counter-example to the Split Theorem exists in $\rnni$ then the trees that deliver the counter-example must be more complex than those obtained by ``gluing together'' two caterpillar trees.
+This counter-example using two trees encodes the basic way in which $\nni$ shortest paths are non-trivial: that one can economize by first grouping leaves into bundles, moving the bundles, and then breaking the bundles apart.
+Because this basic operation does provide an advantage in the simplest case of two caterpillar trees, we do not believe that it will hold for more complex collections of moves.
 
 \begin{conjecture}
 \label{conjSplit}
