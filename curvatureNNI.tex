@@ -379,7 +379,7 @@ For ultrametric trees, the number of event intervals is $n-1$, hence they add $n
 The number of intervals on which an $\nni$ move is possible is $n-2$ for ultrametric trees, hence they contribute $2(n-2)$ to the degree.
 In total, this gives the upper bound of $3n-5$ for ultrametric trees.
 
-Since every $\nni$ move results in two neighbors, the equality $\deg(T) = 2(n-2)$ follows for $\nni$ graph.
+Every $\nni$ move results in two neighbors, so the equality $\deg(T) = 2(n-2)$ follows for the $\nni$ graph.
 Indeed, it is not hard to see that the set of $\nni$ moves that only consider moving a subtree to its aunt captures the full set of $\nni$ neighbors with no duplicates.
 The neighborhood size then follows because the root and its two children have no aunt.
 
@@ -575,7 +575,7 @@ Furthermore, the smaller the size of $A_2 \cup B_1$ the shorter the path.
 Finally, the total length of the path is maximized when $|A_2| = |B_1|$ and $|A_1| = |B_2|$.
 \endproof
 
-Although we stated and proved the theorem only for $\rnniu$ graph, the idea can be straightforwardly adapted to the other graphs under consideration.
+Although we stated and proved the theorem only for the $\rnniu$ graph, the idea can be straightforwardly adapted to the other graphs under consideration.
 However, this adaptation goes beyond the scope of this paper.
 %TODO: Add this for the full version?
 
@@ -917,7 +917,7 @@ For example, the representation of the tree on Figure~\ref{timeTree.eps} is $(\{
 $(\{A,B\}, \{D,E\}, \{C, D, E\}, \{A,B,F\}, \{A,B,C,D,E,F\})$ if we make the tree ultrametric by placing all taxa below the most recent divergence event.
 Using this representation of trees we construct a map $\nu : S \to \omega$, where $\omega$ is the set of non-negative integers.
 This map allows us to determine whether or not a tree is already a vertex of the graph.
-This takes linear time if the map is implemented as a Trie.
+This takes linear time if the map is implemented as a trie.
 We can also enumerate the neighbors of a tree in $O(n^2)$-time using Lemma~\ref{neighBound}.
 The algorithm therefore takes $O(|S|*n^2)$-time.
 
@@ -1019,7 +1019,7 @@ Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
 \end{enumerate}
 \end{theorem}
 
-The proof of this theorem can be found is Section~\ref{secAppendix}.\ Appendix.
+The proof of this theorem can be found in Section~\ref{secAppendix}.\ Appendix.
 
 We conclude by noting that most of the results in this paper can be generalized to the class of sampled ancestor trees \autocite{Gavryushkina2014-xd}.
 However, currently only a few methods of sampling the space of sampled ancestor trees are known \autocite{Gavryushkina2015-vq} and the geometry of the space is poorly understood \autocite{Gavryushkin2014-bw}, hence we do not include the generalization here.
