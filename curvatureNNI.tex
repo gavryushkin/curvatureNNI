@@ -411,7 +411,8 @@ The number of trees within distance $r$ from any given tree is at most
 
 \proof
 We describe the proof in detail for $\rnniu$, and include proof sketches the other three graphs in Section~\ref{secAppendix}.\ Appendix.
-The proof employs the technique by \textcite{Sleator1992-bp} for counting paths in a graph: we first apply Theorem~2.3 of \textcite{Sleator1992-bp} and then improve the bound using specific properties of the $\rnniu$ graph.
+The proof employs the technique by \textcite{Sleator1992-bp} for counting paths in a graph: we first apply Theorem~2.3 from \autocite{Sleator1992-bp} and then improve the bound using specific properties of the $\rnniu$ graph.
+We note that since our trees are ranked trees, they possess additional structure (ranking) on top of the tree graph structure, hence we will be applying the same style of argument as in \autocite{Sleator1992-bp} but to a somewhat different structure.
 
 We first need to introduce the \emph{graph grammar} for $\rnniu$.
 Recall that a graph grammar consists of a finite set of productions $\{L_i \to_i R_i\}$, where $L_i$ and $R_i$ are connected undirected edge-end labeled graphs and $\to_i$ is a one-to-one map between half-edges of $L_i$ and those of $R_i$.
@@ -429,6 +430,9 @@ The graph grammar for $\rnniu$ is the grammar $\Gamma$ shown on Figure~\ref{gram
 Note that the definition of a graph grammar requires the left sides $L_i$ to be connected and we have a disconnected left side in the third production.
 We can adapt our graph grammar to fit this requirement by noting that the nodes on the left side of the production must be of consecutive ranks, so we consider those nodes as being adjacent via a second type of adjacency relation by declaring nodes with consecutive ranks to be adjacent.
 This second type of relation is in addition to the first type of adjacency relation given by the branches of the tree.
+Furthermore, this second type of adjacency allows us to avoid considering two separate moves for the left and right sister nodes.
+Indeed, the half-edge labels order the edges to make the distinction between left and right, however since our nodes are ordered via ranking, this ordering of edges is irrelevant.
+We will further exploit this important property below, where we improve the bound obtained directly from grammar $\Gamma$.
 
 \begin{figure}
 \centering
