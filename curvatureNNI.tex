@@ -455,10 +455,11 @@ We say that a pair of consecutive nodes is \emph{ready} if the node-label of the
 If two consecutive nodes are ready and not connected by an edge in the tree, then only the rank move is possible.
 If they are, the type of the move is determined by the node-label of the top node.
 Hence, this notion of readiness uniquely identifies which of the three productions is applied.
-Furthermore, if we want to indicate that a node $v$ should not be destroyed for the reminder of the derivation, we label the node with an $a$.
+Furthermore, if we want to indicate that a node $v$ should never be destroyed, we label the node with an $a$ (\textcite{Sleator1992-bp} call this ``eliminating the zero label'').
 This labeling will indeed preserve the node $v$ because of the following.
-The node cannot be destroyed as a top node because top nodes that are ready for destruction must be labeled with either $b$ or $c$.
-The node $v$ cannot be destroyed as a bottom node either, because the node $w$ directly on top of $v$ in the running tree at a later stage $s$ of the derivation can be either a bottom node or a node that has to be preserved, and in both of these cases node $w$ must be marked with an $a$.
+If $w$ is the node directly succeeding $v$ at some step of the derivation then $w$ can only be marked with an $a$ and hence the pair $v, w$ is not ready.
+If $w$ is the node directly preceding $v$ at some step of the derivation then the pair $w, v$ is never ready.
+Hence $v$ is preserved in either case.
 
 Thus, all possible configurations encoded by the six nodes on the left sides of the productions of $\Gamma$ can be encoded using three node-labels.
 This implies that the derivation can be encoded by a ternary sequence of length $n-1+2r$.
