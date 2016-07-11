@@ -410,7 +410,7 @@ The number of trees within distance $r$ from any given tree is at most
 \end{theorem}
 
 \proof
-We describe the proof in detail for $\rnniu$, and include proof sketches the other three graphs in Section~\ref{secAppendix}.\ Appendix.
+We describe the proof in detail for $\rnniu$, and include proof sketches for the other three graphs in Section~\ref{secAppendix}.\ Appendix.
 The proof employs the technique by \textcite{Sleator1992-bp} for counting paths in a graph: we first apply Theorem~2.3 from \autocite{Sleator1992-bp} and then improve the bound using specific properties of the $\rnniu$ graph.
 We note that since our trees are ranked trees, they possess additional structure (ranking) on top of the tree graph structure, hence we will be applying the same style of argument as in \autocite{Sleator1992-bp} but to a somewhat different structure.
 
@@ -982,7 +982,7 @@ Hence, a natural question that would contribute to understanding Problem~\ref{pr
 Specifically, they showed that sorting two caterpillar trees simultaneously is more efficient than sorting them independently, provided the size of the trees is large enough.
 In the following, we conjecture that the ranked versions of $\nni$ graph maintain splits along shortest paths.
 Our conjecture is based on the fact that $\rnni$ does not satisfy the diameter bounds necessary for the argument in \autocite{li1996some} to go through---see Theorems~\ref{neighSizeTh} and~\ref{diameterUpperBound}.
-Indeed, since sorting a caterpillar tree of size $k$ in $\rnni$ takes shorter than merging two such caterpillar trees and then separating them, the counter-example from \autocite{li1996some} does not apply in $\rnni$.
+Indeed, since sorting a caterpillar tree of size $k$ in $\rnni$ takes fewer moves than merging two such caterpillar trees and then separating them, the counter-example from \autocite{li1996some} does not apply in $\rnni$.
 This counter-example using two trees encodes the basic way in which $\nni$ shortest paths are non-trivial: that one can economize by first grouping leaves into bundles, moving the bundles, and then breaking the bundles apart.
 Because this basic operation does provide an advantage in the simplest case of two caterpillar trees, we do not believe that it will hold for more complex collections of moves.
 
