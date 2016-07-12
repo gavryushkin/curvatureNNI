@@ -463,7 +463,7 @@ Hence, this notion of readiness uniquely identifies which of the three productio
 \textcite{Sleator1992-bp} use a special node-label, called the ``zero label'', to mark nodes that should not be destroyed.
 They also explain how to eliminate the zero label in various cases.
 In our case, we can use one of the labels that are already in use, namely node-label $a$.
-Indeed, if we want to indicate that a node $v$ should never be destroyed, we label the node with an $a$.
+That is, if we want to indicate that a node $v$ should never be destroyed, we label the node with an $a$.
 This labeling will indeed preserve the node $v$ because of the following.
 If $w$ is the node directly succeeding $v$ at some step of the derivation then $w$ can only be marked with an $a$ and hence the pair $v, w$ is not ready.
 If $w$ is the node directly preceding $v$ at some step of the derivation then the pair $w, v$ is never ready.
