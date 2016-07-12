@@ -460,7 +460,7 @@ If two consecutive nodes are ready and not connected by an edge in the tree, the
 If they are, the type of the move is determined by the node-label of the top node.
 Hence, this notion of readiness uniquely identifies which of the three productions is applied.
 
-\textcite{Sleator1992-bp} use a special node-label, called ``zero label'', to mark nodes that should not be destroyed.
+\textcite{Sleator1992-bp} use a special node-label, called the ``zero label'', to mark nodes that should not be destroyed.
 They also explain how to eliminate the zero label in various cases.
 In our case, we can use one of the labels that are already in use, namely node-label $a$.
 Indeed, if we want to indicate that a node $v$ should never be destroyed, we label the node with an $a$.
