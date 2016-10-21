@@ -74,7 +74,8 @@ theory and open problems}
 
 \date{July 12, 2016}
 
-\thanks{AG was supported by Marsden Fund of the Royal Society of New Zealand, grant UOA1324, through the Centre for Computational Evolution, the University of Auckland, where this work has been carried out.}
+\thanks{AG was supported by Marsden Fund of the Royal Society of New Zealand, grant UOA1324, through the Centre for Computational Evolution, the University of Auckland, where this work has been carried out.
+This work was done in part while AG was visiting Fred Hutchinson Cancer Research Center.}
 
 \thanks{CW and FM were funded by National Science Foundation award 1223057.}
 
@@ -138,7 +139,7 @@ This sort of move cannot be expressed using the type of discretization used thus
 
 However, one can discretize time-trees in a way that does preserve some of the information.
 For example, by retaining the order of internal nodes backward in time one obtains a so-called \emph{ranked tree} \autocite{Semple2003-nj}.
-To make a less rough approximation of a time-tree, one can allow the time periods between nodes of the tree to take only finitely many possible values.
+To make a less rough approximation of a time-tree, one can allow the time periods between nodes of the tree to take only finitely many possible values \autocite{Akerborg2008-cl}.
 This results in an object we call a \emph{discrete time-tree}.
 The graph built on such trees provides a discretization of the space of time-trees, which we call a \emph{discrete time-tree graph}.
 A sequence of time-trees sampled using MCMC projects to a collection of movements on a graph in which each vertex is a discrete time-tree and each edge is a discrete version of an MCMC move on time-trees.
@@ -352,7 +353,7 @@ We will use these bounds to estimate the curvature of various random walks later
 
 \begin{lemma}
 \label{neighBound}
-Let $T$ be a tree on $n$ leaves.
+Let $T$ be a tree on $n$ leaves and $\deg(T)$---the number of trees adjacent to $T$.
 Then
 \begin{align*}
 & 2(n-1) \leq \deg(T) \leq 5n-6	& \mbox{in $\dtt$,}
@@ -380,7 +381,7 @@ The number of trees within distance $r$ from any given tree is at most
 \end{align*}
 \end{theorem}
 
-Since this theorem bounds the sizes of $r$-neighborhoods by functions of the form $a^{f(n) + 2a}$, the following corollary bounds the diameters of the graphs under consideration from below.
+Since this theorem bounds the sizes of $r$-neighborhoods by functions of the form $a^{f(n) + 2r}$, the following corollary bounds the diameters of the graphs under consideration from below.
 
 \begin{corollary}
 Let $\Delta(\G)$, $|\G|$, and $\delta_r(\G)$ be the diameter, the number of vertices, and the number of vertices within distance $r$ from any given vertex in graph $\G$, respectively.
@@ -484,6 +485,7 @@ However, this adaptation goes beyond the scope of this paper.
 
 We also note that the proof of the theorem provides an efficient algorithm for computing (not necessarily shortest) paths between discrete time-trees.
 This algorithm can be used for efficient exploration of the space, e.g.\ via MCMC, where approximate paths can be used to improve mixing by making distant proposals.
+The algorithm might also be useful to determine if two trees appear to be separated by a valley (e.g.\ of posterior probability) or if they are rather located on a plateau.
 
 A non-ranked tree has a symmetry associated with every internal node.
 Those symmetries can be employed to consider only a single representative from equivalent pairs of trees, such as by using tanglegrams \autocite{Matsen2015-fn, Whidden2015-es}.
@@ -888,7 +890,7 @@ Because this basic operation does provide an advantage in the simplest case of t
 \label{conjSplit}
 \vskip-4.5pt
 The following is true in all graphs $\dtt$, $\dttu$, $\rnni$, and $\rnniu$, but not in $\nni$.
-If a partition of leaves given by an edge presents in two trees $T$ and $R$ then the partition presents in every tree on every shortest path between $T$ and $R$.
+If a partition of leaves given by an edge is presented in two trees $T$ and $R$ then the partition is presented in every tree on every shortest path between $T$ and $R$.
 \end{conjecture}
 
 \textbf{Computing the distance.} We now bound the number of neighbors of a tree $x$ in the discrete time-tree graphs that are closer than $x$ to a given tree $y$, \textbf{under the assumption that Conjecture~\ref{conjSplit} holds}.\footnote{
