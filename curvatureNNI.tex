@@ -86,22 +86,22 @@ This work was done in part while AG was visiting Fred Hutchinson Cancer Research
 
 \begin{abstract}
 A \emph{time-tree} is a rooted phylogenetic tree such that all internal nodes are equipped with absolute divergence dates and all leaf nodes are equipped with sampling dates.
-Such time-trees have become a central object of study in phylogenetics.
+Such time-trees have become a central object of study in phylogenetics but little is known about the parameter space of such objects.
 Here we introduce and study a hierarchy of discrete approximations of the space of time-trees from the graph-theoretic and algorithmic point of view.
 One of the basic and widely used phylogenetic graphs, the $\nni$ graph, is the roughest approximation and bottom level of our hierarchy.
 More refined approximations discretize the relative timing of evolutionary divergence and sampling dates.
 
-%CW this is rather vague, can we call out a few specific results? (Maybe EM's suggestion from below?)
-We study basic graph-theoretic questions for these graphs including the size of neighborhoods, diameter upper and lower bounds, and the problem of finding shortest paths.
-We settle many of these questions by applying the concept of graph grammars introduced by Sleator, Tarjan, and Thurston to our graphs.
-We also design an efficient algorithm for constructing these graphs.
+We study basic graph-theoretic questions for these graphs, including the size of neighborhoods, diameter upper and lower bounds, and the problem of finding shortest paths.
+We settle many of these questions by extending the concept of graph grammars introduced by Sleator, Tarjan, and Thurston to our graphs.
+Although time values greatly increase the number of possible trees, we show that $1$-neighborhood sizes remain linear, allowing for efficient local exploration and construction of these graphs.
+We also obtain upper bounds on the $r$-neighborhood sizes of these graphs, including a smaller bound than was previously known for $\nni$.
 \iftoggle{curvatureON}{
 We also investigate the Ricci-Ollivier curvature of basic random walks on the space.
 }{}
 
-%CW: this is also rather vague, can we make it more direct and specific?
 Our results open up a number of possible directions for theoretical investigation of graph-theoretic and algorithmic properties of the time-tree graphs.
 We discuss the directions that are most valuable for phylogenetic applications and give a list of prominent open problems for those applications.
+In particular, we conjecture that the split theorem applies to shortest paths in time-tree graphs, a property not shared in the general NNI case.
 \end{abstract}
 
 
@@ -336,6 +336,9 @@ We proceed by establishing basic geometric properties of discrete time-trees.
 
 \subsection{Sizes of neighborhoods}
 
+We first bound the number of trees in each graph. As expected, times greatly expand the size of the graphs.  
+
+
 \begin{lemma}[see \autocite{Semple2003-nj}]
 \label{spaceSizes}
 Let $|V|$ be the number of vertices in the graph, then $|V|$ is equal to
@@ -354,7 +357,10 @@ The rest follow using similar arguments.
 \endproof
 
 % Along the lines of EM's comment below, we should note that we prove here that these spaces have linear-size neighborhoods which are efficiently enumerable, and important property for efficient phylogenetics. We could also note that these insights are important for developing tree proposals, either here or in the abstract and/or intro
-We continue with the following bounds on the sizes of $1$-neighborhoods of various discretizations of the space of time-trees (see Section~\ref{secAppendix} for all omitted proofs).
+We continue by tightly bounding the sizes of $1$-neighborhoods of various discretizations of the space of time-trees (see Section~\ref{secAppendix} for all omitted proofs).
+Each has a $1$-neighborhood size that is linear in $n$ allowing for efficient local traversal and enumeration.
+
+
 \iftoggle{curvatureON}{
 We will use these bounds to estimate the curvature of various random walks later in the paper.
 }{}
@@ -373,10 +379,9 @@ Then
 All bounds are tight.
 \end{lemma}
 
-Lemma~\ref{neighBound} gives tight bounds for the number of trees in a $1$-neighborhood, while the following theorem gives an upper bound for the number of trees in an $r$-neighborhood.
-The following theorem bounds the sizes of neighborhoods.
+Next, we bound the size of arbitrary $r$-neighborhoods from above using a graph grammar formalism.
 The best known bound for $\nni$ that we are aware of is $3^{n-2} 2^{4r}$ \autocite{li1996some}.
-Since the bound we get for $\rnniu$ is smaller, this improves the result for $\nni$.
+We obtain a smaller bound for $\rnniu$ and, hence, improve the result for $\nni$ as well.
 
 %EM I suggest adding some text here that says basically "here's the big one!" There are lots of lemmas and things in this section, some of which are simple to prove, and it's easy to miss that this one is extra exciting.
 % In fact, I think that one could make an argument for putting a proof sketch for this theorem in, and moving the proof of the diameter upper bound to the appendix.
