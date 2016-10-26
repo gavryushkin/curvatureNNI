@@ -101,7 +101,7 @@ We also investigate the Ricci-Ollivier curvature of basic random walks on the sp
 
 Our results open up a number of possible directions for theoretical investigation of graph-theoretic and algorithmic properties of the time-tree graphs.
 We discuss the directions that are most valuable for phylogenetic applications and give a list of prominent open problems for those applications.
-In particular, we conjecture that the split theorem applies to shortest paths in time-tree graphs, a property not shared in the general NNI case.
+In particular, we conjecture that the split theorem applies to shortest paths in time-tree graphs, a property not shared in the general $\nni$ case.
 \end{abstract}
 
 
@@ -153,13 +153,13 @@ Although inferential algorithms have applied MCMC on time-trees for over a decad
 Such a theory would provide a foundation for understanding the behavior of MCMC algorithms on time-trees, as has been done previously for graphs associated with unrooted phylogenetic trees.
 Up to now, the only discretization of time-tree space that has been studied is that of ranked trees \autocite{Page1991-rd,Ford2009-qi,Lambert2013-mr}, and that was not from a graph-theoretic perspective.
 
-% As with the abstract, this paragraph is quite vague, probably as a result of dropping curvature. We should discuss specific results here.
 In this paper we initiate the mathematical study of discrete time-tree graphs, obtain basic geometric and graph-theoretic results,
 \iftoggle{curvatureON}{
 study random walks on these graphs,
 }{}
 and compare these results to those in the classical phylogenetic setting.
 In particular, we focus on ranked trees, discrete time-trees (as defined above), and the ultrametric versions of those types of trees.
+We establish size bounds for neighborhoods and diameters in these tree spaces and show how those bounds can be used to develop efficient tree search algorithms such as MCMC.
 \iftoggle{curvatureON}{
 We study Ricci-Ollivier curvature \autocite{Ollivier2009-cj} of Markov chains on these graphs, a formalism which quantifies to what extent random walking brings unit balls together.
 This formalism has recently been applied to Markov chains on graphs of classical phylogenetic trees \autocite{Whidden2015-es}.
@@ -229,8 +229,7 @@ To move from $T$ to $R$ in $\dtt_2$, one must decrease the length of interval $I
 \end{figure}
 
 Note that $\dtt_0$ can be obtained from $\dtt_1$ by ``forgetting'' ranks and $\dtt_1$ from $\dtt_m$ by forgetting lengths.
-%EM If we want to include this "tail" comment I suggest that it be clarified. IIUC there are lots of tails, right?
-In general, the graph structure for $m > 1$ can be understood by considering all diagrams as in Figure~\ref{DtT.pdf} and introducing an extra layer of nodes in the tail on the left of the diagram.
+In general, the graph structure for $m > 1$ can be understood by considering all diagrams as in Figure~\ref{DtT.pdf} and introducing an extra layer of nodes in every tail adjacent to the triangle on the right of the diagram.
 
 This hierarchy can be seen as a set of discrete refinements of the full space of phylogenetic time-trees, where event intervals can take an arbitrary real value.
 Indeed, if we consider
@@ -336,8 +335,8 @@ We proceed by establishing basic geometric properties of discrete time-trees.
 
 \subsection{Sizes of neighborhoods}
 
-We first bound the number of trees in each graph. As expected, times greatly expand the size of the graphs.  
-
+We first bound the number of trees in each graph.
+As expected, times greatly expand the size of the graphs.  
 
 \begin{lemma}[see \autocite{Semple2003-nj}]
 \label{spaceSizes}
@@ -356,10 +355,8 @@ The proof for $\nni$ can be found in \autocite{Semple2003-nj}.
 The rest follow using similar arguments.
 \endproof
 
-% Along the lines of EM's comment below, we should note that we prove here that these spaces have linear-size neighborhoods which are efficiently enumerable, and important property for efficient phylogenetics. We could also note that these insights are important for developing tree proposals, either here or in the abstract and/or intro
 We continue by tightly bounding the sizes of $1$-neighborhoods of various discretizations of the space of time-trees (see Section~\ref{secAppendix} for all omitted proofs).
-Each has a $1$-neighborhood size that is linear in $n$ allowing for efficient local traversal and enumeration.
-
+Each has a $1$-neighborhood size that is linear in $n$ allowing for efficient local traversal and enumeration, a property of importance for phylogenetic algorithms, e.g.\ tree proposals in MCMC.
 
 \iftoggle{curvatureON}{
 We will use these bounds to estimate the curvature of various random walks later in the paper.
@@ -895,7 +892,10 @@ If a partition of leaves given by an edge is shared between two trees then there
 These claims were finally refuted by \textcite{li1996some}, who proved that the Split Theorem does not hold in the $\nni$ graph.
 Hence, a natural question that would contribute to understanding Problem~\ref{problemComplexity} is whether or not the Split Theorem holds in the $\rnni$ graph and other time-tree graphs.
 
-\textbf{Split Theorem.} \textcite{li1996some} used properties of the diameter of the $\nni$ graph and the sizes of its neighborhoods to provide an example of trees such that every shortest $\nni$ path between the trees fails to maintain a partition of taxa shared by the origin and destination trees.
+
+\subsection{Split Theorem.}
+
+\textcite{li1996some} used properties of the diameter of the $\nni$ graph and the sizes of its neighborhoods to provide an example of trees such that every shortest $\nni$ path between the trees fails to maintain a partition of taxa shared by the origin and destination trees.
 Specifically, they showed that sorting two caterpillar trees simultaneously is more efficient than sorting them independently, provided the size of the trees is large enough.
 In the following, we conjecture that the ranked versions of $\nni$ graph maintain splits along shortest paths.
 Our conjecture is based on the fact that $\rnni$ does not satisfy the diameter bounds necessary for the argument in \autocite{li1996some} to go through---see Theorems~\ref{neighSizeTh} and~\ref{diameterUpperBound}.
@@ -905,12 +905,12 @@ Because this basic operation does provide an advantage in the simplest case of t
 
 \begin{conjecture}
 \label{conjSplit}
-\vskip-4.5pt
 The following is true in all graphs $\dtt$, $\dttu$, $\rnni$, and $\rnniu$, but not in $\nni$.
 If a partition of leaves given by an edge is presented in two trees $T$ and $R$ then the partition is presented in every tree on every shortest path between $T$ and $R$.
 \end{conjecture}
 
-\textbf{Computing the distance.} We now bound the number of neighbors of a tree $x$ in the discrete time-tree graphs that are closer than $x$ to a given tree $y$, \textbf{under the assumption that Conjecture~\ref{conjSplit} holds}.\footnote{
+\subsection{Computing the distance.}
+We now bound the number of neighbors of a tree $x$ in the discrete time-tree graphs that are closer than $x$ to a given tree $y$, \textbf{under the assumption that Conjecture~\ref{conjSplit} holds}.\footnote{
 We denote trees by lowercase letters to stress the fact that we are considering graphs as metric spaces in this section.}
 We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
 \iftoggle{curvatureON}{
@@ -923,7 +923,6 @@ Furthermore, the result provides a further insight into possible approaches to P
 
 \begin{theorem}
 \label{max_good_neighbors}
-\vskip-4.5pt
 Assume that Conjecture~\ref{conjSplit} holds.
 Let $x$ and $y$ be two trees and $N(x)$---a one-neighborhood of $x$.
 Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
@@ -954,7 +953,10 @@ We introduce and make some initial progress on the computational complexity of c
 This is an important step for further progress in theoretical research as well as computational and biological applications of time trees.
 In particular, a better understanding of this problem would have the following applications.
 
-\textbf{Efficient tree search algorithms.} Some of the most popular phylogenetic time-tree inference methods utilize the Markov Chain Monte Carlo (MCMC) algorithm to sample a probability distribution over the space of time-trees.
+
+\subsection{Efficient tree search algorithms.}
+
+Some of the most popular phylogenetic time-tree inference methods utilize the Markov Chain Monte Carlo (MCMC) algorithm to sample a probability distribution over the space of time-trees.
 The ability to make tree proposals that take into account both local and global geometry of the space is at the heart of those algorithms.
 Furthermore, as the sampling is performed within the space of time-trees, the more structure of the space is taken into account by the tree proposals, the more efficient the algorithm will be.
 Our hierarchy of discrete time-trees allows one to naturally balance and refine the discrete structure of the space used in such tree proposals.
@@ -963,7 +965,10 @@ Thus far, the most widely used modifications of trees are the $\nni$, SPR, and t
 The graph distance inherited from these modifications is known to be NP-hard to compute, and although sometimes NP-hard problems can be solved efficiently for practically interesting data sets, this is not the case for these phylogenetic graphs of ranked trees, where the size of tractable problems is an order of magnitude smaller than those that routinely arise in practice.
 Hence, a computationally tractable phylogenetic graph is a highly relevant and desirable object for the field, and we believe that the $\rnni$ graph should have this property.
 
-\textbf{Convergence of phylogenetic algorithms.} A tractable phylogenetic distance would greatly assist methods to assess convergence of Bayesian tree inference algorithms based on MCMC and related methods.
+
+\subsection{Convergence of phylogenetic algorithms.}
+
+A tractable phylogenetic distance would greatly assist methods to assess convergence of Bayesian tree inference algorithms based on MCMC and related methods.
 In other areas of statistics, distance methods are widely used to test for convergence, but the computational complexity of phylogenetic distances makes those methods applicable to only very moderate data sizes.
 Phylogenetic distances are especially suitable for such applications because they correspond to the distance inherited from the inference algorithm, being based on the same sorts of tree rearrangements.
 
