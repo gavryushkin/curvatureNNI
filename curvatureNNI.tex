@@ -139,7 +139,7 @@ The discrete component of MCMC moves between classical phylogenetic trees are ty
 For example, common moves include \emph{subtree prune and regraft} (SPR) moves, which cut a subtree off and reattach it at another location, and the subset of SPR moves called \emph{nearest-neighbor interchange} ($\nni$) moves.
 Classically, these are applied without reference to branch lengths.
 On the other hand, the discrete component of moves between time-trees are defined also in terms of their timing information.
-For example, \textcite{Hohna2008-vl} show that SPR-like moves that reattach subtrees at the same divergence time are more effective than ones that do not.
+For example, \autocite{Hohna2008-vl} show that SPR-like moves that reattach subtrees at the same divergence time are more effective than ones that do not.
 This sort of move cannot be expressed using the type of discretization used thus far in which all continuous information is lost, and so the previous work on MCMC mixing cannot be applied.
 
 However, one can discretize time-trees in a way that does preserve some of the information.
@@ -151,7 +151,7 @@ A sequence of time-trees sampled using MCMC projects to a collection of movement
 
 Although inferential algorithms have applied MCMC on time-trees for over a decade, and graphs corresponding to discretizations of unrooted tree space have been studied for even longer, we are not aware of any work defining graphs from discretization of time-tree spaces or analyzing random walks thereupon.
 Such a theory would provide a foundation for understanding the behavior of MCMC algorithms on time-trees, as has been done previously for graphs associated with unrooted phylogenetic trees.
-Up to now, the only discretization of time-tree space that has been studied is that of ranked trees \autocite{Page1991-rd,Ford2009-qi,Lambert2013-mr}, and that was not from a graph-theoretic perspective.
+Up to now, the only discretization of time-tree space is that of ranked trees \autocite{Page1991-rd,Ford2009-qi,Lambert2013-mr}, and the corresponding graphs have not been studied.
 
 In this paper we initiate the mathematical study of discrete time-tree graphs, obtain basic geometric and graph-theoretic results,
 \iftoggle{curvatureON}{
@@ -206,6 +206,7 @@ We denote this graph by $\dtt_0$.
 \centering
 \includegraphics[width=0.8\textwidth]{DtT.pdf}
 \caption{All possible moves performed on interval $I$.
+%EM It seems to me that the following sentence is optional.
 Assuming that the length of every event interval is either $1$ or $2$, the outer trees are all possible neighbors in $\dtt$ of the tree in the middle corresponding to interval $I$.}
 \label{DtT.pdf}
 \end{figure}
@@ -310,7 +311,7 @@ What is the complexity of computing the distance between two discrete time-trees
 Although this problem remains open, we make progress towards the solution by establishing several geometric and algorithmic properties of these graphs.
 First, we demonstrate in the following example that even for caterpillar trees\footnote{
 Caterpillar trees, sometimes called ladder trees, have all leaves connected to a single path from the root.}
-the complexity cannot be derived from the complexity of $\nni$ distance.
+the complexity cannot be derived from that of $\nni$ distance.
 
 \begin{example}
 Let $T$ be the ultrametric caterpillar tree denoted $((((((1, 2), 3), 4), 5), 6), 7)$ in Newick notation \autocite{felsenstein1990newick} and $R$ be the ultrametric tree $((((((1, 4), 5), 6), 2), 3), 7)$.
@@ -416,8 +417,7 @@ Hence, the desired inequality.
 
 \subsection{Diameter of the graphs}
 
-In the previous section, we have estimated the diameter of the graphs from below.
-Now we estimate the diameter from above.
+Now we estimate the diameter of the graphs from above, complementing the above lower bounds.
 Recall that $\Delta(\G)$ is the diameter of graph $\G$.
 
 \begin{theorem}
@@ -493,7 +493,7 @@ Furthermore, the smaller the size of $A_2 \cup B_1$ the shorter the path.
 Finally, the total length of the path is maximized when $|A_2| = |B_1|$ and $|A_1| = |B_2|$.
 \endproof
 
-Although we stated and proved the theorem only for the $\rnniu$ graph, the idea can be straightforwardly adapted to the other graphs under consideration.
+Although we stated and proved the theorem only for the $\rnniu$ graph, the idea can be adapted to the other graphs considered here.
 However, this adaptation goes beyond the scope of this paper.
 %TODO: Add this for the full version?
 
@@ -957,11 +957,10 @@ In particular, a better understanding of this problem would have the following a
 \subsection{Efficient tree search algorithms.}
 
 Some of the most popular phylogenetic time-tree inference methods utilize the Markov Chain Monte Carlo (MCMC) algorithm to sample a probability distribution over the space of time-trees.
-The ability to make tree proposals that take into account both local and global geometry of the space is at the heart of those algorithms.
-Furthermore, as the sampling is performed within the space of time-trees, the more structure of the space is taken into account by the tree proposals, the more efficient the algorithm will be.
-Our hierarchy of discrete time-trees allows one to naturally balance and refine the discrete structure of the space used in such tree proposals.
+The most efficient proposals on time trees will take into account both local and global geometry of the corresponding space.
+Our hierarchy of discrete time-trees offers a natural discrete structure of the space used in such tree proposals.
 
-Thus far, the most widely used modifications of trees are the $\nni$, SPR, and their variants.
+Thus far, the most widely used modifications of trees are $\nni$, SPR, and their variants.
 The graph distance inherited from these modifications is known to be NP-hard to compute, and although sometimes NP-hard problems can be solved efficiently for practically interesting data sets, this is not the case for these phylogenetic graphs of ranked trees, where the size of tractable problems is an order of magnitude smaller than those that routinely arise in practice.
 Hence, a computationally tractable phylogenetic graph is a highly relevant and desirable object for the field, and we believe that the $\rnni$ graph should have this property.
 
