@@ -60,7 +60,7 @@
 theory and open problems}
 
 \author{Alex Gavryushkin}
-\address{Department of Biosystems Science and Engineering, ETH Z\"urich, 4058 Basel}
+\address{Department of Biosystems Science and Engineering, ETH Z\"urich, 4058 Basel, Switzerland}
 \email{alex@gavruskin.com}
 
 
@@ -72,31 +72,35 @@ theory and open problems}
 %\address{Program in Computational Biology, Fred Hutchinson Cancer Research Center, Seattle, WA 98109}
 \email{matsen@fredhutch.org}
 
-\date{July 12, 2016}
+\date{October 26, 2016}
 
 \thanks{AG was supported by Marsden Fund of the Royal Society of New Zealand, grant UOA1324, through the Centre for Computational Evolution, the University of Auckland, where this work has been carried out.
 This work was done in part while AG was visiting Fred Hutchinson Cancer Research Center.}
 
-\thanks{CW and FM were funded by National Science Foundation award 1223057.}
+\thanks{CW and FM were funded by National Science Foundation awards 1223057 and 1564137.}
 
 \thanks{CW is a Simons Foundation Fellow of the Life Sciences Research Foundation.}
+
+\thanks{FM supported in part by a Faculty Scholar grant from the Howard Hughes Medical Institute and the Simons Foundation.}
 
 
 \begin{abstract}
 A \emph{time-tree} is a rooted phylogenetic tree such that all internal nodes are equipped with absolute divergence dates and all leaf nodes are equipped with sampling dates.
-Such time-trees have become a central object of study in phylogenetics.
+Such time-trees have become a central object of study in phylogenetics but little is known about the parameter space of such objects.
 Here we introduce and study a hierarchy of discrete approximations of the space of time-trees from the graph-theoretic and algorithmic point of view.
 One of the basic and widely used phylogenetic graphs, the $\nni$ graph, is the roughest approximation and bottom level of our hierarchy.
 More refined approximations discretize the relative timing of evolutionary divergence and sampling dates.
-We study basic graph-theoretic questions for these graphs including the size of neighborhoods, diameter upper and lower bounds, and the problem of finding shortest paths.
-We settle many of these questions by applying the concept of graph grammars introduced by Sleator, Tarjan, and Thurston to our graphs.
-Furthermore, we design an efficient algorithm for constructing these graphs.
+We study basic graph-theoretic questions for these graphs, including the size of neighborhoods, diameter upper and lower bounds, and the problem of finding shortest paths.
+We settle many of these questions by extending the concept of graph grammars introduced by Sleator, Tarjan, and Thurston to our graphs.
+Although time values greatly increase the number of possible trees, we show that $1$-neighborhood sizes remain linear, allowing for efficient local exploration and construction of these graphs.
+We also obtain upper bounds on the $r$-neighborhood sizes of these graphs, including a smaller bound than was previously known for $\nni$.
 \iftoggle{curvatureON}{
 We also investigate the Ricci-Ollivier curvature of basic random walks on the space.
 }{}
 
 Our results open up a number of possible directions for theoretical investigation of graph-theoretic and algorithmic properties of the time-tree graphs.
-We discuss the directions that are most valuable for phylogenetic applications and give a list of open problems of prominent importance for those applications.
+We discuss the directions that are most valuable for phylogenetic applications and give a list of prominent open problems for those applications.
+In particular, we conjecture that the split theorem applies to shortest paths in time-tree graphs, a property not shared in the general $\nni$ case.
 \end{abstract}
 
 
@@ -114,14 +118,14 @@ For example, such methods can be used to infer time to a most recent common ance
 Thus the \emph{time-tree}---a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates---has become an important object of investigation.
 This interpretation of continuous parameters for time-trees stands in contrast to that for classical phylogenetic trees, in which branch lengths quantify the amount of molecular substitution along a branch.
 Posterior distributions on both time-trees and classical trees are estimated using Markov chain Monte Carlo (MCMC) \autocite{Mau1997-sq,Yang1997-gv,Drummond2002}, but with different transition kernels.
-This paper builds a foundation for a mathematical understanding of time trees, such as understanding convergence properties of MCMC thereupon.
+This paper builds a foundation for a mathematical understanding of time-trees, such as understanding convergence properties of MCMC thereupon.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.7\textwidth]{timeTree.eps}
 \caption{Time-tree on $6$ leaves.
 Time is measured by non-negative real numbers.
-If time is restricted to integers, the tree becomes a discrete time-tree.}
+If all times are integers, the tree is a discrete time-tree.}
 \label{timeTree.eps}
 \end{figure}
 
@@ -146,7 +150,7 @@ A sequence of time-trees sampled using MCMC projects to a collection of movement
 
 Although inferential algorithms have applied MCMC on time-trees for over a decade, and graphs corresponding to discretizations of unrooted tree space have been studied for even longer, we are not aware of any work defining graphs from discretization of time-tree spaces or analyzing random walks thereupon.
 Such a theory would provide a foundation for understanding the behavior of MCMC algorithms on time-trees, as has been done previously for graphs associated with unrooted phylogenetic trees.
-Up to now, the only discretization of time-tree space that has been studied is that of ranked trees \autocite{Page1991-rd,Ford2009-qi,Lambert2013-mr}, and that was not from a graph-theoretic perspective.
+Up to now, the only discretization of time-tree space is that of ranked trees \autocite{Page1991-rd,Ford2009-qi,Lambert2013-mr}, and the corresponding graphs have not been studied.
 
 In this paper we initiate the mathematical study of discrete time-tree graphs, obtain basic geometric and graph-theoretic results,
 \iftoggle{curvatureON}{
@@ -154,6 +158,7 @@ study random walks on these graphs,
 }{}
 and compare these results to those in the classical phylogenetic setting.
 In particular, we focus on ranked trees, discrete time-trees (as defined above), and the ultrametric versions of those types of trees.
+We establish size bounds for neighborhoods and diameters in these tree spaces and show how those bounds can be used to develop efficient tree search algorithms such as MCMC.
 \iftoggle{curvatureON}{
 We study Ricci-Ollivier curvature \autocite{Ollivier2009-cj} of Markov chains on these graphs, a formalism which quantifies to what extent random walking brings unit balls together.
 This formalism has recently been applied to Markov chains on graphs of classical phylogenetic trees \autocite{Whidden2015-es}.
@@ -175,7 +180,7 @@ We also assume that each tree with $n$ leaves uses the same fixed set of $n$ con
 Hence, we say that two trees are isomorphic if they are isomorphic as graphs and the isomorphism maps leaves marked by the same constant to each other.
 We identify isomorphic trees.
 
-By a \emph{time-tree} (see Figure~\ref{timeTree.eps}) we mean a phylogenetic tree with an absolute time associated with every node of the tree so that the time strictly increases along every path from a leaf to the root: for internal nodes the time is interpreted as (typically estimated) divergence time and for leaves---(typically known) sampling time.
+By a \emph{time-tree} (Figure~\ref{timeTree.eps}) we mean a phylogenetic tree with an absolute time associated with every node of the tree so that the time strictly increases along every path from a leaf to the root: for internal nodes the time is interpreted as (typically estimated) divergence time and for leaves it is the (typically known) sampling time.
 By ``absolute'' we clarify that these are not relative times, but rather actual times that can be put on a calendar.
 We assume that time progresses backward, from the leaves to the root.
 
@@ -191,7 +196,7 @@ Note that taxon events can be younger than divergence nodes, i.e.\ when the samp
 
 We are now ready to introduce a hierarchy of discrete time-trees.
 
-At the bottom level of our hierarchy is the well-known $\nni$ graph.
+At the bottom level of our hierarchy is the well-known $\nni$ graph, which does not have timing information.
 $\nni$ is a graph with the vertices being all trees on $n$ leaves.
 Two trees $T$ and $R$ are adjacent in $\nni$ if there exists an edge $e$ in $T$ and an edge $f$ in $R$ such that both edges are not adjacent to a leaf and the graph obtained from $T$ by shrinking $e$ to a vertex is isomorphic to the graph obtained from $R$ by shrinking $f$.
 We denote this graph by $\dtt_0$.
@@ -223,7 +228,7 @@ To move from $T$ to $R$ in $\dtt_2$, one must decrease the length of interval $I
 \end{figure}
 
 Note that $\dtt_0$ can be obtained from $\dtt_1$ by ``forgetting'' ranks and $\dtt_1$---from $\dtt_m$ by forgetting lengths.
-In general, the graph structure for $m > 1$ can be understood by considering all diagrams as in Figure~\ref{DtT.pdf} and introducing an extra layer of nodes in the tail on the left of the diagram.
+In general, the graph structure for $m > 1$ can be understood by considering all diagrams as in Figure~\ref{DtT.pdf} and introducing an extra layer of nodes in every tail adjacent to the triangle on the right of the diagram.
 
 This hierarchy can be seen as a set of discrete refinements of the full space of phylogenetic time-trees, where event intervals can take an arbitrary real value.
 Indeed, if we consider
@@ -303,11 +308,11 @@ What is the complexity of computing the distance between two discrete time-trees
 
 Although this problem remains open, we make progress towards the solution by establishing several geometric and algorithmic properties of these graphs.
 First, we demonstrate in the following example that even for caterpillar trees\footnote{
-Caterpillar trees are sometimes called ladder trees.}
-the complexity cannot be derived from the complexity of $\nni$ distance.
+Caterpillar trees, sometimes called ladder trees, have all leaves connected to a single path from the root.}
+the complexity cannot be derived from that of $\nni$ distance.
 
 \begin{example}
-Let $T$ be the ultrametric tree denoted $((((((1, 2), 3), 4), 5), 6), 7)$ in Newick notation \autocite{felsenstein1990newick} and $R$ be the ultrametric tree $((((((1, 4), 5), 6), 2), 3), 7)$.
+Let $T$ be the ultrametric caterpillar tree denoted $((((((1, 2), 3), 4), 5), 6), 7)$ in Newick notation \autocite{felsenstein1990newick} and $R$ be the ultrametric tree $((((((1, 4), 5), 6), 2), 3), 7)$.
 Then a shortest $\nni$ path is given by first making a cherry $(2,3)$, then moving the cherry up to the split $1456 \mid 7$, and then resolving the cherry back.
 In $\rnniu$ this path is not shortest, and one shortest path moves the parents of $2$ and $3$ up independently.
 
@@ -321,13 +326,16 @@ In $\rnniu$ this path is not shortest, and one shortest path moves the parents o
 
 This example can be generalized to show that the set of trees of the form $(\ldots(1, i_2), \ldots, i_{n-1}), n)$, where $\{i_2, \ldots, i_{n-1}\} = \{2, \ldots, n-1\}$, is convex in $\dtt$ and is not convex in $\nni$.
 Indeed, the example shows that if two leaves have to be moved up, they can be moved independently along a shortest path.
-The generalization of this statement to an arbitrary number of leaves implies convexity in $\dtt$, while the need to group leaves in $\nni$ as in the previous example shows non-convexity in that space.
+The generalization of this statement to an arbitrary number of leaves implies convexity in $\dtt$, while the need to group leaves in $\nni$ as in the previous example shows non-convexity in $\nni$ space.
 This basic difference in the structure of the two graphs suggests that the complexity of computing the distance is likely to be different.
 
 We proceed by establishing basic geometric properties of discrete time-trees.
 
 
 \subsection{Sizes of neighborhoods}
+
+We first bound the number of trees in each graph.
+As expected, times greatly expand the size of the graphs.
 
 \begin{lemma}[see \autocite{Semple2003-nj}]
 \label{spaceSizes}
@@ -343,10 +351,12 @@ Let $|V|$ be the number of vertices in the graph, then $|V|$ is equal to
 
 \proof
 The proof for $\nni$ can be found in \autocite{Semple2003-nj}.
-The rest follow from the $\nni$ case.
+The rest follow using similar arguments.
 \endproof
 
-We continue with the following bounds on the sizes of $1$-neighborhoods of various discretizations of the space of time-trees.
+We continue by tightly bounding the sizes of $1$-neighborhoods of various discretizations of the space of time-trees.
+Each has a $1$-neighborhood size that is linear in $n$ allowing for efficient local traversal and enumeration a property of importance for phylogenetic algorithms, e.g.\ tree proposals in MCMC.
+
 \iftoggle{curvatureON}{
 We will use these bounds to estimate the curvature of various random walks later in the paper.
 }{}
@@ -397,7 +407,7 @@ The degree of such a tree is $n-1$ in $\rnniu$.
 Lemma~\ref{neighBound} gives tight bounds for the number of trees in a $1$-neighborhood, while the following theorem gives an upper bound for the number of trees in an $r$-neighborhood.
 The following theorem bounds the sizes of neighborhoods.
 The best known bound for $\nni$ that we are aware of is $3^{n-2} 2^{4r}$ \autocite{li1996some}.
-Since the bound we get for $\rnniu$ is smaller, this improves the result for $\nni$.
+We obtain a smaller bound for $\rnniu$ and, hence, improve the result for $\nni$ as well.
 
 \begin{theorem}
 \label{neighSizeTh}
@@ -500,8 +510,7 @@ Hence, the desired inequality.
 
 \subsection{Diameter of the graphs}
 
-In the previous section, we have estimated the diameter of the graphs from below.
-Now we estimate the diameter from above.
+Now we estimate the diameter of the graphs from above, complementing the above lower bounds.
 Recall that $\Delta(\G)$ is the diameter of graph $\G$.
 
 \begin{theorem}
@@ -577,7 +586,7 @@ Furthermore, the smaller the size of $A_2 \cup B_1$ the shorter the path.
 Finally, the total length of the path is maximized when $|A_2| = |B_1|$ and $|A_1| = |B_2|$.
 \endproof
 
-Although we stated and proved the theorem only for the $\rnniu$ graph, the idea can be straightforwardly adapted to the other graphs under consideration.
+Although we stated and proved the theorem only for the $\rnniu$ graph, the idea can be adapted to the other graphs considered here.
 However, this adaptation goes beyond the scope of this paper.
 %TODO: Add this for the full version?
 
@@ -908,12 +917,12 @@ Use Corollary~\ref{degreeBounds}.
 
 \subsection{Efficient algorithm for generating $\rnni$ graphs}
 
-The following algorithm computes the $\rnni$ graph on $n$ leaves, which is a natural extension of an algorithm from \textcite{Whidden2015-es}.
+We now introduce an algorithm to compute the $\rnni$ graph on $n$ leaves by extending an algorithm from \textcite{Whidden2015-es}.
 The input to our algorithm is a set $S$ of $\rnni$ trees in the format described by \textcite{Gavryushkin2014-bw} and implemented in \autocite{tauGeodesic} (see also \autocite{Semple2003-nj}).
 The two key requirements of the algorithm are the ability to enumerate the neighbors of a given tree in the $\rnni$ graph, and the ability to determine whether a given tree is already a vertex of the graph.
 Both of these requirements follow from an efficient unique representation for ranked trees.
 
-A node of a tree is given by the set of taxa that are all descendants of the node. 
+A node of a tree is given by the set of taxa that are all descendants of the node.
 A tree is then given by a sequence of nodes ordered by their ranks.
 Clearly, this obtained representation is unique.
 For example, the representation of the tree on Figure~\ref{timeTree.eps} is $(\{A\}, \{C\}, \{D\}, \{B\}, \{E\}, \{A,B\}, \{D,E\}, \{C, D, E\}, \{F\}, \{A,B,F\}, \{A,B,C,D,E,F\})$, or
@@ -923,9 +932,8 @@ This map allows us to determine whether or not a tree is already a vertex of the
 This takes linear time if the map is implemented as a trie.
 We can also enumerate the neighbors of a tree in $O(n^2)$-time using Lemma~\ref{neighBound}.
 The algorithm therefore takes $O(|S|*n^2)$-time.
-
 The high-level steps of the algorithm are as follows.
-See \cite{Whidden2015-es} for a proof of correctness.
+See \cite{Whidden2015-es} for an analogous proof of correctness.
 
 \medskip
 
@@ -975,7 +983,6 @@ See \autocite{Dasgupta2000-xa} for a detailed discussion of those publications, 
 The latter claims were mainly based on the so-called Split Theorem which states the following:
 If a partition of leaves given by an edge is shared between two trees then there exists a shortest $\nni$ path between the trees such that every tree on the path maintains the partition.
 These claims were finally refuted by \textcite{li1996some}, who proved that the Split Theorem does not hold in the $\nni$ graph.
-
 Hence, a natural question that would contribute to understanding Problem~\ref{problemComplexity} is whether or not the Split Theorem holds in the $\rnni$ graph and other time-tree graphs.
 
 
@@ -1039,20 +1046,25 @@ Surprisingly, the geometry of $\rnni$ and $\nni$ graphs differ in many aspects i
 This suggests that the computational complexity of computing distances in the two graphs is likely to be different, at least at the level of certain subgraphs such as the restriction to caterpillar trees.
 Although the size of discrete ranked graphs are much larger than their $\nni$ graph counterparts, ranks provide an inherent structure that may provide a useful avenue of attack for future algorithms.
 
-We introduce and make some initial progress on the computational complexity of calculating the distance between two time trees (Problem~\ref{problemComplexity}).
-This is an important step for further progress in theoretical research as well as computational and biological applications of time trees.
+We introduce and make some initial progress on the computational complexity of calculating the distance between two time-trees (Problem~\ref{problemComplexity}).
+This is an important step for further progress in theoretical research as well as computational and biological applications of time-trees.
 In particular, a better understanding of this problem would have the following applications.
 
-\textbf{Efficient tree search algorithms.} Some of the most popular phylogenetic time-tree inference methods utilize the Markov Chain Monte Carlo (MCMC) algorithm to sample a probability distribution over the space of time-trees.
-The ability to make tree proposals that take into account both local and global geometry of the space is at the heart of those algorithms.
-Furthermore, as the sampling is performed within the space of time-trees, the more structure of the space is taken into account by the tree proposals, the more efficient the algorithm will be.
-Our hierarchy of discrete time-trees allows one to naturally balance and refine the discrete structure of the space used in such tree proposals.
 
-Thus far, the most widely used modifications of trees are the $\nni$, SPR, and their variants.
+\subsection{Efficient tree search algorithms.}
+
+Some of the most popular phylogenetic time-tree inference methods utilize the Markov Chain Monte Carlo (MCMC) algorithm to sample a probability distribution over the space of time-trees.
+The most efficient proposals on time-trees will take into account both local and global geometry of the corresponding space.
+Our hierarchy of discrete time-trees offers a natural discrete structure of the space used in such tree proposals.
+
+Thus far, the most widely used modifications of trees are $\nni$, SPR, and their variants.
 The graph distance inherited from these modifications is known to be NP-hard to compute, and although sometimes NP-hard problems can be solved efficiently for practically interesting data sets, this is not the case for these phylogenetic graphs of ranked trees, where the size of tractable problems is an order of magnitude smaller than those that routinely arise in practice.
 Hence, a computationally tractable phylogenetic graph is a highly relevant and desirable object for the field, and we believe that the $\rnni$ graph should have this property.
 
-\textbf{Convergence of phylogenetic algorithms.} A tractable phylogenetic distance would greatly assist methods to assess convergence of Bayesian tree inference algorithms based on MCMC and related methods.
+
+\subsection{Convergence of phylogenetic algorithms.}
+
+A tractable phylogenetic distance would greatly assist methods to assess convergence of Bayesian tree inference algorithms based on MCMC and related methods.
 In other areas of statistics, distance methods are widely used to test for convergence, but the computational complexity of phylogenetic distances makes those methods applicable to only very moderate data sizes.
 Phylogenetic distances are especially suitable for such applications because they correspond to the distance inherited from the inference algorithm, being based on the same sorts of tree rearrangements.
 
