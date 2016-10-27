@@ -72,7 +72,7 @@ theory and open problems}
 %\address{Program in Computational Biology, Fred Hutchinson Cancer Research Center, Seattle, WA 98109}
 \email{matsen@fredhutch.org}
 
-\date{July 12, 2016}
+\date{October 26, 2016}
 
 \thanks{AG was supported by Marsden Fund of the Royal Society of New Zealand, grant UOA1324, through the Centre for Computational Evolution, the University of Auckland, where this work has been carried out.
 This work was done in part while AG was visiting Fred Hutchinson Cancer Research Center.}
@@ -119,7 +119,7 @@ For example, such methods can be used to infer time to a most recent common ance
 Thus the \emph{time-tree}---a rooted phylogenetic tree with all internal nodes equipped with absolute divergence dates---has become an important object of investigation.
 This interpretation of continuous parameters for time-trees stands in contrast to that for classical phylogenetic trees, in which branch lengths quantify the amount of molecular substitution along a branch.
 Posterior distributions on both time-trees and classical trees are estimated using Markov chain Monte Carlo (MCMC) \autocite{Mau1997-sq,Yang1997-gv,Drummond2002}, but with different transition kernels.
-This paper builds a foundation for a mathematical understanding of time trees, such as understanding convergence properties of MCMC thereupon.
+This paper builds a foundation for a mathematical understanding of time-trees, such as understanding convergence properties of MCMC thereupon.
 
 \begin{figure}[ht]
 \centering
@@ -139,7 +139,7 @@ The discrete component of MCMC moves between classical phylogenetic trees are ty
 For example, common moves include \emph{subtree prune and regraft} (SPR) moves, which cut a subtree off and reattach it at another location, and the subset of SPR moves called \emph{nearest-neighbor interchange} ($\nni$) moves.
 Classically, these are applied without reference to branch lengths.
 On the other hand, the discrete component of moves between time-trees are defined also in terms of their timing information.
-For example, \autocite{Hohna2008-vl} show that SPR-like moves that reattach subtrees at the same divergence time are more effective than ones that do not.
+For example, \textcite{Hohna2008-vl} show that SPR-like moves that reattach subtrees at the same divergence time are more effective than ones that do not.
 This sort of move cannot be expressed using the type of discretization used thus far in which all continuous information is lost, and so the previous work on MCMC mixing cannot be applied.
 
 However, one can discretize time-trees in a way that does preserve some of the information.
@@ -949,15 +949,15 @@ Surprisingly, the geometry of $\rnni$ and $\nni$ graphs differ in many aspects i
 This suggests that the computational complexity of computing distances in the two graphs is likely to be different, at least at the level of certain subgraphs such as the restriction to caterpillar trees.
 Although the size of discrete ranked graphs are much larger than their $\nni$ graph counterparts, ranks provide an inherent structure that may provide a useful avenue of attack for future algorithms.
 
-We introduce and make some initial progress on the computational complexity of calculating the distance between two time trees (Problem~\ref{problemComplexity}).
-This is an important step for further progress in theoretical research as well as computational and biological applications of time trees.
+We introduce and make some initial progress on the computational complexity of calculating the distance between two time-trees (Problem~\ref{problemComplexity}).
+This is an important step for further progress in theoretical research as well as computational and biological applications of time-trees.
 In particular, a better understanding of this problem would have the following applications.
 
 
 \subsection{Efficient tree search algorithms.}
 
 Some of the most popular phylogenetic time-tree inference methods utilize the Markov Chain Monte Carlo (MCMC) algorithm to sample a probability distribution over the space of time-trees.
-The most efficient proposals on time trees will take into account both local and global geometry of the corresponding space.
+The most efficient proposals on time-trees will take into account both local and global geometry of the corresponding space.
 Our hierarchy of discrete time-trees offers a natural discrete structure of the space used in such tree proposals.
 
 Thus far, the most widely used modifications of trees are $\nni$, SPR, and their variants.
