@@ -178,7 +178,7 @@ Every node of a tree has a parent except for the root, and is called the \emph{c
 We fix the number of leaves of the trees and denote this number by $n$ throughout the paper.
 We also assume that each tree with $n$ leaves uses the same fixed set of $n$ constants to mark the leaves.
 Hence, we say that two trees are isomorphic if they are isomorphic as graphs and the isomorphism maps leaves marked by the same constant to each other.
-We identify isomorphic trees.
+We we do not distinguish (identify) isomorphic trees.
 
 By a \emph{time-tree} (Figure~\ref{timeTree.eps}) we mean a phylogenetic tree with an absolute time associated with every node of the tree so that the time strictly increases along every path from a leaf to the root: for internal nodes the time is interpreted as (typically estimated) divergence time and for leaves it is the (typically known) sampling time.
 By ``absolute'' we clarify that these are not relative times, but rather actual times that can be put on a calendar.
@@ -199,13 +199,13 @@ We are now ready to introduce a hierarchy of discrete time-trees.
 At the bottom level of our hierarchy is the well-known $\nni$ graph, which does not have timing information.
 $\nni$ is a graph with the vertices being all trees on $n$ leaves.
 Two trees $T$ and $R$ are adjacent in $\nni$ if there exists an edge $e$ in $T$ and an edge $f$ in $R$ such that both edges are not adjacent to a leaf and the graph obtained from $T$ by shrinking $e$ to a vertex is isomorphic to the graph obtained from $R$ by shrinking $f$.
-We denote this graph by $\dtt_0$.
+We denote this graph by $\dtt_0$, where $\dtt$ stands for ``discrete time-trees''.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{DtT.pdf}
-\caption{All possible moves performed on interval $I$.
-Assuming that the length of every event interval is either $1$ or $2$, the outer trees are all possible neighbors in $\dtt$ of the tree in the middle corresponding to interval $I$.}
+\includegraphics[width=0.8\textwidth]{DtT_with_rank_move_short}
+\caption{All possible moves performed on intervals $I$ and $J$.
+Assuming that the length of every event interval is either $1$ or $2$, the outer trees are all possible neighbors in $\dtt$ of the tree in the middle corresponding to intervals $I$ and $J$, where the trees on the right correspond to interval $I$ and on the left correspond to $J$.}
 \label{DtT.pdf}
 \end{figure}
 
@@ -231,10 +231,9 @@ Note that $\dtt_0$ can be obtained from $\dtt_1$ by ``forgetting'' ranks and $\d
 In general, the graph structure for $m > 1$ can be understood by considering all diagrams as in Figure~\ref{DtT.pdf} and introducing an extra layer of nodes in every tail adjacent to the triangle on the right of the diagram.
 
 This hierarchy can be seen as a set of discrete refinements of the full space of phylogenetic time-trees, where event intervals can take an arbitrary real value.
-Indeed, if we consider
-$\tau$-space\footnote{Conveniently, the discrete versions of $\tau$- and $\mathrm t$-space from \autocite{Gavryushkin2014-bw} coincide.}
-defined by \textcite{Gavryushkin2014-bw} and allow the real-valued parameters (length of event intervals) to take only $m$ possible values from $1,\ldots,m$ then we get $\dtt_m$.
-In this case, $\dtt_0$ is the graph with the vertices being the cubes of $\tau$-space and the adjacency relation being the relation of ``have a shared facet of co-dimension $1$''.
+Indeed, if we allow the lengths of event intervals to take every possible non-negative real value and impose the Euclidean metric on trees with the same ranked topology, then we get the $\tau$-space introduced by \textcite{Gavryushkin2014-bw}.
+In this case, $\dtt_1$ is the graph with the vertices being the cubes of $\tau$-space and the adjacency relation being the relation of ``have a shared facet of co-dimension $1$''.
+Similarly $\dtt_0$ is the adjacency graph on the cubes of BHV space \autocite{Billera2001-rj}.
 
 The $\dtt_m$ graph on ultrametric trees, that is the set of trees such that each leaf has the same time, is denoted by $\dttu_m$.
 The $\dtt_1$ graph is denoted by $\rnni$ and called the \emph{ranked $\nni$} graph; on ultrametric trees we will denote it $\rnniu$.\footnote{
@@ -312,6 +311,7 @@ Caterpillar trees, sometimes called ladder trees, have all leaves connected to a
 the complexity cannot be derived from that of $\nni$ distance.
 
 \begin{example}
+\label{ex_caterpillars}
 Let $T$ be the ultrametric caterpillar tree denoted $((((((1, 2), 3), 4), 5), 6), 7)$ in Newick notation \autocite{felsenstein1990newick} and $R$ be the ultrametric tree $((((((1, 4), 5), 6), 2), 3), 7)$.
 Then a shortest $\nni$ path is given by first making a cherry $(2,3)$, then moving the cherry up to the split $1456 \mid 7$, and then resolving the cherry back.
 In $\rnniu$ this path is not shortest, and one shortest path moves the parents of $2$ and $3$ up independently.
@@ -324,7 +324,8 @@ In $\rnniu$ this path is not shortest, and one shortest path moves the parents o
 \end{figure}
 \end{example}
 
-This example can be generalized to show that the set of trees of the form $(\ldots(1, i_2), \ldots, i_{n-1}), n)$, where $\{i_2, \ldots, i_{n-1}\} = \{2, \ldots, n-1\}$, is convex in $\dtt$ and is not convex in $\nni$.
+A set of trees $A$ is called \emph{convex} if for every pair of trees from $A$, there exists a shortest path between them such that every tree on the path belongs to $A$.
+Example~\ref{ex_caterpillars} can be generalized to show that the set of trees of the form $(\ldots(1, i_2), \ldots, i_{n-1}), n)$, where $\{i_2, \ldots, i_{n-1}\} = \{2, \ldots, n-1\}$, is convex in $\dtt$ and is not convex in $\nni$.
 Indeed, the example shows that if two leaves have to be moved up, they can be moved independently along a shortest path.
 The generalization of this statement to an arbitrary number of leaves implies convexity in $\dtt$, while the need to group leaves in $\nni$ as in the previous example shows non-convexity in $\nni$ space.
 This basic difference in the structure of the two graphs suggests that the complexity of computing the distance is likely to be different.
@@ -380,7 +381,7 @@ The lower bound in $\dtt$ is attained by any tree with all event intervals being
 Recall that $m > 1$ is the maximal possible length of an event interval in a tree from $\dtt$.}
 In this case, $\deg(T)$ is simply the number of event intervals, since every event interval adds $1$ to the total degree of the tree.
 Other trees have the same or more possible event interval changes, showing that this is a lower bound.
-The upper bound is attained by a caterpillar tree with all intervals short and no divergence event being younger than a taxon.
+The upper bound is attained by a caterpillar tree with all intervals short and no divergence event being younger than a taxon, that is, a caterpillar tree with internal nodes having ranks $n+1, \ldots, 2(n-1)$.
 In this case, $\deg(T)$ is bounded by the sum of the $2(n-1)$ possible interval length changes, the at most $2(n-2)$ $\nni$ neighbors, and at most $n$ rank changes that can occur between the $n$ taxa.
 In total, $\deg(T) \le 2(n-1) + 2(n-2) + n = 5n-6$.
 Note that this is an upper bound indeed, as each of the $2(n-2)$ intervals excluding the most recent can contribute either a rank change or $2$ $\nni$ moves.
@@ -391,8 +392,7 @@ The number of intervals on which an $\nni$ move is possible is $n-2$ for ultrame
 In total, this gives the upper bound of $3n-5$ for ultrametric trees.
 
 Every $\nni$ move results in two neighbors, so the equality $\deg(T) = 2(n-2)$ follows for the $\nni$ graph.
-Indeed, it is not hard to see that the set of $\nni$ moves that only consider moving a subtree to its aunt captures the full set of $\nni$ neighbors with no duplicates.
-The neighborhood size then follows because the root and its two children have no aunt.
+Indeed, no $\nni$ move can be performed on an edge adjacent to a taxon, exactly two $\nni$ moves can be performed on every edge between internal nodes, the number of which is $n-2$, no two trees obtained by an $\nni$ move performed on different edges are identical.
 
 The lower bound in $\rnni$ is attained by the caterpillar-tree where taxa get ranks $0, 1, 3, 5, \ldots, 2n-3$ and internal nodes get ranks $2, 4, 6, \ldots, 2n-2$.
 In other words, the divergence events alternate with the taxa in the ranked topology of the tree so that if we parse the tree from the present to the past, we meet the nodes in the following order: taxon, taxon, coalescence, taxon, coalescence, taxon, coalescence, and so on.
@@ -406,7 +406,7 @@ The degree of such a tree is $n-1$ in $\rnniu$.
 
 Lemma~\ref{neighBound} gives tight bounds for the number of trees in a $1$-neighborhood, while the following theorem gives an upper bound for the number of trees in an $r$-neighborhood.
 The following theorem bounds the sizes of neighborhoods.
-The best known bound for $\nni$ that we are aware of is $3^{n-2} 2^{4r}$ \autocite{li1996some}.
+The best known upper bound for $\nni$ that we are aware of is $3^{n-2} 2^{4r}$ \autocite{li1996some}.
 We obtain a smaller bound for $\rnniu$ and, hence, improve the result for $\nni$ as well.
 
 \begin{theorem}
@@ -427,6 +427,7 @@ We note that since our trees are ranked trees, they possess additional structure
 
 We first need to introduce the \emph{graph grammar} for $\rnniu$.
 Recall that a graph grammar consists of a finite set of productions $\{L_i \to_i R_i\}$, where $L_i$ and $R_i$ are connected undirected edge-end labeled graphs and $\to_i$ is a one-to-one map between half-edges of $L_i$ and those of $R_i$.
+Here, for every edge in the tree we distinguish between its two half-edges---this is necessary to be able to substitute one subgraph instead another in a unique way---as in \autocite{Sleator1992-bp}.
 The productions are then applied to the starting tree $T$ to derive all possible trees at $\rnniu$ distance up to $r$ from $T$.
 A production is said to be \emph{ready} at a stage $s$ of the derivation if the running tree at stage $s$ has a subgraph isomorphic to the left side $L_i$ of the production.\footnote{
 By a \emph{running tree at stage $s$} we mean the tree obtained after $s$ applications of the production rules in the derivation.}
@@ -588,7 +589,6 @@ Finally, the total length of the path is maximized when $|A_2| = |B_1|$ and $|A_
 
 Although we stated and proved the theorem only for the $\rnniu$ graph, the idea can be adapted to the other graphs considered here.
 However, this adaptation goes beyond the scope of this paper.
-%TODO: Add this for the full version?
 
 We also note that the proof of the theorem provides an efficient algorithm for computing (not necessarily shortest) paths between discrete time-trees.
 This algorithm can be used for efficient exploration of the space, e.g.\ via MCMC, where approximate paths can be used to improve mixing by making distant proposals.
@@ -1030,7 +1030,7 @@ Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
 
 The proof of this theorem can be found in Section~\ref{secAppendix}.\ Appendix.
 
-We conclude by noting that most of the results in this paper can be generalized to the class of sampled ancestor trees \autocite{Gavryushkina2014-xd}.
+We conclude by noting that most of the results in this paper can be generalized to the class of sampled ancestor trees \autocite{Gavryushkina2014-xd}, where $\dtt$ trees are enriched by an extra event called \emph{sampled ancestor}---an internal node marked by a taxon with exactly one child.
 However, currently only a few methods of sampling the space of sampled ancestor trees are known \autocite{Gavryushkina2015-vq} and the geometry of the space is poorly understood \autocite{Gavryushkin2014-bw}, hence we do not include the generalization here.
 
 
