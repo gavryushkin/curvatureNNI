@@ -307,8 +307,9 @@ What is the complexity of computing the distance between two discrete time-trees
 \end{problem}
 
 Although this problem remains open, we make progress towards the solution by establishing several geometric and algorithmic properties of these graphs.
-A \emph{caterpillar tree} (sometimes called a \emph{ladder tree}) has all leaves connected to a single path from the root.
 First, we demonstrate in the following example that even for caterpillar trees the complexity cannot be derived from that of $\nni$ distance.
+A \emph{caterpillar tree} (sometimes called a \emph{ladder tree}) has all leaves connected to a single path from the root.
+A \emph{cherry} is a pair of taxa adjacent to a common internal node in the tree.
 
 \begin{example}
 \label{ex_caterpillars}
@@ -608,8 +609,6 @@ The algorithm might also be useful to determine if two trees appear to be separa
 A non-ranked tree has a symmetry associated with every internal node.
 Those symmetries can be employed to consider only a single representative from equivalent pairs of trees, such as by using tanglegrams \autocite{Matsen2015-fn, Whidden2015-es}.
 However, as the following proposition shows, ranked trees are free from all but one of those symmetries, hence the tanglegram approach is not applicable in this case.
-
-A \emph{cherry} is a pair of taxa adjacent to a common internal node in the tree.
 
 \begin{proposition}
 Let $T$ be a tree from $\dtt$, $\dttu$, $\rnni$, or $\rnniu$ and $\sigma$ a permutation of taxa of $T$.
@@ -928,7 +927,7 @@ Use Corollary~\ref{degreeBounds}.
 
 \subsection{Efficient algorithm for generating $\rnni$ graphs}
 
-We now introduce an algorithm to compute the $\rnni$ graph on $n$ leaves by extending an algorithm from \textcite{Whidden2015-es}.
+We now introduce an algorithm to compute the $\rnni$ graph on $n$ leaves by extending an algorithm from \autocite{Whidden2015-es}.
 The input to our algorithm is a set $S$ of $\rnni$ trees in the format described by \textcite{Gavryushkin2014-bw} and implemented in \autocite{tauGeodesic} (see also \autocite{Semple2003-nj}).
 The two key requirements of the algorithm are the ability to enumerate the neighbors of a given tree in the $\rnni$ graph, and the ability to determine whether a given tree is already a vertex of the graph.
 Both of these requirements follow from an efficient unique representation for ranked trees.
@@ -944,7 +943,7 @@ This takes linear time if the map is implemented as a trie.
 We can also enumerate the neighbors of a tree in $O(n^2)$-time using Lemma~\ref{neighBound}.
 The algorithm therefore takes $O(|S|*n^2)$-time.
 The high-level steps of the algorithm are as follows.
-See \cite{Whidden2015-es} for an analogous proof of correctness.
+See \autocite{Whidden2015-es} for an analogous proof of correctness.
 
 \medskip
 
@@ -1005,7 +1004,7 @@ In the following, we conjecture that the ranked versions of $\nni$ graph maintai
 Our conjecture is based on the fact that $\rnni$ does not satisfy the diameter bounds necessary for the argument in \autocite{li1996some} to go through---see Theorems~\ref{neighSizeTh} and~\ref{diameterUpperBound}.
 Indeed, since sorting a caterpillar tree of size $k$ in $\rnni$ takes fewer moves than merging two such caterpillar trees and then separating them, the counter-example from \autocite{li1996some} does not apply in $\rnni$.
 This counter-example using two trees encodes the basic way in which $\nni$ shortest paths are non-trivial: that one can economize by first grouping leaves into bundles, moving the bundles, and then breaking the bundles apart.
-Because this basic operation does provide an advantage in the simplest case of two caterpillar trees, we do not believe that it will hold for more complex collections of moves.
+Because this basic operation does not provide an advantage in the simplest case of two caterpillar trees in $\rnni$, we do not believe that it will hold for more complex collections of moves.
 
 \begin{conjecture}
 \label{conjSplit}
@@ -1041,7 +1040,6 @@ Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
 
 \proof
 We first prove the statement for $\dtt_2$.
-
 Let $U$ be the set of neighbors $u$ of $x$ such that $d(u,y) \le d(x,y)$, as stated in the theorem.
 We partition $U$ into three sets of trees---$I$, $R$, and $L$---obtained from $x$ by a single $\nni$ move, rank change, or length change, respectively.
 We then prove the theorem by bounding the size of each partition by $2d(x,y)$, $d(x,y)$, and $d(x,y)$, respectively.
@@ -1083,7 +1081,7 @@ Hence, the introduced hierarchy fits and refines naturally the classical picture
 
 Surprisingly, the geometry of $\rnni$ and $\nni$ graphs differ in many aspects including the diameter, the sizes of neighborhoods, and the convexity of caterpillar trees.
 This suggests that the computational complexity of computing distances in the two graphs is likely to be different, at least at the level of certain subgraphs such as the restriction to caterpillar trees.
-Although the size of discrete ranked graphs are much larger than their $\nni$ graph counterparts, ranks provide an inherent structure that may provide a useful avenue of attack for future algorithms.
+Although the size of discrete ranked graphs are much larger than their $\nni$ graph counterparts, ranks provide an inherent structure that may serve as a useful avenue of attack for future algorithms.
 
 We introduce and make some initial progress on the computational complexity of calculating the distance between two time-trees (Problem~\ref{problemComplexity}).
 This is an important step for further progress in theoretical research as well as computational and biological applications of time-trees.
