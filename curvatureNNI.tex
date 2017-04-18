@@ -381,13 +381,13 @@ Recall that $m > 1$ is the maximal possible length of an event interval in a tre
 The lower bound in $\dtt$ is attained by any tree with all event intervals being of length $m$.
 In this case, $\deg(T)$ is simply the number of event intervals, since every event interval adds $1$ to the total degree of the tree.
 Other trees have the same or more possible event interval changes, showing that this is a lower bound.
-The upper bound is attained by a caterpillar tree with all intervals short, no divergence event being younger than a taxon, and both taxa of the cherry being younger than at leas one other taxon, that is, a caterpillar tree with internal nodes having ranks $n, \ldots, 2(n-1)$ and the ranks of the taxa in cherry $< n-1$.
+The upper bound is attained by a caterpillar tree with all intervals short, no divergence event being younger than a taxon, and both taxa of the cherry being younger than at least one other taxon, that is, a caterpillar tree with internal nodes having ranks $n, \ldots, 2(n-1)$ and the ranks of the taxa in cherry $< n-1$.
 In this case, $\deg(T)$ is bounded by the sum of the $2(n-1)$ possible interval length changes, at most $2(n-2)$ $\nni$ neighbors, and at most $n$ rank changes that can occur between the $n$ taxa and the root of the cherry.
 In total, $\deg(T) \le 2(n-1) + 2(n-2) + n = 5n-6$.
 Note that this is an upper bound indeed, as each of the $2(n-2)$ intervals excluding the most recent can contribute either a rank change or $2$ $\nni$ moves.
 The caterpillar tree described above maximizes the number of intervals that contribute $2$ $\nni$ moves and enables the rest of intervals to contribute a rank change.
 
-For ultrametric trees, the number of event intervals is $n-1$, hence they add $n-1$ to the degree of the caterpillar tree from interval changes.
+For ultrametric trees, the number of event intervals is $n-1$, hence they add $n-1$ to the degree of the caterpillar tree from interval length changes.
 The number of intervals on which an $\nni$ move is possible is $n-2$ for ultrametric trees, hence they contribute $2(n-2)$ to the degree.
 In total, this gives the upper bound of $3n-5$ for ultrametric trees.
 
@@ -405,7 +405,6 @@ The degree of such a tree is $n-1$ in $\rnniu$.
 \endproof
 
 Lemma~\ref{neighBound} gives tight bounds for the number of trees in a $1$-neighborhood, while the following theorem gives an upper bound for the number of trees in an $r$-neighborhood.
-The following theorem bounds the sizes of neighborhoods.
 The best known upper bound for $\nni$ that we are aware of is $3^{n-2} 2^{4r}$ \autocite{li1996some}.
 We obtain a smaller bound for $\rnniu$ and, hence, improve the result for $\nni$ as well.
 
@@ -426,8 +425,9 @@ The proof employs the technique by \textcite{Sleator1992-bp} for counting paths 
 We note that since our trees are ranked trees, they possess additional structure (ranking) on top of the tree graph structure, hence we will be applying the same style of argument as in \autocite{Sleator1992-bp} but to a somewhat different structure.
 
 We first need to introduce the \emph{graph grammar} for $\rnniu$.
-Recall that a graph grammar consists of a finite set of productions $\{L_i \to_i R_i\}$, where $L_i$ and $R_i$ are connected undirected edge-end labeled graphs and $\to_i$ is a one-to-one map between half-edges of $L_i$ and those of $R_i$.
-Here, for every edge in the tree we distinguish between its two half-edges---this is necessary to be able to substitute one subgraph instead another in a unique way---as in \autocite{Sleator1992-bp}.
+Since we will apply the graph grammar to modify trees, we use the graph-theoretic terminology here and recall that a tree is a graph.
+A graph grammar consists of a finite set of productions $\{L_i \to_i R_i\}$, where $L_i$ and $R_i$ are connected undirected edge-end labeled graphs and $\to_i$ is a one-to-one map between half-edges of $L_i$ and those of $R_i$.
+Here, for every edge in the tree we distinguish between its two ends and refer to them as half-edges---this is necessary to be able to substitute one subgraph by another in a unique way---as in \autocite{Sleator1992-bp}.
 The productions are then applied to the starting tree $T$ to derive all possible trees at $\rnniu$ distance up to $r$ from $T$.
 By a \emph{running tree at stage $s$} we mean the tree obtained after $s$ applications of the production rules in the derivation.
 A production is said to be \emph{ready} at a stage $s$ of the derivation if the running tree at stage $s$ has a subgraph isomorphic to the left side $L_i$ of the production.
@@ -494,7 +494,7 @@ Since the number of nodes (internal and leaves) in an $\rnni$ tree is $2n - 1$ a
 
 For $\dttu$, we have to extend the grammar $\Gamma$ by two productions, namely, one for increasing the length of the branch between two nodes in the production and one for decreasing.
 This increases the number of necessary node-labels by one.
-Indeed, if a production has a long branch on the left side, three node-labels are enough to indicate whether the branch length increases or decreases; if a production has a short branch on the left side three node-labels are needed for the top node to indicate the type of the move that has to be applied: length increase move or one of the two possible $\nni$ moves.
+Indeed, if a production has a long event interval on the left side, three node-labels are enough to indicate whether the event interval length increases or decreases; if a production has a short event interval on the left side three node-labels are needed for the top node to indicate the type of the move that has to be applied: length increase move, one of the two possible $\nni$ moves, or rank swap move.
 Together, this requires $4$ node-labels and the desired bound is $4^{n-1 + 2r}$.
 
 For $\dtt$, we extend the grammar constructed for $\dttu$ by four productions, namely, one for the move when two taxa either swap their ranks or increase the interval length between them, one for the move when two taxa either increase or decrease the interval length between them, one for the move when a taxon and an internal node either swap their ranks or increase the interval length between them, and one for the move when a taxon and an internal node either increase or decrease the interval length between them.
