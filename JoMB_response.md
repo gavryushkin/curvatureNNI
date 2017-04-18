@@ -73,7 +73,10 @@ Done.
 
 > Page 6 inside the proof of Lemma 4: "… no divergence event being younger than a taxon."Not clear what this means, this should hold for every phylogenetic tree.
 
-We clarified this. Sometimes sampling evens happen earlier than some divergence events in another linage. Our concept of discrete time-trees allows this. See Figure 1 for an example of such tree: taxon F was sampled before taxa C and D diverged.
+Sometimes sampling events happen earlier than some divergence events in another linage. Our concept of discrete time-trees allows this. See Figure 1 for an example of such tree: taxon F was sampled before taxa C and D diverged.
+We clarified the paragraph to read:
+
+"The upper bound is attained by a caterpillar tree with all intervals short, every taxon being younger than every divergence event, and both taxa of the cherry being younger than at least one other taxon, that is, a caterpillar tree with internal nodes having ranks n, ... , 2(n-1) and the ranks of the taxa in cherry < n-1."
 
 > Page 6 inside the proof of Lemma 4: what is the aunt of a subtree?
 
