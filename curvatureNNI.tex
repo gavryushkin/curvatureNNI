@@ -421,7 +421,7 @@ The number of trees within distance $r$ from any given tree is at most
 \end{theorem}
 
 \proof
-We describe the proof in detail for $\rnniu$, and include proof sketches for the other three graphs in Section~\ref{secAppendix}.\ Appendix.
+We describe the proof in detail for $\rnniu$ and then explain how to modify the proof for the other three graphs.
 The proof employs the technique by \textcite{Sleator1992-bp} for counting paths in a graph: we first apply Theorem~2.3 from \autocite{Sleator1992-bp} and then improve the bound using specific properties of the $\rnniu$ graph.
 We note that since our trees are ranked trees, they possess additional structure (ranking) on top of the tree graph structure, hence we will be applying the same style of argument as in \autocite{Sleator1992-bp} but to a somewhat different structure.
 
@@ -487,7 +487,18 @@ Indeed, the first $n-1$ entries of the sequence are needed to encode all possibl
 The number of such strings, $3^{n-1+2r}$, gives the desired improved bound.
 
 The proof for the other three spaces follows similarly.
-See Section~\ref{secAppendix}.\ Appendix for details.
+
+For $\rnni$, we extend the graph grammar $\Gamma$ by two productions, namely, one for the move when two taxa swap their ranks and one for the move when a taxon and an internal node swap their ranks.
+Since in both of these productions the only possible type of move is the rank move, two node-labels is enough for these productions.
+Since the number of nodes (internal and leaves) in an $\rnni$ tree is $2n - 1$ and the maximum number of nodes on right sides of the productions is still $2$, the desired bound is $3^{2n-1 + 2r}$.
+
+For $\dttu$, we have to extend the grammar $\Gamma$ by two productions, namely, one for increasing the length of the branch between two nodes in the production and one for decreasing.
+This increases the number of necessary node-labels by one.
+Indeed, if a production has a long branch on the left side, three node-labels are enough to indicate whether the branch length increases or decreases; if a production has a short branch on the left side three node-labels are needed for the top node to indicate the type of the move that has to be applied: length increase move or one of the two possible $\nni$ moves.
+Together, this requires $4$ node-labels and the desired bound is $4^{n-1 + 2r}$.
+
+For $\dtt$, we extend the grammar constructed for $\dttu$ by four productions, namely, one for the move when two taxa either swap their ranks or increase the interval length between them, one for the move when two taxa either increase or decrease the interval length between them, one for the move when a taxon and an internal node either swap their ranks or increase the interval length between them, and one for the move when a taxon and an internal node either increase or decrease the interval length between them.
+All these moves require three node-labels, hence the desired bound is $4^{2n-1 + 2r}$.
 \endproof
 
 Since this theorem bounds the sizes of $r$-neighborhoods by functions of the form $a^{f(n) + 2r}$, the following corollary bounds the diameters of the graphs under consideration from below.
@@ -1028,7 +1039,35 @@ Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
 \end{enumerate}
 \end{theorem}
 
-The proof of this theorem can be found in Section~\ref{secAppendix}.\ Appendix.
+\proof
+We first prove the statement for $\dtt_2$.
+
+Let $U$ be the set of neighbors $u$ of $x$ such that $d(u,y) \le d(x,y)$, as stated in the theorem.
+We partition $U$ into three sets of trees---$I$, $R$, and $L$---obtained from $x$ by a single $\nni$ move, rank change, or length change, respectively.
+We then prove the theorem by bounding the size of each partition by $2d(x,y)$, $d(x,y)$, and $d(x,y)$, respectively.
+
+We first consider some basic properties of minimal length paths between $x$ and $y$.
+Observe that at most $d(x,y)$ bipartitions differ between $x$ and $y$, as each $\nni$ operation replaces one bipartition with another (and rank and length changes do not modify bipartitions).
+Now, Conjecture~\ref{conjSplit} implies that no minimal length path from $x$ to $y$ will replace a bipartition that is common to $x$ and $y$.
+
+We are now ready to bound the sizes of each partition $I$, $R$, and $L$.
+First, consider the subset $I$ of closer neighbors obtained via $\nni$ moves.
+By our observations above, $|I|$ is bounded by the number of $\nni$ operations that modify one of the at most $d(x,y)$ bipartitions of $x$ that are not a bipartition of $y$.
+There are two neighbors of $x$ that lack any given bipartition (obtained by moving either the left or right subtree located below the bipartition).
+Therefore, $|I| \le 2d(x,y)$.
+
+Second, consider the subset $R$ of closer neighbors obtained via rank change moves.
+These operate either on one of $x$'s unique bipartitions or a bipartition common to $x$ and $y$ that differs in rank.
+As observed above, the number of unique bipartitions is bounded by the maximum number of $\nni$ moves on any minimal $x$ to $y$ path.
+Any such path must fix the ranks of each common edge.
+In other words, if $r_1$ is the number of trees in $U$ which are obtained from $x$ by a rank move corresponding to a common edge and $r_2$ is the number of trees in $U$ which are obtained from $x$ by a rank move corresponding to a unique edge of $x$, then $r_1 + r_2 \leq d(x,y)$, because the $r_1$ moves have to be done along every shortest path from $x$ to $y$.
+Thus, the total size of $R$ is bounded by $d(x,y)$.
+
+The bound of $d(x,y)$ on the number of length changes that can be applied to move $x$ closer to $y$ follows similarly.
+Therefore, there are at most $|I| + |R| + |L| \le 2d(x,y) + d(x,y) + d(x,y) = 4d(x,y)$ trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$.
+
+The statement for the other two graphs follows similarly: for $\rnni$ we need to count only for trees from $I$ and $R$, for $\dtt$ we will have to add $2d(x,y)$ instead of $d(x,y)$ for $L$.
+\endproof
 
 We conclude by noting that most of the results in this paper can be generalized to the class of sampled ancestor trees \autocite{Gavryushkina2014-xd}, where $\dtt$ trees are enriched by an extra event called \emph{sampled ancestor}---an internal node marked by a taxon with exactly one child.
 However, currently only a few methods of sampling the space of sampled ancestor trees are known \autocite{Gavryushkina2015-vq} and the geometry of the space is poorly understood \autocite{Gavryushkin2014-bw}, hence we do not include the generalization here.
@@ -1071,58 +1110,6 @@ Phylogenetic distances are especially suitable for such applications because the
 Another important property for phylogenetic applications is to compute the number of trees that are ``equally good'' under certain criterion.
 This intuition is formalized by \textcite{Sanderson2011-zp} in the notion of a terrace.
 To compute the terrace, an efficient tree metric is of crucial importance.
-
-\newpage
-
-
-\section{Appendix}
-\label{secAppendix}
-
-\proof[Proof of Theorem~\ref{neighSizeTh} for $\rnni$, $\dttu$, and $\dtt$]
-Following the terminology and notations from the $\rnniu$ case, we proceed as follows.
-
-For $\rnni$, we extend the graph grammar $\Gamma$ by two productions, namely, one for the move when two taxa swap their ranks and one for the move when a taxon and an internal node swap their ranks.
-Since in both of these productions the only possible type of move is the rank move, two node-labels is enough for these productions.
-Since the number of nodes (internal and leaves) in an $\rnni$ tree is $2n - 1$ and the maximum number of nodes on right sides of the productions is still $2$, the desired bound is $3^{2n-1 + 2r}$.
-
-For $\dttu$, we have to extend the grammar $\Gamma$ by two productions, namely, one for increasing the length of the branch between two nodes in the production and one for decreasing.
-This increases the number of necessary node-labels by one.
-Indeed, if a production has a long branch on the left side, three node-labels are enough to indicate whether the branch length increases or decreases; if a production has a short branch on the left side three node-labels are needed for the top node to indicate the type of the move that has to be applied: length increase move or one of the two possible $\nni$ moves.
-Together, this requires $4$ node-labels and the desired bound is $4^{n-1 + 2r}$.
-
-For $\dtt$, we extend the grammar constructed for $\dttu$ by four productions, namely, one for the move when two taxa either swap their ranks or increase the interval length between them, one for the move when two taxa either increase or decrease the interval length between them, one for the move when a taxon and an internal node either swap their ranks or increase the interval length between them, and one for the move when a taxon and an internal node either increase or decrease the interval length between them.
-All these moves require three node-labels, hence the desired bound is $4^{2n-1 + 2r}$.
-\endproof
-
-\proof[Proof of Theorem~\ref{max_good_neighbors}]
-We first prove the statement for $\dtt_2$.
-
-Let $U$ be the set of neighbors $u$ of $x$ such that $d(u,y) \le d(x,y)$, as stated in the theorem.
-We partition $U$ into three sets of trees---$I$, $R$, and $L$---obtained from $x$ by a single $\nni$ move, rank change, or length change, respectively.
-We then prove the theorem by bounding the size of each partition by $2d(x,y)$, $d(x,y)$, and $d(x,y)$, respectively.
-
-We first consider some basic properties of minimal length paths between $x$ and $y$.
-Observe that at most $d(x,y)$ bipartitions differ between $x$ and $y$, as each $\nni$ operation replaces one bipartition with another (and rank and length changes do not modify bipartitions).
-Now, Conjecture~\ref{conjSplit} implies that no minimal length path from $x$ to $y$ will replace a bipartition that is common to $x$ and $y$.
-
-We are now ready to bound the sizes of each partition $I$, $R$, and $L$.
-First, consider the subset $I$ of closer neighbors obtained via $\nni$ moves.
-By our observations above, $|I|$ is bounded by the number of $\nni$ operations that modify one of the at most $d(x,y)$ bipartitions of $x$ that are not a bipartition of $y$.
-There are two neighbors of $x$ that lack any given bipartition (obtained by moving either the left or right subtree located below the bipartition).
-Therefore, $|I| \le 2d(x,y)$.
-
-Second, consider the subset $R$ of closer neighbors obtained via rank change moves.
-These operate either on one of $x$'s unique bipartitions or a bipartition common to $x$ and $y$ that differs in rank.
-As observed above, the number of unique bipartitions is bounded by the maximum number of $\nni$ moves on any minimal $x$ to $y$ path.
-Any such path must fix the ranks of each common edge.
-In other words, if $r_1$ is the number of trees in $U$ which are obtained from $x$ by a rank move corresponding to a common edge and $r_2$ is the number of trees in $U$ which are obtained from $x$ by a rank move corresponding to a unique edge of $x$, then $r_1 + r_2 \leq d(x,y)$, because the $r_1$ moves have to be done along every shortest path from $x$ to $y$.
-Thus, the total size of $R$ is bounded by $d(x,y)$.
-
-The bound of $d(x,y)$ on the number of length changes that can be applied to move $x$ closer to $y$ follows similarly.
-Therefore, there are at most $|I| + |R| + |L| \le 2d(x,y) + d(x,y) + d(x,y) = 4d(x,y)$ trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$.
-
-The statement for the other two graphs follows similarly: for $\rnni$ we need to count only for trees from $I$ and $R$, for $\dtt$ we will have to add $2d(x,y)$ instead of $d(x,y)$ for $L$.
-\endproof
 
 
 \printbibliography
