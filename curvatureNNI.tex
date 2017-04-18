@@ -197,7 +197,6 @@ The difference between the times of $x$ and $y$ is called the \emph{length} of t
 We identify two discrete time-trees if they are isomorphic as trees and the isomorphism preserves ranks of the nodes as well as event interval lengths.
 
 We are now ready to introduce a hierarchy of discrete time-trees.
-
 At the bottom level of our hierarchy is the well-known $\nni$ graph, which does not have timing information.
 $\nni$ is a graph with the vertices being all trees on $n$ leaves.
 Two trees $T$ and $R$ are adjacent in $\nni$ if there exists an edge $e$ in $T$ and an edge $f$ in $R$ such that both edges are not adjacent to a leaf and the graph obtained from $T$ by shrinking $e$ to a vertex is isomorphic to the graph obtained from $R$ by shrinking $f$.
@@ -213,11 +212,11 @@ Assuming that the length of every event interval is either $1$ or $2$, the outer
 
 The following graph $\dtt_m$ forms the level $m > 0$ of the hierarchy.
 The set of vertices of the graph is the set of all discrete time-trees on $n$ leaves such that every event interval has its length not greater than $m$.
-Two trees $T$ and $R$ are adjacent in $\dtt_m$ if $R$ can be obtained from $T$ by one of three operations: a \emph{length move performed on interval} $I$, \emph{swapping the rank of two nodes $x$ and $y$} or an \emph{$\nni$ move performed on interval $I$} (Figure~\ref{DtT.pdf}).
+Two trees $T$ and $R$ are adjacent in $\dtt_m$ if $R$ can be obtained from $T$ by one of three operations: a \emph{length move performed on interval} $I$, \emph{swapping the rank of two nodes $x$ and $y$ on interval} $I$ or an \emph{$\nni$ move performed on interval $I$} (Figure~\ref{DtT.pdf}).
 A length move changes the length of $I$ by 1.
-Swapping the rank of two nodes $x$ and $y$ swaps their times.
-$R$ can be obtained from $T$ by an $\nni$ move if there exist event intervals $I$ and $J$ of length $1$ in $T$ and $R$, respectively, such that the graphs obtained by shrinking $I$ and $J$ to vertices are isomorphic and the isomorphism preserves the lengths of the event intervals.
-In other words, by going from one tree to an adjacent tree in the $\dtt_m$ graph we can either change the length of one event interval by one unit, swap the rank of two nodes, or send the length of an event interval of minimal length down to zero and then resolve the multifurcation to either of the two possible trees.
+Swapping the rank of two nodes swaps the times of the nodes bounding an event interval $I$ of length $1$.
+$R$ can be obtained from $T$ by an $\nni$ move if there exist event intervals $I_T$ and $I_R$ of length $1$ in $T$ and $R$, respectively, such that the graphs obtained by shrinking $I_T$ and $I_R$ to vertices are isomorphic and the isomorphism preserves the lengths of the event intervals.
+In other words, by going from one tree to an adjacent tree in the $\dtt_m$ graph we can either change the length of one event interval by one unit, swap the rank of two nodes bounding an event interval of minimal length, or send the length of an event interval of minimal length down to zero and then resolve the multifurcation to either of the two possible trees.
 In the latter case, the new interval is of minimal length.
 See Figure~\ref{dts_neighbors.pdf} for an example of the full variety of possible moves.
 
@@ -230,7 +229,7 @@ To move from $T$ to $R$ in $\dtt_2$, one must decrease the length of interval $I
 \end{figure}
 
 Note that $\dtt_0$ can be obtained from $\dtt_1$ by ``forgetting'' ranks and $\dtt_1$---from $\dtt_m$ by forgetting lengths.
-In general, the graph structure for $m > 1$ can be understood by considering all diagrams as in Figure~\ref{DtT.pdf} and introducing an extra layer of nodes in every tail adjacent to the triangle on the right of the diagram.
+In general, the graph structure for $m > 1$ can be understood by considering all four-tree diagrams as the four trees on the right in Figure~\ref{DtT.pdf} and introducing an extra layer of nodes in every tail adjacent to the $\nni$ triangle.
 
 This hierarchy can be seen as a set of discrete refinements of the full space of phylogenetic time-trees, where event intervals can take an arbitrary real value.
 Indeed, if we allow the lengths of event intervals to take every possible non-negative real value and impose the Euclidean metric on trees with the same ranked topology, then we get the $\tau$-space introduced by \textcite{Gavryushkin2014-bw}.
@@ -243,7 +242,7 @@ The $\mathrm R$ in $\rnni$ stands for \emph{ranked} and not for rooted.
 We emphasize that although this is the $\rnni$ \emph{graph}, $\nni$ \emph{moves} can be applied to trees in any of the spaces considered (under appropriate conditions).
 For simplicity, we use the generic identifier $\dtt$ to refer to a $\dtt_m$ with an arbitrary $m > 1$.
 
-A graph can also be seen as a metric space where the distance is given by the length of a shortest path, so we will refer to $\dtt_m$ and other graphs introduced below as both.
+A graph can also be seen as a metric space where the distance is given by the length of a shortest path, so we will refer to $\dtt_m$ and other graphs introduced below as both, in agreement with \autocite{Semple2003-nj}.
 
 \iftoggle{curvatureON}{
 Furthermore, as $\nni$ graph on unrooted tree topologies with $n-1$ leaves is isomorphic (as a graph) to the $\nni$ graph on rooted tree topologies with $n$ leaves, all our results on curvature immediately imply their counterparts in unrooted $\nni$ graph.
