@@ -495,7 +495,8 @@ Since the number of nodes (internal and leaves) in an $\rnni$ tree is $2n - 1$ a
 
 For $\dttu$, we have to extend the grammar $\Gamma$ by two productions, namely, one for increasing the length of the branch between two nodes in the production and one for decreasing.
 This increases the number of necessary node-labels by one.
-Indeed, if a production has a long event interval on the left side, three node-labels are enough to indicate whether the event interval length increases or decreases; if a production has a short event interval on the left side three node-labels are needed for the top node to indicate the type of the move that has to be applied: length increase move, one of the two possible $\nni$ moves, or rank swap move.
+Indeed, if a production has a long event interval on the left side, three node-labels are enough to indicate whether the event interval length increases or decreases.
+Alternatively, if a production has a short event interval on the left side, three node-labels are needed for the top node to indicate the type of move to apply: a length increase move, one of the two possible $\nni$ moves, or a rank swap move.
 Together, this requires $4$ node-labels and the desired bound is $4^{n-1 + 2r}$.
 
 For $\dtt$, we extend the grammar constructed for $\dttu$ by four productions, namely, one for the move when two taxa either swap their ranks or increase the interval length between them, one for the move when two taxa either increase or decrease the interval length between them, one for the move when a taxon and an internal node either swap their ranks or increase the interval length between them, and one for the move when a taxon and an internal node either increase or decrease the interval length between them.
