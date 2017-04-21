@@ -1,7 +1,7 @@
 \documentclass[11pt]{amsart}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL curvatureNNI_JMB_original_submission.tex   Fri Apr 21 10:30:32 2017
-%DIF ADD curvatureNNI.tex                           Fri Apr 21 11:02:36 2017
+%DIF ADD curvatureNNI.tex                           Fri Apr 21 11:25:45 2017
 
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage{todonotes}
@@ -481,14 +481,14 @@ The number of trees within distance $r$ from any given tree is at most
 \end{theorem}
 
 \proof
-We describe the proof in detail for $\rnniu$ \DIFdelbegin \DIFdel{, and include proof sketches }\DIFdelend \DIFaddbegin \DIFadd{and then explain how to modify the proof }\DIFaddend for the other three graphs\DIFdelbegin \DIFdel{in Section~\ref{secAppendix}.\ Appendix}\DIFdelend .
+We describe the proof in detail for $\rnniu$ \DIFdelbegin \DIFdel{, and include proof sketches }\DIFdelend \DIFaddbegin \DIFadd{and then explain how to modify the proof }\DIFaddend for the other three graphs\DIFdelbegin \DIFdel{in Section~6.\ Appendix}\DIFdelend .
 The proof employs the technique by \textcite{Sleator1992-bp} for counting paths in a graph: we first apply Theorem~2.3 from \autocite{Sleator1992-bp} and then improve the bound using specific properties of the $\rnniu$ graph.
 We note that since our trees are ranked trees, they possess additional structure (ranking) on top of the tree graph structure, hence we will be applying the same style of argument as in \autocite{Sleator1992-bp} but to a somewhat different structure.
 
 We first need to introduce the \emph{graph grammar} for $\rnniu$.
 \DIFdelbegin \DIFdel{Recall that a }\DIFdelend \DIFaddbegin \DIFadd{Since we will apply the graph grammar to modify trees, we use the graph-theoretic terminology here and recall that a tree is a graph.
 A }\DIFaddend graph grammar consists of a finite set of productions $\{L_i \to_i R_i\}$, where $L_i$ and $R_i$ are connected undirected edge-end labeled graphs and $\to_i$ is a one-to-one map between half-edges of $L_i$ and those of $R_i$.
-\DIFaddbegin \DIFadd{Here, for every edge in the tree we distinguish between its two ends and refer to them as half-edges---this is necessary to be able to substitute one subgraph by another in a unique way---as in }\autocite{Sleator1992-bp}\DIFadd{.
+\DIFaddbegin \DIFadd{Here, for every edge in the tree we distinguish between its two ends and refer to them as half-edges---this is necessary to be able to substitute one subgraph by another in a unique way by connecting corresponding half-edges---as in }\autocite{Sleator1992-bp}\DIFadd{.
 }\DIFaddend The productions are then applied to the starting tree $T$ to derive all possible trees at $\rnniu$ distance up to $r$ from $T$.
 \DIFaddbegin \DIFadd{By a }\emph{\DIFadd{running tree at stage $s$}} \DIFadd{we mean the tree obtained after $s$ applications of the production rules in the derivation.
 }\DIFaddend A production is said to be \emph{ready} at a stage $s$ of the derivation if the running tree at stage $s$ has a subgraph isomorphic to the left side $L_i$ of the production.
@@ -563,7 +563,7 @@ Indeed, the first $n-1$ entries of the sequence are needed to encode all possibl
 The number of such strings, $3^{n-1+2r}$, gives the desired improved bound.
 
 The proof for the other three spaces follows similarly.
-\DIFdelbegin \DIFdel{See Section~\ref{secAppendix}.
+\DIFdelbegin \DIFdel{See Section~6.
 \ Appendix for details}\DIFdelend \DIFaddbegin 
 
 \DIFadd{For $\rnni$, we extend the graph grammar $\Gamma$ by two productions, namely, one for the move when two taxa swap their ranks and one for the move when a taxon and an internal node swap their ranks.
@@ -1128,7 +1128,7 @@ Then the number of trees $u \in N(x)$ such that $d(u, y) \le d(x, y)$ is at most
  \end{enumerate} 
 \end{theorem}
 
-\DIFdelbegin \DIFdel{The proof of this theorem can be found in Section~\ref{secAppendix}.
+\DIFdelbegin \DIFdel{The proof of this theorem can be found in Section~6.
 \ Appendix}\DIFdelend \DIFaddbegin \proof
 \DIFadd{We first prove the statement for $\dtt_2$.
 Let $U$ be the set of neighbors $u$ of $x$ such that $d(u,y) \le d(x,y)$, as stated in the theorem.
