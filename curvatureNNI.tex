@@ -379,6 +379,7 @@ All bounds are tight.
 \end{lemma}
 
 \proof
+We prove the bounds by providing exemplar trees with the specified degrees and explaining why no tree can have a greater (or lesser) degree.
 Recall that $m > 1$ is the maximal possible length of an event interval in a tree from $\dtt$.
 The lower bound in $\dtt$ is attained by any tree with all event intervals being of length $m$.
 In this case, $\deg(T)$ is simply the number of event intervals, since every event interval adds $1$ to the total degree of the tree.
@@ -609,7 +610,7 @@ This algorithm can be used for efficient exploration of the space, e.g.\ via MCM
 The algorithm might also be useful to determine if two trees appear to be separated by a valley (e.g.\ of posterior probability) or if they are rather located on a plateau.
 
 A non-ranked tree has a symmetry associated with every internal node.
-Those symmetries can be employed to consider only a single representative from equivalent pairs of trees, such as by using tanglegrams \autocite{Matsen2015-fn, Whidden2015-es}.
+Those symmetries can be employed to consider only a single representative from equivalent pairs of trees, such as by using tanglegrams \autocite{Matsen2015-fn, Whidden2015-es}, where a \emph{tanglegram} is a graph formed by identifying the leaves of two phylogenetic trees.
 However, as the following proposition shows, ranked trees are free from all but one of those symmetries, hence the tanglegram approach is not applicable in this case.
 
 \begin{proposition}
