@@ -62,7 +62,7 @@ We have added: "..., where DtT stands for “discrete time-trees”."
 
 > Page 3: It would be nice if the example in Fig. 2 shows all the three operations, that is also the swapping of the rank of two nodes.
 
-We have added all possible operation to Fig. 2.
+We have added all possible operations to Fig. 2. The caption now reads: "All possible moves performed on intervals I and J. Assuming that the length of every event interval is either 1 or 2, the outer trees are all possible neighbors in DtT of the tree in the middle obtained by moves performed on intervals I and J.  The trees on the right are obtained by moves performed on interval I and those on the left on J."
 
 > Page 4: The paragraph starting with "This hierarchy can be seen as a set of … " is not clear. Please give at least some intuition on what is a \tau-space.
 
@@ -70,7 +70,7 @@ We have added: "... if we allow the lengths of event intervals to take every pos
 
 > Page 5: define what convex means in the set of trees you are considering.
 
-We have added the definition.
+We have added the definition "A set of trees A is called convex if for every pair of trees from A there exists a shortest path between them such that every tree on the path belongs to A.
 
 > Page 6 inside the proof of Lemma 4: "… no divergence event being younger than a taxon."Not clear what this means, this should hold for every phylogenetic tree.
 
@@ -80,7 +80,7 @@ Sometimes sampling events happen earlier than some divergence events in another 
 
 > Page 6 inside the proof of Lemma 4: what is the aunt of a subtree?
 
-We removed this and added a direct explanation.
+We removed this and added a direct explanation "Indeed, no NNI move can be performed on an edge adjacent to a taxon, exactly two NNI moves can be performed on every edge between internal nodes (the number of which is n-2), and no two trees obtained by an NNI move performed on different edges are identical."
 
 > Page 6 last paragraph:  "The best known bound for NNI … ". You mean upper bound.
 
@@ -92,7 +92,7 @@ We have added a detailed explanation: "Here, for every edge in the tree we disti
 
 > Page 12: what are sampled ancestor trees?
 
-We have added the definition.
+We have added the definition to the sentence: "We conclude by noting that most of the results in this paper can be generalized to the class of sampled ancestor trees (Gavryushkina, Welch, et al. 2014), where DtT trees are enriched by an extra event called sampled ancestor---an internal node marked by a taxon with exactly one child."
 
 Best wishes,
 Alex
