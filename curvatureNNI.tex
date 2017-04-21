@@ -437,9 +437,16 @@ A production is said to be \emph{ready} at a stage $s$ of the derivation if the 
 A ready production can be applied to the running tree by destroying all nodes corresponding to the left side of the production under the isomorphism and replacing them with the right side $R_i$ of the production.
 The map $\to_i$ of the production then says how to reconnect the right side of the production to the half-edges of the running tree that were created after the destruction.
 The obtained tree is the new running tree for the next stage $s+1$ of the derivation.
+See \autocite{Sleator1992-bp} for precise definitions and details.
 
 Given the grammar, the number of possible productions to the power of the encoding length for a given neighborhood radius gives a simple upper bound on the number of trees in a neighborhood.
-See \autocite{Sleator1992-bp} for precise definitions and details.
+Specifically, Theorem~2.3 from \autocite{Sleator1992-bp}, adapted to trees, claims the following:
+
+\begin{itemize}
+\item[] Let $T$ be a tree with $h$ nodes, including all internal nodes and taxa, $\Gamma$ be a graph grammar, $d$ be the number of vertices in left sides of $\Gamma$, and $k$ be the maximum number of nodes in any right side of a production of $\Gamma$.
+Let $R(T, \Gamma, r)$ be the set of graphs obtainable from $T$ by derivations in $\Gamma$ of length at most $r$.
+Then $|R(T, \Gamma, r)| \leq (d + 1)^{h+k\cdot r}$.
+\end{itemize}
 
 The graph grammar for $\rnniu$ is the grammar $\Gamma$ shown on Figure~\ref{grammar_rNNIu.pdf}.
 Note that the definition of a graph grammar requires the left sides $L_i$ to be connected and we have a disconnected left side in the third production.
