@@ -147,8 +147,7 @@ To make a less rough approximation of a time-tree, one can allow the time period
 This results in an object we call a \emph{discrete time-tree}.
 The graph built on such trees provides a discretization of the space of time-trees, which we call a \emph{discrete time-tree graph}.
 By a \emph{graph} on a set of trees here and throughout the paper we mean a graph consisting of trees as vertices, with edges connecting pairs of trees that are identical after a given tree rearrangement operation \autocite{Semple2003-nj}.
-%EM Certainly there are many other prior authors that have called things NNI graph etc.
-This graph-theoretic terminology is convenient and has become widespread in recent years \autocite{Whidden2015-yi}.
+This graph-theoretic terminology is convenient and has become widespread in recent years \autocite{spade2014note, Whidden2015-yi, Gavryushkin2014-bw}.
 A sequence of time-trees sampled using MCMC projects to a collection of movements on a graph in which each vertex is a discrete time-tree and each edge is a discrete version of an MCMC move on time-trees.
 
 Although inferential algorithms have applied MCMC on time-trees for over a decade, and graphs corresponding to discretizations of unrooted tree space have been studied for even longer, we are not aware of any work defining graphs from discretization of time-tree spaces or analyzing random walks thereupon.
@@ -208,8 +207,7 @@ We denote this graph by $\dtt_0$, where $\dtt$ stands for ``discrete time-trees'
 \centering
 \includegraphics[width=0.8\textwidth]{DtT_with_rank_move_short}
 \caption{All possible moves performed on intervals $I$ and $J$.
-%EM "corresponding too" is maddeningly vague. Perhaps you mean "modifying"?
-Assuming that the length of every event interval is either $1$ or $2$, the outer trees are all possible neighbors in $\dtt$ of the tree in the middle corresponding to intervals $I$ and $J$, where the trees on the right correspond to interval $I$ and on the left correspond to $J$.}
+Assuming that the length of every event interval is either $1$ or $2$, the outer trees are all possible neighbors in $\dtt$ of the tree in the middle obtained by moves performed on intervals $I$ and $J$, where the trees on the right are obtained by moves performed on interval $I$ and on the left---on $J$.}
 \label{DtT.pdf}
 \end{figure}
 
@@ -236,9 +234,8 @@ In general, the graph structure for $m > 1$ can be understood by considering all
 
 This hierarchy can be seen as a set of discrete refinements of the full space of phylogenetic time-trees, where event intervals can take an arbitrary real value.
 Indeed, if we allow the lengths of event intervals to take every possible non-negative real value and impose the Euclidean metric on trees with the same ranked topology, then we get the $\tau$-space introduced by \textcite{Gavryushkin2014-bw}.
-%EM Alex, do you prefer this "cube" terminology? In our phyloHMC paper, we call them "orthants".
-In this case, $\dtt_1$ is the graph with the vertices being the cubes of $\tau$-space and the adjacency relation being the relation of ``have a shared facet of co-dimension $1$.''
-Similarly $\dtt_0$ is the adjacency graph on the cubes of BHV space \autocite{Billera2001-rj}.
+In this case, $\dtt_1$ is the graph with the vertices being the orthants of $\tau$-space and the adjacency relation being the relation of ``have a shared facet of co-dimension $1$.''
+Similarly $\dtt_0$ is the adjacency graph on the orthants of BHV space \autocite{Billera2001-rj}.
 
 The $\dtt_m$ graph on ultrametric trees, that is the set of trees such that each leaf has the same time, is denoted by $\dttu_m$.
 The $\dtt_1$ graph is denoted by $\rnni$ and called the \emph{ranked $\nni$} graph; on ultrametric trees we will denote it $\rnniu$.
@@ -386,8 +383,7 @@ Recall that $m > 1$ is the maximal possible length of an event interval in a tre
 The lower bound in $\dtt$ is attained by any tree with all event intervals being of length $m$.
 In this case, $\deg(T)$ is simply the number of event intervals, since every event interval adds $1$ to the total degree of the tree.
 Other trees have the same or more possible event interval changes, showing that this is a lower bound.
-%EM Should the end of this mega-sentence read "in the cherry"?
-The upper bound is attained by a caterpillar tree with all intervals short, every taxon being younger than every divergence event, and both taxa of the cherry being younger than at least one other taxon, that is, a caterpillar tree with internal nodes having ranks $n, \ldots, 2(n-1)$ and the ranks of the taxa in cherry $< n-1$.
+The upper bound is attained by a caterpillar tree with all intervals short, every taxon being younger than every divergence event, and both taxa in the cherry being younger than at least one other taxon, that is, a caterpillar tree with internal nodes having ranks $n, \ldots, 2(n-1)$ and the ranks of the taxa in the cherry $< n-1$.
 In this case, $\deg(T)$ is bounded by the sum of the $2(n-1)$ possible interval length changes, at most $2(n-2)$ $\nni$ neighbors, and at most $n$ rank changes that can occur between the $n$ taxa and the root of the cherry.
 In total, $\deg(T) \le 2(n-1) + 2(n-2) + n = 5n-6$.
 Note that this is an upper bound indeed, as each of the $2(n-2)$ intervals excluding the most recent can contribute either a rank change or $2$ $\nni$ moves.
