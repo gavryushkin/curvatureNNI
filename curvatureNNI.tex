@@ -8,7 +8,10 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{graphicx}
 \usepackage{etoolbox}
-\usepackage[style=authoryear,ibidtracker=false,uniquename=false]{biblatex}
+\usepackage[style=authoryear,ibidtracker=false,uniquename=false,giveninits=true,terseinits=true,maxbibnames=5]{biblatex}
+\DeclareNameAlias{sortname}{last-first}
+\renewcommand*{\revsdnamepunct}{}
+\renewbibmacro{in:}{}
 %\usepackage[nomarkers,nolists]{endfloat}
 \usepackage{outlines}
 
@@ -1127,4 +1130,3 @@ To compute the terrace, an efficient tree metric is of crucial importance.
 \printbibliography
 
 \end{document}
-
