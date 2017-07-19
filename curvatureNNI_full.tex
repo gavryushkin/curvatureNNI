@@ -50,6 +50,9 @@
 
 \renewcommand{\O}{\mathcal{O}}
 
+\newtoggle{curvatureON}
+\togglefalse{curvatureON}
+
 \sloppy
 
 
@@ -94,6 +97,9 @@ We study basic graph-theoretic questions for these graphs, including the size of
 We settle many of these questions by extending the concept of graph grammars introduced by Sleator, Tarjan, and Thurston to our graphs.
 Although time values greatly increase the number of possible trees, we show that $1$-neighborhood sizes remain linear, allowing for efficient local exploration and construction of these graphs.
 We also obtain upper bounds on the $r$-neighborhood sizes of these graphs, including a smaller bound than was previously known for $\nni$.
+\iftoggle{curvatureON}{
+We also investigate the Ricci-Ollivier curvature of basic random walks on the space.
+}{}
 
 Our results open up a number of possible directions for theoretical investigation of graph-theoretic and algorithmic properties of the time-tree graphs.
 We discuss the directions that are most valuable for phylogenetic applications and give a list of prominent open problems for those applications.
@@ -151,13 +157,24 @@ Although inferential algorithms have applied MCMC on time-trees for over a decad
 Such a theory would provide a foundation for understanding the behavior of MCMC algorithms on time-trees, as has been done previously for graphs associated with unrooted phylogenetic trees.
 Up to now, the only discretization of time-tree space is that of ranked trees \autocite{Page1991-rd,Ford2009-qi,Lambert2013-mr}, and the corresponding graphs have not been studied.
 
-In this paper we initiate the mathematical study of discrete time-tree graphs, obtain basic geometric and graph-theoretic results, and compare these results to those in the classical phylogenetic setting.
+In this paper we initiate the mathematical study of discrete time-tree graphs, obtain basic geometric and graph-theoretic results,
+\iftoggle{curvatureON}{
+study random walks on these graphs,
+}{}
+and compare these results to those in the classical phylogenetic setting.
 In particular, we focus on ranked trees, discrete time-trees (as defined above), and the ultrametric versions of those types of trees.
 We establish size bounds for neighborhoods and diameters in these tree spaces and show how those bounds can be used to develop efficient tree search algorithms such as MCMC.
 The importance of these basic geometric characteristics in phylogenetics and other areas of evolutionary biology is highlighted in \autocite{Huber2011-uu}.
+\iftoggle{curvatureON}{
+We study Ricci-Ollivier curvature \autocite{Ollivier2009-cj} of Markov chains on these graphs, a formalism which quantifies to what extent random walking brings unit balls together.
+This formalism has recently been applied to Markov chains on graphs of classical phylogenetic trees \autocite{Whidden2015-es}.
+}
 
 
 \section{Technical introduction}
+\iftoggle{curvatureON}{
+\subsection{Discrete time-trees}
+}{}
 
 Throughout the paper by a (phylogenetic) \emph{tree} we mean a rooted binary tree with designated leaves, that is, an undirected acyclic graph with the following properties:
 (1) all nodes have degree $1$, $2$, or $3$; (2) there exists exactly one node of degree $2$, this node is called the \emph{root} of the tree; (3) all nodes of degree $1$ are labeled by distinct identifiers, these nodes are called \emph{leaves} or \emph{taxa} (singular \emph{taxon}).
@@ -211,7 +228,7 @@ See Figure~\ref{dts_neighbors.pdf} for an example of the full variety of possibl
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\textwidth]{dts_neighbors.eps}
+\includegraphics[width=\textwidth]{dts_neighbors.pdf}
 \caption{Trees $T$ and $R$ are at $\dtt_2$ distance $3$.
 To move from $T$ to $R$ in $\dtt_2$, one must decrease the length of interval $I$, swap the ranks of nodes $A$ and $C$ bounding interval $J$, and perform an $\nni$ move on interval $K$, resolving nodes $C$ and $D$.}
 \label{dts_neighbors.pdf}
@@ -232,6 +249,56 @@ We emphasize that although this is the $\rnni$ \emph{graph}, $\nni$ \emph{moves}
 For simplicity, we use the generic identifier $\dtt$ to refer to a $\dtt_m$ with an arbitrary $m > 1$.
 
 A graph can also be seen as a metric space where the distance is given by the length of a shortest path, so we will refer to $\dtt_m$ and other graphs introduced below as both, in agreement with \autocite{Semple2003-nj}.
+
+\iftoggle{curvatureON}{
+Furthermore, as $\nni$ graph on unrooted tree topologies with $n-1$ leaves is isomorphic (as a graph) to the $\nni$ graph on rooted tree topologies with $n$ leaves, all our results on curvature immediately imply their counterparts in unrooted $\nni$ graph.
+We omit from the text the exact formulations for unrooted trees, as they can be obtained in the obvious way.
+
+
+\subsection{Ricci-Ollivier curvature}
+A random walk on a metric space is defined by its proposal mechanism, which is a functional $m$ that maps points of the space to the set of measures on this space \autocite[see][]{Ollivier2009-cj}.
+In other words, for every point $v$ in the space, $m(v,w)$, which we denote by $m_v(w)$, is the probability of the random walk moving from $v$ to $w$ in one step.
+Given a metric space $(V,d)$, a \emph{coupling} $\mu$ between two measures $\mu_1$ and $\mu_2$ on $V$ is a probability measure on the set of pairs of points $V \times V$ that is $\mu_1$ after marginalizing over the second component, and $\mu_2$ after marginalizing over the first component, that is, $\sum\limits_{y \in V}\mu(x,y) = \mu_1(x)$ and $\sum\limits_{y \in V}\mu(y,x) = \mu_2(x)$ for all $x \in V$.
+A coupling can be seen as a scenario of transforming the measure $\mu_1$ on $V$ to $\mu_2$ by looking at $\mu(x,y)$ as the probability mass that has to be moved from $x$ to $y$ under the scenario.
+
+Using these notations, we define the \emph{work} $\W_\mu$ needed to be done to transform $\mu_1$ to $\mu_2$ via coupling $\mu$ by setting
+\[
+\W_\mu(\mu_1,\mu_2) = \sum\limits_{x,y\in V}\mu(x,y) d(x,y).
+\]
+Let $\M$ be the set of all couplings between measures $\mu_1$ and $\mu_2$.
+Then the \emph{earth mover's distance} $W$ between $\mu_1$ and $\mu_2$ is defined to be $W(\mu_1,\mu_2) = \inf\limits_{\mu\in\M}\W_\mu(\mu_1,\mu_2)$.
+
+We are now ready to introduce two curvature notions that we are studying in this paper.
+Let $m$ be a random walk on a metric space $(V,d)$.
+Then the \emph{coarse Ricci-Ollivier curvature} between two points $x$ and $y$ from $V$ with the random walk $m$ is
+\[
+\kappa(m;x,y) = 1 - \frac{W(m_x,m_y)}{d(x,y)}
+\]
+
+Another important notion of this paper is that of asymptotic curvature.
+The following random walk $m$ is called a \emph{uniform $p$-lazy random walk} on a metric space $(V,d)$:
+\[
+m_x(y) =
+\begin{cases}
+1-p			& \mbox{ if } x=y \\
+0   			& \mbox{ if } d(x,y) > 1 \\
+\dfrac{p}{|N(x)|}	& \mbox{ if } d(x,y) = 1 \\
+\end{cases}
+\]
+where $x,y \in V$ and $N(x) = \{y \mid d(x,y) = 1\}$.
+
+We follow \textcite{Loisel2014-gu} and define \emph{asymptotic Ricci-Ollivier curvature} $\ric$ between points $x,y$ from a metric space with uniform $p$-lazy random walk $m$ by
+\[
+\ric(x,y) = \lim_{p\to0} \frac{\kappa(m;x,y)}{p}
+\]
+
+One of the central properties of Ricci-Ollivier curvature is that the curvature is a local property \autocite{Ollivier2009-cj}.
+For finite metric spaces that means that for all distinct $u$ and $v$,
+\[
+\inf\{\kappa(m;x,y)\mid d(x,y) = 1\} \leq \kappa(m;u,v).
+\]
+Hence, we define the \emph{coarse Ricci-Ollivier curvature of a metric space} with a random walk $m$ to be $\inf\{\kappa(m;x,y)\mid d(x,y) = 1\}$ and the \emph{asymptotic Ricci-Ollivier curvature of a metric space} to be $\inf\{\ric(x,y)\mid d(x,y) = 1\}$.
+}{}
 
 
 \section{Geometry and complexity of discrete time-trees}
@@ -258,7 +325,7 @@ In $\rnniu$ this path is not shortest, and one shortest path moves the parents o
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\textwidth]{NNI_VS_rNNI.eps}
+\includegraphics[width=\textwidth]{NNI_VS_rNNI.pdf}
 \caption{Shortest paths in $\nni$ may not be shortest in $\rnni$.}
 \label{NNI_VS_rNNI.pdf}
 \end{figure}
@@ -297,6 +364,10 @@ The rest follow using similar arguments.
 
 We continue by tightly bounding the sizes of $1$-neighborhoods of various discretizations of the space of time-trees.
 Each has a $1$-neighborhood size that is linear in $n$ allowing for efficient local traversal and enumeration, a property of importance for phylogenetic algorithms, e.g.\ tree proposals in MCMC.
+
+\iftoggle{curvatureON}{
+We will use these bounds to estimate the curvature of various random walks later in the paper.
+}{}
 
 \begin{lemma}
 \label{neighBound}
@@ -394,7 +465,7 @@ We will further exploit this important property below, where we improve the boun
 
 \begin{figure}
 \centering
-\includegraphics[width=0.7\textwidth]{grammar_rNNIu.eps}
+\includegraphics[width=0.7\textwidth]{grammar_rNNIu.pdf}
 \caption{Graph grammar $\Gamma$ for $\rnniu$.
 Maps $\to_i$ are shown by dashed lines.
 In the first two productions, the edge-ends marked by $\beta$ and $\gamma$ without dashed lines are mapped to each other: top $\gamma$ to top $\gamma$, $\beta$ to $\beta$, bottom $\gamma$ to bottom $\gamma$.
@@ -492,7 +563,7 @@ For move counts in the remainder of this proof, we will allow the ``null move'' 
 
 \begin{figure}
 \centering
-\includegraphics[width = \textwidth]{diameterUpperBound.eps}
+\includegraphics[width = \textwidth]{diameterUpperBound.pdf}
 \caption{An algorithm to compute a (not necessarily shortest) path between discrete time-trees.
 Although the trees at steps $(6)$ and $(7)$ look identical, the topologies inside the triangles are different: those at step $(6)$ correspond to the restriction of $T$, at step $(7)$---of $R$.}
 \label{diameterUpperBound.pdf}
@@ -571,6 +642,305 @@ Hence $T \ne T_\sigma$ because the ranks of the parent of $i$ are different in $
 
 These observations suggest that the $\nni$ graph is geometrically and algorithmically different from the other four graphs.
 
+\iftoggle{curvatureON}{
+\section{Ricci-Ollivier curvature of discrete time-trees}
+
+We need the following corollaries for our analysis of curvature.
+
+\begin{corollary}
+\label{degreeBounds}
+The following are satisfied in $\dtt$ for every pair of trees $T$ and $R$.
+\begin{align*}
+& \deg(T)-\deg(R) \leq 3n-4					&& \mbox{in $\dtt$,}\\
+& \deg(T)-\deg(R) \leq 2n-4					&& \mbox{in $\dttu$,}\\
+& \deg(T)-\deg(R) \leq 2n-3					&& \mbox{in $\rnni$,}\\
+& \deg(T)-\deg(R) \leq n-3					&& \mbox{in $\rnniu$,}\\
+& \dfrac25 < \dfrac{\deg(T)}{\deg(R)} < \dfrac52		&& \mbox{in $\dtt$,}\\
+& \dfrac13 < \dfrac{\deg(T)}{\deg(R)} < 3			&& \mbox{in $\dttu$ and $\rnni$,}\\
+& \dfrac12 < \dfrac{\deg(T)}{\deg(R)} < 2			&& \mbox{in $\rnniu$,}\\
+\end{align*}
+and all inequalities are tight.
+\end{corollary}
+
+\proof
+The first four inequalities follow from Lemma~\ref{neighBound} immediately.
+
+For the fifth inequality we note that
+\[
+\frac{\deg(T)}{deg(R)} \geq \frac{2(n-1)}{5n-6} = \frac25 \left(1 + \frac{1}{5n-6}\right) \searrow \frac 25 \mbox{ when } n\to\infty
+\]
+The upper bound follows similarly, as well as the rest of inequalities.
+\endproof
+
+For $\nni$ graph, Lemma~\ref{neighBound} implies that $deg(T)-deg(R) = 0$ and $\frac{\deg(T)}{deg(R)} = 1$.
+
+Let $N(T)$ be the set of trees at distance one from $T$, that is, the set of trees adjacent to $T$ in the corresponding graph.
+The following lemma describes how many trees the tree neighborhoods can have in common.
+
+\begin{lemma}
+\label{intersecNeighb}
+The following is true for all the graphs $\nni$, $\rnni$, $\rnniu$, $\dtt$, and $\dttu$.
+If $d(T,R) = 1$ then $|N(T)\cap N(R)|\in\{0,1\}$.
+\end{lemma}
+
+\proof
+Suppose $T$ and $R$ are neighbors.
+If the trees differ by a single branch length or rank change then the fact that $\nni$ moves only apply to short branches implies that any shared neighbor $S$ would have to match the length or rank of one of the trees.
+As $S$ must differ from both trees, they do not have a neighbor in common.
+If $T$ and $R$ are $\nni$-neighbors, there is precisely one tree which is a neighbor of both $T$ and $R$, namely the third tree that can be obtained by resolving the interval that connects $T$ and $R$.
+\endproof
+
+The following general lemma is true for all graphs, particularly, for those we consider in this paper.
+By \emph{distance-one random walk}, we mean a random walk $(m_x)_{x \in X}$ satisfying $m_x(y) = 0$ for all $x$ and $y$ such that $d(x,y) > 1$.
+
+\begin{lemma}
+\label{curvBoundGeneral}
+Let $(M,d)$ be a finite metric space and $x,y$ a pair of points from $M$.
+If $(m_x)_{x \in M}$ is a distance-one random walk on $M$, then the curvature $\kappa$ of the random walk satisfies the following boundary conditions.
+\[
+\dfrac{-2}{d(x,y)} \leq \kappa(x,y) \leq \dfrac{2}{d(x,y)}.
+\]
+\end{lemma}
+
+\proof
+Let $x$, $y$, $u$, and $v$ be arbitrary points from $M$ such that both $m_x(u)$ and $m_y(v)$ are positive.
+Since $m$ is a distance-one random walk, $d(u,v) \leq d(x,y) + 2$.
+Hence for any coupling $\{p_{u,v}\}$,
+\[
+W(m_x,m_y) \leq \sum p_{u,v} d(u,v) \leq (d(x,y)+2)\sum p_{u,v} = d(x,y) + 2,
+\]
+where the sum is taken over a correspondence between the set of $u \in N(x)$ and $v \in N(y)$.
+So, $\kappa(x,y) \geq - 2/d(x,y)$.
+The lower bound follows similarly from $d(u,v) \geq d(x,y) - 2$.
+\endproof
+
+Note that this lemma can be generalized to \emph{distance-$d$} random walks, which are those satisfying $m_x(y) = 0$ for all $x$ and $y$ such that $d(x,y) > d$.
+In this case, using the notations of the lemma, $d(u,v) \leq d(x,y) + 2d$.
+Thus,
+\[
+-\dfrac{2d}{d(x,y)} \leq \kappa(x,y) \leq \dfrac{2d}{d(x,y)}.
+\]
+
+As we will see in the next few lemmas, these bounds can be improved for certain random walks on the graphs under consideration.
+
+\begin{lemma}
+\label{uniformUpper}
+Let $T$ and $R$ be adjacent trees.
+Then the curvature of the following spaces with uniform random walk satisfy
+\begin{align*}
+& \kappa(T,R) \leq \dfrac{1}{2(n-1)}	&& \mbox{for $\dtt$,}\\
+& \kappa(T,R) \leq \dfrac{1}{2(n-2)}	&& \mbox{for $\nni$, and}\\
+& \kappa(T,R) \leq \dfrac{1}{n-1}	&& \mbox{for $\rnni$, $\rnniu$, and $\dttu$.}
+\end{align*}
+The bounds are tight.
+\end{lemma}
+
+\proof
+To maximize the curvature $\kappa(T,R)$, we have to minimize $W(m_T,m_R) = \inf\limits_{\mu\in\M} \sum\limits_{x,y\in V}\mu(x,y) d(x,y)$.
+The latter is minimized when the probability mass $\mu(x,y)$ to be moved at shorter distance $d(x,y)$ is maximized.
+Since $d(T,R) = 1$, it follows from Lemma~\ref{intersecNeighb} that the smallest possible value of $d(x,y)$ is $0$ (the case when $|N(T) \cap N(R)| = 1$).
+Hence, to maximize the curvature we are to maximize the probability mass allocated to the tree $E$ in the intersection $N(T) \cap N(R)$.
+It follows from Lemma~\ref{neighBound} that the maximal mass $p_E$ we can allocate under a uniform random walk to the tree $E$ is $\frac{1}{2(n-1)}$ in $\dtt$, $\frac{1}{2(n-2)}$ in $\nni$, and $\frac{1}{n-1}$ in $\rnni$, $\rnniu$, and $\dttu$.
+It is not hard to see that trees $T$ and $R$ can be chosen so that $d(x,y) = 1$ for all $x,y$ which are different from $E$ and for which $\mu(x,y) > 0$.
+Hence, $\kappa(T, R) = 1 - \left(\sum\limits_{x,y\in V\setminus\{E\}}\mu(x,y)\cdot 1 + p_E \cdot 0\right) = 1 - (1-p_E) = p_E$.
+The lemma follows.
+\endproof
+
+This lemma and corollary provide tighter upper bounds for the curvature than Lemma~\ref{curvBoundGeneral} for all $n$.
+
+It is easy to generalize the lemma to the uniform $p$-lazy random walk.
+Indeed, we observe that the curvature between adjacent trees $T$ and $R$ under a uniform $p$-lazy random walk satisfies
+\begin{align*}
+& \kappa(T,R) \leq \frac{p}{2(n-1)}	&& \mbox{in $\dtt$,}\\
+& \kappa(T,R) \leq \frac{p}{2(n-2)}	&& \mbox{in $\nni$, and}\\
+& \kappa(T,R) \leq \frac{p}{n-1}	&& \mbox{in $\rnni$, $\rnniu$, and $\dttu$.}
+\end{align*}
+
+We recall that the \emph{asymptotic Ricci-Ollivier curvature} \autocite{Loisel2014-gu} $\ric$ of a metric space with uniform $p$-lazy random walk is defined by
+\[
+\ric(x,y) = \lim_{p\to0} \frac{\kappa(x,y)}{p}
+\]
+
+In this case the asymptotic curvature between adjacent trees in $\dtt$ with uniform $p$-lazy random walk is bounded from above by
+\[
+\frac{1}{2(n-1)}
+\]
+
+Following \textcite{Loisel2014-gu}, we will refer to non-asymptotic curvature as \emph{coarse curvature} to distinguish between the two alternative notions of curvature.
+
+Thus, the upper bounds of asymptotic curvatures of $\nni$, $\rnni$, $\rnniu$, $\dtt$, and $\dttu$ spaces coincides with the coarse curvatures of the spaces.
+
+We continue with lower bounds on curvature of spaces with uniform lazy random walks.
+
+\begin{lemma}
+\label{uniformLower}
+Let $T$ and $R$ be adjacent trees.
+Then both the asymptotic curvature of the space with $p$-lazy uniform random walk and the curvature of the space with uniform random walk are at least
+\begin{enumerate}[(i)]
+\item $-\dfrac{4}{n-1}$ in $\dtt$,
+\item $-\dfrac{4}{n-2}$ in $\nni$,
+\item $-\dfrac{8}{n-1}$ in $\rnni$.
+\end{enumerate}
+
+The bounds are tight.
+\end{lemma}
+
+\proof
+Let $T$ and $R$ be two adjacent trees.
+To minimize the curvature, we have to maximize $W(m_T, m_R)$ across $T$ and $R$.
+The latter is maximized when the probability mass on trees $E\in N(T)$ such that $d(E, N(R)) > d(T, R)$, is
+maximized\footnote{If $x$ is a point of a metric space $(M,d)$ and $S \subseteq M$ then by $d(x,S)$ we denote $\inf\limits_{s \in S} d(x,s)$.}.
+Since $d(T, R) = 1$, the maximum possible number of such trees $E$ is
+\todo{Explain this.
+EM skipped pending explanation.}
+$8$.
+To make $W(m_T,m_R)$ being as large as possible, we have to assume $d(S, N(R)) = 1$ for the rest of the trees $S$ from $N(T)$.
+Hence for the uniform random walk we have:
+\[
+W(m_T,m_R)\leq 8 \cdot 2 \cdot \frac{1}{|N(T)|} +
+(|N(T)| - 8) \cdot \frac{1}{N(T)} = 1 + \dfrac{8}{|N(T)|}.
+\]
+Hence, $\kappa(T,R) = 1 - W(m_T,m_R) \geq - \dfrac{8}{|N(T)|}$.
+
+A similar reasoning applies for the $p$-lazy random walk:
+\[
+W(m_T,m_R)\leq 8 \cdot 2 \cdot \frac{p}{|N(T)|} +
+(|N(T)| - 7) \cdot \frac{p}{|N(T)|} + (1-p) - \frac{p}{|N(T)|} =
+\]
+$1 + \dfrac{8p}{|N(T)|}$.
+Hence, $\ric(T,R) = \lim\limits_{p\to0}\left(1 - W(m_T,m_R)\right) \geq - \dfrac{8}{|N(T)|}$.
+
+It remains to note that Lemma~\ref{neighBound} gives us an estimate $|N(T)| \geq 2(n-1)$ in $\dtt$, $|N(T)| \geq 2(n-2)$ in $\nni$, and $|N(T)| \geq n-1$ in $\rnni$.
+The lemma follows.
+\endproof
+
+\begin{corollary}
+\label{flatInLimDTS}
+Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of trees such that $d(T_n,R_n) = 1$ in $\nni$, $\rnni$, or $\dtt$.
+Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = \lim\limits_{n \to \infty}\ric(T_n,R_n) = 0$.
+\end{corollary}
+
+\proof
+Follows from Lemma~\ref{uniformUpper} and Lemma~\ref{uniformLower}.
+\endproof
+
+As we have just proved, the corollary above holds true in $\nni$, $\rnni$, and $\dtt$.
+This corollary is also true in the SPR graph of rooted trees \autocite{Whidden2015-es}.
+Actually, this property can be derived from the following general statement for all spaces mentioned, as well as for many others.
+
+\begin{proposition}
+\label{flatInLimGen}
+Let $(M_n,d_n)_{n \in \omega}$ be a sequence of finite metric spaces and $(x_n, y_n)$ a sequence of adjacent vertices from $M_n$, that is $d_n(x_n,y_n) = 1$, such that
+\begin{enumerate}[(1)]
+\item
+\label{intersec}
+$\big|N(x_n) \cap N(y_n)\big| = o(|N(x_n)|)$
+\item
+\label{difference}
+$\big||N(x_n)| - |N(y_n)|\big| = o(|N(x_n)|)$
+\item
+\label{dist2}
+$\big|\{(x,y) \mid
+	x \in N(x_n),~ y \in N(y_n),~ d(x, y) \geq 2\}\big| = o(|N(x_n)|)$
+\end{enumerate}
+
+Then $\lim\limits_{n \to \infty} \kappa(x_n, y_n) = 0$.
+\end{proposition}
+
+\proof
+Consider an arbitrary $n$ and the pair of points $x_n,y_n$.
+Set $I_0 = N(x_n) \cap N(y_n)$, denote by $I_1$ the set of points $z$ such that the probability mass is moved from $z$ at distance one under the optimum coupling for $W(m_{x_n},m_{y_n})$, by $I_2$ the set of points $z$ such that the probability mass is moved from $z$ a distance $\geq 2$ under the optimum scenario for $W(m_x,m_y)$.
+Then
+\[
+W(m_{x_n},m_{y_n}) = \sum_{I_0} d_i x_i p_{x_i} + \sum_{I_1} d_i x_i p_{x_i} +
+\sum_{I_2} d_i x_i p_{x_i}.
+\]
+It follows from~(\ref{intersec}) and~(\ref{dist2}) that the first and the last sums are $\O(1)$ when $n\to\infty$.
+This together with property~(\ref{difference}) implies that the middle sum tends to $1$ when $n\to\infty$ because the number of points $z$ such that the probability mass has to travel at distance one under an optimum scenario, divided by $|N(x_n)|$, tends to $1$ when $n\to\infty$.
+\endproof
+
+We note that in both Corollary~\ref{flatInLimDTS} and Proposition~\ref{flatInLimGen}, the assumption of being at distance one can be relaxed by that of being at a distance uniformly bounded by a slowly growing function.
+But since the primary focus of this paper is on the spaces under consideration, we will not \todo{Should we?} include the statement in general terms of metric spaces.
+However, we prove below (Theorem~\ref{zero-in-the-limit}) a much stronger property of the spaces, namely, that the curvature tends to zero when the tree size tends to infinity does not matter what distance between the trees is.
+}
+{}
+
+\iftoggle{curvatureON}{
+We now use Theorem~\ref{max_good_neighbors} to prove the following.
+
+\todo[inline]{$\downarrow$ This must be true for $p$-lazy walk as well.}
+
+\begin{theorem}
+\label{zero-in-the-limit}
+Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of $\dtt_2$-trees on $n$ taxa.
+Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$ for the uniform random walk.
+\end{theorem}
+
+\proof
+Since the curvature is a local property, it follows from Lemma~\ref{uniformLower} that $\kappa(T_n,R_n) \geq -\dfrac{4}{n-1}$ for all $n$.
+To finish the proof, we need to bound the sequence $\kappa(T_n,R_n)$ from above by another sequence which tends to zero.
+
+Let us fix an $n$ and let $U$ be the set of trees $E \in N(T)$ such that $d_\dtt_2(E,R_n) \leq d_\dtt_2(T_n,R_n)$ as in Theorem~\ref{max_good_neighbors}, and $B$ be the rest of trees $N(T_n)\setminus U$ from $N(T_n)$.
+Let's denote $d_\dtt_2(T_n,R_n)$ by $d$.
+Then
+\[
+W(m_{T_n},m_{R_n}) = \sum_{i\in U} p_i d_i + \sum_{j\in B} p_j d_j \geq
+\sum_{i\in U} p_i (d-2) + \sum_{j\in B} p_j d =
+\frac{|U|(d-2)}{|N(T_n)|} + \frac{|B|d}{|N(T_n)|}.
+\]
+Hence,
+\[
+\kappa(T_n,R_n) = 1 - \frac{W(m_{T_n},m_{R_n})}{d} \leq
+1 - \frac{|U| + |B|}{|N(T_n)|} + \frac{2|U|}{|N(T_n)|d}
+= \frac{2|U|}{|N(T_n)|d}.
+\]
+It follows from Theorem~\ref{max_good_neighbors} that $|U| \leq 4d$.
+Thus, $\kappa(T_n,R_n) \leq \dfrac{8}{|N(T_n)|}$.
+It remains to note that $\lim\limits_{n\to\infty}\dfrac{8}{|N(T_n)|} = 0$.
+\endproof
+
+Clearly, the same reasoning goes through for the other three spaces under consideration:
+
+\begin{corollary}
+Let $(T_n,R_n)_{n\in\omega}$ be a sequence of pairs of trees on $n$ taxa.
+Then $\lim\limits_{n \to \infty}\kappa(T_n,R_n) = 0$ for $\nni$, $\rnni$, and $\dtt$ distances.
+\end{corollary}
+
+We now estimate the curvature of the Metropolis-Hastings random walk, which proposes a tree in the $1$-neighborhood uniformly at random and accepts the proposal with probability $\min\left(1, \dfrac{|N(T_{old})|}{|N(T_{new})|}\right)$.
+We denote the corresponding curvature by $\kappa(\MH;T,R)$.
+
+\begin{lemma}
+The following inequalities are satisfied in both $\dtt_2$ and $\dtt$.
+\[
+\kappa(T,R) - \dfrac{6}{5d(T,R)} \leq \kappa(\MH;T,R) \leq \kappa(T,R) +
+\dfrac{6}{5d(T,R)}\mbox{, and}
+\]
+\[
+\kappa(T,R) - \dfrac35 \leq \kappa(\MH;T,R) \leq \kappa(T,R) + \dfrac35.
+\]
+\end{lemma}
+
+\proof
+From Corollary~\ref{degreeBounds} we have that $\frac{|N(T_{old})|}{|N(T_{new})|} \geq \frac{2}{5}$, so the probability mass that an MH move leaves at $T_{old}$ is not greater than $\frac35$.
+The rest of the proof follows \autocite[][Proof of Lemma~V.8]{Whidden2015-es} literally.
+\endproof
+
+\begin{corollary}
+The following inequalities are satisfied in $\rnni$ \todo{What about NNI?}.
+\[
+\kappa(T,R) - \dfrac{4}{3d(T,R)} \leq \kappa(\MH;T,R) \leq \kappa(T,R) +
+\dfrac{4}{3d(T,R)}\mbox{, and}
+\]
+\[
+\kappa(T,R) - \dfrac23 \leq \kappa(\MH;T,R) \leq \kappa(T,R) + \dfrac23.
+\]
+\end{corollary}
+
+\proof
+Use Corollary~\ref{degreeBounds}.
+\endproof
+}{}
+
 
 \subsection{Efficient algorithm for generating $\rnni$ graphs}
 
@@ -611,6 +981,25 @@ See \autocite{Whidden2015-es} for an analogous proof of correctness.
 		\end{enumerate}
 \end{enumerate}
 
+\iftoggle{curvatureON}{
+\section{Some other spaces}
+
+Several important proposal mechanisms used in phylogenetic Bayesian inference by popular software packages such as BEAST2 \autocite{beast2} favor topological moves or tree moves depending on various conditions.
+All tree moves we have been considering so far do not make an explicit distinction between topological changes and branch length changes.
+To address this issue\todo{issue?}, we consider the following tree move that explicitly allows distributing the acceptance probability between topological and branch length moves.
+
+{\bf Lazy walk.}
+Let $p$ be the laziness probability, that is, we do nothing with probability $1-p$ and distribute the probability $p$ as follows.
+We decide first on what type of move we want to perform: choose a topological move with probability $q$ and a length move otherwise, that is, $q \leq p$ and the probability of a length move is $p-q$.
+The proposal is rejected if a topological move is impossible.
+
+{\bf tau move.}
+Choose a coordinate uniformly at random.
+Increase the coordinate by $1$ with probability $p$ and decrease it by $1$ otherwise.
+If the coordinate becomes $0$, resolve the multifurcation uniformly at random and set the new coordinate to $1$.
+Note that this mechanism does not bound edge lengths from above and favors topological moves when $p<1/2$.
+}{}
+
 
 \section{Open problems and conjectures}
 
@@ -646,9 +1035,13 @@ If a partition of leaves given by an edge is presented in two trees $T$ and $R$ 
 In this section, we bound the number of neighbors of a tree $x$ in the discrete time-tree graphs that are closer than $x$ to a given tree $y$, \textbf{under the assumption that Conjecture~\ref{conjSplit} holds}.
 We denote trees by lowercase letters to stress the fact that we are considering graphs as metric spaces in this section.
 We show that the maximum fraction of neighbors that tend closer to $y$ grows linearly with respect to $d(x,y)$.
+\iftoggle{curvatureON}{
+These subsets of neighbors are the force pushing towards positive curvature, so this will allow us to bound the maximum curvature with respect to distance.
+}{
 When the graph is seen as a metric space, this property is important for the study of the curvature of the space as well as convergence properties of random walks over the space.
 This will be useful in future studies analogous to \autocite{Whidden2015-es}.
 Furthermore, the result provides a further insight into possible approaches to Problem~\ref{problemComplexity}.
+}
 
 \begin{theorem}
 \label{max_good_neighbors}
